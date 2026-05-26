@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Comparison — Cormorant Garamond vs Bebas Neue</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Bebas+Neue&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0a;
+            color: #e8e8e8;
+            font-family: 'Geist', system-ui, sans-serif;
+            padding: 40px 24px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .label {
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 8px;
+            font-family: 'Geist', system-ui, sans-serif;
+        }
+        .note {
+            font-size: 14px;
+            color: #555;
+            font-family: 'Geist', system-ui, sans-serif;
+            margin-top: 4px;
+            line-height: 1.5;
+        }
+        .divider {
+            border: none;
+            border-top: 1px solid #1a1a1a;
+            margin: 60px 0;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 40px;
+        }
+        @media (max-width: 768px) {
+            .comparison-grid { grid-template-columns: 1fr; gap: 40px; }
+        }
+        .font-card {
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            padding: 40px 32px;
+            background: #0f0f0f;
+        }
+        .font-card h2 {
+            margin-bottom: 8px;
+        }
+        .section-heading {
+            margin-bottom: 48px;
+        }
+        .section-heading h1 {
+            font-family: 'Geist', system-ui, sans-serif;
+            font-size: 18px;
+            font-weight: 500;
+            color: #888;
+        }
+
+        /* Font A */
+        .cormorant h2 { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 48px; line-height: 1.1; }
+        .cormorant .sample-lg { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 36px; line-height: 1.2; margin: 24px 0 12px; }
+        .cormorant .sample-md { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 24px; line-height: 1.3; margin: 20px 0 8px; }
+
+        /* Font B */
+        .bebas h2 { font-family: 'Bebas Neue', sans-serif; font-size: 48px; line-height: 1.1; letter-spacing: 2px; }
+        .bebas .sample-lg { font-family: 'Bebas Neue', sans-serif; font-size: 36px; line-height: 1.2; letter-spacing: 1.5px; margin: 24px 0 12px; }
+        .bebas .sample-md { font-family: 'Bebas Neue', sans-serif; font-size: 24px; line-height: 1.3; letter-spacing: 1px; margin: 20px 0 8px; }
+
+        .body-text {
+            font-family: 'Geist', system-ui, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #999;
+            margin-top: 12px;
+        }
+
+        /* Simulated sections */
+        .mock-section {
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            padding: 48px 40px;
+            background: #0f0f0f;
+            margin-top: 24px;
+        }
+        .mock-nav {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 40px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        .mock-nav span {
+            font-family: 'Geist', system-ui, sans-serif;
+            font-size: 14px;
+            color: #555;
+            letter-spacing: 0.5px;
+        }
+        .mock-nav span.active { color: #e8e8e8; }
+        .accent { color: rgba(255,255,255,0.5); }
+
+        /* Film quote styling */
+        .film-quote {
+            border-left: 2px solid #333;
+            padding: 16px 0 16px 24px;
+            margin: 32px 0;
+        }
+        .film-quote p {
+            font-style: italic;
+            color: #777;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        .film-quote .source {
+            font-style: normal;
+            font-size: 12px;
+            color: #444;
+            margin-top: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .tag {
+            display: inline-block;
+            font-family: 'Geist', system-ui, sans-serif;
+            font-size: 12px;
+            color: #666;
+            border: 1px solid #2a2a2a;
+            border-radius: 4px;
+            padding: 4px 10px;
+            margin-right: 8px;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="section-heading">
+            <h1>Font Comparison for Portfolio Headings</h1>
+            <p class="note" style="margin-top:8px;">Body text in both options uses Geist. Only section headings differ.</p>
+        </div>
+
+        <!-- Side by Side -->
+        <div class="comparison-grid">
+
+            <!-- OPTION A: Cormorant Garamond -->
+            <div class="font-card cormorant">
+                <p class="label">Option A</p>
+                <h2>Cormorant Garamond</h2>
+                <p class="note">Elegant serif · Classic film title energy · Refined & literary</p>
+
+                <hr class="divider" style="margin: 32px 0;">
+
+                <p class="label">Section Headings</p>
+                <div class="sample-lg">Director's Cut</div>
+                <div class="sample-md">Character Arc</div>
+                <div class="sample-md">Interrogation</div>
+                <div class="sample-md">Gossip</div>
+                <div class="sample-md">Craft</div>
+                <div class="sample-md">Side Roles</div>
+
+                <hr class="divider" style="margin: 32px 0;">
+
+                <p class="label">Hero / Credits Text</p>
+                <div class="sample-lg">Rajat Garg</div>
+                <p class="body-text">Product Designer · B2B SaaS</p>
+
+                <hr class="divider" style="margin: 32px 0;">
+
+                <p class="label">Heading + Body Pairing</p>
+                <div class="sample-md">Reduce Eye Test Wait Time</div>
+                <p class="body-text">Led designs of iPad, mobile & TV apps for customers & staff that reduced eye test wait time by 38% in 1600+ Lenskart stores.</p>
+                <div style="margin-top: 12px;">
+                    <span class="tag">Lenskart</span>
+                    <span class="tag">iPad</span>
+                    <span class="tag">B2B SaaS</span>
+                </div>
+            </div>
+
+            <!-- OPTION B: Bebas Neue -->
+            <div class="font-card bebas">
+                <p class="label">Option B</p>
+                <h2>Bebas Neue</h2>
+                <p class="note">Bold sans-serif · Vintage movie poster energy · Punchy & commanding</p>
+
+                <hr class="divider" style="margin: 32px 0;">
+
+                <p class="label">Section Headings</p>
+                <div class="sample-lg">Director's Cut</div>
+                <div class="sample-md">Character Arc</div>
+                <div class="sample-md">Interrogation</div>
+                <div class="sample-md">Gossip</div>
+                <div class="sample-md">Craft</div>
+                <div class="sample-md">Side Roles</div>
+
+                <hr class="divider" style="margin: 32px 0;">
+
+                <p class="label">Hero / Credits Text</p>
+                <div class="sample-lg">Rajat Garg</div>
+                <p class="body-text">Product Designer · B2B SaaS</p>
+
+                <hr class="divider" style="margin: 32px 0;">
+
+                <p class="label">Heading + Body Pairing</p>
+                <div class="sample-md">Reduce Eye Test Wait Time</div>
+                <p class="body-text">Led designs of iPad, mobile & TV apps for customers & staff that reduced eye test wait time by 38% in 1600+ Lenskart stores.</p>
+                <div style="margin-top: 12px;">
+                    <span class="tag">Lenskart</span>
+                    <span class="tag">iPad</span>
+                    <span class="tag">B2B SaaS</span>
+                </div>
+            </div>
+        </div>
+
+
+        <hr class="divider">
+
+
+        <!-- Full Mock Section: Cormorant -->
+        <p class="label">Option A in context — Simulated Homepage Section</p>
+        <div class="mock-section cormorant">
+            <div class="mock-nav">
+                <span class="active">Director's Cut</span>
+                <span>Character Arc</span>
+                <span>Craft</span>
+                <span>Interrogation</span>
+                <span>Gossip</span>
+            </div>
+
+            <div class="sample-lg" style="margin-top: 0;">Director's Cut</div>
+
+            <div class="film-quote">
+                <p>"Leave the gun. Take the cannoli."</p>
+                <p class="source">The Godfather, 1972</p>
+            </div>
+
+            <div class="sample-md">Reduce Eye Test Wait Time at Stores</div>
+            <p class="body-text" style="margin-bottom: 4px;">
+                Led designs of iPad, mobile & TV apps that reduced eye test wait time by 38% in 1600+ Lenskart stores. Sales up by 2.7% in 3 weeks.
+            </p>
+            <div style="margin-top: 12px;">
+                <span class="tag">Lenskart</span>
+                <span class="tag">iPad</span>
+                <span class="tag">2023</span>
+                <span class="tag" style="border-color:#444; color:#aaa;">↗ View Case Study</span>
+            </div>
+
+            <hr class="divider" style="margin: 40px 0;">
+
+            <div class="sample-md" style="opacity: 0.5;">Upload, Verify & Tag Documents</div>
+            <p class="body-text" style="opacity: 0.4;">
+                Spearheaded the zero-to-one design of dox2U, a B2B SaaS document management system.
+            </p>
+            <div style="margin-top: 12px;">
+                <span class="tag" style="opacity: 0.4;">dox2U</span>
+                <span class="tag" style="opacity: 0.4;">Desktop Web</span>
+                <span class="tag" style="opacity: 0.5; border-color:#444; color:#777;">Case study coming soon</span>
+            </div>
+        </div>
+
+
+        <hr class="divider">
+
+
+        <!-- Full Mock Section: Bebas Neue -->
+        <p class="label">Option B in context — Simulated Homepage Section</p>
+        <div class="mock-section bebas">
+            <div class="mock-nav">
+                <span class="active">Director's Cut</span>
+                <span>Character Arc</span>
+                <span>Craft</span>
+                <span>Interrogation</span>
+                <span>Gossip</span>
+            </div>
+
+            <div class="sample-lg" style="margin-top: 0;">Director's Cut</div>
+
+            <div class="film-quote">
+                <p>"Leave the gun. Take the cannoli."</p>
+                <p class="source">The Godfather, 1972</p>
+            </div>
+
+            <div class="sample-md">Reduce Eye Test Wait Time at Stores</div>
+            <p class="body-text" style="margin-bottom: 4px;">
+                Led designs of iPad, mobile & TV apps that reduced eye test wait time by 38% in 1600+ Lenskart stores. Sales up by 2.7% in 3 weeks.
+            </p>
+            <div style="margin-top: 12px;">
+                <span class="tag">Lenskart</span>
+                <span class="tag">iPad</span>
+                <span class="tag">2023</span>
+                <span class="tag" style="border-color:#444; color:#aaa;">↗ View Case Study</span>
+            </div>
+
+            <hr class="divider" style="margin: 40px 0;">
+
+            <div class="sample-md" style="opacity: 0.5;">Upload, Verify & Tag Documents</div>
+            <p class="body-text" style="opacity: 0.4;">
+                Spearheaded the zero-to-one design of dox2U, a B2B SaaS document management system.
+            </p>
+            <div style="margin-top: 12px;">
+                <span class="tag" style="opacity: 0.4;">dox2U</span>
+                <span class="tag" style="opacity: 0.4;">Desktop Web</span>
+                <span class="tag" style="opacity: 0.5; border-color:#444; color:#777;">Case study coming soon</span>
+            </div>
+        </div>
+
+
+        <hr class="divider">
+
+
+        <!-- Character comparison -->
+        <p class="label">Side-by-side character details</p>
+        <div class="comparison-grid" style="margin-top: 24px;">
+            <div class="font-card cormorant">
+                <p class="label">Cormorant Garamond · Characteristics</p>
+                <div class="body-text" style="margin-top: 16px;">
+                    <p>✦ High-contrast serif with classical proportions</p>
+                    <p style="margin-top:8px;">✦ Feels literary, sophisticated, almost editorial</p>
+                    <p style="margin-top:8px;">✦ Evokes: Criterion Collection, art house cinema, Coppola</p>
+                    <p style="margin-top:8px;">✦ Pairs beautifully with Geist — creates elegant contrast</p>
+                    <p style="margin-top:8px;">✦ Risk: Could feel too "design agency" if not balanced</p>
+                </div>
+            </div>
+            <div class="font-card bebas">
+                <p class="label">Bebas Neue · Characteristics</p>
+                <div class="body-text" style="margin-top: 16px;">
+                    <p>✦ All-caps, condensed, bold sans-serif</p>
+                    <p style="margin-top:8px;">✦ Feels commanding, direct, cinematic in a blockbuster way</p>
+                    <p style="margin-top:8px;">✦ Evokes: Movie posters, Star Wars title cards, trailers</p>
+                    <p style="margin-top:8px;">✦ Strong visual hierarchy — headings pop immediately</p>
+                    <p style="margin-top:8px;">✦ Risk: All-caps can feel loud; needs careful sizing</p>
+                </div>
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <p class="note" style="text-align:center; padding: 20px 0 40px;">
+            My recommendation: Cormorant Garamond if you want sophisticated & understated.<br>
+            Bebas Neue if you want bold & cinematic. Both work — it's a personality choice.
+        </p>
+
+    </div>
+</body>
+</html>

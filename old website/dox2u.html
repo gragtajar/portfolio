@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload, Verify &amp; Tag Documents in dox2U - Rajat Garg</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='black' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="cursor d-none d-md-block"></div>
+    
+    <div id="splash-screen">
+        <div class="text-center">
+            <div class="spinner-border text-light mb-3" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="message" id="welcome-message">..</div>
+        </div>
+    </div>
+    
+        
+    <header class="container site-header sticky-top border-bottom bg-white py-3">
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+
+            <!-- Left: Brand -->
+            <a href="/" class="fw-bold text-dark text-decoration-none">Rajat says &#128075;</a>
+        
+            <!-- Center: Nav (only visible on md+ screens) -->
+            <ul class="nav d-none d-md-flex col-md-auto mb-0 justify-content-center">
+                <li class="nav-link px-4">
+                    <a href="#work" class="link-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Work</a>
+                </li>
+                <li class="nav-link px-4">
+                    <a href="#about" class="link-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">About</a>
+                </li>
+                <li class="nav-link px-4">
+                    <a href="docs/Rajat-Garg-Product-UX-Designer-Resume.pdf" target="_blank" class="link-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Resume</a>
+                </li>
+            </ul>
+        
+            <!-- Right: Email Button + Hamburger (mobile only) -->
+            <div class="d-flex align-items-center gap-3">
+                <!-- Email Button (always visible) -->
+                <a href="mailto:rajatgarg1809@gmail.com">
+                    <button type="button" class="btn btn-dark shadow hvr-shadow">Email Me</button>
+                </a>
+        
+                <!-- Hamburger Toggle (mobile only) -->
+                <button class="navbar-toggler d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation" id="navbarToggle">
+                    <span class=" navbar-toggler-icon fs-5" id="toggleIcon"></span>
+                </button>
+            </div>
+        </div>
+    
+        <!-- Mobile Collapsible Menu (hidden on desktop) -->
+        <div class="collapse d-md-none border-top mt-2" id="mobileMenu">
+            <ul class="nav flex-column px-3 py-2">
+                <li class="nav-item">
+                    <a href="#work" class="nav-link link-dark menu-link">Work</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link link-dark menu-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="docs/Rajat-Garg-Product-UX-Designer-Resume.pdf" target="_blank" class="nav-link link-dark menu-link">Resume</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+        
+
+    <div class="container my-5 border-bottom">
+        <div style="max-width: 800px;">
+            <h1 class="display-4 fw-bold mb-4">
+                Upload, Verify and Tag Documents
+            </h1>
+            <p class="lead fw-normal text-body-secondary mb-3">
+                SaaS-based document management system for people to upload, tag and retrieve their scanned or captured paper documents easily.
+            </p>
+            <p class="text-body-tertiary">
+                8 mins read &middot; Updated on 2 May 2025
+            </p>
+        </div>
+    </div>
+        
+        
+    <div class="container">
+        <img src="assets/dox2u/dox2u-hero.png" class="img-fluid rounded-2 mb-3" alt=""/>
+    </div>
+    
+    
+    <div class="my-5 container">
+        <h2 class="pb-2 border-bottom">About Project</h2>
+        <div class="row my-5">
+            <div class="col-12 col-md-4 mb-3">
+                <h4>Problems with Paper Documents</h4>
+            </div>
+            <div class="col-12 col-md-8">
+                <dl class="mb-4">
+                    <dt>Hard to find information</dt>
+                    <dd class="text-body-secondary">Finding information in documents takes too much effort.</dd>
+                    <dt>No remote access & risk of loss</dt>
+                    <dd class="text-body-secondary">Papers can’t be accessed on the go and are prone to damage or getting lost.</dd>
+                </dl>
+                <div class="p-4 bg-info-subtle rounded-2">
+                    <h5>How is dox2U different from Google Drive?</h5>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover mt-4">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Feature</th>
+                                    <th scope="col">dox2U</th>
+                                    <th scope="col">Google Drive</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                                <tr>
+                                    <th scope="row">Document Processing</th>
+                                    <td>Advanced OCR/ICR for text extraction</td>
+                                    <td>Basic text search</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Organization Tools</th>
+                                    <td>Smart Cabinet &amp; Deep Search</td>
+                                    <td>Only folder-based organization</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" >Integration with Business Tools</th>
+                                    <td>Tally &amp; ERP systems</td>
+                                    <td>Within Google Workspace</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Security and Compliance</th>
+                                    <td>Granular access controls &amp; audit logs</td>
+                                    <td>Basic sharing permissions</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-5">
+            <div class="col-12 col-md-4 mb-3">
+                <h4>Few Stats</h4>
+            </div>
+            <div class="col-12 col-md-8">
+                <div class="row g-4 row-cols-1 row-cols-md-2">
+                    <div class="feature col">
+                        <h5>46% &#128531;</h5>
+                        <p class="text-body-secondary">Time spent searching for information written in paper documents</p>
+                    </div>
+                    <div class="feature col">
+                        <h5>7.5%</h5>
+                        <p class="text-body-secondary">Paper documents get lost, on an average</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row my-5">
+            <div class="col-12 col-md-4 mb-3">
+                <h4>Target Users</h4>
+            </div>
+            <div class="col-12 col-md-8">
+                <div class="row g-4 row-cols-1 row-cols-md-2">
+                    <div class="feature col">
+                        <h5>Professionals</h5>
+                        <p class="text-body-secondary">CA, Advocates and Doctors</p>
+                    </div>
+                    <div class="feature col">
+                        <h5>Industries</h5>
+                        <p class="text-body-secondary">Customs, Real-Estate and Education</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row my-5">
+            <div class="col-12 col-md-4 mb-3">
+                <h4>Timelines</h4>
+            </div>
+            <div class="col-12 col-md-8">
+                <div class="row g-4 row-cols-1 row-cols-md-2">
+                    <div class="feature col">
+                        <h5>June 2020</h5>
+                        <p class="text-body-secondary">Project Started</p>
+                    </div>
+                    <div class="feature col">
+                        <h5>Oct 2021</h5>
+                        <p class="text-body-secondary">Beta Release</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="my-5 container">
+        <div class="pb-2 border-bottom">
+            <h2>Benchmarking</h2>
+            <p class="text-body-secondary">Done in 2020</p>
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col-12 col-md-5 mb-3">
+                <h3>1. DocSumo</h3>
+            </div>
+            <div class="col-12 col-md-7">
+                <figure class="figure mb-3 img-wrapper">
+                    <img src="assets/dox2u/docsumo.jpeg" class="figure-img img-fluid rounded-2 zoom-img" alt="" loading="lazy" />
+                    <figcaption class="figure-caption">Workspace screenshot</figcaption>    
+                </figure>
+                <div class="my-4">
+                    <div class="p-4 bg-success-subtle rounded-2 border border-success-subtle">
+                        <h5>Strengths</h5>
+                        <ul>
+                            <li>Simple and intuitive UI</li>
+                            <li>Point and click selection for invoice processing</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="my-4">
+                    <div class="p-4 bg-danger-subtle rounded-2 border border-danger-subtle">
+                        <h5>Weaknesses</h5>
+                        <ul>
+                            <li>Oriented towards invoice processing only</li>
+                            <li>No direct sign up</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col-12 col-md-5 mb-3">
+                <h3>2. Alfresco</h3>
+            </div>
+            <div class="col-12 col-md-7">
+                <figure class="figure mb-3 img-wrapper">
+                    <img src="assets/dox2u/alfresco.png" class="figure-img img-fluid rounded-2 zoom-img" alt="" loading="lazy"/>
+                    <figcaption class="figure-caption">Workspace screenshot</figcaption>    
+                </figure>
+                <div class="my-4">
+                    <div class="p-4 bg-success-subtle rounded-2 border border-success-subtle">
+                        <h5>Strengths</h5>
+                        <ul>
+                            <li>Easy to customize workflow</li>
+                            <li>Online and offline access to files of any size and format</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="my-4">
+                    <div class="p-4 bg-danger-subtle rounded-2 border border-danger-subtle">
+                        <h5>Weaknesses</h5>
+                        <ul>
+                            <li>Unfriendly and cumbersome UI</li>
+                            <li>Limitations of mobility as some tasks cannot be carried out</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col-12 col-md-5 mb-3">
+                <h3>3. Mayan E-DMS</h3>
+            </div>
+            <div class="col-12 col-md-7">
+                <figure class="figure mb-3 img-wrapper">
+                    <img src="assets/dox2u/mayan.png" class="figure-img img-fluid rounded-2 zoom-img" alt="" loading="lazy"/>
+                    <figcaption class="figure-caption">Workspace screenshot</figcaption>    
+                </figure>
+                <div class="my-4">
+                    <div class="p-4 bg-success-subtle rounded-2 border border-success-subtle">
+                        <h5>Strengths</h5>
+                        <ul>
+                            <li>Open source</li>
+                            <li>Legacy software</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="my-4">
+                    <div class="p-4 bg-danger-subtle rounded-2 border border-danger-subtle">
+                        <h5>Weaknesses</h5>
+                        <ul>
+                            <li>Inadequate and difficult to use</li>
+                            <li>Old and clunky user interface</li>
+                            <li>Lack of security for cloud storage</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+        
+    <div class="my-5 container">
+        <h2 class="pb-2 border-bottom">My Contributions</h2>
+        <div class="mt-5">
+            <div class="row g-4 row-cols-1 row-cols-lg-3">
+                <div class="feature col hover-group text-start">
+                    <div class="feature-icon hvr-rotate">
+                        <img src="assets/dox2u/product.svg" class="img-fluid mb-3" alt="" loading="lazy" />
+                    </div>
+                    <h4>Shaping the Product Structure</h4>
+                    <p class="text-body-secondary">
+                        I helped define user flows and requirements early on. This gave me a deep understanding of how to build a product that works as a complete, connected system.
+                    </p>
+                </div>
+                <div class="feature col hover-group text-start">
+                    <div class="feature-icon hvr-rotate">
+                        <img src="assets/dox2u/wireframe.svg" class="img-fluid mb-3" alt="" loading="lazy" />
+                    </div>
+                    <h4>Wireframing for Fast Feedback</h4>
+                    <p class="text-body-secondary">
+                        We used quick, low-fidelity wireframes to explore ideas and test them early. It helped us move fast and improve based on feedback before going into final design.
+                    </p>
+                </div>
+                <div class="feature col hover-group text-start">
+                    <div class="feature-icon hvr-rotate">
+                        <img src="assets/dox2u/question.svg" class="img-fluid mb-3" alt="" loading="lazy" />
+                    </div>
+                    <h4>Finding Edge Cases Early by Asking Questions</h4>
+                    <p class="text-body-secondary">
+                        I often looked for scenarios and edge cases others might miss. With my technical background, I could discuss backend and frontend challenges with developers and propose practical solutions.
+                    </p>
+                </div>
+            </div>
+            <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+                <div class="feature col hover-group text-start">
+                    <div class="feature-icon hvr-rotate">
+                        <img src="assets/dox2u/handoff.svg" class="img-fluid mb-3" alt="" loading="lazy" />
+                    </div>
+                    <h4>Smooth Design-to-Development Hand-off</h4>
+                    <p class="text-body-secondary">
+                        To keep development smooth, I created clear and detailed design documents. These helped the dev and QA teams understand both the big picture and small details.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+        
+    <div class="my-5 container">
+        <h2 class="pb-2 border-bottom">Features</h2>
+        <div class="row mt-5">
+            <div class="col-12 col-md-5 mb-3">
+                <h3>1. Upload Documents</h3>
+            </div>
+            <div class="col-12 col-md-7">
+                <figure class="figure mb-3 img-wrapper">
+                    <img src="assets/dox2u/upload-1.png" class="figure-img img-fluid rounded-2 zoom-img" alt="" loading="lazy"/>
+                    <figcaption class="figure-caption">Low-fidelity wireframe</figcaption>    
+                </figure>
+                <figure class="figure mb-3 img-wrapper">
+                    <img src="assets/dox2u/upload-2.png" class="figure-img img-fluid rounded-2 zoom-img" alt="" loading="lazy"/>
+                    <figcaption class="figure-caption">Low-fidelity wireframe</figcaption>    
+                </figure>
+                <figure class="figure mb-3 img-wrapper">
+                    <img src="assets/dox2u/upload-3.png" class="figure-img img-fluid rounded-2 zoom-img" alt="" loading="lazy"/>
+                    <figcaption class="figure-caption">High-fidelity mockup</figcaption>
+                </figure>  
+                <div class="feature my-4">
+                    <h5>Easy Document Uploads</h5>
+                    <p class="text-body-secondary">Users can upload files one by one or in bulk. The system shows how much storage is left and what file types are allowed — in real time — for a smooth user experience.</p>
+                </div>
+                <div class="feature my-4">
+                    <h5>Assigning Controls to Right People</h5>
+                    <p class="text-body-secondary">We noticed that the person uploading a document isn’t always the one managing it later. So, we added options to assign a document owner and a verifier during upload.</p>
+                </div>
+                <div class="feature my-4">
+                    <h5>Auto Language Detection</h5>
+                    <p class="text-body-secondary">To make things simpler, the system automatically detects the language of the document using <a tabindex="0" href="#!" class="fw-bold text-dark text-decoration-none" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="What are OCR & ICR?" data-bs-content="OCR: Optical Character Recognition ICR: Intelligent Character Recognition" style="border-bottom: 1px dotted #000;">OCR &amp; ICR</a> — no need to set it manually.</p>
+                </div>
+                <div class="feature my-4">
+                    <h5>Custom Upload Controls</h5>
+                    <p class="text-body-secondary">Admins can set limits on file size and the number of files allowed per upload through Document Settings.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col-12 col-md-5 mb-3">
+                <h3>2. Verify Documents</h3>
+            </div>
+            <div class="col-12 col-md-7">
+                <figure class="figure mb-3 img-wrapper">
+                    <img src="assets/dox2u/verify-1.jpeg" class="figure-img img-fluid rounded-2 zoom-img" alt="" loading="lazy"/>
+                    <figcaption class="figure-caption">Initial paper sketches</figcaption>    
+                </figure>
+                <figure class="figure mb-3 img-wrapper">
+                    <img src="assets/dox2u/verify-3.png" class="figure-img img-fluid rounded-2 zoom-img" alt="" loading="lazy"/>
+                    <figcaption class="figure-caption">Low-fidelity wireframe</figcaption>    
+                </figure>
+                <div class="feature my-4">
+                    <h5>Why Document Verification Matters</h5>
+                    <p class="text-body-secondary">After upload, every document needs to be checked to make sure it’s easy to find later. This step ensures reliable search results.</p>
+                </div>
+                <div class="feature my-4">
+                    <h5>Simple Workflow</h5>
+                    <p class="text-body-secondary">Each user sees a list of documents assigned to them for review. While verifying, they can add tags to the document before it's saved.</p>
+                </div>
+                <figure class="figure mb-3 img-wrapper">
+                    <img src="assets/dox2u/verify-2.png" class="figure-img img-fluid rounded-2 zoom-img" alt="" loading="lazy"/>
+                    <figcaption class="figure-caption">High-fidelity mockup</figcaption>    
+                </figure>
+                <div class="feature my-4">
+                    <h5>Choosing the Best Layout</h5>
+                    <p class="text-body-secondary">We <span class="fw-bold">tested different layouts</span> for the verification screen — from top toolbars to side menus. We chose a side menu layout so the document stays in focus while other options sit neatly on the side.</p>
+                </div>
+                <div class="feature my-4">
+                    <h5>Quick Page Navigation</h5>
+                    <p class="text-body-secondary">A thumbnail viewer (like Adobe Acrobat) helps users jump between pages in multi-page documents, making the review process smoother.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col-12 col-md-5 mb-3">
+                <h3>3. Tag &amp; Share Documents</h3>
+            </div>
+            <div class="col-12 col-md-7">
+                <figure class="figure mb-3 img-wrapper">
+                    <img src="assets/dox2u/template-1.jpeg" class="figure-img img-fluid rounded-2 zoom-img" alt="" loading="lazy"/>
+                    <figcaption class="figure-caption">Concept paper sketch of Documents Tagging</figcaption>
+                </figure>
+                <figure class="figure mb-3 img-wrapper">
+                    <img src="assets/dox2u/template-2.png" class="figure-img img-fluid rounded-2 zoom-img" alt="" loading="lazy"/>
+                    <figcaption class="figure-caption">High-fidelity mockup of Documents Tagging</figcaption>
+                </figure>
+                <div class="feature my-4">
+                    <h5>Subjective Problem with Tags</h5>
+                    <p class="text-body-secondary">Everyone adds tags differently, which makes it hard for others to find documents later.</p>
+                </div>
+                <div class="feature my-4">
+                    <h5>A Simple Solution: Tag Templates</h5>
+                    <p class="text-body-secondary">We added a feature that lets users create reusable tag templates. These templates help standardize how documents are tagged across the workspace.</p>
+                </div>
+                <div class="feature my-4">
+                    <h5>Faster &amp; Easier Tagging</h5>
+                    <p class="text-body-secondary">Instead of typing tags manually each time for each document, users just fill out a simple form — saving time and reducing confusion.</p>
+                </div>
+                <figure class="figure mb-3 img-wrapper">
+                    <img src="assets/dox2u/share.jpeg" class="figure-img img-fluid rounded-2 zoom-img" alt="" loading="lazy"/>
+                    <figcaption class="figure-caption">Concept paper sketch of Sharing Documents</figcaption>    
+                </figure>
+                <div class="feature my-4">
+                    <h5>Sharing Documents</h5>
+                    <p class="text-body-secondary">Users can securely share files with customizable access and edit permissions. It also supports guest sharing with options like OTP protection and restricted downloads.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        
+    <div class="my-5 container">
+        <!-- Thank You Message -->
+        <div class="text-center">
+            <h4>You're awesome!</h4>
+            <p class="lead text-body-secondary">Thanks for reading 💖</p>
+        </div>
+        <hr class="text-body-tertiary my-4"/>
+        <!-- Next Case Study -->
+        <div class="row mt-4 align-items-center justify-content-center">
+            <!-- Empty column for symmetry on desktop -->
+            <div class="col-12 col-md-6 d-none d-md-block">
+                <p class="invisible"></p>
+            </div>
+            <div class="col-12 col-md-6 text-start">
+                <a href="lenskart-eye-test.html" class="text-decoration-none text-dark explore d-block">
+                    <div class="img-wrapper">
+                        <img src="assets/dox2u/eye-test-hero.png" class="img-fluid rounded-2 mb-3 zoom-img" alt="Next case study image"/>
+                    </div>
+                    <h6>Next case study</h6>
+                    <p class="lead text-body-secondary">Reduce Eye Test Wait Time at Lenskart Stores</p>
+                </a>
+            </div>
+        </div>
+     </div>
+    
+    
+    <footer class="py-5 mt-auto container">
+        <!-- Responsive Navigation -->
+        <ul class="nav flex-column flex-sm-row justify-content-center border-bottom pb-3 mb-3 text-center text-sm-start">
+            <li class="nav-item nav-link px-3">
+                <a href="mailto:rajatgarg1809@gmail.com" target="_blank"
+                class="link-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-body-secondary">
+                    rajatgarg1809@gmail.com
+                </a>
+            </li>
+            <li class="nav-item nav-link px-3">
+                <a href="https://www.linkedin.com/in/gragtajar" target="_blank"
+                class="link-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-body-secondary">
+                    Linkedin
+                </a>
+            </li>
+            <li class="nav-item nav-link px-3">
+                <a href="docs/Rajat-Garg-Product-UX-Designer-Resume.pdf" class="link-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-body-secondary" download>
+                    Download Resume
+                </a>
+            </li>
+        </ul>
+            
+        <!-- Footer Note -->
+        <p class="text-center text-body-secondary mb-0">
+            Designed &amp; developed with &hearts; by Rajat Garg
+            <br/>
+            <span class="text-body-tertiary small d-block mt-2">
+                Product designer with 6+ years experience
+                <br/>
+                This is not a Framer or Webflow template
+            </span>
+        </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+        const messages = [
+            "Oh hey! You made it.",
+            "Adios!",
+            "You rang? The design is here.",
+            "Make him an offer, he can't refuse",
+            "Prepare to be mildly impressed!",
+            "Who let the UX out? Woof!",
+            "Brace yourself, pixels ahead!",
+            "I am the one who knocks and design.",
+            "Hydrate before you caffeinate..",
+            "Summoning jutsu..",
+            "Read a book or atleast pretend to",
+            "I'm FUBAR!",
+            "May the Force be with you",
+            "It's clobberin' time!",
+            "Design is coming..",
+            "It’s over 9000!",
+            "You can’t always get what you want..",
+            "To infinity and beyond",
+            "I can do this all day.",
+            "I will survive!!",
+            "Bazinga!"
+        ];
+        const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+        document.getElementById("welcome-message").textContent = randomMessage;
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                const splash = document.getElementById("splash-screen");
+                //splash.classList.add("hide-splash");
+                setTimeout(() => {
+                    splash.style.display = "none";
+                    //document.getElementById("main-content").style.display = "block";
+                    document.body.style.overflow = "auto";
+                }, 1000); // Match with transition duration
+            }, 1000); // Delay before animation starts
+        });
+        
+        const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        const popoverList = popoverTriggerList.map(function (popoverTriggerEl) { return new bootstrap.Popover(popoverTriggerEl)})
+        
+        const cursor = document.querySelector(".cursor");
+        // Position cursor div to cursor position
+        document.addEventListener("mousemove", (e) => {
+        	let x = e.clientX;
+        	let y = e.clientY;
+        	cursor.style.left = x + "px";
+        	cursor.style.top = y + "px";
+        });
+        // Add 'pressable' class to cursor when hovering certain elements
+        const items = document.querySelectorAll('.explore');
+        items.forEach(item => {
+          item.addEventListener('mouseover', () => {
+            cursor.classList.add('pressable');
+          });
+          item.addEventListener('mouseleave', () => {
+            cursor.classList.remove('pressable');
+          });
+        });
+        
+    </script>
+</body>
+</html>

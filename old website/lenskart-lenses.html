@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lens Package Selection - Rajat Garg</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!--<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>-->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='black' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+        .sticky-contents-bar {
+            opacity: 0.95;
+            transition: opacity 0.3s ease;
+        }
+        
+        .sticky-contents-bar:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor d-none d-md-block"></div>
+    
+    <div id="splash-screen">
+        <div class="text-center">
+            <div class="spinner-border text-light mb-3" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="message" id="welcome-message">..</div>
+        </div>
+    </div>
+    
+        
+    <header class="container site-header sticky-top border-bottom bg-white py-3">
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+
+            <!-- Left: Brand -->
+            <a href="/" class="fw-bold text-dark text-decoration-none">Rajat says &#128075;</a>
+        
+            <!-- Center: Nav (only visible on md+ screens) -->
+            <ul class="nav d-none d-md-flex col-md-auto mb-0 justify-content-center">
+                <li class="nav-link px-4">
+                    <a href="#work" class="link-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Work</a>
+                </li>
+                <li class="nav-link px-4">
+                    <a href="#about" class="link-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">About</a>
+                </li>
+                <li class="nav-link px-4">
+                    <a href="docs/Rajat-Garg-Product-UX-Designer-Resume.pdf" target="_blank" class="link-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Resume</a>
+                </li>
+            </ul>
+        
+            <!-- Right: Email Button + Hamburger (mobile only) -->
+            <div class="d-flex align-items-center gap-3">
+                <!-- Email Button (always visible) -->
+                <a href="mailto:rajatgarg1809@gmail.com" class="d-none d-md-block text-decoration-none">
+                    <button type="button" class="btn btn-dark shadow hvr-shadow">Email Me</button>
+                </a>
+                <!-- Call Button (mobile only) -->
+                <a href="tel:+918527550597" class="d-md-none">
+                    <button type="button" class="btn btn-dark shadow hvr-shadow">Call Me</button>
+                </a>
+        
+                <!-- Hamburger Toggle (mobile only) -->
+                <button class="navbar-toggler d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation" id="navbarToggle">
+                    <span class=" navbar-toggler-icon fs-5" id="toggleIcon"></span>
+                </button>
+            </div>
+        </div>
+    
+        <!-- Mobile Collapsible Menu (hidden on desktop) -->
+        <div class="collapse d-md-none border-top mt-2" id="mobileMenu">
+            <ul class="nav flex-column px-3 py-2">
+                <li class="nav-item">
+                    <a href="#work" class="nav-link link-dark menu-link">Work</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link link-dark menu-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="docs/Rajat-Garg-Product-UX-Designer-Resume.pdf" target="_blank" class="nav-link link-dark menu-link">Resume</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+
+    <!-- Sticky Content Bar (Initially hidden) -->
+    <nav id="stickyContents" class="position-fixed my-3 d-none z-3 sticky-contents-bar w-100 px-3 px-md-0" style="z-index:1000;">
+        <div class="mx-auto bg-white border rounded-pill shadow-sm py-2 px-5 px-md-5" style="max-width: fit-content;">
+            <div class="d-flex gap-4 justify-content-start justify-content-md-center overflow-auto transition-opacity flex-nowrap">
+                <a class="nav-link text-secondary fw-medium flex-shrink-0" href="#about">About</a>
+                <a class="nav-link text-secondary fw-medium flex-shrink-0" href="#compare">Comparison</a>
+                <a class="nav-link text-secondary fw-medium flex-shrink-0" href="#why">Why?</a>
+                <a class="nav-link text-secondary fw-medium flex-shrink-0" href="#audit">UX Audit</a>
+                <a class="nav-link text-secondary fw-medium flex-shrink-0" href="#competitors">Competitor Analysis</a>
+                <a class="nav-link text-secondary fw-medium flex-shrink-0" href="#design">Design Explorations</a>
+                <a class="nav-link text-secondary fw-medium flex-shrink-0" href="#decisions">Decisions</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container my-5 border-bottom">
+        <div class="" style="max-width: 800px;">
+            <h1 class="display-4 fw-bold mb-4">
+                Lens Package Selection
+            </h1>
+            <p class="lead fw-normal text-body-secondary mb-3">
+                Revamped designs for lens package selection screen for Lenskart consumer mobile app and its counterpart iPad app for store staff.
+            </p>
+            <p class="text-body-tertiary">
+                7 mins read &middot; Updated on 29 Jun 2025
+            </p>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <img src="assets/lenskart/lens/sample.png" class="img-fluid rounded-2 mb-3" alt=""/>
+    </div>
+
+
+    <div class="my-5 container" id="about">
+        <h2 class="pb-2 border-bottom">About Project</h2>
+        <!-- Problems at Store -->
+        <div class="row my-4">
+            <div class="col-12 col-md-4 mb-3">
+                <h3>Customers' Problems</h3>
+            </div>
+            <div class="col-12 col-md-8">
+                <h4>Struggles to understand and compare lens packages due to overwhelming information, unclear visuals and lack of guidance on what’s best for their needs.</h4>
+            </div>
+        </div>
+        <p class="invisible">.</p>
+        <div class="row my-4">
+            <div class="col-12 col-md-4 mb-3">
+                <h3>Store Staff Problems</h3>
+            </div>
+            <div class="col-12 col-md-8">
+                <h4>Faces difficulty in explaining lens options quickly and clearly to customers, especially during rush hours.</h4>
+            </div>
+        </div>
+        <p class="invisible">.</p>
+        <!-- Impact -->
+        <div class="row my-4">
+            <div class="col-12 col-md-4 mb-3">
+                <h3>Impact Results</h3>
+                <p class="text-body-tertiary mb-0">Refer details below</p>
+            </div>
+            <div class="col-12 col-md-8">
+                <div class="row g-4 row-cols-1 row-cols-md-2">
+                    <div class="feature col">
+                        <h4>this ðŸ’–</h4>
+                        <p class="text-body-secondary">Drop reduced</p>
+                    </div>
+                    <div class="feature col">
+                        <h4>this ðŸ’–</h4>
+                        <p class="text-body-secondary">Completion increased</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="invisible">.</p>
+        <!-- Users -->
+        <div class="row my-4">
+            <div class="col-12 col-md-4 mb-3">
+                <h3>Users</h3>
+            </div>
+            <div class="col-12 col-md-8">
+                <div class="row g-4 row-cols-1 row-cols-md-2">
+                    <div class="feature col">
+                        <h4>Customers</h4>
+                        <p class="text-body-secondary">Who are browsing online or at stores</p>
+                    </div>
+                    <div class="feature col">
+                        <h4>Sales Associates</h4>
+                        <p class="text-body-secondary">Who are attending the customers at stores</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="invisible">.</p>
+        <!-- Timelines -->
+        <div class="row my-4">
+            <div class="col-12 col-md-4 mb-3">
+                <h3>Timelines</h3>
+            </div>
+            <div class="col-12 col-md-8">
+                <div class="row g-4 row-cols-1 row-cols-md-2">
+                    <div class="feature col">
+                        <h4>June 2024</h4>
+                        <p class="text-body-secondary">Project Started</p>
+                    </div>
+                    <div class="feature col">
+                        <h4>August 2024</h4>
+                        <p class="text-body-secondary">Released v1.0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <p class="invisible">.</p>
+    
+    
+    <div class="my-5 container" id="compare">
+        <h2 class="border-bottom">Before & After</h2>
+        <img src="assets/lenskart/lens/before-after.png" class="img-fluid rounded-2 mt-4 zoom-img" alt="" loading="lazy"/>
+    </div>
+    
+    
+    <p class="invisible">.</p>
+    
+    
+    <div class="my-5 container" id="why">
+        <h2 class="pb-2 border-bottom">Why Re-design?</h2>
+        <!-- Major Insights -->
+        <div class="row mt-5">
+            <div class="col-12 col-md-5 mb-3">
+                <h4>Major Pain Points/Insights</h4>
+            </div>
+            <div class="col-12 col-md-7">
+                <!-- Sticky-notes -->
+                <ul class="row g-4 list-unstyled mb-4">
+                    <li class="note col-12 col-sm-6">
+                        <a href="#!" class="sticky-note text-decoration-none shadow-sm d-block h-100">
+                            <h6 class="text-dark">Too Much Text</h6>
+                            <p class="text-body-secondary">
+                                Lens points are dense and hard to scan
+                            </p>
+                        </a>
+                    </li>
+                    <li class="note col-12 col-sm-6">
+                        <a href="#!" class="sticky-note text-decoration-none shadow-sm d-block h-100">
+                            <h6 class="text-dark">Missing Context</h6>
+                            <p class="text-body-secondary">
+                                No frame or price breakdown shown on lens screen
+                            </p>
+                        </a>
+                    </li>
+                    <li class="note col-12 col-sm-6">
+                        <a href="#!" class="sticky-note text-decoration-none shadow-sm d-block h-100">
+                            <h6 class="text-dark">No Comparison Help</h6>
+                            <p class="text-body-secondary">
+                                Tough to differentiate amongst lenses
+                            </p>
+                        </a>
+                    </li>
+                    <li class="note col-12 col-sm-6">
+                        <a href="#!" class="sticky-note text-decoration-none shadow-sm d-block h-100">
+                            <h6 class="text-dark">Premium lenses go unnoticed</h6>
+                            <p class="text-body-secondary">
+                                Customers often pick basic lenses just to move ahead
+                            </p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Drop Data -->
+        <div class="row mt-5">
+            <!-- Left Section -->
+            <div class="col-12 col-md-5 mb-3">
+                <h4 class="mb-0" style="max-width: 15em;">Data measured</h4>
+            </div>
+            <!-- Right Section -->
+            <div class="col-12 col-md-7">
+                <!-- List -->
+                <ul class="mb-5 ps-3">
+                    <li class="lead">
+                        <span class="fw-bold">86%</span> of users move from lens screen to cart.
+                    </li>
+                    <li class="lead">
+                        But <span class="fw-bold">ATV remains low (~₹1500).</span>
+                    </li>
+                    <li class="lead">
+                        Premium lenses like Photochromatic & Owndays have less than <span class="fw-bold">1% adoption</span>.
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Screen Importance -->
+        <div class="row mt-5">
+            <!-- Left Section -->
+            <div class="col-12 col-md-5 mb-3">
+                <h4 class="mb-0" style="max-width: 15em;">Importance of this screen</h4>
+            </div>
+            <!-- Right Section -->
+            <div class="col-12 col-md-7">
+                <p class="lead">It's not just a product listing, it connects users with medically necessary, vision-correcting lenses.
+                <br/><br/>
+                It directly influences both health outcomes and business revenue.</p>
+            </div>
+        </div>
+    </div>
+    
+    
+    <p class="invisible">.</p>
+    
+    
+    <div class="my-5 container">
+        <h2 class="pb-2 border-bottom">Omni-channel Importance</h2>
+        <!-- Mobile -->
+        <div class="row mt-5">
+            <div class="col-12 col-md-5 mb-3">
+                <div class="mb-5">
+                    <h4>Customers</h4>
+                    <p class="text-body-tertiary mb-0">Using on their mobile app</p>
+                    <ul class="mb-5 ps-3">
+                        <li class="lead">
+                            Needs to self-navigate the screen without assistance.
+                        </li>
+                        <li class="lead">
+                            Poor hierarchy and dense info create friction and abandonment.
+                        </li>
+                        <li class="lead">
+                            Visual consistency helps reinforce decision-making.
+                        </li>
+                    </ul>
+                </div>
+                <div class="mt-5">
+                    <h4>Store Staff (iPad app)</h4>
+                    <p class="text-body-tertiary mb-0">Using on iPad app when customers visit stores to buy frames with lenses</p>
+                    <ul class="mb-5 ps-3">
+                        <li class="lead">
+                            Relies on the same screen to explain options clearly to walk-in customers.
+                        </li>
+                        <li class="lead">
+                            Cluttered layout slows down consultations.
+                        </li>
+                        <li class="lead">
+                            A unified experience across app & store builds trust and reduces dependency on staff.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-12 col-md-7">
+                <figure class="figure img-wrapper">
+                    <img src="assets/lenskart/lens/journey.png" class="figure-img img-fluid rounded-2 zoom-img" alt="" loading="lazy"/>
+                    <figcaption class="figure-caption">Journey of lens package step in funnel</figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+    
+    
+    <p class="invisible">.</p>
+    
+    
+    <div class="my-5 container" id="audit">
+        <h2 class="pb-2 border-bottom">UX Audit</h2>
+        <div class="row mb-5">
+            <div class="img-wrapper">
+                <img src="assets/lenskart/lens/mobile-ux-audit.png" class="img-fluid rounded-2 my-4 zoom-img" alt="" loading="lazy"/>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12 col-md-5 mb-3">
+                <h4 style="width:15em">Insights</h4>
+            </div>
+            <div class="col-12 col-md-7">
+                <div class="mb-4">
+                    <div class="p-4 bg-success-subtle rounded-2 border border-success-subtle">
+                        <h6>Positive takeaways</h6>
+                        <ul>
+                            <li>Customers prefer a quick check-in with minimal questions.</li>
+                            <li>Staff was already comfortable using the check-in and optometrist apps on iPad.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="my-4">
+                    <div class="p-4 bg-danger-subtle rounded-2 border border-danger-subtle">
+                        <h6>Things to avoid</h6>
+                        <ul>
+                            <li>Asking for a phone number shouldnâ€™t feel like a marketing tactic â€” keep it purpose-driven.</li>
+                            <li>Avoid changing staff's existing flow â€” donâ€™t introduce anything that disrupts their current SOPs.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12 col-md-5 mb-3">
+                <h4 style="width:15em">Principles Used</h4>
+            </div>
+            <div class="col-12 col-md-7">
+                <div class="mb-5">
+                    <h5>Principles used in UX audit</h5>
+                    <ol>
+                        <li>Match between the System and the Real World,</li>
+                        <li>Recognition rather than Recall &amp;</li>
+                        <li>Consistency and Standards</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="img-wrapper">
+                <img src="assets/lenskart/lens/ipad-ux-audit.png" class="img-fluid rounded-2 my-4 zoom-img" alt="" loading="lazy"/>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12 col-md-5 mb-3">
+                <h4 style="width:15em">Insights</h4>
+            </div>
+            <div class="col-12 col-md-7">
+                <div class="mb-4">
+                    <div class="p-4 bg-success-subtle rounded-2 border border-success-subtle">
+                        <h6>Positive takeaways</h6>
+                        <ul>
+                            <li>Customers prefer a quick check-in with minimal questions.</li>
+                            <li>Staff was already comfortable using the check-in and optometrist apps on iPad.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="my-4">
+                    <div class="p-4 bg-danger-subtle rounded-2 border border-danger-subtle">
+                        <h6>Things to avoid</h6>
+                        <ul>
+                            <li>Asking for a phone number shouldnâ€™t feel like a marketing tactic â€” keep it purpose-driven.</li>
+                            <li>Avoid changing staff's existing flow â€” donâ€™t introduce anything that disrupts their current SOPs.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <p class="invisible">.</p>
+    
+    
+    <div class="my-5 container" id="competitors">
+        <h2 class="pb-2 border-bottom">Competitors Analysis</h2>
+        <!-- Titan Eye+ -->
+        <div class="row mt-5">
+            <div class="col-12 col-md-5 mb-3">
+                <h4 style="width:15em">1. Titan Eye+</h4>
+            </div>
+            <div class="col-12 col-md-7">
+                <figure class="figure img-wrapper">
+                    <img src="assets/lenskart/lens/comp-analysis-1.png" class="figure-img img-fluid rounded-2 zoom-img" alt="" loading="lazy"/>
+                    <figcaption class="figure-caption">Titan</figcaption>
+                </figure>
+                <div class="my-4">
+                    <div class="p-4 bg-success-subtle rounded-2 border border-success-subtle">
+                        <h5>Strengths</h5>
+                        <ul>
+                            <li>Simple and intuitive UI</li>
+                            <li>Point and click selection for invoice processing</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="my-4">
+                    <div class="p-4 bg-danger-subtle rounded-2 border border-danger-subtle">
+                        <h5>Weaknesses</h5>
+                        <ul>
+                            <li>Oriented towards invoice processing only</li>
+                            <li>No direct sign up</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+        <div class="row mt-5">
+            <div class="col-12 col-md-5 mb-3">
+                <h4 style="width:15em">2. Specsavers</h4>
+            </div>
+            <div class="col-12 col-md-7">
+                <figure class="figure img-wrapper">
+                    <img src="assets/lenskart/lens/comp-analysis-2.png" class="figure-img img-fluid rounded-2 zoom-img" alt="" loading="lazy"/>
+                    <figcaption class="figure-caption">something</figcaption>
+                </figure>
+                <div class="my-4">
+                    <div class="p-4 bg-success-subtle rounded-2 border border-success-subtle">
+                        <h5>Strengths</h5>
+                        <ul>
+                            <li>Simple and intuitive UI</li>
+                            <li>Point and click selection for invoice processing</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="my-4">
+                    <div class="p-4 bg-danger-subtle rounded-2 border border-danger-subtle">
+                        <h5>Weaknesses</h5>
+                        <ul>
+                            <li>Oriented towards invoice processing only</li>
+                            <li>No direct sign up</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <p class="invisible">.</p>
+    
+    
+    <div class="my-5 container" id="design">
+        <h2 class="pb-2 border-bottom">Design Explorations</h2>
+        <div class="row my-5">
+            <div class="mb-4">
+                <h4>Consumer Mobile App</h4>
+                <div class="img-wrapper">
+                    <img src="assets/lenskart/lens/mobile-wireframe.png" class="img-fluid rounded-2 my-2 zoom-img" alt="" loading="lazy"/>
+                </div>
+            </div>
+            <!--<div class="row my-3">
+                <div class="col-12 col-md-5">
+                    <h5>Final Mobile card</h5>
+                </div>
+                <div class="col-12 col-md-7">
+                    <figure class="figure img-wrapper">
+                        <img src="assets/lenskart/lens/sample.png" class="figure-img img-fluid rounded-2 zoom-img" alt="" loading="lazy"/>
+                        <figcaption class="figure-caption">something</figcaption>
+                    </figure>
+                    <ul class="mb-5 ps-3">
+                        <li class="lead">Time taken in an eye test on an average came down from</li>
+                    </ul>
+                </div>
+            </div>-->
+            <p class="invisible my-3">.</p>
+        </div>
+        
+        <div class="row my-5">
+            <div class="mb-4">
+                <h4>Store Staff iPad App</h4>
+                <div class="img-wrapper">
+                    <img src="assets/lenskart/lens/ipad-wireframe.png" class="img-fluid rounded-2 my-2 zoom-img" alt="" loading="lazy"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <p class="invisible">.</p>
+    
+    
+    <div class="my-5 container" id="decisions">
+        <h2 class="pb-2 border-bottom">Important Decisions</h2>
+        
+        <div class="row mt-5">
+            <div class="col-12 col-md-5 mb-3">
+                <h4 style="width:15em;">Clear Pricing</h4>
+            </div>
+            <div class="col-12 col-md-7">
+                <figure class="figure img-wrapper">
+                    <img src="assets/lenskart/lens/pricing.png" class="figure-img img-fluid rounded-2 zoom-img" alt="" loading="lazy"/>
+                    <figcaption class="figure-caption">something</figcaption>
+                </figure>
+                <p class="lead">Frame + Lenses + Gold Membership(Buy 1 Get 1)</p>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12 col-md-5 mb-3">
+                <h4 style="width:15em;">Comparison Mode on iPad</h4>
+            </div>
+            <div class="col-12 col-md-7">
+                <figure class="figure img-wrapper">
+                    <img src="assets/lenskart/lens/ipad-compare.png" class="figure-img img-fluid rounded-2 zoom-img" alt="" loading="lazy"/>
+                    <figcaption class="figure-caption">Digital lens cards</figcaption>
+                </figure>
+                <p class="lead">Match between system and real world</p>
+                <figure class="figure img-wrapper">
+                    <img src="assets/lenskart/lens/ipad-compare-store.png" class="figure-img img-fluid rounded-2 zoom-img" alt="" loading="lazy"/>
+                    <figcaption class="figure-caption">Inspiration from store's lens cards</figcaption>
+                </figure>
+            </div>
+        </div>
+        <!--<div class="row mt-5">
+            <div class="col-12 col-md-5 mb-3">
+                <h4 style="width:15em;">Explainer Videos for Each Lens Package</h4>
+            </div>
+            <div class="col-12 col-md-7">
+                <figure class="figure img-wrapper">
+                    <img src="assets/lenskart/lens/sample.png" class="figure-img img-fluid rounded-2 zoom-img" alt="" loading="lazy"/>
+                    <figcaption class="figure-caption">One of such videos</figcaption>
+                </figure>
+                <p class="lead">Created by Nitish Bhardwaj and Suhas Paunikar</p>
+            </div>
+        </div>-->
+    </div>                
+    
+    
+    <p class="invisible">.</p>
+    
+    
+    <div class="my-5 container">
+        <!-- Thank You Message -->
+        <div class="text-center">
+            <h4>You're awesome!</h4>
+            <p class="lead text-body-secondary">Thanks for reading ❤️</p>
+        </div>
+        <hr class="text-body-tertiary my-4"/>
+        <!-- Next Case Study -->
+        <div class="row mt-4 align-items-center justify-content-center">
+            <!-- Empty column for symmetry on desktop -->
+            <div class="col-12 col-md-6 d-none d-md-block">
+                <p class="invisible"></p>
+            </div>
+            <div class="col-12 col-md-6 text-start">
+                <a href="lenskart-eye-test.html" class="text-decoration-none text-dark explore d-block">
+                    <div class="img-wrapper">
+                        <img src="assets/lenskart/lens/eye-test-hero.png" class="img-fluid rounded-2 mb-3 zoom-img" alt="Next case study image"/>
+                    </div>
+                    <h6>Next case study</h6>
+                    <p class="lead text-body-secondary">Reduce Eye Test Wait Time at Lenskart Stores</p>
+                </a>
+            </div>
+        </div>
+     </div>
+        
+        
+        
+    <footer class="py-5 mt-auto container">
+        <!-- Responsive Navigation -->
+        <ul class="nav flex-column flex-sm-row justify-content-center border-bottom pb-3 mb-3 text-center text-sm-start">
+            <li class="nav-item nav-link px-3">
+                <a href="mailto:rajatgarg1809@gmail.com" target="_blank"
+                class="link-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-body-secondary">
+                    rajatgarg1809@gmail.com
+                </a>
+            </li>
+            <li class="nav-item nav-link px-3">
+                <a href="https://www.linkedin.com/in/gragtajar" target="_blank"
+                class="link-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-body-secondary">
+                    Linkedin
+                </a>
+            </li>
+            <li class="nav-item nav-link px-3">
+                <a href="docs/Rajat-Garg-Product-UX-Designer-Resume.pdf" class="link-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-body-secondary" download>
+                    Download Resume
+                </a>
+            </li>
+        </ul>
+            
+        <!-- Footer Note -->
+        <p class="text-center text-body-secondary mb-0">
+            Designed &amp; developed with &hearts; by Rajat Garg
+            <br/>
+            <span class="text-body-tertiary small d-block mt-2">
+                Product designer with 6+ years experience
+                <br/>
+                This is not a Framer or Webflow template
+            </span>
+        </p>
+    </footer>
+        
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    
+        const toggleBtn = document.getElementById('navbarToggle');
+        const toggleIcon = document.getElementById('toggleIcon');
+        const menu = document.getElementById('mobileMenu');
+        const menuLinks = document.querySelectorAll('.menu-link');
+        // Use Bootstrap's collapse events
+        menu.addEventListener('show.bs.collapse', () => {
+            toggleIcon.classList.remove('navbar-toggler-icon');
+            toggleIcon.innerHTML = '&#10005;'; // Close (Ã—)
+            toggleIcon.style.fontSize = '2rem';
+            toggleIcon.style.lineHeight = '1.25';
+        });
+        menu.addEventListener('hide.bs.collapse', () => {
+            toggleIcon.innerHTML = ''; // Clear custom icon
+            toggleIcon.classList.add('navbar-toggler-icon'); // Restore Bootstrap icon
+            toggleIcon.style.fontSize = ''; // Reset any styles
+            toggleIcon.style.lineHeight = '';
+        });
+        // Auto-close menu on link click
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                const bsCollapse = bootstrap.Collapse.getInstance(menu);
+                if (bsCollapse) bsCollapse.hide();
+            });
+        });
+    
+        const messages = [
+            "Oh hey! You made it.",
+            "Adios!",
+            "You rang? The design is here.",
+            "Make him an offer, he can't refuse",
+            "Prepare to be wildly impressed!",
+            "Who let the UX out? Woof!",
+            "Brace yourself, pixels ahead!",
+            "I am the one who knocks and designs.",
+            "Hydrate before you caffeinate..",
+            "Summoning jutsu..",
+            "Read a book or atleast pretend to",
+            "FUBAR!",
+            "May the Force be with you",
+            "It's clobberin' time!",
+            "Design is coming..",
+            "It's over 9000!",
+            "You can't always get what you want..",
+            "To infinity and beyond..",
+            "I can do this all day.",
+            "I will survive!!",
+            "Buzzinga!"
+        ];
+        const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+        document.getElementById("welcome-message").textContent = randomMessage;
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                const splash = document.getElementById("splash-screen");
+                //splash.classList.add("hide-splash");
+                setTimeout(() => {
+                    splash.style.display = "none";
+                    //document.getElementById("main-content").style.display = "block";
+                    document.body.style.overflow = "auto";
+                }, 1000); // Match with transition duration
+            }, 1000); // Delay before animation starts
+        });
+        
+        const cursor = document.querySelector(".cursor");
+        // Position cursor div to cursor position
+        document.addEventListener("mousemove", (e) => {
+        	let x = e.clientX;
+        	let y = e.clientY;
+        	cursor.style.left = x + "px";
+        	cursor.style.top = y + "px";
+        });
+        // Add 'pressable' class to cursor when hovering certain elements
+        const items = document.querySelectorAll('.explore');
+        items.forEach(item => {
+          item.addEventListener('mouseover', () => {
+            cursor.classList.add('pressable');
+          });
+          item.addEventListener('mouseleave', () => {
+            cursor.classList.remove('pressable');
+          });
+        });
+        
+
+        const stickyBar = document.getElementById("stickyContents");
+        const sectionLinks = stickyBar.querySelectorAll("a");
+        window.addEventListener("scroll", () => {
+        if (window.scrollY > 1050) {
+          stickyBar.classList.remove("d-none");
+        } else {
+          stickyBar.classList.add("d-none");
+        }
+        // Highlight current section
+        sectionLinks.forEach(link => {
+          const section = document.querySelector(link.getAttribute("href"));
+          if (section) {
+            const rect = section.getBoundingClientRect();
+            const offset = 180;
+            if (rect.top <= offset && rect.bottom > offset) {
+              link.classList.add("text-dark", "fw-bolder");
+              link.classList.remove("text-secondary");
+            } else {
+              link.classList.remove("text-dark", "fw-bolder");
+              link.classList.add("text-secondary");
+            }
+          }
+        });
+        });
+
+        const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        const popoverList = popoverTriggerList.map(function (popoverTriggerEl) { return new bootstrap.Popover(popoverTriggerEl)})
+        
+        /*gsap.utils.toArray(".comparisonSection").forEach(section => {
+        	let tl = gsap.timeline({
+        			scrollTrigger: {
+        				trigger: section,
+        				start: "center center",
+                // makes the height of the scrolling (while pinning) match the width, thus the speed remains constant (vertical/horizontal)
+        				end: () => "+=" + section.offsetWidth, 
+        				scrub: true,
+        				pin: true,
+                        anticipatePin: 1
+        			},
+        			defaults: {ease: "none"}
+        		});
+        	// animate the container one way...
+        	tl.fromTo(section.querySelector(".afterImage"), { xPercent: 100, x: 0}, {xPercent: 0})
+        	  // ...and the image the opposite way (at the same time)
+        	  .fromTo(section.querySelector(".afterImage img"), {xPercent: -100, x: 0}, {xPercent: 0}, 0);
+        });*/
+    </script>
+</body>
+</html>

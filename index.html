@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rajat Garg — Product Designer · B2B SaaS</title>
+  <meta name="description" content="Portfolio of Rajat Garg, a B2B SaaS Product Designer with 6+ years of experience turning complex workflows into business outcomes.">
+
+  <!-- Preconnect to TMDB image CDN for fast poster loads -->
+  <link rel="preconnect" href="https://image.tmdb.org" crossorigin>
+  <link rel="dns-prefetch" href="https://image.tmdb.org">
+
+  <!-- Fonts: preconnect + preload for faster render -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Geist:wght@400;500;600&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Disable browser scroll restoration (we'll restore manually after intro) -->
+  <script>if ('scrollRestoration' in history) history.scrollRestoration = 'manual';</script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/intro.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/screening-room.css">
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <!-- Preload critical above-fold resources -->
+  <link rel="preload" href="js/main.js" as="script">
+
+  <!-- Lottie player for animated emoji -->
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+</head>
+<body class="page-home">
+
+  <!-- ═══ INTRO CRAWL ═══ -->
+  <div class="intro-overlay" id="intro-overlay">
+    <div id="board">
+      <div id="content">
+        <p id="title">Rajat</p>
+        <p>He is noone.</p>
+      </div>
+    </div>
+    <button class="intro-skip" id="intro-skip">Skip Intro</button>
+  </div>
+
+  <!-- Screening Room Banner -->
+  <div class="sr-banner" id="sr-banner">
+    <div class="sr-banner-inner">
+      <span class="sr-banner-text">New: <strong>Screening Room</strong> — a movie bracket game that reveals Rajat's taste in cinema. <a href="#screening-room" class="sr-banner-link">Play now &rarr;</a></span>
+      <button class="sr-banner-close" id="sr-banner-close" aria-label="Close banner">&times;</button>
+    </div>
+  </div>
+
+  <!-- Starfield Background -->
+  <canvas id="starfield"></canvas>
+
+  <!-- Page Transition Overlay -->
+  <div class="page-transition"></div>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="site-logo">Rajat says <dotlottie-player id="cheers-lottie" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f37b/lottie.json" autoplay speed="1" style="width:28px;height:28px;display:inline-block;vertical-align:middle;margin-left:2px;"></dotlottie-player></a>
+      <nav class="site-nav">
+        <a href="#directors-cut">Director's Cut</a>
+        <a href="#character-arc">Character Arc</a>
+        <a href="#craft">Craft</a>
+        <a href="#gossip">Gossip</a>
+        <div class="nav-contact-wrapper">
+          <a href="#" class="nav-contact-trigger">Say Hello</a>
+          <div class="nav-contact-popover">
+            <a href="mailto:rajatgarg1809@gmail.com" target="_blank" rel="noopener" class="popover-item">
+              <img src="images/icons/at-solid.svg" alt="" width="18" height="18"> Email me
+            </a>
+            <a href="https://linkedin.com/in/gragtajar" target="_blank" rel="noopener" class="popover-item">
+              <img src="images/icons/handshake-solid.svg" alt="" width="18" height="18"> Connect on LinkedIn
+            </a>
+            <a href="#" download class="popover-item">
+              <img src="images/icons/arrow-circle-down-solid.svg" alt="" width="18" height="18"> Download Resume
+            </a>
+          </div>
+        </div>
+      </nav>
+      <button class="nav-toggle" aria-label="Open menu">&#9776;</button>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav">
+    <button class="close-btn" aria-label="Close menu">&times;</button>
+    <a href="#directors-cut">Director's Cut</a>
+    <a href="#character-arc">Character Arc</a>
+    <a href="#craft">Craft</a>
+    <a href="#gossip">Gossip</a>
+    <a href="mailto:rajatgarg1809@gmail.com" target="_blank" rel="noopener">Email me</a>
+    <a href="https://linkedin.com/in/gragtajar" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+
+  <!-- ═══ HERO (post-crawl settle) ═══ -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <h1 data-animate>Rajat Garg</h1>
+      <p class="subtitle" data-animate>Product Designer · B2B SaaS</p>
+      <p class="tagline" data-animate>6 years of turning complex workflows into business outcomes.</p>
+    </div>
+  </section>
+
+  <main>
+
+    <!-- ═══ FILM QUOTE DIVIDER → Work ═══ -->
+    <div class="film-quote" data-animate>
+      <blockquote>
+        I'm going to make him an offer he can't refuse.
+      </blockquote>
+      <div class="quote-source">The Godfather, 1972</div>
+    </div>
+
+    <!-- ═══ DIRECTOR'S CUT (Featured Work) ═══ -->
+    <section class="section" id="directors-cut">
+      <div class="container">
+        <h2 data-animate>Director's Cut</h2>
+
+        <!-- Project 1: Lenskart -->
+        <div class="cs-image" data-animate style="margin-top: 48px; margin-bottom: 0; border-radius: 12px 12px 0 0; border-bottom: none;">
+          <div class="cs-image-placeholder" style="aspect-ratio: 21/9; background: linear-gradient(135deg, #111 0%, #1a1510 50%, #111 100%);">Lenskart case study hero — replace with image</div>
+        </div>
+        <div class="project-card" data-animate style="margin-top: 0; border-radius: 0 0 12px 12px;">
+          <div class="project-tags">
+            <span class="tag">Lenskart</span>
+            <span class="tag">iPad</span>
+            <span class="tag">2023</span>
+          </div>
+          <div class="ribbon">With Impact</div>
+          <h3>From 34 Minutes to 8: Redesigning Lenskart's In-Store Eye Test Experience</h3>
+          <p class="project-desc">
+            Led designs of iPad, mobile &amp; TV apps for customers &amp; staff that reduced eye test wait time by 38% in 1600+ Lenskart stores.
+          </p>
+          <div class="metric-callout">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M4 7l4-4 4 4" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Sales up by 2.7% in 3 weeks (Q2 2023)
+          </div>
+          <br>
+          <a href="lenskart-eye-test.html" class="view-link" data-transition>
+            View Case Study
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H3M13 1v10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <!-- Project 2: dox2U -->
+        <div class="cs-image" data-animate style="margin-top: 32px; margin-bottom: 0; border-radius: 12px 12px 0 0; border-bottom: none;">
+          <div class="cs-image-placeholder" style="aspect-ratio: 21/9; background: linear-gradient(135deg, #111 0%, #0f1520 50%, #111 100%);">dox2U project hero — replace with image</div>
+        </div>
+        <div class="project-card" data-animate style="margin-top: 0; border-radius: 0 0 12px 12px;">
+          <div class="project-tags">
+            <span class="tag">dox2U</span>
+            <span class="tag">Desktop Web</span>
+            <span class="tag">B2B SaaS</span>
+            <span class="tag">2021</span>
+          </div>
+          <div class="ribbon" style="color: var(--text-muted); border-color: var(--border-light);">Case Study Coming Soon</div>
+          <h3>Upload, Verify &amp; Tag Documents</h3>
+          <p class="project-desc">
+            Spearheaded the zero-to-one design of dox2U, a B2B SaaS document management system that helped people reduce dependency on paper documents. Launched beta and first-stable versions.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ CURRENTLY WORKING ON ═══ -->
+    <section class="section" id="currently-working-on">
+      <div class="container">
+        <h2 data-animate>Now Showing</h2>
+
+        <div class="cs-image" data-animate style="margin-top: 48px; margin-bottom: 0; border-radius: 12px 12px 0 0; border-bottom: none;">
+          <div class="cs-image-placeholder" style="aspect-ratio: 21/9; background: linear-gradient(135deg, #111 0%, #150f20 50%, #111 100%);">LambdaTest / TestMu AI hero — replace with image</div>
+        </div>
+        <div class="teaser-card" data-animate style="margin-top: 0; border-radius: 0 0 12px 12px;">
+          <div class="project-tags">
+            <span class="tag">LambdaTest / TestMu AI</span>
+            <span class="tag">Product Designer</span>
+            <span class="tag">Oct 2025 – Present</span>
+          </div>
+          <h3 style="margin: 16px 0 12px;">Shaping the Future of AI-Native Testing</h3>
+          <p class="project-desc">
+            <span class="token-resolve">Designing intelligent workflows that help QA teams and developers ship faster with AI-powered test generation, debugging, and orchestration.</span>
+          </p>
+          <p class="teaser-blur">
+            Exploring new interaction paradigms for complex testing scenarios, reducing cognitive load for engineering teams working across distributed systems, and building design systems that scale with AI capabilities...
+          </p>
+          <div style="margin-top: 16px;">
+            <span class="tag accent-tag" style="font-style: italic;">More details coming soon</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ FILM QUOTE DIVIDER → Side Roles ═══ -->
+    <div class="film-quote" data-animate>
+      <blockquote>
+        A man who doesn't spend time with his family can never be a real man.
+      </blockquote>
+      <div class="quote-source">The Godfather, 1972</div>
+    </div>
+
+    <!-- ═══ SIDE ROLES (Other Work) ═══ -->
+    <section class="section" id="side-roles">
+      <div class="container">
+        <h2 data-animate>Side Roles</h2>
+
+        <div class="side-roles-grid" style="margin-top: 48px;">
+
+          <!-- Plugin -->
+          <div class="side-role-card" data-animate data-modal="modal-plugin">
+            <div class="side-role-image" style="background: linear-gradient(135deg, #111 0%, #1a1510 50%, #111 100%);">Figma plugin screenshot — replace with image</div>
+            <h3>Lenskart Product Data</h3>
+            <p style="font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; margin-top: 4px;">Figma Plugin</p>
+            <p>Independently designed &amp; developed using Cursor. Batch-updates Figma layers with real product info: names, IDs, images as fills.</p>
+            <span class="view-link" style="margin-top: 16px; display: inline-block; font-size: 13px; color: var(--text-dim);">Click to expand &darr;</span>
+          </div>
+
+          <!-- Flags Library -->
+          <a href="https://www.figma.com/community/file/1516171459035590514/flags-library-svg" target="_blank" rel="noopener" class="side-role-card" data-animate style="text-decoration: none;">
+            <div class="side-role-image" style="background: linear-gradient(135deg, #111 0%, #101520 50%, #111 100%);">Flags library preview — replace with image</div>
+            <h3>Flags Library SVG</h3>
+            <p style="font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; margin-top: 4px;">Figma Community File</p>
+            <p>A comprehensive collection of country flags in SVG format, published on the Figma Community for designers worldwide.</p>
+            <span class="view-link" style="margin-top: 16px; display: inline-block; font-size: 13px; color: var(--text-dim);">View on Figma Community &nearr;</span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Plugin Modal -->
+    <div class="modal-overlay" id="modal-plugin" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:300;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s ease;">
+      <div style="background:#111;border:1px solid #2a2a2a;border-radius:16px;max-width:640px;width:90%;max-height:80vh;overflow-y:auto;padding:40px;position:relative;">
+        <button class="modal-close" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#666;font-size:24px;cursor:pointer;">&times;</button>
+        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">Lenskart Product Data</h3>
+        <p style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#666;">Figma Plugin · Built with Cursor</p>
+        <p style="color:#999;font-size:15px;line-height:1.7;margin-top:16px;">
+          A Figma plugin that batch-updates layers with real Lenskart product information including product names, IDs, and images (applied as fills). Features a General Data tab for generating Indian names, phone numbers, store/customer addresses, and staff IDs.
+        </p>
+        <p style="color:#999;font-size:15px;line-height:1.7;margin-top:12px;">
+          Independently designed and developed to streamline the design workflow when building realistic mockups for Lenskart's product ecosystem.
+        </p>
+        <div style="margin-top:24px;background:#0a0a0a;border:1px solid #1a1a1a;border-radius:12px;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:#444;font-size:14px;">
+          Plugin screenshot placeholder
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ FILM QUOTE DIVIDER → Character Arc ═══ -->
+    <div class="film-quote" data-animate>
+      <blockquote>
+        It is not our abilities that show what we truly are. It is our choices.
+      </blockquote>
+      <div class="quote-source">Albus Dumbledore (paraphrased), 2002</div>
+    </div>
+
+    <!-- ═══ CHARACTER ARC (About) ═══ -->
+    <section class="section" id="character-arc">
+      <div class="container">
+        <h2 data-animate>Character Arc</h2>
+
+        <div class="about-grid" style="margin-top: 48px;">
+
+          <!-- Profile Photo -->
+          <div data-animate>
+            <div class="profile-photo">
+              Photo placeholder
+            </div>
+          </div>
+
+          <!-- Bio -->
+          <div class="about-text show-fluff" data-animate>
+            <p>
+              I'm a product designer with 6+ years of experience building interfaces for <span class="fluff">complex,</span> data-heavy environments. <span class="fluff">I mix strategy with creativity, obsess over details, and</span> collaborate deeply with PMs, engineers, and QA teams to ship things that actually move metrics.
+            </p>
+            <p>
+              <span class="fluff">My career arc tells the story:</span> <strong>Apporio Infolabs</strong> gave me foundations. <strong>dox2U</strong> handed me zero-to-one ownership. <strong>Lenskart</strong> taught me what scale and impact look like at 1600+ stores. And now at <strong>LambdaTest</strong>, I'm designing at the AI frontier.
+            </p>
+            <p>
+              I've worked across healthcare, logistics, POS, and B2B SaaS. <span class="fluff">I'm based in Gurugram, India, and open to relocating anywhere for the right opportunity.</span>
+            </p>
+
+            <label class="fluff-toggle">
+              <span class="fluff-toggle-label">Cut the fluff</span>
+              <input type="checkbox" class="fluff-toggle-input" checked onchange="document.querySelector('.about-text').classList.toggle('show-fluff', this.checked)">
+              <span class="fluff-toggle-track">
+                <span class="fluff-toggle-thumb"></span>
+              </span>
+            </label>
+
+            <div class="about-meta">
+              <span class="meta-tag">Gurugram, India</span>
+              <span class="meta-tag">6+ years experience</span>
+              <span class="meta-tag">B2B SaaS</span>
+              <span class="meta-tag">Open to relocate</span>
+              <span class="meta-tag mbti-tag">
+                INFJ-T
+                <span class="mbti-tooltip">Personality type known for being thoughtful, idealistic, emotionally deep and driven by a strong sense of purpose.</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 35mm Film Strip -->
+        <div class="film-strip-container" data-animate style="margin-top: 64px;">
+          <div class="film-strip">
+            <!-- 5 frames x2 for seamless loop -->
+            <div class="film-frame"><div class="film-frame-inner">Photo 1</div></div>
+            <div class="film-frame"><div class="film-frame-inner">Photo 2</div></div>
+            <div class="film-frame"><div class="film-frame-inner">Photo 3</div></div>
+            <div class="film-frame"><div class="film-frame-inner">Photo 4</div></div>
+            <div class="film-frame"><div class="film-frame-inner">Photo 5</div></div>
+            <!-- Duplicate for seamless loop -->
+            <div class="film-frame"><div class="film-frame-inner">Photo 1</div></div>
+            <div class="film-frame"><div class="film-frame-inner">Photo 2</div></div>
+            <div class="film-frame"><div class="film-frame-inner">Photo 3</div></div>
+            <div class="film-frame"><div class="film-frame-inner">Photo 4</div></div>
+            <div class="film-frame"><div class="film-frame-inner">Photo 5</div></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══ FILM QUOTE DIVIDER → Experience ═══ -->
+    <div class="film-quote" data-animate>
+      <blockquote>
+        Kaam bolta hai. Baaki sab bakwaas hai.
+      </blockquote>
+      <div class="quote-source">Gangs of Wasseypur, 2012</div>
+    </div>
+
+    <!-- ═══ EXPERIENCE (Filmography Style) ═══ -->
+    <section class="section" id="experience">
+      <div class="container">
+        <h2 data-animate>Performances</h2>
+        <p style="color:var(--text-muted);font-size:15px;margin-top:8px;margin-bottom:40px;" data-animate>Led design at fast-growing companies, driving features that boosted conversions and user delight.</p>
+
+        <div class="experience-list" data-animate>
+          <div class="experience-item">
+            <span class="exp-logo" style="background: #6366f1;">LT</span>
+            <span class="exp-company">LambdaTest / TestMu AI</span>
+            <span class="exp-role">Product Designer</span>
+            <span class="exp-period">Oct 2025 – Present</span>
+            <span class="exp-duration">~6 months</span>
+          </div>
+          <div class="experience-item">
+            <span class="exp-logo" style="background: #00bac6;">LK</span>
+            <span class="exp-company">Lenskart</span>
+            <span class="exp-role">Product Designer</span>
+            <span class="exp-period">Sep 2022 – Sep 2025</span>
+            <span class="exp-duration">3 years</span>
+          </div>
+          <div class="experience-item">
+            <span class="exp-logo" style="background: #3b82f6;">d2</span>
+            <span class="exp-company">dox2U</span>
+            <span class="exp-role">Product Designer</span>
+            <span class="exp-period">Jun 2020 – Aug 2022</span>
+            <span class="exp-duration">2 yrs 2 mos</span>
+          </div>
+          <div class="experience-item">
+            <span class="exp-logo" style="background: #f59e0b;">AI</span>
+            <span class="exp-company">Apporio Infolabs</span>
+            <span class="exp-role">UI/UX Designer</span>
+            <span class="exp-period">Mar 2019 – May 2020</span>
+            <span class="exp-duration">1 yr 2 mos</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ SCREENING ROOM (Movie Game) ═══ -->
+    <section class="screening-room" id="screening-room">
+      <div class="container">
+        <h2 data-animate>Screening Room</h2>
+
+        <div class="sr-header" style="margin-top: 32px;">
+          <span class="sr-genre"></span>
+          <button class="sr-restart" style="display:none;">Restart</button>
+        </div>
+        <div class="sr-round"></div>
+
+        <!-- Start state -->
+        <div class="sr-start" data-animate>
+          <div class="sr-start-hint">
+            <div class="sr-placeholder-card"></div>
+            <div class="sr-placeholder-card"></div>
+          </div>
+          <p class="sr-tagline">Pick your favorite, round by round</p>
+          <button class="sr-play-btn">Play</button>
+        </div>
+
+        <!-- Game arena -->
+        <div class="sr-arena">
+          <div class="sr-cards">
+            <!-- Left card -->
+            <div class="sr-card sr-card-left">
+              <div class="sr-poster"></div>
+              <div class="sr-card-info">
+                <div class="sr-card-title"></div>
+                <div class="sr-card-meta">
+                  <span class="sr-card-year"></span>
+                  <a class="sr-imdb-link" href="#" target="_blank" rel="noopener">IMDB &#8599;</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="sr-vs">VS</div>
+
+            <!-- Right card -->
+            <div class="sr-card sr-card-right">
+              <div class="sr-poster"></div>
+              <div class="sr-card-info">
+                <div class="sr-card-title"></div>
+                <div class="sr-card-meta">
+                  <span class="sr-card-year"></span>
+                  <a class="sr-imdb-link" href="#" target="_blank" rel="noopener">IMDB &#8599;</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Winner state -->
+        <div class="sr-winner">
+          <div class="sr-winner-trophy"></div>
+          <div class="sr-winner-card">
+            <div class="sr-poster"></div>
+            <div class="sr-card-info">
+              <div class="sr-card-title"></div>
+              <div class="sr-card-meta">
+                <span class="sr-card-year"></span>
+                <a class="sr-imdb-link" href="#" target="_blank" rel="noopener">IMDB &#8599;</a>
+              </div>
+            </div>
+          </div>
+          <div class="sr-badge"></div>
+          <br>
+          <a class="sr-imdb-cta" href="#" target="_blank" rel="noopener">Watch on IMDB &rarr;</a>
+          <div class="sr-recommendation" style="display:none;">
+            <p class="sr-rec-label">Try this instead</p>
+            <div class="sr-rec-card">
+              <div class="sr-poster"></div>
+              <div class="sr-card-info">
+                <div class="sr-card-title"></div>
+                <div class="sr-card-meta">
+                  <span class="sr-card-year"></span>
+                  <a class="sr-imdb-link" href="#" target="_blank" rel="noopener">IMDB &#8599;</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- All genres exhausted -->
+        <div class="sr-impressive">
+          <div class="sr-impressive-emoji">🎬</div>
+          <h3>You've Watched the Entire Reel</h3>
+          <p>Rajat thinks you have impeccable taste. Let's discuss over chai &amp; movies.</p>
+          <a class="sr-instagram-cta" href="https://www.instagram.com/gragtajar/" target="_blank" rel="noopener">@gragtajar on Instagram</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══ FILM QUOTE DIVIDER → Craft ═══ -->
+    <div class="film-quote" data-animate>
+      <blockquote>
+        We are what we repeatedly do. Excellence, then, is not an act, but a habit.
+      </blockquote>
+      <div class="quote-source">Aristotle (via Will Durant)</div>
+    </div>
+
+    <!-- ═══ CRAFT (Skills) ═══ -->
+    <section class="section" id="craft">
+      <div class="container">
+        <h2 data-animate>Craft</h2>
+
+        <div class="skills-grid" style="margin-top: 48px;">
+
+          <div class="skill-card" data-animate>
+            <img class="skill-icon" src="images/icons/user-headset-solid.svg" alt="UX Research" width="40" height="40" loading="lazy">
+            <h4>UX Research &amp; Empathy</h4>
+            <p>Deeply understanding user needs and pain points to translate insights into solutions that solve real problems and align with business goals.</p>
+          </div>
+
+          <div class="skill-card" data-animate>
+            <img class="skill-icon" src="images/icons/grid-solid.svg" alt="Interface Design" width="40" height="40" loading="lazy">
+            <h4>Complex Interface Design</h4>
+            <p>Crafting visually appealing and user-friendly interfaces for complex workflows, dashboards, and data-heavy products.</p>
+          </div>
+
+          <div class="skill-card" data-animate>
+            <img class="skill-icon" src="images/icons/cog-solid.svg" alt="Design System" width="40" height="40" loading="lazy">
+            <h4>Design System &amp; Tokens</h4>
+            <p>Maintaining scalable design systems and managing tokens for consistent, efficient UI development.</p>
+          </div>
+
+          <div class="skill-card" data-animate>
+            <img class="skill-icon" src="images/icons/code-solid.svg" alt="Design Tooling" width="40" height="40" loading="lazy">
+            <h4>Design Tooling &amp; Automation</h4>
+            <p>Building plugins, automating workflows, and leveraging Figma as the most efficient platform from research to dev-handoff.</p>
+          </div>
+
+          <div class="skill-card" data-animate>
+            <img class="skill-icon" src="images/icons/file-import-solid.svg" alt="Documentation" width="40" height="40" loading="lazy">
+            <h4>Documentation &amp; Dev-Handoff</h4>
+            <p>Delivering clear, organized specs and prototypes that ensure smooth collaboration with engineering.</p>
+          </div>
+
+          <div class="skill-card" data-animate>
+            <img class="skill-icon" src="images/icons/search-solid.svg" alt="UX Audits" width="40" height="40" loading="lazy">
+            <h4>UX Audits &amp; Testing</h4>
+            <p>Running structured audits and tests to validate design effectiveness and continuously improve UX.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ FILM QUOTE DIVIDER → Gossip ═══ -->
+    <div class="film-quote" data-animate>
+      <blockquote>
+        Tum log ke saath kaam karna bohot achha lagta hai.
+      </blockquote>
+      <div class="quote-source">Gully Boy, 2019</div>
+    </div>
+
+    <!-- ═══ GOSSIP (Testimonials) ═══ -->
+    <section class="section" id="gossip">
+      <div class="container">
+        <h2 data-animate>Gossip</h2>
+
+        <div class="testimonials-grid" style="margin-top: 48px;">
+
+          <div class="testimonial-card" data-animate>
+            <p class="quote-text">
+              Rajat brings a rare mix of design thinking and methodical execution to every project. His ability to understand client needs and translate them into polished, user-centric solutions made a real difference in our product quality.
+            </p>
+            <p class="reviewer-name">Keshav Goyal</p>
+            <p class="reviewer-role">Co-founder &amp; CEO, Shipmozo</p>
+            <a href="https://linkedin.com/in/gragtajar" target="_blank" rel="noopener" class="review-link">View on LinkedIn &nearr;</a>
+          </div>
+
+          <div class="testimonial-card" data-animate>
+            <p class="quote-text">
+              Rajat's work went above and beyond our expectations. He did an incredible job on dox2U — meticulous, creative, and always pushing for the best outcome. He'd be an asset to any team.
+            </p>
+            <p class="reviewer-name">Vikash Marwal</p>
+            <p class="reviewer-role">VP Engineering, dox2U</p>
+            <a href="https://linkedin.com/in/gragtajar" target="_blank" rel="noopener" class="review-link">View on LinkedIn &nearr;</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ FILM QUOTE DIVIDER → FAQ ═══ -->
+    <div class="film-quote" data-animate>
+      <blockquote>
+        The greatest trick the Devil ever pulled was convincing the world he didn't exist.
+      </blockquote>
+      <div class="quote-source">The Usual Suspects, 1995</div>
+    </div>
+
+    <!-- ═══ INTERROGATION (FAQ) ═══ -->
+    <section class="section" id="interrogation">
+      <div class="container">
+        <h2 data-animate>Interrogation</h2>
+
+        <div class="faq-list" style="margin-top: 40px;" data-animate>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              Are you using AI tools in your design process?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <div>
+                <p>Yes — Claude, Cursor, and Lovable. I also design AI-native products at LambdaTest, so AI isn't just in my toolkit, it's in my problem space.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              How come design after B.Tech?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <div>
+                <p>Started off as a WordPress dev, but design stole my heart (and brain). Never looked back.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              Do you use any social media for designers?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <div>
+                <p>Not really — just LinkedIn for now.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              Have you created anything using vibe coding tools?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <div>
+                <p>Absolutely. Built a Figma plugin using Cursor, and this entire portfolio site was built with Claude Code. I'm always exploring tools that let me move faster from idea to artifact.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              Do you code?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <div>
+                <p>Enough to build my own Figma plugins, prototype ideas, and have informed conversations with engineers. Not enough to steal their jobs.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══ FOOTER (Post-Credits Scene) ═══ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <p class="footer-easter-egg"></p>
+
+        <div class="footer-links">
+          <a href="mailto:rajatgarg1809@gmail.com" target="_blank" rel="noopener">rajatgarg1809@gmail.com</a>
+          <a href="https://linkedin.com/in/gragtajar" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="#" download>Download Resume</a>
+        </div>
+
+        <p class="footer-credit">
+          Designed &amp; developed with &#9829; by Rajat Garg
+          <span class="subtle">This is not a Framer or Webflow template.</span>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal open/close styles -->
+  <style>
+    .modal-overlay.open { opacity: 1 !important; pointer-events: all !important; }
+  </style>
+
+  <!-- Scripts -->
+  <script src="js/intro.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/screening-room.js" defer></script>
+
+</body>
+</html>
