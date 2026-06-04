@@ -5,6 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rajat Garg — Product Designer · B2B SaaS</title>
   <meta name="description" content="Portfolio of Rajat Garg, a B2B SaaS Product Designer with 6+ years of experience turning complex workflows into business outcomes.">
+  <meta name="author" content="Rajat Garg">
+  <meta name="theme-color" content="#0a0a0a">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://rajatg.in/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Rajat Garg">
+  <meta property="og:title" content="Rajat Garg — Product Designer · B2B SaaS">
+  <meta property="og:description" content="6 years of turning complex workflows into business outcomes. Portfolio of a B2B SaaS product designer.">
+  <meta property="og:url" content="https://rajatg.in/">
+  <meta property="og:image" content="https://rajatg.in/images/og-home.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Rajat Garg — Product Designer · B2B SaaS">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Rajat Garg — Product Designer · B2B SaaS">
+  <meta name="twitter:description" content="6 years of turning complex workflows into business outcomes.">
+  <meta name="twitter:image" content="https://rajatg.in/images/og-home.png">
 
   <!-- Preconnect to TMDB image CDN for fast poster loads -->
   <link rel="preconnect" href="https://image.tmdb.org" crossorigin>
@@ -24,8 +46,11 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/screening-room.css">
 
-  <!-- Favicon -->
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <!-- Favicons + manifest -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
 
   <!-- Preload critical above-fold resources -->
   <link rel="preload" href="js/main.js" as="script">
@@ -34,6 +59,9 @@
   <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 </head>
 <body class="page-home">
+
+  <!-- Skip link for keyboard users -->
+  <a href="#main" class="skip-link">Skip to main content</a>
 
   <!-- ═══ INTRO CRAWL ═══ -->
   <div class="intro-overlay" id="intro-overlay">
@@ -61,10 +89,10 @@
   <div class="page-transition"></div>
 
   <!-- ═══ HEADER ═══ -->
-  <header class="site-header">
+  <header class="site-header" role="banner">
     <div class="container">
-      <a href="index.html" class="site-logo">Rajat says <dotlottie-player id="cheers-lottie" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f37b/lottie.json" autoplay speed="1" style="width:28px;height:28px;display:inline-block;vertical-align:middle;margin-left:2px;"></dotlottie-player></a>
-      <nav class="site-nav">
+      <a href="index.html" class="site-logo" aria-label="Rajat Garg — Home">Rajat says <dotlottie-player id="cheers-lottie" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f37b/lottie.json" autoplay speed="1" style="width:28px;height:28px;display:inline-block;vertical-align:middle;margin-left:2px;" aria-hidden="true"></dotlottie-player></a>
+      <nav class="site-nav" aria-label="Main navigation">
         <a href="#directors-cut">Director's Cut</a>
         <a href="#character-arc">Character Arc</a>
         <a href="#craft">Craft</a>
@@ -73,13 +101,13 @@
           <a href="#" class="nav-contact-trigger">Say Hello</a>
           <div class="nav-contact-popover">
             <a href="mailto:rajatgarg1809@gmail.com" target="_blank" rel="noopener" class="popover-item">
-              <img src="images/icons/at-solid.svg" alt="" width="18" height="18"> Email me
+              <img src="images/icons/at-solid.svg" alt="" width="18" height="18" loading="lazy" decoding="async" aria-hidden="true"> Email me
             </a>
             <a href="https://linkedin.com/in/gragtajar" target="_blank" rel="noopener" class="popover-item">
-              <img src="images/icons/handshake-solid.svg" alt="" width="18" height="18"> Connect on LinkedIn
+              <img src="images/icons/handshake-solid.svg" alt="" width="18" height="18" loading="lazy" decoding="async" aria-hidden="true"> Connect on LinkedIn
             </a>
             <a href="#" download class="popover-item">
-              <img src="images/icons/arrow-circle-down-solid.svg" alt="" width="18" height="18"> Download Resume
+              <img src="images/icons/arrow-circle-down-solid.svg" alt="" width="18" height="18" loading="lazy" decoding="async" aria-hidden="true"> Download Resume
             </a>
           </div>
         </div>
@@ -89,7 +117,7 @@
   </header>
 
   <!-- Mobile Nav -->
-  <div class="mobile-nav">
+  <div class="mobile-nav" role="dialog" aria-label="Mobile navigation menu">
     <button class="close-btn" aria-label="Close menu">&times;</button>
     <a href="#directors-cut">Director's Cut</a>
     <a href="#character-arc">Character Arc</a>
@@ -108,7 +136,7 @@
     </div>
   </section>
 
-  <main>
+  <main id="main" role="main">
 
     <!-- ═══ FILM QUOTE DIVIDER → Work ═══ -->
     <div class="film-quote" data-animate>
@@ -376,9 +404,9 @@
     </section>
 
     <!-- ═══ SCREENING ROOM (Movie Game) ═══ -->
-    <section class="screening-room" id="screening-room">
+    <section class="screening-room" id="screening-room" aria-labelledby="screening-room-heading">
       <div class="container">
-        <h2 data-animate>Screening Room</h2>
+        <h2 id="screening-room-heading" data-animate>Screening Room</h2>
 
         <div class="sr-header" style="margin-top: 32px;">
           <span class="sr-genre"></span>
@@ -485,37 +513,37 @@
         <div class="skills-grid" style="margin-top: 48px;">
 
           <div class="skill-card" data-animate>
-            <img class="skill-icon" src="images/icons/user-headset-solid.svg" alt="UX Research" width="40" height="40" loading="lazy">
+            <img class="skill-icon" src="images/icons/user-headset-solid.svg" alt="UX Research" width="40" height="40" loading="lazy" decoding="async">
             <h4>UX Research &amp; Empathy</h4>
             <p>Deeply understanding user needs and pain points to translate insights into solutions that solve real problems and align with business goals.</p>
           </div>
 
           <div class="skill-card" data-animate>
-            <img class="skill-icon" src="images/icons/grid-solid.svg" alt="Interface Design" width="40" height="40" loading="lazy">
+            <img class="skill-icon" src="images/icons/grid-solid.svg" alt="Interface Design" width="40" height="40" loading="lazy" decoding="async">
             <h4>Complex Interface Design</h4>
             <p>Crafting visually appealing and user-friendly interfaces for complex workflows, dashboards, and data-heavy products.</p>
           </div>
 
           <div class="skill-card" data-animate>
-            <img class="skill-icon" src="images/icons/cog-solid.svg" alt="Design System" width="40" height="40" loading="lazy">
+            <img class="skill-icon" src="images/icons/cog-solid.svg" alt="Design System" width="40" height="40" loading="lazy" decoding="async">
             <h4>Design System &amp; Tokens</h4>
             <p>Maintaining scalable design systems and managing tokens for consistent, efficient UI development.</p>
           </div>
 
           <div class="skill-card" data-animate>
-            <img class="skill-icon" src="images/icons/code-solid.svg" alt="Design Tooling" width="40" height="40" loading="lazy">
+            <img class="skill-icon" src="images/icons/code-solid.svg" alt="Design Tooling" width="40" height="40" loading="lazy" decoding="async">
             <h4>Design Tooling &amp; Automation</h4>
             <p>Building plugins, automating workflows, and leveraging Figma as the most efficient platform from research to dev-handoff.</p>
           </div>
 
           <div class="skill-card" data-animate>
-            <img class="skill-icon" src="images/icons/file-import-solid.svg" alt="Documentation" width="40" height="40" loading="lazy">
+            <img class="skill-icon" src="images/icons/file-import-solid.svg" alt="Documentation" width="40" height="40" loading="lazy" decoding="async">
             <h4>Documentation &amp; Dev-Handoff</h4>
             <p>Delivering clear, organized specs and prototypes that ensure smooth collaboration with engineering.</p>
           </div>
 
           <div class="skill-card" data-animate>
-            <img class="skill-icon" src="images/icons/search-solid.svg" alt="UX Audits" width="40" height="40" loading="lazy">
+            <img class="skill-icon" src="images/icons/search-solid.svg" alt="UX Audits" width="40" height="40" loading="lazy" decoding="async">
             <h4>UX Audits &amp; Testing</h4>
             <p>Running structured audits and tests to validate design effectiveness and continuously improve UX.</p>
           </div>
@@ -643,7 +671,7 @@
   </main>
 
   <!-- ═══ FOOTER (Post-Credits Scene) ═══ -->
-  <footer class="site-footer">
+  <footer class="site-footer" role="contentinfo" aria-label="Site footer">
     <div class="container">
       <div class="footer-content">
         <p class="footer-easter-egg"></p>
@@ -667,9 +695,8 @@
     .modal-overlay.open { opacity: 1 !important; pointer-events: all !important; }
   </style>
 
-  <!-- Scripts -->
+  <!-- Scripts (canvas-confetti is lazy-loaded inside screening-room.js when needed) -->
   <script src="js/intro.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
   <script src="js/main.js" defer></script>
   <script src="js/screening-room.js" defer></script>
 

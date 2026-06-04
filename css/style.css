@@ -13,9 +13,9 @@
   --border: #1a1a1a;
   --border-light: #2a2a2a;
   --text-primary: #e8e8e8;
-  --text-secondary: #999999;
-  --text-muted: #666666;
-  --text-dim: #555555;
+  --text-secondary: #999999;  /* 7.0:1 on #0a0a0a — passes WCAG AA */
+  --text-muted: #888888;      /* 5.4:1 on #0a0a0a — passes WCAG AA for body text */
+  --text-dim: #6e6e6e;        /* 3.7:1 — passes AA for large text only */
   --accent: rgba(255,255,255,0.85);
   --accent-dim: rgba(255,255,255,0.4);
   --font-body: 'Geist', system-ui, -apple-system, sans-serif;
@@ -1639,4 +1639,65 @@ main {
   font-size: 14px;
   color: var(--text-secondary);
   line-height: 1.7;
+}
+
+/* ============================================================================
+   Reduced motion preference — respect OS-level setting
+   Disables non-essential animations for accessibility
+   ============================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Static fallbacks for key motion elements */
+  .film-strip { animation: none !important; }
+  .pixel-icon, .skill-icon { animation: none !important; }
+  .skill-card:hover .skill-icon { animation: none !important; }
+  #content { animation: none !important; top: 50% !important; transform: translateY(-50%); }
+  .crawl-wrapper { animation: none !important; }
+  #starfield { display: none; }
+}
+
+/* ============================================================================
+   Skip-to-content link — accessible to keyboard users, hidden until focused
+   ============================================================================ */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  z-index: 100000;
+  background: #ffd54f;
+  color: #0a0a0a;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 16px;
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+  opacity: 1;
+}
+
+/* ============================================================================
+   Visible focus outlines for keyboard navigation
+   ============================================================================ */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid #ffd54f;
+  outline-offset: 2px;
+  border-radius: 4px;
 }

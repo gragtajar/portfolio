@@ -24,6 +24,27 @@
   let right = null;
   let active = false;
   let transitioning = false;
+  let confettiLib = null;          // lazy-loaded canvas-confetti
+  let confettiLoading = null;      // dedup load promise
+
+  // Lazy-load canvas-confetti only when needed (saves ~12KB on initial page load)
+  function loadConfetti() {
+    if (confettiLib) return Promise.resolve(confettiLib);
+    if (confettiLoading) return confettiLoading;
+    confettiLoading = new Promise((resolve) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js';
+      s.async = true;
+      s.onload = () => { confettiLib = window.confetti; resolve(confettiLib); };
+      s.onerror = () => resolve(null);
+      document.head.appendChild(s);
+    });
+    return confettiLoading;
+  }
+
+  function fireConfetti(opts) {
+    loadConfetti().then((c) => { if (c) c(opts); });
+  }
 
   // ─── DOM ───────────────────────────────────────────────
   const root = document.getElementById('screening-room');
@@ -253,10 +274,7 @@
       }
     }
 
-    if (typeof confetti === 'function') {
-      const o = { origin: { y: 0.6 }, zIndex: 9999 };
-      confetti({ ...o, particleCount: movie.rajatApproved ? 100 : 40, spread: 70 });
-    }
+    fireConfetti({ origin: { y: 0.6 }, zIndex: 9999, particleCount: movie.rajatApproved ? 100 : 40, spread: 70 });
 
     transitioning = false;
   }
@@ -267,9 +285,7 @@
     winEl.classList.remove('active'); winEl.style.display = 'none';
     impEl.style.display = 'block';
     requestAnimationFrame(() => impEl.classList.add('active'));
-    if (typeof confetti === 'function') {
-      confetti({ particleCount: 150, spread: 100, origin: { y: 0.5 }, zIndex: 9999 });
-    }
+    fireConfetti({ particleCount: 150, spread: 100, origin: { y: 0.5 }, zIndex: 9999 });
   }
 
   function restart() {
