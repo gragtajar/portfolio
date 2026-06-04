@@ -61,9 +61,24 @@
   const cardR = root.querySelector('.sr-card-right');
 
   // ─── Load Data ─────────────────────────────────────────
+  // If movies.json fails to load OR is empty, gracefully hide the game section
+  // so the user never sees a broken UI on the homepage.
+  function disableGame(reason) {
+    console.warn('Screening Room disabled:', reason);
+    if (root) root.style.display = 'none';
+  }
+
   fetch('data/movies.json')
-    .then(r => r.json())
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
     .then(d => {
+      if (!Array.isArray(d) || d.length < 21) {
+        // Not enough movies to play a 20-round bracket — hide gracefully
+        disableGame('Insufficient movie data');
+        return;
+      }
       movies = d;
       genres = [...new Set(d.map(m => m.genre))];
       // Warm the HTTP/image cache for common posters by preloading a few
@@ -75,7 +90,7 @@
         }
       });
     })
-    .catch(() => console.warn('Could not load movies.json'));
+    .catch((e) => disableGame(e?.message || 'fetch failed'));
 
   // ─── Helpers ───────────────────────────────────────────
   function shuffle(a) {
@@ -167,6 +182,11 @@
 
   // ─── Game Flow ─────────────────────────────────────────
   function start() {
+    // Guard: if movies haven't loaded yet, do nothing instead of crashing
+    if (!movies.length || !genres.length) {
+      console.warn('Screening Room: movies not loaded yet');
+      return;
+    }
     genre = (function pick() {
       const avail = genres.filter(g => !played.includes(g));
       return avail.length ? avail[Math.random() * avail.length | 0] : null;
@@ -175,6 +195,11 @@
 
     played.push(genre);
     pool = shuffle(movies.filter(m => m.genre === genre));
+    // Guard: not enough movies in this genre — pick another
+    if (pool.length < 21) {
+      console.warn('Screening Room: genre "' + genre + '" has only ' + pool.length + ' movies, skipping');
+      return start();
+    }
     poolIdx = 2;
     round = 1;
     active = true;

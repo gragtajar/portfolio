@@ -51,8 +51,41 @@
 
   <link rel="preload" href="js/main.js" as="script">
 
+  <!-- Structured data: Article schema for SEO rich results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "From 34 Minutes to 8: Redesigning Lenskart's In-Store Eye Test Experience",
+    "description": "Case study: How a redesign reduced eye test wait time by 38% across 1600+ Lenskart stores and lifted sales conversion 2.7%.",
+    "image": "https://rajatg.in/images/og-lenskart.png",
+    "author": {
+      "@type": "Person",
+      "name": "Rajat Garg",
+      "url": "https://rajatg.in/"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Rajat Garg"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rajatg.in/lenskart-eye-test.html"
+    },
+    "datePublished": "2023-06-01",
+    "dateModified": "2026-06-04",
+    "articleSection": "Case Study"
+  }
+  </script>
+
   <!-- Lottie player for animated emoji -->
   <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+  <!--
+    Analytics — Cloudflare Web Analytics (cookieless, GDPR-friendly).
+    Replace REPLACE_WITH_CF_TOKEN with the beacon token from dash.cloudflare.com.
+  -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "REPLACE_WITH_CF_TOKEN"}'></script>
 </head>
 <body class="page-casestudy">
 
@@ -91,7 +124,7 @@
             <a href="https://linkedin.com/in/gragtajar" target="_blank" rel="noopener" class="popover-item">
               <img src="images/icons/handshake-solid.svg" alt="" width="18" height="18" loading="lazy" decoding="async" aria-hidden="true"> Connect on LinkedIn
             </a>
-            <a href="#" download class="popover-item">
+            <a href="resume.pdf" download="Rajat-Garg-Resume.pdf" class="popover-item">
               <img src="images/icons/arrow-circle-down-solid.svg" alt="" width="18" height="18" loading="lazy" decoding="async" aria-hidden="true"> Download Resume
             </a>
           </div>
@@ -151,7 +184,7 @@
     <!-- ═══ HERO IMAGE ═══ -->
     <div class="container" style="padding-top: 48px;">
       <div class="cs-image" data-animate>
-        <div class="cs-image-placeholder">Case study hero image placeholder</div>
+        <img src="assets/lenskart/eye-test/eye-test-hero.png" alt="Lenskart eye test case study hero" style="width:100%; display:block; border-radius:12px;">
       </div>
     </div>
 
@@ -221,9 +254,7 @@
         </p>
 
         <div class="cs-image" data-animate>
-          <div class="cs-image-placeholder">
-            Customer walk-in &rarr; Purpose of Visit &rarr; Token Generation &rarr; Queue &rarr; Eye Test &rarr; Prescription Automation &rarr; Results
-          </div>
+          <img src="assets/lenskart/eye-test/user-flow.png" alt="End-to-end user flow: customer walk-in to prescription delivery" style="width:100%; display:block; border-radius:12px;" loading="lazy">
           <div class="cs-image-caption">End-to-end user flow: from store walk-in to automated prescription delivery</div>
         </div>
       </div>
@@ -267,11 +298,11 @@
         <!-- Graphs placeholders -->
         <div class="cs-two-col" data-animate>
           <div class="cs-image">
-            <div class="cs-image-placeholder">Wait Time P90 Graph</div>
+            <img src="assets/lenskart/eye-test/graph-2.png" alt="P90 wait time reduction from 34 to 21 minutes" style="width:100%; display:block; border-radius:12px;" loading="lazy">
             <div class="cs-image-caption">P90 wait time reduction over rollout period</div>
           </div>
           <div class="cs-image">
-            <div class="cs-image-placeholder">Mumbai Saturday Weekly Graph</div>
+            <img src="assets/lenskart/eye-test/graph.png" alt="Mumbai Saturday weekly trends — Eye Test to FF%, Conversion%, QMS%" style="width:100%; display:block; border-radius:12px;" loading="lazy">
             <div class="cs-image-caption">Weekly trend at Mumbai stores (Saturday peak)</div>
           </div>
         </div>
@@ -351,11 +382,11 @@
 
           <div class="cs-two-col">
             <div class="cs-image">
-              <div class="cs-image-placeholder">Store visit photo</div>
+              <img src="assets/lenskart/eye-test/store.png" alt="On-site observation at a Lenskart store" style="width:100%; display:block; border-radius:12px;" loading="lazy">
               <div class="cs-image-caption">On-site observation at a Lenskart store</div>
             </div>
             <div class="cs-image">
-              <div class="cs-image-placeholder">CCTV analysis screenshot</div>
+              <img src="assets/lenskart/eye-test/cctv.jpeg" alt="CCTV footage analysis using Tango AI" style="width:100%; display:block; border-radius:12px;" loading="lazy">
               <div class="cs-image-caption">CCTV footage analysis via Tango AI</div>
             </div>
           </div>
@@ -379,15 +410,15 @@
 
           <div class="cs-three-col">
             <div class="cs-image">
-              <div class="cs-image-placeholder">McDonald's kiosk</div>
+              <img src="assets/lenskart/eye-test/mcd.jpeg" alt="McDonald's self-service kiosk" style="width:100%; display:block; border-radius:12px;" loading="lazy">
               <div class="cs-image-caption">McDonald's self-service kiosk</div>
             </div>
             <div class="cs-image">
-              <div class="cs-image-placeholder">KFC token system</div>
+              <img src="assets/lenskart/eye-test/kfc.jpeg" alt="KFC token-based ordering system" style="width:100%; display:block; border-radius:12px;" loading="lazy">
               <div class="cs-image-caption">KFC token-based ordering</div>
             </div>
             <div class="cs-image">
-              <div class="cs-image-placeholder">Airport display</div>
+              <img src="assets/lenskart/eye-test/airport.webp" alt="Airport flight status display board" style="width:100%; display:block; border-radius:12px;" loading="lazy">
               <div class="cs-image-caption">Airport flight status displays</div>
             </div>
           </div>
@@ -400,11 +431,11 @@
 
           <div class="cs-two-col">
             <div class="cs-image">
-              <div class="cs-image-placeholder">Affinity mapping whiteboard</div>
+              <img src="assets/lenskart/eye-test/affinity-1.png" alt="Affinity mapping session — grouping insights on whiteboard" style="width:100%; display:block; border-radius:12px;" loading="lazy">
               <div class="cs-image-caption">Affinity mapping session with research insights</div>
             </div>
             <div class="cs-image">
-              <div class="cs-image-placeholder">Feature matrix</div>
+              <img src="assets/lenskart/eye-test/affinity-2.jpeg" alt="Feature priority matrix created with product manager" style="width:100%; display:block; border-radius:12px;" loading="lazy">
               <div class="cs-image-caption">Feature priority matrix (impact vs effort)</div>
             </div>
           </div>
@@ -439,32 +470,18 @@
           <h3 class="cs-subsection-title">1. Purpose of Visit Screen</h3>
           <p class="cs-text">Explored 4 wireframe options for the initial screen customers see when their visit begins. Needed to capture visit intent quickly while building trust.</p>
 
-          <div class="wireframe-grid">
-            <div class="wireframe-item">
-              <div class="wireframe-placeholder">Option A wireframe</div>
-              <div class="wireframe-label">Option A — Full-width cards</div>
-            </div>
-            <div class="wireframe-item">
-              <div class="wireframe-placeholder">Option B wireframe</div>
-              <div class="wireframe-label">Option B — Icon grid</div>
-            </div>
-            <div class="wireframe-item">
-              <div class="wireframe-placeholder">Option C wireframe</div>
-              <div class="wireframe-label">Option C — List with descriptions</div>
-            </div>
-            <div class="wireframe-item">
-              <div class="wireframe-placeholder">Option D wireframe</div>
-              <div class="wireframe-label">Option D — Two-column split</div>
-            </div>
+          <div class="cs-image" style="margin-top: 24px;">
+            <img src="assets/lenskart/eye-test/visit-purpose-wireframe.png" alt="Four wireframe explorations for the Purpose of Visit screen" style="width:100%; display:block; border-radius:12px;" loading="lazy">
+            <div class="cs-image-caption">Wireframe explorations — comparing layout options for visit purpose selection</div>
           </div>
 
           <div class="cs-two-col" style="margin-top: 24px;">
             <div class="cs-image">
-              <div class="cs-image-placeholder">Final Purpose of Visit mockup</div>
+              <img src="assets/lenskart/eye-test/visit-purpose-mockup.png" alt="Final Purpose of Visit screen mockup" style="width:100%; display:block; border-radius:12px;" loading="lazy">
               <div class="cs-image-caption">Final mockup — Purpose of Visit screen</div>
             </div>
             <div class="cs-image">
-              <div class="cs-image-placeholder">Store snapshot</div>
+              <img src="assets/lenskart/eye-test/visit-purpose-store.jpeg" alt="Purpose of Visit screen deployed on iPad in a Lenskart store" style="width:100%; display:block; border-radius:12px;" loading="lazy">
               <div class="cs-image-caption">Screen deployed in a Lenskart store</div>
             </div>
           </div>
@@ -477,11 +494,11 @@
 
           <div class="cs-two-col">
             <div class="cs-image">
-              <div class="cs-image-placeholder">Token screen final mockup</div>
+              <img src="assets/lenskart/eye-test/token-mockup.png" alt="Final token screen design mockup" style="width:100%; display:block; border-radius:12px;" loading="lazy">
               <div class="cs-image-caption">Final token screen design (animated in production)</div>
             </div>
             <div class="cs-image">
-              <div class="cs-image-placeholder">Token in store</div>
+              <img src="assets/lenskart/eye-test/token-store.jpeg" alt="Token screen displayed on iPad at a Lenskart store" style="width:100%; display:block; border-radius:12px;" loading="lazy">
               <div class="cs-image-caption">Token screen on iPad at a Lenskart store</div>
             </div>
           </div>
@@ -505,11 +522,11 @@
 
           <div class="cs-two-col" style="margin-top: 16px;">
             <div class="cs-image">
-              <div class="cs-image-placeholder">Customer list wireframe</div>
+              <img src="assets/lenskart/eye-test/epb-wireframe.png" alt="Customer list wireframe exploration" style="width:100%; display:block; border-radius:12px;" loading="lazy">
               <div class="cs-image-caption">Wireframe exploration</div>
             </div>
             <div class="cs-image">
-              <div class="cs-image-placeholder">Customer list final mockup</div>
+              <img src="assets/lenskart/eye-test/epb-mockup.png" alt="Final customer list mockup — grid layout with Next Customer highlighted" style="width:100%; display:block; border-radius:12px;" loading="lazy">
               <div class="cs-image-caption">Final mockup — grid layout with "Next Customer" highlighted</div>
             </div>
           </div>
@@ -543,7 +560,7 @@
           </div>
 
           <div class="cs-image" style="margin-top: 24px;">
-            <div class="cs-image-placeholder">Prescription retrieval evolution mockups</div>
+            <img src="assets/lenskart/eye-test/rx-old.png" alt="Prescription retrieval evolution — from manual entry to 4-digit code automation" style="width:100%; display:block; border-radius:12px;" loading="lazy">
             <div class="cs-image-caption">Evolution from manual entry to 4-digit code mapping</div>
           </div>
         </div>
@@ -575,11 +592,11 @@
 
         <div class="cs-two-col" data-animate style="margin-top: 32px;">
           <div class="cs-image">
-            <div class="cs-image-placeholder">Prescription desktop app UI</div>
+            <img src="assets/lenskart/eye-test/bifrost.png" alt="Prescription syncing Windows desktop app designed by Rajat" style="width:100%; display:block; border-radius:12px;" loading="lazy">
             <div class="cs-image-caption">Windows desktop app designed by Rajat</div>
           </div>
           <div class="cs-image">
-            <div class="cs-image-placeholder">Wi-Fi adapters photo</div>
+            <img src="assets/lenskart/eye-test/adapters.png" alt="Wi-Fi adapters connected with eye test machines for prescription syncing" style="width:100%; display:block; border-radius:12px;" loading="lazy">
             <div class="cs-image-caption">Wi-Fi adapters for local prescription syncing</div>
           </div>
         </div>
@@ -620,7 +637,7 @@
         <div class="footer-links">
           <a href="mailto:rajatgarg1809@gmail.com">Email</a>
           <a href="https://linkedin.com/in/gragtajar" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="#" download>Download Resume</a>
+          <a href="resume.pdf" download="Rajat-Garg-Resume.pdf">Download Resume</a>
         </div>
         <p class="footer-credit">
           Designed &amp; developed with &#9829; by Rajat Garg

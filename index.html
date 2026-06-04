@@ -55,8 +55,43 @@
   <!-- Preload critical above-fold resources -->
   <link rel="preload" href="js/main.js" as="script">
 
+  <!-- Structured data: ProfilePage for SEO rich results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "mainEntity": {
+      "@type": "Person",
+      "name": "Rajat Garg",
+      "jobTitle": "Product Designer",
+      "description": "B2B SaaS Product Designer with 6+ years of experience turning complex workflows into business outcomes.",
+      "url": "https://rajatg.in/",
+      "email": "rajatgarg1809@gmail.com",
+      "sameAs": [
+        "https://linkedin.com/in/gragtajar"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Gurugram",
+        "addressCountry": "India"
+      },
+      "worksFor": {
+        "@type": "Organization",
+        "name": "LambdaTest"
+      }
+    }
+  }
+  </script>
+
   <!-- Lottie player for animated emoji -->
   <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+  <!--
+    Analytics — Cloudflare Web Analytics (cookieless, GDPR-friendly).
+    Replace REPLACE_WITH_CF_TOKEN with the beacon token from dash.cloudflare.com
+    → Analytics & Logs → Web Analytics → Add a site → copy the token from the snippet.
+  -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "REPLACE_WITH_CF_TOKEN"}'></script>
 </head>
 <body class="page-home">
 
@@ -106,7 +141,7 @@
             <a href="https://linkedin.com/in/gragtajar" target="_blank" rel="noopener" class="popover-item">
               <img src="images/icons/handshake-solid.svg" alt="" width="18" height="18" loading="lazy" decoding="async" aria-hidden="true"> Connect on LinkedIn
             </a>
-            <a href="#" download class="popover-item">
+            <a href="resume.pdf" download="Rajat-Garg-Resume.pdf" class="popover-item">
               <img src="images/icons/arrow-circle-down-solid.svg" alt="" width="18" height="18" loading="lazy" decoding="async" aria-hidden="true"> Download Resume
             </a>
           </div>
@@ -153,7 +188,7 @@
 
         <!-- Project 1: Lenskart -->
         <div class="cs-image" data-animate style="margin-top: 48px; margin-bottom: 0; border-radius: 12px 12px 0 0; border-bottom: none;">
-          <div class="cs-image-placeholder" style="aspect-ratio: 21/9; background: linear-gradient(135deg, #111 0%, #1a1510 50%, #111 100%);">Lenskart case study hero — replace with image</div>
+          <img src="assets/home/eye-test-hero.png" alt="Lenskart eye test case study — redesigning in-store experience across 1600+ stores" style="width:100%; display:block; border-radius: 12px 12px 0 0;">
         </div>
         <div class="project-card" data-animate style="margin-top: 0; border-radius: 0 0 12px 12px;">
           <div class="project-tags">
@@ -179,7 +214,7 @@
 
         <!-- Project 2: dox2U -->
         <div class="cs-image" data-animate style="margin-top: 32px; margin-bottom: 0; border-radius: 12px 12px 0 0; border-bottom: none;">
-          <div class="cs-image-placeholder" style="aspect-ratio: 21/9; background: linear-gradient(135deg, #111 0%, #0f1520 50%, #111 100%);">dox2U project hero — replace with image</div>
+          <img src="assets/home/dox2u-hero.png" alt="dox2U — B2B SaaS document management system" style="width:100%; display:block; border-radius: 12px 12px 0 0;">
         </div>
         <div class="project-card" data-animate style="margin-top: 0; border-radius: 0 0 12px 12px;">
           <div class="project-tags">
@@ -242,7 +277,7 @@
 
           <!-- Plugin -->
           <div class="side-role-card" data-animate data-modal="modal-plugin">
-            <div class="side-role-image" style="background: linear-gradient(135deg, #111 0%, #1a1510 50%, #111 100%);">Figma plugin screenshot — replace with image</div>
+            <img src="assets/home/plugin.png" alt="Lenskart Product Data Figma Plugin" class="side-role-image" style="width:100%; display:block; border-radius:8px;">
             <h3>Lenskart Product Data</h3>
             <p style="font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; margin-top: 4px;">Figma Plugin</p>
             <p>Independently designed &amp; developed using Cursor. Batch-updates Figma layers with real product info: names, IDs, images as fills.</p>
@@ -251,7 +286,7 @@
 
           <!-- Flags Library -->
           <a href="https://www.figma.com/community/file/1516171459035590514/flags-library-svg" target="_blank" rel="noopener" class="side-role-card" data-animate style="text-decoration: none;">
-            <div class="side-role-image" style="background: linear-gradient(135deg, #111 0%, #101520 50%, #111 100%);">Flags library preview — replace with image</div>
+            <img src="assets/home/flags.png" alt="Flags Library SVG — Figma Community File" class="side-role-image" style="width:100%; display:block; border-radius:8px;">
             <h3>Flags Library SVG</h3>
             <p style="font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; margin-top: 4px;">Figma Community File</p>
             <p>A comprehensive collection of country flags in SVG format, published on the Figma Community for designers worldwide.</p>
@@ -274,8 +309,8 @@
         <p style="color:#999;font-size:15px;line-height:1.7;margin-top:12px;">
           Independently designed and developed to streamline the design workflow when building realistic mockups for Lenskart's product ecosystem.
         </p>
-        <div style="margin-top:24px;background:#0a0a0a;border:1px solid #1a1a1a;border-radius:12px;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:#444;font-size:14px;">
-          Plugin screenshot placeholder
+        <div style="margin-top:24px;">
+          <img src="assets/home/plugin.png" alt="Lenskart Product Data Figma Plugin interface" style="width:100%; display:block; border-radius:12px; border:1px solid #1a1a1a;">
         </div>
       </div>
     </div>
@@ -298,7 +333,7 @@
           <!-- Profile Photo -->
           <div data-animate>
             <div class="profile-photo">
-              Photo placeholder
+              <img src="assets/home/rajat-garg-ux.png" alt="Rajat Garg — Product Designer" style="width:100%; display:block; border-radius:12px; filter: grayscale(40%);">
             </div>
           </div>
 
@@ -568,6 +603,7 @@
         <div class="testimonials-grid" style="margin-top: 48px;">
 
           <div class="testimonial-card" data-animate>
+            <img src="assets/home/keshav.png" alt="Keshav Goyal" width="48" height="48" loading="lazy" decoding="async" style="width:48px; height:48px; border-radius:50%; margin-bottom:16px; display:block;">
             <p class="quote-text">
               Rajat brings a rare mix of design thinking and methodical execution to every project. His ability to understand client needs and translate them into polished, user-centric solutions made a real difference in our product quality.
             </p>
@@ -577,6 +613,7 @@
           </div>
 
           <div class="testimonial-card" data-animate>
+            <img src="assets/home/vikash.png" alt="Vikash Marwal" width="48" height="48" loading="lazy" decoding="async" style="width:48px; height:48px; border-radius:50%; margin-bottom:16px; display:block;">
             <p class="quote-text">
               Rajat's work went above and beyond our expectations. He did an incredible job on dox2U — meticulous, creative, and always pushing for the best outcome. He'd be an asset to any team.
             </p>
@@ -679,7 +716,7 @@
         <div class="footer-links">
           <a href="mailto:rajatgarg1809@gmail.com" target="_blank" rel="noopener">rajatgarg1809@gmail.com</a>
           <a href="https://linkedin.com/in/gragtajar" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="#" download>Download Resume</a>
+          <a href="resume.pdf" download="Rajat-Garg-Resume.pdf">Download Resume</a>
         </div>
 
         <p class="footer-credit">
