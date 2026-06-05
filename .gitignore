@@ -21,3 +21,6 @@ npm-debug.log
 # Build artifacts (none currently — placeholder)
 dist/
 build/
+
+# Dev-only partial data files (canonical lives in data/movies.json)
+data/movies_part*.json

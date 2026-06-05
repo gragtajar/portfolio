@@ -4,18 +4,31 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:        # Allow manual re-run from Actions tab
+
+# Cancel any in-flight deploy when a newer push comes in
+concurrency:
+  group: deploy-main
+  cancel-in-progress: false  # finish current, queue next
 
 jobs:
   web-deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    timeout-minutes: 15
+
     steps:
-    - name: Get latest code
-      uses: actions/checkout@v4.2.2
+    - name: Checkout code
+      uses: actions/checkout@v4
       with:
-        fetch-depth: 0
+        fetch-depth: 0      # full history so the action can compute deltas
+
+    - name: Verify FTP secrets are configured
+      run: |
+        if [ -z "${{ secrets.FTP_SERVER }}" ]; then echo "::error::FTP_SERVER secret is missing"; exit 1; fi
+        if [ -z "${{ secrets.FTP_USERNAME }}" ]; then echo "::error::FTP_USERNAME secret is missing"; exit 1; fi
+        if [ -z "${{ secrets.FTP_PASSWORD }}" ]; then echo "::error::FTP_PASSWORD secret is missing"; exit 1; fi
+        echo "All FTP secrets present."
 
     - name: Sync files to cPanel
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -24,4 +37,30 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         port: 21
+        protocol: ftp
         server-dir: /public_html/
+        log-level: standard
+        # Bump this name to force a full re-sync (use when the live site drifts
+        # out of step with main; the action treats a missing state file as a
+        # fresh deploy and re-uploads every file). Increment when needed.
+        state-name: .ftp-deploy-sync-state-v2.json
+        # Don't upload dev/CI/internal files — keep production clean
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/.github/**
+          **/.claude/**
+          **/node_modules/**
+          **/*.md
+          **/package.json
+          **/package-lock.json
+          **/data/movies_part*.json
+          **/.DS_Store
+          README.md
+
+    - name: Deploy summary
+      if: always()
+      run: |
+        echo "Deploy job finished with status: ${{ job.status }}"
+        echo "Commit deployed: ${{ github.sha }}"
+        echo "Triggered by: ${{ github.actor }} via ${{ github.event_name }}"
