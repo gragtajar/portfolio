@@ -38,12 +38,18 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         port: 21
         protocol: ftp
-        server-dir: /public_html/
+        # Deploy to the FTP user's login directory (their chroot home).
+        # The cPanel FTP user MUST be configured so its home is the real
+        # public_html — i.e. /home/u9zatm6szirz/public_html/. Do NOT use an
+        # absolute path here: cPanel FTP users are chrooted, so "/" means the
+        # user's home, not the account root, which is why a previous
+        # "/public_html/" target nested files inside the user's home.
+        server-dir: ./
         log-level: standard
         # Bump this name to force a full re-sync (use when the live site drifts
         # out of step with main; the action treats a missing state file as a
         # fresh deploy and re-uploads every file). Increment when needed.
-        state-name: .ftp-deploy-sync-state-v2.json
+        state-name: .ftp-deploy-sync-state-v3.json
         # Don't upload dev/CI/internal files — keep production clean
         exclude: |
           **/.git*
