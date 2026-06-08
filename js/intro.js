@@ -49,8 +49,8 @@
     }, 550);
   }
 
-  // 30s animation + 0.5s start delay = total ~30.5s
-  const autoEnd = setTimeout(endIntro, 30500);
+  // 42s animation + 0.5s start delay = total ~42.5s
+  const autoEnd = setTimeout(endIntro, 42500);
 
   // Skip button
   if (skipBtn) {

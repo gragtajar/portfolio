@@ -91,7 +91,8 @@ body.intro-finished .site-footer {
 }
 
 #content {
-  animation: scroll 30s linear 0.5s;
+  /* Slower scroll so the longer copy is comfortably readable */
+  animation: scroll 42s linear 0.5s;
   position: absolute;
   top: 100%;
   text-align: center;
@@ -119,7 +120,7 @@ body.intro-finished .site-footer {
 
 @keyframes scroll {
   0% { top: 100%; }
-  100% { top: -170%; }
+  100% { top: -65%; }
 }
 
 /* Skip button */
