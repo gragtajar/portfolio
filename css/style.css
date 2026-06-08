@@ -448,6 +448,19 @@ main {
 
 .project-card .view-link:hover { color: var(--text-primary); opacity: 1; }
 
+/* --- Whole case-study card is clickable (Director's Cut) --- */
+.cs-card-link {
+  display: block;
+  transition: transform var(--transition);
+}
+.cs-card-link:hover { transform: translateY(-3px); }
+.cs-card-link:hover .view-link { color: var(--text-primary); }
+.cs-card-link:focus-visible {
+  outline: 2px solid #c9a84c;
+  outline-offset: 4px;
+  border-radius: 14px;
+}
+
 /* --- Currently Working On --- */
 .teaser-card {
   background: var(--bg-card);
@@ -624,15 +637,19 @@ main {
 
 /* --- 35mm Film Strip --- */
 .film-strip-container {
-  margin-top: 64px;
+  margin-top: 72px;
+  margin-bottom: 24px;
   overflow: hidden;
   position: relative;
-  /* Edge-to-edge: break out of container */
-  margin-left: calc(-50vw + 50%);
-  margin-right: calc(-50vw + 50%);
-  width: 100vw;
-  /* Subtle tilt for a distinct look */
-  transform: rotate(-2deg);
+  /* Edge-to-edge + extra width so the 4° tilt never exposes the background
+     at the corners. The breakout is wider than the viewport and scaled up
+     slightly; transforms don't affect document flow, so the sections above
+     and below stay exactly where they are. */
+  margin-left: calc(-55vw + 50%);
+  margin-right: calc(-55vw + 50%);
+  width: 110vw;
+  /* Aesthetic tilt: 4 degrees anti-clockwise */
+  transform: rotate(-4deg) scale(1.05);
   padding: 20px 0;
 }
 

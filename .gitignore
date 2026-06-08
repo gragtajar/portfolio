@@ -7,9 +7,14 @@ Resume_Brutal_Assessment_Rajat_Garg.md
 Senior_Lead_Product_UX_Designer_Assessment_Framework.md
 
 # Legacy assets — superseded by current site
+# (no quotes — gitignore treats quote characters literally and would fail to match)
 old website/
-"old resume.pdf"
-"Rajat Garg (Senior Product Designer) Resume.pdf"
+old resume.pdf
+Rajat Garg (Senior Product Designer) Resume.pdf
+
+# Sensitive / unused assets — keep on local disk, never publish
+assets/home/google.pdf
+assets/home/rajat.jpeg
 
 # Local dev / OS noise
 .DS_Store

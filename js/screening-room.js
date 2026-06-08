@@ -321,7 +321,10 @@
   }
 
   // ─── Events ────────────────────────────────────────────
-  playEl?.addEventListener('click', start);
+  playEl?.addEventListener('click', () => {
+    if (window.trackEvent) window.trackEvent('game-start');
+    start();
+  });
   restartEl?.addEventListener('click', restart);
 
   cardL?.addEventListener('click', e => { if (!e.target.closest('.sr-imdb-link')) pick('left'); });
