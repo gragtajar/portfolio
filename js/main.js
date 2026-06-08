@@ -119,9 +119,15 @@
     const chars = text.split('');
     el.innerHTML = '';
     chars.forEach((char, i) => {
+      // Use a real (breaking) space for spaces so the text wraps normally on
+      // mobile. A non-breaking space here was forcing the line to overflow.
+      if (char === ' ') {
+        el.appendChild(document.createTextNode(' '));
+        return;
+      }
       const span = document.createElement('span');
       span.classList.add('token');
-      span.textContent = char === ' ' ? '\u00A0' : char;
+      span.textContent = char;
       span.style.animationDelay = `${i * 30}ms`;
       el.appendChild(span);
     });

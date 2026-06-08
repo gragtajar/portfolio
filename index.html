@@ -48,7 +48,6 @@
 
   <!-- Favicons + manifest -->
   <link rel="icon" href="favicon.ico" sizes="any">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
 
@@ -143,8 +142,17 @@
   <div class="intro-overlay" id="intro-overlay">
     <div id="board">
       <div id="content">
-        <p id="title">Rajat</p>
-        <p>He is nobody.</p>
+        <p>In a galaxy far, far away…</p>
+        <p>there lives a human designer.</p>
+        <p>Seven years of designing enterprise software.</p>
+        <p>Built from scratch at dox2U.</p>
+        <p>Shipped across 1600+ stores at Lenskart.</p>
+        <p>Now teaching AI to behave at LambdaTest.</p>
+        <p>Zero tolerance for bad UX and shit movies.</p>
+        <p>Fueled by cold beer and strong coffee.</p>
+        <p>Recharged by long bike rides and good reads.</p>
+        <p>Speaks empathy with users,<br>business with PMs and code with devs.</p>
+        <p class="intro-finale">Intermission is not an option.</p>
       </div>
     </div>
     <button class="intro-skip" id="intro-skip">Skip Intro</button>
@@ -153,7 +161,7 @@
   <!-- Screening Room Banner -->
   <div class="sr-banner" id="sr-banner">
     <div class="sr-banner-inner">
-      <span class="sr-banner-text">New: <strong>Screening Room</strong> — a movie bracket game that reveals Rajat's taste in cinema. <a href="#screening-room" class="sr-banner-link">Play now &rarr;</a></span>
+      <span class="sr-banner-text">New: <strong>Screening Room</strong> <span class="sr-banner-desc">— a movie bracket game that reveals Rajat's taste in cinema. </span><a href="#screening-room" class="sr-banner-link">Play now &rarr;</a></span>
       <button class="sr-banner-close" id="sr-banner-close" aria-label="Close banner">&times;</button>
     </div>
   </div>
@@ -210,6 +218,10 @@
       <p class="subtitle" data-animate>Product Designer · B2B SaaS</p>
       <p class="tagline" data-animate>6 years of turning complex workflows into business outcomes.</p>
     </div>
+    <a href="#directors-cut" class="scroll-down" aria-label="Scroll down to see work">
+      <span class="scroll-down-mouse"><span class="scroll-down-wheel"></span></span>
+      <span>Scroll</span>
+    </a>
   </section>
 
   <main id="main" role="main">
@@ -267,7 +279,7 @@
               <span class="tag">B2B SaaS</span>
               <span class="tag">2021</span>
             </div>
-            <div class="ribbon" style="color: var(--text-muted); border-color: var(--border-light);">Case Study Coming Soon</div>
+            <div class="ribbon coming-soon-tag">Case Study Coming Soon</div>
             <h3>Upload, Verify &amp; Tag Documents</h3>
             <p class="project-desc">
               Spearheaded the zero-to-one design of dox2U, a B2B SaaS document management system that helped people reduce dependency on paper documents. Launched beta and first-stable versions.
@@ -295,11 +307,8 @@
           <p class="project-desc">
             <span class="token-resolve">Designing intelligent workflows that help QA teams and developers ship faster with AI-powered test generation, debugging, and orchestration.</span>
           </p>
-          <p class="teaser-blur">
-            Exploring new interaction paradigms for complex testing scenarios, reducing cognitive load for engineering teams working across distributed systems, and building design systems that scale with AI capabilities...
-          </p>
           <div style="margin-top: 16px;">
-            <span class="tag accent-tag" style="font-style: italic;">More details coming soon</span>
+            <span class="tag accent-tag coming-soon-tag" style="font-style: italic;">Case Study Coming Soon</span>
           </div>
         </div>
       </div>
@@ -342,20 +351,20 @@
       </div>
     </section>
 
-    <!-- Plugin Modal -->
-    <div class="modal-overlay" id="modal-plugin" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:300;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s ease;">
-      <div style="background:#111;border:1px solid #2a2a2a;border-radius:16px;max-width:640px;width:90%;max-height:80vh;overflow-y:auto;padding:40px;position:relative;">
-        <button class="modal-close" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#666;font-size:24px;cursor:pointer;">&times;</button>
-        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">Lenskart Product Data</h3>
-        <p style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#666;">Figma Plugin · Built with Cursor</p>
-        <p style="color:#999;font-size:15px;line-height:1.7;margin-top:16px;">
+    <!-- Plugin Modal (desktop) → edge-to-edge bottom sheet on mobile -->
+    <div class="modal-overlay" id="modal-plugin">
+      <div class="modal-box">
+        <button class="modal-close" aria-label="Close">&times;</button>
+        <h3 class="modal-title">Lenskart Product Data</h3>
+        <p class="modal-subtitle">Figma Plugin · Built with Cursor</p>
+        <p class="modal-text">
           A Figma plugin that batch-updates layers with real Lenskart product information including product names, IDs, and images (applied as fills). Features a General Data tab for generating Indian names, phone numbers, store/customer addresses, and staff IDs.
         </p>
-        <p style="color:#999;font-size:15px;line-height:1.7;margin-top:12px;">
+        <p class="modal-text">
           Independently designed and developed to streamline the design workflow when building realistic mockups for Lenskart's product ecosystem.
         </p>
-        <div style="margin-top:24px;">
-          <img src="assets/home/plugin.png" alt="Lenskart Product Data Figma Plugin interface" style="width:100%; display:block; border-radius:12px; border:1px solid #1a1a1a;">
+        <div class="modal-image-wrap">
+          <img src="assets/home/plugin.png" alt="Lenskart Product Data Figma Plugin interface">
         </div>
       </div>
     </div>
@@ -771,11 +780,6 @@
       </div>
     </div>
   </footer>
-
-  <!-- Modal open/close styles -->
-  <style>
-    .modal-overlay.open { opacity: 1 !important; pointer-events: all !important; }
-  </style>
 
   <!-- Scripts (canvas-confetti is lazy-loaded inside screening-room.js when needed) -->
   <script src="js/intro.js" defer></script>

@@ -35,8 +35,17 @@
   Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 
   # Content Security Policy — permissive for the resources the site uses
-  # Allows: self origin, Google Fonts, TMDB images, Lottie CDN, canvas-confetti CDN, inline scripts/styles
-  Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://image.tmdb.org; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.themoviedb.org https://fonts.gstatic.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+  # Allows: self origin, Google Fonts, TMDB images, Lottie CDN, canvas-confetti CDN, inline scripts/styles, and Amplitude tracking
+  #
+  # Base policy supplied by Rajat, with the minimal additions required so the
+  # analytics and animations actually work under enforcement:
+  #   script-src  + 'wasm-unsafe-eval'            -> dotLottie "cheers" emoji is WASM-rendered
+  #               + https://cdn.amplitude.com     -> Amplitude SDK actually loads here (not amplitude.com)
+  #               + https://static.cloudflareinsights.com -> Cloudflare Web Analytics beacon script
+  #   connect-src + https://cloudflareinsights.com -> Cloudflare beacon POSTs RUM data here
+  #               + https://unpkg.com https://cdn.jsdelivr.net -> Lottie/confetti sub-resource fetches
+  #   worker-src  'self' blob:                    -> Amplitude Session Replay spins up a blob worker
+  Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://unpkg.com https://cdn.jsdelivr.net https://amplitude.com https://cdn.amplitude.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://image.tmdb.org; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.themoviedb.org https://fonts.gstatic.com https://amplitude.com https://*.amplitude.com https://cloudflareinsights.com https://unpkg.com https://cdn.jsdelivr.net; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
 </IfModule>
 
 # ----------------------------------------------------------------------------

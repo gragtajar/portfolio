@@ -94,6 +94,15 @@ body.intro-finished .site-footer {
   animation: scroll 30s linear 0.5s;
   position: absolute;
   top: 100%;
+  text-align: center;
+  width: 100%;
+}
+
+/* Final punch-line — extra breathing room above it (the blank line) */
+.intro-finale {
+  margin-top: 1.5em;
+  font-weight: bold;
+  letter-spacing: 2px;
 }
 
 #title {
