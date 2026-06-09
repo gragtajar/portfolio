@@ -853,7 +853,7 @@ main {
 
 .experience-item {
   display: grid;
-  grid-template-columns: 40px 1fr 1fr 170px 90px;
+  grid-template-columns: 64px 1fr 1fr 170px 90px;
   gap: 16px;
   align-items: center;
   padding: 24px 0;
@@ -865,24 +865,27 @@ main {
   background: rgba(255,255,255,0.02);
 }
 
+/* Company logos — transparent (no badge background); the site bg is dark and
+   the logos are light, so they read cleanly. Uniform height keeps the column
+   tidy across differently-shaped logos. */
 .exp-logo {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
+  height: 26px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-family: var(--font-body);
-  font-size: 12px;
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: 0.5px;
   flex-shrink: 0;
+}
+
+.exp-logo img {
+  height: 26px;
+  width: auto;
+  max-width: 64px;
+  object-fit: contain;
+  display: block;
 }
 
 @media (max-width: 768px) {
   .experience-item {
-    grid-template-columns: 36px 1fr 1fr;
+    grid-template-columns: 60px 1fr 1fr;
     gap: 4px 12px;
     padding: 20px 0;
   }
@@ -893,7 +896,7 @@ main {
 
 @media (max-width: 480px) {
   .experience-item {
-    grid-template-columns: 36px 1fr;
+    grid-template-columns: 60px 1fr;
     gap: 2px 12px;
   }
   .exp-logo { grid-row: span 4; align-self: start; margin-top: 4px; }
