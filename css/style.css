@@ -435,7 +435,8 @@ main {
   border-color: var(--border-light);
 }
 
-.project-card .project-tags {
+.project-card .project-tags,
+.teaser-card .project-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -641,15 +642,8 @@ main {
 
 .profile-photo {
   width: 100%;
-  aspect-ratio: 3/4;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
   border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-dim);
-  font-size: 14px;
+  overflow: hidden;
 }
 
 .about-text h2 { margin-bottom: 24px; }
@@ -695,8 +689,8 @@ main {
   padding: 12px 16px;
   font-size: 13px;
   color: var(--text-secondary);
-  white-space: nowrap;
-  max-width: 320px;
+  max-width: 380px;
+  width: max-content;
   white-space: normal;
   opacity: 0;
   pointer-events: none;
@@ -853,7 +847,7 @@ main {
 
 .experience-item {
   display: grid;
-  grid-template-columns: 64px 1fr 1fr 170px 90px;
+  grid-template-columns: 80px 1fr 1fr 170px 90px;
   gap: 16px;
   align-items: center;
   padding: 24px 0;
@@ -878,14 +872,20 @@ main {
 .exp-logo img {
   height: 26px;
   width: auto;
-  max-width: 64px;
+  max-width: 80px;
   object-fit: contain;
   display: block;
 }
 
+/* Per-logo tuning so the row reads evenly:
+   LambdaTest's bold mark looks oversized at 26px, Lenskart's wide wordmark
+   looks undersized — nudge them down/up respectively. */
+.exp-logo img[src*="lambdatest"] { height: 19px; }
+.exp-logo img[src*="lenskart"]   { height: 30px; }
+
 @media (max-width: 768px) {
   .experience-item {
-    grid-template-columns: 60px 1fr 1fr;
+    grid-template-columns: 76px 1fr 1fr;
     gap: 4px 12px;
     padding: 20px 0;
   }
@@ -896,7 +896,7 @@ main {
 
 @media (max-width: 480px) {
   .experience-item {
-    grid-template-columns: 60px 1fr;
+    grid-template-columns: 76px 1fr;
     gap: 2px 12px;
   }
   .exp-logo { grid-row: span 4; align-self: start; margin-top: 4px; }
