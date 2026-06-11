@@ -847,7 +847,7 @@ main {
 
 .experience-item {
   display: grid;
-  grid-template-columns: 80px 1fr 1fr 170px 90px;
+  grid-template-columns: 56px 1fr 1fr 170px 90px;
   gap: 16px;
   align-items: center;
   padding: 24px 0;
@@ -862,30 +862,30 @@ main {
 /* Company logos — transparent (no badge background); the site bg is dark and
    the logos are light, so they read cleanly. Uniform height keeps the column
    tidy across differently-shaped logos. */
+/* Company logos — every logo is fit into the SAME box via object-fit: contain,
+   so differently-shaped marks (the wide Lenskart wordmark vs the compact
+   LambdaTest / Apporio / dox2U marks) all read at a consistent, similar size
+   instead of one stretching out wide. Transparent: no badge background. */
 .exp-logo {
-  height: 26px;
+  width: 46px;
+  height: 28px;
   display: flex;
   align-items: center;
   flex-shrink: 0;
 }
 
 .exp-logo img {
-  height: 26px;
+  max-width: 100%;
+  max-height: 100%;
   width: auto;
-  max-width: 80px;
+  height: auto;
   object-fit: contain;
   display: block;
 }
 
-/* Per-logo tuning so the row reads evenly:
-   LambdaTest's bold mark looks oversized at 26px, Lenskart's wide wordmark
-   looks undersized — nudge them down/up respectively. */
-.exp-logo img[src*="lambdatest"] { height: 19px; }
-.exp-logo img[src*="lenskart"]   { height: 30px; }
-
 @media (max-width: 768px) {
   .experience-item {
-    grid-template-columns: 76px 1fr 1fr;
+    grid-template-columns: 56px 1fr 1fr;
     gap: 4px 12px;
     padding: 20px 0;
   }
@@ -896,7 +896,7 @@ main {
 
 @media (max-width: 480px) {
   .experience-item {
-    grid-template-columns: 76px 1fr;
+    grid-template-columns: 56px 1fr;
     gap: 2px 12px;
   }
   .exp-logo { grid-row: span 4; align-self: start; margin-top: 4px; }
@@ -1595,18 +1595,25 @@ main {
 }
 
 /* --- CS Image Container --- */
+/* Transparent: no card background or border, so the caption area never looks
+   disproportionate. The image itself carries the rounded corners. */
 .cs-image {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
+  background: transparent;
+  border: none;
   margin: 32px 0;
 }
 
-.cs-image img {
+.cs-image img,
+.cs-image video {
   width: 100%;
   display: block;
+  border-radius: 12px;
 }
+
+.cs-image + .cs-image { margin-top: 24px; }
+
+.cs-three-col + .insight-box,
+.cs-three-col + .cs-subsection { margin-top: 32px; }
 
 .cs-image-placeholder {
   width: 100%;
@@ -1620,26 +1627,49 @@ main {
 }
 
 .cs-image-caption {
-  padding: 12px 20px;
+  margin-top: 12px;
+  padding: 0;
   font-size: 13px;
   color: var(--text-dim);
-  border-top: 1px solid var(--border);
+  border-top: none;
+  background: transparent;
 }
 
-/* --- CS Sticky Notes --- */
+/* Compact cards for sparse 1-line content (Users, Timeline) */
+.cs-card-compact {
+  text-align: center;
+  padding: 16px 20px;
+}
+
+/* --- CS Sticky Notes (physical-paper look) --- */
 .sticky-note {
   background: #2a2518;
   border: 1px solid #3a3020;
-  border-radius: 4px;
-  padding: 16px 20px;
+  border-radius: 2px;
+  padding: 20px 24px;
   font-size: 14px;
   color: #c9a84c;
   line-height: 1.5;
   transform: rotate(-1deg);
+  box-shadow: 2px 3px 8px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+.sticky-note::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #c9a84c;
+  opacity: 0.3;
+  border-radius: 2px 2px 0 0;
 }
 
 .sticky-note:nth-child(even) { transform: rotate(1deg); }
 .sticky-note:nth-child(3n) { transform: rotate(-0.5deg); }
+.sticky-note:nth-child(4n) { transform: rotate(1.5deg); }
 
 /* --- CS Insight Box --- */
 .insight-box {

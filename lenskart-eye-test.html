@@ -184,7 +184,7 @@
         <h1 class="cs-title" data-animate>From 34 Minutes to 8: Redesigning Lenskart's In-Store Eye Test Experience</h1>
 
         <div class="cs-meta" data-animate>
-          <span class="cs-meta-item"><strong>Role:</strong> Product Designer</span>
+          <span class="cs-meta-item"><strong>Role:</strong> Senior Product Designer</span>
           <span class="cs-meta-item"><strong>Company:</strong> Lenskart</span>
           <span class="cs-meta-item"><strong>Platforms:</strong> iPad, Mobile, TV</span>
           <span class="cs-meta-item"><strong>Year:</strong> 2023</span>
@@ -209,7 +209,7 @@
     <!-- ═══ HERO IMAGE ═══ -->
     <div class="container" style="padding-top: 48px;">
       <div class="cs-image" data-animate>
-        <img src="assets/lenskart/eye-test/eye-test-hero.png" alt="Lenskart eye test case study hero" style="width:100%; display:block; border-radius:12px;">
+        <img src="assets/lenskart/eye-test/eye-test-hero.png" alt="Lenskart eye test case study hero" style="width:100%; display:block; border-radius:12px;" fetchpriority="high" decoding="async">
       </div>
     </div>
 
@@ -218,22 +218,52 @@
       <div class="container">
         <h2 class="cs-section-title" data-animate>About the Project</h2>
 
-        <p class="cs-text" data-animate>
-          Lenskart's retail stores were facing a critical bottleneck: eye tests. Customers walked in excited to buy eyewear, but were met with an average 34-minute wait for their eye examination. This wasn't just an inconvenience — it was driving walk-outs, hurting conversions, and creating chaos for store staff during rush hours.
-        </p>
+        <!-- Problems at Store -->
+        <div class="cs-subsection" data-animate>
+          <h3 class="cs-subsection-title">Problems at Store</h3>
 
-        <p class="cs-text" data-animate>
-          There was zero visibility into the queue. Customers didn't know how long they'd wait. Staff couldn't prioritize effectively. And during peak hours, the store descended into confusion.
-        </p>
-
-        <div class="cs-two-col" data-animate>
-          <div class="cs-card">
-            <h4>The Customer Problem</h4>
-            <p>No visibility into queue position, unpredictable wait times, frustrating experience that turned potential buyers into walk-outs.</p>
+          <div class="cs-two-col" style="gap: 32px;">
+            <div>
+              <h4 style="margin-bottom: 12px; color: var(--text-primary);">Customer Problems</h4>
+              <ul style="list-style: disc; padding-left: 20px;">
+                <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+                  Customers <strong style="color: #fc8181;">waited an average of 34 mins at stores</strong> from walking-in to receiving their prescriptions
+                </li>
+                <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+                  They <strong style="color: #fc8181;">don't know the wait time upfront</strong> which added to frustration
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 style="margin-bottom: 12px; color: var(--text-primary);">Store Staff Problems</h4>
+              <ul style="list-style: disc; padding-left: 20px;">
+                <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+                  Struggled to <strong style="color: #fc8181;">handle multiple customers during rush hours</strong> (like weekend evenings), especially eye tests
+                </li>
+                <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+                  <strong style="color: #fc8181;">No way to track or share wait times</strong> with individual customers
+                </li>
+              </ul>
+            </div>
           </div>
-          <div class="cs-card">
-            <h4>The Staff Problem</h4>
-            <p>No system for managing eye test queues, manual coordination between sales associates and optometrists, chaos during rush hours.</p>
+        </div>
+
+        <!-- Impact Results (preview) -->
+        <div class="cs-subsection" data-animate>
+          <h3 class="cs-subsection-title">Impact Results</h3>
+          <div class="cs-three-col">
+            <div class="cs-metric">
+              <div class="metric-value">2.7% <span style="color: #68d391; font-size: 20px;">&uarr;</span></div>
+              <div class="metric-label">Store sales conversion increased</div>
+            </div>
+            <div class="cs-metric">
+              <div class="metric-value">38% <span style="color: #68d391; font-size: 20px;">&darr;</span></div>
+              <div class="metric-label">Eye test wait time reduced</div>
+            </div>
+            <div class="cs-metric">
+              <div class="metric-value">0.25 <span style="color: #68d391; font-size: 20px;">&uarr;</span></div>
+              <div class="metric-label">Eye test rating increased</div>
+            </div>
           </div>
         </div>
 
@@ -241,32 +271,47 @@
         <div class="cs-subsection" data-animate>
           <h3 class="cs-subsection-title">Users</h3>
           <div class="cs-three-col">
-            <div class="cs-card">
+            <div class="cs-card cs-card-compact">
               <h4>Customers</h4>
-              <p>Walk-in visitors at 1600+ Lenskart stores looking to buy eyewear, needing eye tests as part of their purchase journey.</p>
+              <p>Walk-in visitors who purchase eyeglasses at stores</p>
             </div>
-            <div class="cs-card">
+            <div class="cs-card cs-card-compact">
               <h4>Optometrists</h4>
-              <p>Eye care professionals stationed at each store, conducting comprehensive eye examinations for walk-in customers.</p>
+              <p>Medically certified professionals who conduct eye tests</p>
             </div>
-            <div class="cs-card">
+            <div class="cs-card cs-card-compact">
               <h4>Sales Associates</h4>
-              <p>Store staff managing customer flow, coordinating between eye tests and product selection, handling tokens and queues.</p>
+              <p>Store staff who attend customers and drive sales</p>
             </div>
           </div>
-        </div>
 
-        <!-- Optometrist explainer -->
-        <div class="insight-box" data-animate>
-          <p class="insight-label">Context</p>
-          <p>An optometrist is an eye care professional who performs comprehensive eye exams. At Lenskart stores, they're the bottleneck — each test takes 8-15 minutes, and most stores have only 1-2 optometrists on duty at any time.</p>
+          <!-- Optometrist explainer -->
+          <div class="insight-box" data-animate style="margin-top: 24px;">
+            <p class="insight-label">Who are Optometrists?</p>
+            <p>An optometrist is an eye care professional medically certified to examine vision conditions in human beings.</p>
+            <p>Currently, nearly <strong>2,000 optometrists</strong> are enrolled with Lenskart across India.</p>
+            <div style="margin-top: 16px;">
+              <img src="assets/lenskart/eye-test/optom.png" alt="An optometrist in a Lenskart store's clinic" style="max-width: 15em; width: 100%; display: block; border-radius: 8px;" loading="lazy" decoding="async">
+              <div class="cs-image-caption">An optometrist in a Lenskart store's clinic</div>
+            </div>
+          </div>
         </div>
 
         <!-- Timeline -->
         <div class="cs-subsection" data-animate>
           <h3 class="cs-subsection-title">Timeline</h3>
-          <p class="cs-text">Research &amp; discovery phase: 4 weeks. Design iterations: 6 weeks. Development &amp; testing: 8 weeks. Total: ~18 weeks from kickoff to first rollout in Q2 2023.</p>
+          <div class="cs-two-col">
+            <div class="cs-card cs-card-compact">
+              <h4>April 2023</h4>
+              <p>Project started</p>
+            </div>
+            <div class="cs-card cs-card-compact">
+              <h4>August 2023</h4>
+              <p>Released v1.0</p>
+            </div>
+          </div>
         </div>
+
       </div>
     </section>
 
@@ -274,13 +319,8 @@
     <section class="cs-section" id="cs-userflow">
       <div class="container">
         <h2 class="cs-section-title" data-animate>User Flow</h2>
-        <p class="cs-text" data-animate>
-          The end-to-end flow covers the entire customer journey from walking into a Lenskart store to leaving with a prescription.
-        </p>
-
         <div class="cs-image" data-animate>
-          <img src="assets/lenskart/eye-test/user-flow.png" alt="End-to-end user flow: customer walk-in to prescription delivery" style="width:100%; display:block; border-radius:12px;" loading="lazy">
-          <div class="cs-image-caption">End-to-end user flow: from store walk-in to automated prescription delivery</div>
+          <img src="assets/lenskart/eye-test/user-flow.png" alt="End-to-end user flow: customer walk-in to prescription delivery" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
         </div>
       </div>
     </section>
@@ -290,63 +330,82 @@
       <div class="container">
         <h2 class="cs-section-title" data-animate>Impact</h2>
 
-        <div class="cs-metrics" data-animate>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 32px;" data-animate>Data measured in 3 weeks of Q2 2023</p>
+
+        <!-- Key Metrics -->
+        <div class="cs-three-col" data-animate>
           <div class="cs-metric">
-            <div class="metric-value">38%</div>
-            <div class="metric-label">Reduction in wait time</div>
+            <div class="metric-value">2.7% <span style="color: #68d391; font-size: 20px;">&uarr;</span></div>
+            <div class="metric-label">Sales conversion increased</div>
           </div>
           <div class="cs-metric">
-            <div class="metric-value">2.7%</div>
-            <div class="metric-label">Sales conversion increase</div>
+            <div class="metric-value">38% <span style="color: #68d391; font-size: 20px;">&darr;</span></div>
+            <div class="metric-label">Eye test wait time reduced (north-star)</div>
           </div>
           <div class="cs-metric">
-            <div class="metric-value">+0.25</div>
-            <div class="metric-label">Store rating increase</div>
-          </div>
-          <div class="cs-metric">
-            <div class="metric-value">8.16m</div>
-            <div class="metric-label">Current avg. test time</div>
+            <div class="metric-value">0.25 <span style="color: #68d391; font-size: 20px;">&uarr;</span></div>
+            <div class="metric-label">Eye test rating increased</div>
           </div>
         </div>
 
-        <div class="cs-two-col" data-animate>
-          <div class="cs-metric" style="text-align:left; padding: 28px;">
-            <div class="metric-value" style="font-size:36px;">72.34%</div>
-            <div class="metric-label">Eye tests completed under 10 minutes</div>
-          </div>
-          <div class="cs-metric" style="text-align:left; padding: 28px;">
-            <div class="metric-value" style="font-size:36px;">&#8377;2,040</div>
-            <div class="metric-label">Store ATV (Average Transaction Value)</div>
-          </div>
+        <!-- Graphs - full width, NOT side-by-side -->
+        <div class="cs-image" data-animate style="margin-top: 32px;">
+          <img src="assets/lenskart/eye-test/graph.png" alt="Mumbai Saturday weekly trends" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+          <div class="cs-image-caption">Look closely at the numbers inside the dotted line</div>
         </div>
 
-        <!-- Graphs placeholders -->
-        <div class="cs-two-col" data-animate>
-          <div class="cs-image">
-            <img src="assets/lenskart/eye-test/graph-2.png" alt="P90 wait time reduction from 34 to 21 minutes" style="width:100%; display:block; border-radius:12px;" loading="lazy">
-            <div class="cs-image-caption">P90 wait time reduction over rollout period</div>
-          </div>
-          <div class="cs-image">
-            <img src="assets/lenskart/eye-test/graph.png" alt="Mumbai Saturday weekly trends — Eye Test to FF%, Conversion%, QMS%" style="width:100%; display:block; border-radius:12px;" loading="lazy">
-            <div class="cs-image-caption">Weekly trend at Mumbai stores (Saturday peak)</div>
-          </div>
+        <div class="cs-image" data-animate style="margin-top: 24px;">
+          <img src="assets/lenskart/eye-test/graph-2.png" alt="P90 wait time reduction from 34 to 21 minutes" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+          <div class="cs-image-caption">Eye test wait time reducing from 34 mins to 21 mins</div>
         </div>
 
-        <div class="insight-box" data-animate>
+        <!-- Bullet points with hard numbers -->
+        <ul data-animate style="margin-top: 32px; padding-left: 20px; list-style: disc;">
+          <li style="margin-bottom: 12px; color: var(--text-secondary); line-height: 1.7; font-size: 16px;">
+            Time taken in an eye test on average came down from
+            <strong style="color: var(--text-primary);">34 mins (Apr 2023)</strong> to
+            <strong style="color: var(--text-primary);">21 mins (Nov 2023)</strong>.
+            Currently it's <strong style="color: var(--text-primary);">8.16 mins.</strong>
+          </li>
+          <li style="margin-bottom: 12px; color: var(--text-secondary); line-height: 1.7; font-size: 16px;">
+            <strong style="color: var(--text-primary);">72.34%</strong> of eye tests happen in under 10 mins across all Lenskart stores.
+          </li>
+          <li style="margin-bottom: 12px; color: var(--text-secondary); line-height: 1.7; font-size: 16px;">
+            Sales conversion at stores went from <strong style="color: var(--text-primary);">31.2% to 33.9%</strong> in 3 weeks of Q2 2023.
+          </li>
+        </ul>
+
+        <!-- Insight box: How did this lead to increased sales? -->
+        <div class="insight-box" data-animate style="margin-top: 32px;">
           <p class="insight-label">Key Insight</p>
-          <p>The token system didn't just reduce wait times — it gave customers visibility into their position, which reduced perceived wait time even further. Customers who could see their queue position were significantly less likely to walk out, directly contributing to the 2.7% sales conversion increase.</p>
+          <h4 style="color: var(--text-primary); margin-bottom: 12px; font-size: 16px;">How did token system &amp; prescription automation lead to increased sales conversion?</h4>
+          <p>78% customers walk-in to buy new eyeglasses and only 12% come just for an eye test. Since glasses are prescription-based, they have a medical need too.</p>
+          <p style="margin-top: 12px;">After this flow, store operations became smoother and less chaotic.</p>
+          <ul style="margin-top: 16px; padding-left: 20px; list-style: disc;">
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              <strong style="color: var(--text-primary);">Faster and accurate eye tests</strong> mean customers spend less time inside clinic and more time shopping
+            </li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              Staff now have more time to sell and it's <strong style="color: var(--text-primary);">easier to convince customers to buy when there's a change in their eye power</strong>
+            </li>
+          </ul>
         </div>
 
-        <div class="cs-two-col" data-animate>
-          <div class="cs-card">
-            <h4>Customer Benefit</h4>
-            <p>Transparent wait times, clear queue position, smoother in-store experience leading to higher satisfaction and repeat visits.</p>
+        <!-- Customer vs Business benefit -->
+        <div class="cs-two-col" data-animate style="margin-top: 32px;">
+          <div class="cs-card" style="border-color: rgba(72,187,120,0.2);">
+            <h4 style="color: #68d391;">Customer's Benefit</h4>
+            <p>Quick and accurate prescriptions let customers prioritise selecting eyeframes that fulfil their medical needs</p>
           </div>
-          <div class="cs-card">
-            <h4>Business Benefit</h4>
-            <p>Higher conversion rates, increased store ratings, better staff utilization, and measurable revenue impact across 1600+ stores.</p>
+          <div class="cs-card" style="border-color: rgba(72,187,120,0.2);">
+            <h4 style="color: #68d391;">Business' Benefit</h4>
+            <ul style="list-style: disc; padding-left: 20px;">
+              <li style="margin-bottom: 4px;">Customers checking their eye power results in new or repeat purchases, boosting business growth</li>
+              <li>Store ATV: <strong>&#8377;2,040</strong></li>
+            </ul>
           </div>
         </div>
+
       </div>
     </section>
 
@@ -358,129 +417,237 @@
         <!-- Why Redesign -->
         <div class="cs-subsection" data-animate>
           <h3 class="cs-subsection-title">Why Redesign?</h3>
-          <p class="cs-text">Major research insights from store visits and customer interviews pointed to a fundamentally broken experience.</p>
 
-          <div class="cs-three-col" style="margin-top: 24px;">
-            <div class="sticky-note">Customers had no idea how long they would have to wait for their eye test</div>
-            <div class="sticky-note">Staff relied on shouting names to call customers — chaos during busy hours</div>
-            <div class="sticky-note">Walk-out rate spiked during 12-3pm and weekends when wait times exceeded 30 mins</div>
+          <!-- 5 sticky notes - exact text from old page -->
+          <div class="cs-two-col" style="margin-top: 24px;">
+            <div class="sticky-note">
+              <h4 style="font-size: 14px; margin-bottom: 8px; color: #e8c84a; font-weight: 600;">Customers prefer a fair, first-come-first-serve system</h4>
+              <p style="font-size: 13px; color: #c9a84c; opacity: 0.8;">They expect to be served in the order they arrive. A transparent token queue builds trust</p>
+            </div>
+            <div class="sticky-note">
+              <h4 style="font-size: 14px; margin-bottom: 8px; color: #e8c84a; font-weight: 600;">Eye test can be for someone other than the person giving number</h4>
+              <p style="font-size: 13px; color: #c9a84c; opacity: 0.8;">Many walk in with family or friends. We should capture who the service is actually for, not just who shared their number</p>
+            </div>
+          </div>
+          <div class="cs-three-col" style="margin-top: 16px;">
+            <div class="sticky-note">
+              <h4 style="font-size: 14px; margin-bottom: 8px; color: #e8c84a; font-weight: 600;">Optoms need the same walk-in queue</h4>
+              <p style="font-size: 13px; color: #c9a84c; opacity: 0.8;">Optoms should see the same real-time queue as store staff to avoid confusion</p>
+            </div>
+            <div class="sticky-note">
+              <h4 style="font-size: 14px; margin-bottom: 8px; color: #e8c84a; font-weight: 600;">Customers want live updates on their wait time</h4>
+              <p style="font-size: 13px; color: #c9a84c; opacity: 0.8;">Providing status and wait-time updates helps reduce frustration</p>
+            </div>
+            <div class="sticky-note">
+              <h4 style="font-size: 14px; margin-bottom: 8px; color: #e8c84a; font-weight: 600;">Inconsistent &amp; non-adaptive UI</h4>
+              <p style="font-size: 13px; color: #c9a84c; opacity: 0.8;">Legacy design language, inconsistent icons, small tap areas, and not usable in both iPad orientations</p>
+            </div>
           </div>
 
+          <!-- User quote from old page -->
           <div class="insight-box" style="margin-top: 32px;">
             <p class="insight-label">User Quote</p>
-            <p><span class="hindi-quote">"Pata nahi kitna time aur lagega"</span></p>
-            <p class="hindi-translation">"I have no idea how much longer this will take" — overheard at a Lenskart store during a weekend visit</p>
+            <p><span style="font-style: italic; color: var(--text-primary);">"Pata nahi kitna time aur lagega"</span></p>
+            <p style="margin-top: 8px;">"I have no idea how much longer this will take" - customer at a Lenskart store</p>
           </div>
         </div>
 
         <!-- UX Audit -->
         <div class="cs-subsection" data-animate>
           <h3 class="cs-subsection-title">UX Audit of Old Flows</h3>
-          <p class="cs-text">Audited the existing store flows against 3 core heuristic principles to identify structural problems.</p>
 
-          <div class="cs-three-col">
-            <div class="cs-card">
-              <h4>Visibility of System Status</h4>
-              <p>Customers had zero visibility into queue position, estimated wait time, or test progress.</p>
+          <ul style="list-style: disc; padding-left: 20px; margin-bottom: 24px;">
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              Usability heuristic evaluation of <strong style="color: var(--text-primary);">customer check-in flow</strong> when they walk-in to store
+            </li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              <strong style="color: var(--text-primary);">Eye test customer list</strong> used by optometrists
+            </li>
+          </ul>
+
+          <h4 style="margin-bottom: 12px; color: var(--text-primary);">Principles used in UX audit</h4>
+          <ol style="padding-left: 20px; margin-bottom: 32px;">
+            <li style="margin-bottom: 6px; color: var(--text-secondary); line-height: 1.6;">Match between the System and the Real World</li>
+            <li style="margin-bottom: 6px; color: var(--text-secondary); line-height: 1.6;">Recognition rather than Recall</li>
+            <li style="margin-bottom: 6px; color: var(--text-secondary); line-height: 1.6;">Consistency and Standards</li>
+          </ol>
+
+          <h4 style="margin-bottom: 16px; color: var(--text-primary);">Pain points</h4>
+          <div class="cs-two-col">
+            <div class="sticky-note">
+              <h4 style="font-size: 14px; margin-bottom: 8px; color: #e8c84a; font-weight: 600;">No Clear Ordering in Eye Test List</h4>
+              <p style="font-size: 13px; color: #c9a84c; opacity: 0.8;">Optometrist struggles to determine which customer to attend first, causing confusion</p>
             </div>
-            <div class="cs-card">
-              <h4>User Control &amp; Freedom</h4>
-              <p>No ability for customers to check status, leave and return, or understand the process steps ahead.</p>
+            <div class="sticky-note">
+              <h4 style="font-size: 14px; margin-bottom: 8px; color: #e8c84a; font-weight: 600;">No Clarity on Purpose of Visit</h4>
+              <p style="font-size: 13px; color: #c9a84c; opacity: 0.8;">Staff request personal details (phone number etc) without explaining purpose, making customers feel it's only for marketing</p>
             </div>
-            <div class="cs-card">
-              <h4>Match Real World</h4>
-              <p>The digital system didn't match the physical store flow, creating confusion between what staff saw and what customers experienced.</p>
+          </div>
+          <div class="cs-three-col" style="margin-top: 16px;">
+            <div class="sticky-note">
+              <h4 style="font-size: 14px; margin-bottom: 8px; color: #e8c84a; font-weight: 600;">Repetitive Data Entries</h4>
+              <p style="font-size: 13px; color: #c9a84c; opacity: 0.8;">Frequent customers must provide their details on every visit leading to frustration</p>
+            </div>
+            <div class="sticky-note">
+              <h4 style="font-size: 14px; margin-bottom: 8px; color: #e8c84a; font-weight: 600;">Lack of Search</h4>
+              <p style="font-size: 13px; color: #c9a84c; opacity: 0.8;">Staff often re-enters customer details instead of searching leading to duplicate entries and an overwhelming list</p>
+            </div>
+            <div class="sticky-note">
+              <h4 style="font-size: 14px; margin-bottom: 8px; color: #e8c84a; font-weight: 600;">Complex User Journeys</h4>
+              <p style="font-size: 13px; color: #c9a84c; opacity: 0.8;">The system is not intuitive requiring training for staff to navigate by themselves</p>
             </div>
           </div>
 
-          <div class="cs-three-col" style="margin-top: 16px;">
-            <div class="sticky-note">Token number shown but no estimated time</div>
-            <div class="sticky-note">Customer list UI was a flat table with no priority indicators</div>
-            <div class="sticky-note">Prescription entry was fully manual — 5-7 minutes per patient</div>
+          <!-- UX Audit image -->
+          <div class="cs-image" data-animate style="margin-top: 32px;">
+            <img src="assets/lenskart/eye-test/ux-audit.png" alt="UX audit annotations on old store flows" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
           </div>
         </div>
 
         <!-- Benchmarking: Store Visits -->
         <div class="cs-subsection" data-animate>
           <h3 class="cs-subsection-title">Benchmarking: Lenskart Store Visits</h3>
-          <p class="cs-text">Visited multiple Lenskart stores, conducted impromptu interviews with staff and customers, and analyzed CCTV footage via Tango AI to map real customer behavior patterns.</p>
+
+          <ul style="list-style: disc; padding-left: 20px; margin-bottom: 24px;">
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              Visited several Lenskart stores at <strong style="color: var(--text-primary);">various times of the day</strong>
+            </li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              Engaged with customers and store staff through <strong style="color: var(--text-primary);">candid conversations and impromptu interviews</strong> to gather insights
+            </li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              Analysed staff behaviour during peak and non-peak hours, supported by <strong style="color: var(--text-primary);">CCTV footage analysis using Tango AI</strong>
+            </li>
+          </ul>
 
           <div class="cs-two-col">
             <div class="cs-image">
-              <img src="assets/lenskart/eye-test/store.png" alt="On-site observation at a Lenskart store" style="width:100%; display:block; border-radius:12px;" loading="lazy">
-              <div class="cs-image-caption">On-site observation at a Lenskart store</div>
+              <img src="assets/lenskart/eye-test/store.png" alt="On-site observation at a Lenskart store" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+              <div class="cs-image-caption">From store visits</div>
             </div>
             <div class="cs-image">
-              <img src="assets/lenskart/eye-test/cctv.jpeg" alt="CCTV footage analysis using Tango AI" style="width:100%; display:block; border-radius:12px;" loading="lazy">
-              <div class="cs-image-caption">CCTV footage analysis via Tango AI</div>
+              <img src="assets/lenskart/eye-test/cctv.jpeg" alt="CCTV footage analysis using Tango AI" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+              <div class="cs-image-caption">Checked store's CCTV footages</div>
             </div>
           </div>
 
+          <h4 style="margin-top: 32px; margin-bottom: 16px; color: var(--text-primary);">Observations</h4>
+
           <div class="cs-two-col">
             <div class="cs-card" style="border-color: rgba(72,187,120,0.2);">
-              <h4 style="color: #68d391;">Positive Observations</h4>
-              <p>Staff were genuinely trying to manage queues manually. Customers appreciated when given even rough time estimates. Store layout had logical flow from entry to test room.</p>
+              <h4 style="color: #68d391;">Positive takeaways</h4>
+              <ul style="list-style: disc; padding-left: 20px;">
+                <li style="margin-bottom: 6px; color: var(--text-secondary); line-height: 1.6;">Customers prefer a <strong style="color: var(--text-primary);">quick check-in</strong> with minimal questions</li>
+                <li style="margin-bottom: 6px; color: var(--text-secondary); line-height: 1.6;">Staff was already <strong style="color: var(--text-primary);">comfortable using the check-in and optometrist apps</strong> on iPad</li>
+              </ul>
             </div>
             <div class="cs-card" style="border-color: rgba(245,101,101,0.2);">
-              <h4 style="color: #fc8181;">Things to Avoid</h4>
-              <p>Staff overwhelmed during peak hours. No standardized process across stores. Different stores had different workarounds, creating inconsistent experience.</p>
+              <h4 style="color: #fc8181;">Things to avoid</h4>
+              <ul style="list-style: disc; padding-left: 20px;">
+                <li style="margin-bottom: 6px; color: var(--text-secondary); line-height: 1.6;">Asking for a phone number <strong style="color: var(--text-primary);">shouldn't feel like a marketing tactic</strong></li>
+                <li style="margin-bottom: 6px; color: var(--text-secondary); line-height: 1.6;">Avoid changing staff's existing flow. <strong style="color: var(--text-primary);">Don't disrupt their current SOPs</strong></li>
+              </ul>
             </div>
           </div>
         </div>
 
         <!-- Benchmarking: Other Brands -->
         <div class="cs-subsection" data-animate>
-          <h3 class="cs-subsection-title">Benchmarking: Other Brands</h3>
-          <p class="cs-text">Studied queue management systems at McDonald's (self-service kiosks), KFC (token-based ordering), and airports (flight status displays) to identify patterns that could transfer to Lenskart's context.</p>
+          <h3 class="cs-subsection-title">Benchmarking: Other Brands' Stores, Offices &amp; Airport</h3>
+
+          <ul style="list-style: disc; padding-left: 20px; margin-bottom: 24px;">
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              Visited places like <strong style="color: var(--text-primary);">McDonald's, KFC, airports and government offices</strong> to understand customer flow operations
+            </li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              Observed how different environments handle <strong style="color: var(--text-primary);">queues, waiting times and service efficiency</strong>
+            </li>
+          </ul>
 
           <div class="cs-three-col">
             <div class="cs-image">
-              <img src="assets/lenskart/eye-test/mcd.jpeg" alt="McDonald's self-service kiosk" style="width:100%; display:block; border-radius:12px;" loading="lazy">
-              <div class="cs-image-caption">McDonald's self-service kiosk</div>
+              <img src="assets/lenskart/eye-test/mcd.jpeg" alt="Customer Kiosk at McDonald's" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+              <div class="cs-image-caption">Customer Kiosk at McDonald's</div>
             </div>
             <div class="cs-image">
-              <img src="assets/lenskart/eye-test/kfc.jpeg" alt="KFC token-based ordering system" style="width:100%; display:block; border-radius:12px;" loading="lazy">
-              <div class="cs-image-caption">KFC token-based ordering</div>
+              <img src="assets/lenskart/eye-test/kfc.jpeg" alt="Token system at KFC" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+              <div class="cs-image-caption">Tokens system at KFC</div>
             </div>
             <div class="cs-image">
-              <img src="assets/lenskart/eye-test/airport.webp" alt="Airport flight status display board" style="width:100%; display:block; border-radius:12px;" loading="lazy">
-              <div class="cs-image-caption">Airport flight status displays</div>
+              <img src="assets/lenskart/eye-test/airport.webp" alt="Flight status at Airport" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+              <div class="cs-image-caption">Flight status at Airport</div>
+            </div>
+          </div>
+
+          <h4 style="margin-top: 32px; margin-bottom: 16px; color: var(--text-primary);">Observations</h4>
+
+          <div class="cs-two-col">
+            <div class="cs-card" style="border-color: rgba(72,187,120,0.2);">
+              <h4 style="color: #68d391;">Positive takeaways</h4>
+              <ul style="list-style: disc; padding-left: 20px;">
+                <li style="margin-bottom: 6px; color: var(--text-secondary); line-height: 1.6;"><strong style="color: var(--text-primary);">Queue system</strong> should serve walk-ins on a first-come, first-served basis</li>
+                <li style="margin-bottom: 6px; color: var(--text-secondary); line-height: 1.6;">Customers want <strong style="color: var(--text-primary);">live updates in-store</strong> to avoid frustration while waiting</li>
+                <li style="margin-bottom: 6px; color: var(--text-secondary); line-height: 1.6;">iPad touch targets must be <strong style="color: var(--text-primary);">large and clearly visible</strong> since staff often operate them from a distance on tables</li>
+                <li style="margin-bottom: 6px; color: var(--text-secondary); line-height: 1.6;"><strong style="color: var(--text-primary);">Airport-style displays</strong> show status updates clearly and efficiently</li>
+              </ul>
+            </div>
+            <div class="cs-card" style="border-color: rgba(245,101,101,0.2);">
+              <h4 style="color: #fc8181;">Things to avoid</h4>
+              <ul style="list-style: disc; padding-left: 20px;">
+                <li style="margin-bottom: 6px; color: var(--text-secondary); line-height: 1.6;">Avoid <strong style="color: var(--text-primary);">manual AR slip uploads and eye power entry</strong>. It wastes a lot of time and burdens optometrists</li>
+                <li style="margin-bottom: 6px; color: var(--text-secondary); line-height: 1.6;">Don't assume the phone number belongs to the person getting eyes tested. Example: <strong style="color: var(--text-primary);">parents give their own phone number for kid's eye test</strong></li>
+              </ul>
             </div>
           </div>
         </div>
 
-        <!-- Affinity Mapping -->
+        <!-- Affinity Mapping & Feature Matrix -->
         <div class="cs-subsection" data-animate>
-          <h3 class="cs-subsection-title">Affinity Mapping &amp; Feature Matrix</h3>
-          <p class="cs-text">Synthesized all research insights through affinity mapping sessions and created a feature priority matrix with the PM to define what to build first.</p>
+          <h3 class="cs-subsection-title">Collating Insights &amp; Affinity Mapping</h3>
 
           <div class="cs-two-col">
             <div class="cs-image">
-              <img src="assets/lenskart/eye-test/affinity-1.png" alt="Affinity mapping session — grouping insights on whiteboard" style="width:100%; display:block; border-radius:12px;" loading="lazy">
-              <div class="cs-image-caption">Affinity mapping session with research insights</div>
+              <img src="assets/lenskart/eye-test/affinity-1.png" alt="Affinity mapping session" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+              <div class="cs-image-caption">Grouping insights on whiteboard</div>
             </div>
             <div class="cs-image">
-              <img src="assets/lenskart/eye-test/affinity-2.jpeg" alt="Feature priority matrix created with product manager" style="width:100%; display:block; border-radius:12px;" loading="lazy">
-              <div class="cs-image-caption">Feature priority matrix (impact vs effort)</div>
+              <img src="assets/lenskart/eye-test/affinity-2.jpeg" alt="Feature priority matrix" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+              <div class="cs-image-caption">Created feature matrix with product manager</div>
+            </div>
+          </div>
+
+          <div class="cs-two-col" style="margin-top: 24px;">
+            <div class="sticky-note">
+              <h4 style="font-size: 14px; margin-bottom: 8px; color: #e8c84a; font-weight: 600;">Token system brings order to walk-ins</h4>
+              <p style="font-size: 13px; color: #c9a84c; opacity: 0.8;">Token-based queue helps manage customer flow fairly and efficiently, reducing confusion and wait-time complaints</p>
+            </div>
+            <div class="sticky-note">
+              <h4 style="font-size: 14px; margin-bottom: 8px; color: #e8c84a; font-weight: 600;">Primary &amp; secondary profiles</h4>
+              <p style="font-size: 13px; color: #c9a84c; opacity: 0.8;">Capturing both the person giving the number and the one getting the eyes tested ensures smooth check-ins for families and groups</p>
+            </div>
+          </div>
+          <div class="cs-two-col" style="margin-top: 16px;">
+            <div class="sticky-note">
+              <h4 style="font-size: 14px; margin-bottom: 8px; color: #e8c84a; font-weight: 600;">Shared token visibility for optometrists</h4>
+              <p style="font-size: 13px; color: #c9a84c; opacity: 0.8;">Showing the same token queue in the optometrist's app aligns the entire staff, enabling timely and predictable eye tests</p>
+            </div>
+            <div class="sticky-note">
+              <h4 style="font-size: 14px; margin-bottom: 8px; color: #e8c84a; font-weight: 600;">Wireless prescription sync reduces manual work</h4>
+              <p style="font-size: 13px; color: #c9a84c; opacity: 0.8;">Auto-syncing AR prescriptions via Wi-Fi adapters saves 5-7 minutes per test, freeing optometrists to focus more on patient</p>
             </div>
           </div>
         </div>
 
-        <!-- Design System Updates -->
+        <!-- Updating Design System -->
         <div class="cs-subsection" data-animate>
-          <h3 class="cs-subsection-title">Design System Updates</h3>
-          <p class="cs-text">Updated the Lenskart design system to support the new iPad-first interfaces — added larger touch targets, new component sizes, and iPad-specific patterns.</p>
-
-          <div class="cs-two-col" style="margin-top: 16px;">
-            <div class="cs-card">
-              <h4>New Components</h4>
-              <p>Title XL size, xl Button variant, lg Checkbox/Radio for iPad touch targets, Modal popup component for confirmations.</p>
-            </div>
-            <div class="cs-card">
-              <h4>Why iPad-First</h4>
-              <p>Store staff use iPads for customer management. Larger touch targets reduce errors during busy periods. Components needed to work at arm's length.</p>
-            </div>
-          </div>
+          <h3 class="cs-subsection-title">Updating Design System</h3>
+          <h4 style="margin-bottom: 16px; color: var(--text-primary);">Added Variants for Tablet (iPad) and TV Interfaces</h4>
+          <ul style="list-style: disc; padding-left: 20px;">
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;"><code style="background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 3px; font-size: 14px;">Title XL</code> in Typography</li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;"><code style="background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 3px; font-size: 14px;">xl</code> variant for Button</li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;"><code style="background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 3px; font-size: 14px;">lg</code> variant for Checkbox &amp; Radio button</li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">Modal popup</li>
+          </ul>
         </div>
       </div>
     </section>
@@ -488,107 +655,140 @@
     <!-- ═══ WIREFRAMES & UI ═══ -->
     <section class="cs-section" id="cs-wireframes">
       <div class="container">
-        <h2 class="cs-section-title" data-animate>Wireframes &amp; UI</h2>
+        <h2 class="cs-section-title" data-animate>Wireframe Explorations</h2>
 
-        <!-- 1. Purpose of Visit -->
+        <!-- 1. Purpose of Visit Screen -->
         <div class="cs-subsection" data-animate>
           <h3 class="cs-subsection-title">1. Purpose of Visit Screen</h3>
-          <p class="cs-text">Explored 4 wireframe options for the initial screen customers see when their visit begins. Needed to capture visit intent quickly while building trust.</p>
 
-          <div class="cs-image" style="margin-top: 24px;">
-            <img src="assets/lenskart/eye-test/visit-purpose-wireframe.png" alt="Four wireframe explorations for the Purpose of Visit screen" style="width:100%; display:block; border-radius:12px;" loading="lazy">
-            <div class="cs-image-caption">Wireframe explorations — comparing layout options for visit purpose selection</div>
+          <!-- Old version image -->
+          <div class="cs-image" style="margin-top: 16px;">
+            <img src="assets/lenskart/eye-test/visit-purpose-old.png" alt="Old Purpose of Visit screen with annotated issues" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
           </div>
 
-          <div class="cs-two-col" style="margin-top: 24px;">
-            <div class="cs-image">
-              <img src="assets/lenskart/eye-test/visit-purpose-mockup.png" alt="Final Purpose of Visit screen mockup" style="width:100%; display:block; border-radius:12px;" loading="lazy">
-              <div class="cs-image-caption">Final mockup — Purpose of Visit screen</div>
-            </div>
-            <div class="cs-image">
-              <img src="assets/lenskart/eye-test/visit-purpose-store.jpeg" alt="Purpose of Visit screen deployed on iPad in a Lenskart store" style="width:100%; display:block; border-radius:12px;" loading="lazy">
-              <div class="cs-image-caption">Screen deployed in a Lenskart store</div>
-            </div>
+          <h4 style="margin-top: 32px; margin-bottom: 16px; color: var(--text-primary);">Identified main elements:</h4>
+          <ol style="padding-left: 20px;">
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">All purposes should be <strong style="color: var(--text-primary);">visible in one glance</strong> without any nesting</li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">Customers mostly select <strong style="color: var(--text-primary);">'eye test' and 'shopping'</strong> as their purpose of visit, moving them to higher priority</li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">UI design should be <strong style="color: var(--text-primary);">eye-catchy</strong></li>
+          </ol>
+
+          <div class="cs-image" style="margin-top: 24px;">
+            <img src="assets/lenskart/eye-test/visit-purpose-wireframe.png" alt="Wireframe explorations for Purpose of Visit" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+          </div>
+
+          <!-- Screen Divisions -->
+          <h4 style="margin-top: 32px; margin-bottom: 16px; color: var(--text-primary);">Screen Divisions</h4>
+          <div class="cs-image">
+            <img src="assets/lenskart/eye-test/visit-purpose-screen.png" alt="Screen division diagram showing interactive elements" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+            <div class="cs-image-caption">Depicting interactive elements on screen</div>
+          </div>
+
+          <h4 style="margin-top: 32px; margin-bottom: 16px; color: var(--text-primary);">Final Mockup</h4>
+          <div class="cs-image">
+            <img src="assets/lenskart/eye-test/visit-purpose-mockup.png" alt="Final Purpose of Visit screen mockup" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+          </div>
+
+          <h4 style="margin-top: 32px; margin-bottom: 16px; color: var(--text-primary);">Snapshot from Store</h4>
+          <div class="cs-image">
+            <img src="assets/lenskart/eye-test/visit-purpose-store.jpeg" alt="Purpose of Visit screen deployed on iPad in store" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
           </div>
         </div>
 
         <!-- 2. Token Screen -->
         <div class="cs-subsection" data-animate>
           <h3 class="cs-subsection-title">2. Token Screen</h3>
-          <p class="cs-text">Inspired by physical receipts and boarding passes. The token gives the customer a tangible reference point for their position in the queue.</p>
 
-          <div class="cs-two-col">
-            <div class="cs-image">
-              <img src="assets/lenskart/eye-test/token-mockup.png" alt="Final token screen design mockup" style="width:100%; display:block; border-radius:12px;" loading="lazy">
-              <div class="cs-image-caption">Final token screen design (animated in production)</div>
-            </div>
-            <div class="cs-image">
-              <img src="assets/lenskart/eye-test/token-store.jpeg" alt="Token screen displayed on iPad at a Lenskart store" style="width:100%; display:block; border-radius:12px;" loading="lazy">
-              <div class="cs-image-caption">Token screen on iPad at a Lenskart store</div>
-            </div>
+          <!-- Inspiration -->
+          <h4 style="margin-top: 16px; margin-bottom: 16px; color: var(--text-primary);">Inspirations</h4>
+          <div class="cs-image" style="max-width: 15em;">
+            <img src="assets/lenskart/eye-test/token-inspiration.png" alt="Physical receipt inspiration for token design" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+            <div class="cs-image-caption">Got the idea of depicting token slip</div>
+          </div>
+
+          <h4 style="margin-top: 32px; margin-bottom: 16px; color: var(--text-primary);">Identified main elements:</h4>
+          <ol style="padding-left: 20px;">
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;"><strong style="color: var(--text-primary);">Token number</strong> with approximate waiting time (in minutes)</li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;"><strong style="color: var(--text-primary);">Customer details</strong> and their purpose of visit</li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;"><strong style="color: var(--text-primary);">Date and time</strong> of token generation (current time)</li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">Area for showing <strong style="color: var(--text-primary);">offers, customer incentives</strong> etc.</li>
+          </ol>
+
+          <!-- Video mockup -->
+          <h4 style="margin-top: 32px; margin-bottom: 16px; color: var(--text-primary);">Final Mockup</h4>
+          <div class="cs-image">
+            <video autoplay muted loop playsinline width="100%" preload="none" poster="assets/lenskart/eye-test/token-mockup.png" style="border-radius: 12px; display: block;">
+              <source src="assets/lenskart/eye-test/token-mockup.webm" type="video/webm">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <h4 style="margin-top: 32px; margin-bottom: 16px; color: var(--text-primary);">Snapshot from Store</h4>
+          <div class="cs-image" style="max-width: 20em;">
+            <img src="assets/lenskart/eye-test/token-store.jpeg" alt="Token generated at store" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+            <div class="cs-image-caption">Token generated at store</div>
           </div>
         </div>
 
-        <!-- 3. Customer List -->
+        <!-- 3. Customer's List for Eye Test -->
         <div class="cs-subsection" data-animate>
-          <h3 class="cs-subsection-title">3. Customer List for Eye Test</h3>
-          <p class="cs-text">The old version was a flat, unprioritized table. The redesign introduced a grid layout with clear "Next Customer" highlighting, status indicators, and time-in-queue visibility.</p>
+          <h3 class="cs-subsection-title">3. Customer's List for Eye Test</h3>
 
-          <div class="cs-two-col">
-            <div class="cs-card" style="border-color: rgba(245,101,101,0.2);">
-              <h4>Old Version Issues</h4>
-              <p>Flat table with no visual hierarchy. No "next customer" indicator. No time-in-queue data. Staff had to manually track who was next.</p>
-            </div>
-            <div class="cs-card" style="border-color: rgba(72,187,120,0.2);">
-              <h4>Redesigned Version</h4>
-              <p>Grid layout with prominent "Next Customer" card, color-coded status, elapsed wait time, and one-tap actions for staff.</p>
-            </div>
+          <!-- Old version image -->
+          <div class="cs-image" style="margin-top: 16px;">
+            <img src="assets/lenskart/eye-test/epb-old.png" alt="Old customer list UI with annotated issues" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
           </div>
 
-          <div class="cs-two-col" style="margin-top: 16px;">
-            <div class="cs-image">
-              <img src="assets/lenskart/eye-test/epb-wireframe.png" alt="Customer list wireframe exploration" style="width:100%; display:block; border-radius:12px;" loading="lazy">
-              <div class="cs-image-caption">Wireframe exploration</div>
-            </div>
-            <div class="cs-image">
-              <img src="assets/lenskart/eye-test/epb-mockup.png" alt="Final customer list mockup — grid layout with Next Customer highlighted" style="width:100%; display:block; border-radius:12px;" loading="lazy">
-              <div class="cs-image-caption">Final mockup — grid layout with "Next Customer" highlighted</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 4. Prescription Retrieval -->
-        <div class="cs-subsection" data-animate>
-          <h3 class="cs-subsection-title">4. Automatic Prescription Retrieval</h3>
-          <p class="cs-text">The biggest time-saver. Prescription entry went from 5-7 minutes of manual input to 10-15 seconds with automatic retrieval via a 4-digit code mapping system.</p>
-
-          <div class="evolution-timeline">
-            <div class="evolution-step">
-              <div class="step-label">Before</div>
-              <div class="step-title">Old Version<br><span style="color:var(--text-dim);font-size:12px;">5-7 min manual entry</span></div>
-            </div>
-            <span class="evolution-arrow">&rarr;</span>
-            <div class="evolution-step">
-              <div class="step-label">Iteration 1</div>
-              <div class="step-title">v1.0<br><span style="color:var(--text-dim);font-size:12px;">Partial automation</span></div>
-            </div>
-            <span class="evolution-arrow">&rarr;</span>
-            <div class="evolution-step">
-              <div class="step-label">Iteration 2</div>
-              <div class="step-title">v2.0<br><span style="color:var(--text-dim);font-size:12px;">Improved mapping</span></div>
-            </div>
-            <span class="evolution-arrow">&rarr;</span>
-            <div class="evolution-step">
-              <div class="step-label">Final</div>
-              <div class="step-title">4-Digit Code<br><span style="color:#c9a84c;font-size:12px;">10-15 seconds</span></div>
-            </div>
-          </div>
+          <h4 style="margin-top: 32px; margin-bottom: 16px; color: var(--text-primary);">Identified main elements:</h4>
+          <ol style="padding-left: 20px;">
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">Customer queue should be <strong style="color: var(--text-primary);">sorted by token number</strong></li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;"><strong style="color: var(--text-primary);">Next customer</strong> for eye test should be clearly visible</li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">Show upcoming customers as much as possible with <strong style="color: var(--text-primary);">minimal scrolling</strong></li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">Optometrist should see as much <strong style="color: var(--text-primary);">customer info</strong> as possible</li>
+          </ol>
 
           <div class="cs-image" style="margin-top: 24px;">
-            <img src="assets/lenskart/eye-test/rx-old.png" alt="Prescription retrieval evolution — from manual entry to 4-digit code automation" style="width:100%; display:block; border-radius:12px;" loading="lazy">
-            <div class="cs-image-caption">Evolution from manual entry to 4-digit code mapping</div>
+            <img src="assets/lenskart/eye-test/epb-wireframe.png" alt="Customer list wireframe exploration" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+          </div>
+
+          <h4 style="margin-top: 32px; margin-bottom: 16px; color: var(--text-primary);">Final Mockup</h4>
+          <div class="cs-image">
+            <img src="assets/lenskart/eye-test/epb-mockup.png" alt="Final customer list mockup" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
           </div>
         </div>
+
+        <!-- 4. Automatic Prescription Retrieval -->
+        <div class="cs-subsection" data-animate>
+          <h3 class="cs-subsection-title">4. Automatic Prescription Retrieval</h3>
+
+          <!-- Old version evolution image -->
+          <div class="cs-image" style="margin-top: 16px;">
+            <img src="assets/lenskart/eye-test/rx-old.png" alt="Prescription retrieval evolution" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+          </div>
+
+          <h4 style="margin-top: 32px; margin-bottom: 16px; color: var(--text-primary);">Identified main elements:</h4>
+          <ol style="padding-left: 20px;">
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              Manual work of printing <strong style="color: var(--text-primary);">AR slips</strong>, uploading images and entering prescriptions was inefficient. We aimed to eliminate it
+            </li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              First, we introduced <strong style="color: var(--text-primary);">Wi-Fi adapters and a desktop app</strong> to sync AR prescriptions directly to the system
+            </li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              Version 2.0 let optometrists view all synced prescriptions and manually select the correct one. But this was still <strong style="color: var(--text-primary);">time-consuming</strong>
+            </li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              <strong style="color: var(--text-primary);">Final solution:</strong> Use a unique 4-digit code to map a customer's token to their AR prescription, showing only the right one instantly
+            </li>
+          </ol>
+
+          <!-- Final Rx Mockup -->
+          <h4 style="margin-top: 32px; margin-bottom: 16px; color: var(--text-primary);">Final Mockup</h4>
+          <div class="cs-image">
+            <img src="assets/lenskart/eye-test/rx-mockup.png" alt="Final prescription retrieval mockup with 4-digit code" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -597,34 +797,88 @@
       <div class="container">
         <h2 class="cs-section-title" data-animate>Important Decisions</h2>
 
-        <div class="decision-card" data-animate>
-          <div class="decision-number">01</div>
-          <h4>Get Visit Purpose Before Mobile Number</h4>
-          <p>Instead of asking for the phone number first (the old flow), we ask customers why they're visiting. This builds trust by showing we care about their intent before asking for personal data. It also lets staff route customers more efficiently — someone coming for a repair doesn't need an eye test slot.</p>
-        </div>
+        <!-- Decision 1 -->
+        <div class="cs-subsection" data-animate>
+          <h3 class="cs-subsection-title">1. Get Customer's Visit Purpose Before Mobile Number</h3>
 
-        <div class="decision-card" data-animate>
-          <div class="decision-number">02</div>
-          <h4>Customer Profile Selection (Primary &amp; Secondary)</h4>
-          <p>My original suggestion: allow customers to indicate if they're also shopping for someone else (e.g., a spouse or parent). This created primary and secondary profiles per visit, letting staff prepare for multiple eye tests upfront instead of discovering them mid-visit. Reduced repeat queue-joining significantly.</p>
-        </div>
-
-        <div class="decision-card" data-animate>
-          <div class="decision-number">03</div>
-          <h4>Prescription Syncing Desktop App (Patent Pending)</h4>
-          <p>Designed a Windows desktop application that syncs prescription data from the autorefractor machine to the iPad app via local Wi-Fi adapters. This eliminated manual prescription entry entirely. The solution uses a local network approach (no cloud dependency), making it work reliably even in stores with poor internet. Patent currently pending.</p>
-        </div>
-
-        <div class="cs-two-col" data-animate style="margin-top: 32px;">
-          <div class="cs-image">
-            <img src="assets/lenskart/eye-test/bifrost.png" alt="Prescription syncing Windows desktop app designed by Rajat" style="width:100%; display:block; border-radius:12px;" loading="lazy">
-            <div class="cs-image-caption">Windows desktop app designed by Rajat</div>
+          <div class="cs-image" style="margin-top: 16px;">
+            <img src="assets/lenskart/eye-test/token-decision.png" alt="Comparison between the two flows" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+            <div class="cs-image-caption">Comparison between the two flows - Clear intent builds trust</div>
           </div>
-          <div class="cs-image">
-            <img src="assets/lenskart/eye-test/adapters.png" alt="Wi-Fi adapters connected with eye test machines for prescription syncing" style="width:100%; display:block; border-radius:12px;" loading="lazy">
-            <div class="cs-image-caption">Wi-Fi adapters for local prescription syncing</div>
+
+          <ul style="list-style: disc; padding-left: 20px; margin-top: 24px;">
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              Asking for a phone number upfront without context <strong style="color: var(--text-primary);">makes it feel like a marketing tactic</strong>
+            </li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              <strong style="color: var(--text-primary);">Insight:</strong> Customers need to know <em>why</em> number is being asked and what comes next
+            </li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              Asking the visit purpose <em>before</em> the phone number made customers <strong style="color: var(--text-primary);">more comfortable and conversations smoother</strong>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Decision 2 -->
+        <div class="cs-subsection" data-animate>
+          <h3 class="cs-subsection-title">2. Customer Profile Selection</h3>
+
+          <div class="cs-image" style="margin-top: 16px;">
+            <img src="assets/lenskart/eye-test/profiles.png" alt="Multiple profiles linked to one phone number" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+            <div class="cs-image-caption">Multiple profiles linked to one phone number</div>
+          </div>
+
+          <ul style="list-style: disc; padding-left: 20px; margin-top: 24px;">
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              Customer profiles were <strong style="color: var(--text-primary);">not saved earlier</strong>. Staff re-entered all info on every visit
+            </li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              <strong style="color: var(--text-primary);">Insight:</strong> Often, one person (e.g. parent) gave their phone number for someone else's eye test (e.g. child)
+            </li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              I suggested the concept of <strong style="color: var(--text-primary);">customer profiling with primary and secondary profiles</strong>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Decision 3 -->
+        <div class="cs-subsection" data-animate>
+          <h3 class="cs-subsection-title">3. Prescription Syncing Desktop App</h3>
+          <p style="display: inline-block; background: rgba(201,168,76,0.15); color: #c9a84c; padding: 4px 12px; border-radius: 4px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px;">Patent pending</p>
+
+          <div class="cs-image" style="margin-top: 8px;">
+            <img src="assets/lenskart/eye-test/bifrost.png" alt="Prescription syncing Windows desktop app" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+            <div class="cs-image-caption">Software to sync prescriptions from machines to Lenskart database via Wi-Fi adapters</div>
+          </div>
+
+          <ul style="list-style: disc; padding-left: 20px; margin-top: 24px;">
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              AR machines are now connected via <strong style="color: var(--text-primary);">Wi-Fi adapters</strong> that relay info to a fixed IP address
+            </li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              To sync prescription data with Lenskart's database, we needed an <strong style="color: var(--text-primary);">app to listen to the IP</strong>
+            </li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              I designed a <strong style="color: var(--text-primary);">Windows desktop app</strong> (developed in-house) that receives and relays prescriptions wirelessly and securely
+            </li>
+          </ul>
+
+          <h4 style="margin-top: 24px; margin-bottom: 12px; color: var(--text-primary);">About Adapters:</h4>
+          <ul style="list-style: disc; padding-left: 20px;">
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              These Wi-Fi adapters <strong style="color: var(--text-primary);">securely transfer recorded prescriptions</strong> to a fixed IP address
+            </li>
+            <li style="margin-bottom: 8px; color: var(--text-secondary); line-height: 1.6;">
+              <strong style="color: var(--text-primary);">Patent is pending</strong> for these adapters
+            </li>
+          </ul>
+
+          <div class="cs-image" style="margin-top: 24px; max-width: 20em;">
+            <img src="assets/lenskart/eye-test/adapters.png" alt="Wi-Fi adapters connected with eye test machines" style="width:100%; display:block; border-radius:12px;" loading="lazy" decoding="async">
+            <div class="cs-image-caption">Wi-Fi adapters connected with eye test machines</div>
           </div>
         </div>
+
       </div>
     </section>
 
