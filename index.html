@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rajat Garg, Product Designer</title>
+  <meta name="description" content="Portfolio of Rajat Garg, a product designer with seven years of designing the software people run their workday on.">
+  <meta name="author" content="Rajat Garg">
+  <meta name="theme-color" content="#f4f5f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#18191a" media="(prefers-color-scheme: dark)">
+
+  <link rel="canonical" href="https://rajatg.in/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Rajat Garg">
+  <meta property="og:title" content="Rajat Garg, Product Designer">
+  <meta property="og:description" content="Seven years of designing the software people run their workday on.">
+  <meta property="og:url" content="https://rajatg.in/">
+
+  <!-- Fonts are served from this site (css/site.css declares them). The one
+       connection kept to fonts.gstatic.com is for the animated beer emoji. -->
+  <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Before first paint: the chosen theme, and whether the intro already played this visit -->
+  <script>
+    (function () {
+      var root = document.documentElement;
+      root.classList.add('js');
+      try {
+        var theme = localStorage.getItem('rg-theme');
+        if (theme === 'light' || theme === 'dark') root.dataset.theme = theme;
+        if (sessionStorage.getItem('rg-intro-seen') === '1') root.classList.add('intro-seen');
+      } catch (e) {}
+      // The intro restores scroll itself once it ends
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    })();
+  </script>
+
+  <link rel="stylesheet" href="css/intro.css">
+  <link rel="stylesheet" href="css/site.css">
+
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="manifest" href="site.webmanifest">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "mainEntity": {
+      "@type": "Person",
+      "name": "Rajat Garg",
+      "jobTitle": "Product Designer",
+      "description": "Product designer with seven years of designing the software people run their workday on.",
+      "url": "https://rajatg.in/",
+      "email": "rajatgarg1809@gmail.com",
+      "sameAs": ["https://linkedin.com/in/gragtajar", "https://github.com/gragtajar"],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Noida",
+        "addressCountry": "India"
+      },
+      "worksFor": {
+        "@type": "Organization",
+        "name": "LambdaTest"
+      }
+    }
+  }
+  </script>
+
+  <!-- Lottie player for the animated beer emoji -->
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+  <!-- Analytics: Cloudflare Web Analytics (cookieless, deferred) -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "599e70fe62dd40bf8b0fa8569f070d68"}'></script>
+
+  <!--
+    Analytics: Amplitude, loaded async by script injection so it never blocks
+    rendering. trackEvent() queues events fired before the SDK is ready.
+  -->
+  <script>
+  (function () {
+    window.trackEvent = function (name) {
+      if (window.amplitude && typeof window.amplitude.track === 'function') {
+        window.amplitude.track(name);
+      } else {
+        (window.__ampQueue = window.__ampQueue || []).push(name);
+      }
+    };
+    var s = document.createElement('script');
+    s.src = 'https://cdn.amplitude.com/script/8300beffc146f03833610e507db0468c.js';
+    s.async = true;
+    s.onload = function () {
+      if (!window.amplitude) return;
+      if (window.sessionReplay && window.amplitude.add) {
+        window.amplitude.add(window.sessionReplay.plugin({ sampleRate: 1 }));
+      }
+      window.amplitude.init('8300beffc146f03833610e507db0468c', {
+        fetchRemoteConfig: true,
+        autocapture: {
+          attribution: { trackingMethod: ['userProperty', 'eventProperty'] },
+          fileDownloads: true,
+          formInteractions: true,
+          pageViews: true,
+          sessions: true,
+          elementInteractions: true,
+          networkTracking: true,
+          webVitals: true,
+          frustrationInteractions: { thrashedCursor: true, errorClicks: true, deadClicks: true, rageClicks: true }
+        }
+      });
+      (window.__ampQueue || []).forEach(function (n) { window.amplitude.track(n); });
+      window.__ampQueue = [];
+    };
+    document.head.appendChild(s);
+  })();
+  </script>
+</head>
+<body class="page-home">
+
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- ═══ INTRO CRAWL (unchanged) ═══ -->
+  <div class="intro-overlay" id="intro-overlay">
+    <div id="board">
+      <div id="content">
+        <p>In a galaxy far, far away…</p>
+        <p>there lives a human designer.</p>
+        <p>Seven years of designing enterprise software.</p>
+        <p>Built from scratch at dox2U.</p>
+        <p>Shipped across 1600+ stores at Lenskart.</p>
+        <p>Now teaching AI to behave at LambdaTest.</p>
+        <p>Zero tolerance for bad UX and shit movies.</p>
+        <p>Fueled by cold beer and strong coffee.</p>
+        <p>Recharged by long bike rides and good reads.</p>
+        <p>Speaks empathy with users,<br>business with PMs and code with devs.</p>
+        <p class="intro-finale">Intermission is not an option.</p>
+      </div>
+    </div>
+    <button class="intro-skip" id="intro-skip">Skip Intro</button>
+  </div>
+
+  <header class="site-header">
+    <div class="ident">
+      <h1>Rajat Garg <dotlottie-player id="cheers-lottie" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f37b/lottie.json" autoplay speed="1" aria-hidden="true"></dotlottie-player></h1>
+      <p class="role">Product designer</p>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section class="about" aria-label="About">
+      <p class="bio">Seven years of designing the software people run their workday on. Right now that means teaching AI to behave for QA teams at LambdaTest.</p>
+
+      <p class="reach">
+        <a href="mailto:rajatgarg1809@gmail.com">Email me</a>,
+        <a href="https://linkedin.com/in/gragtajar" target="_blank" rel="noopener">connect on LinkedIn</a>,
+        <a href="https://github.com/gragtajar" target="_blank" rel="noopener" data-track="github">find me on GitHub</a>,
+        or <a href="resume.pdf" download="Rajat-Garg-Lead-Product-Designer-Resume.pdf" data-track="resume">download my resume</a>.
+      </p>
+
+      <!-- Utilities: after the contact sentence in the flow, top-right on wide screens -->
+      <nav class="tools" aria-label="Site">
+        <button type="button" class="switch sound-toggle" aria-pressed="false"><span class="under">Sound <span class="state">off</span></span></button>
+        <button type="button" class="switch theme-toggle" aria-pressed="true"><span class="under">Lights <span class="state">on</span></span></button>
+      </nav>
+    </section>
+
+    <!-- The contact strip: one frame per work. Adding a work = one more <li class="frame">.
+         Media can be an <img>, or a <video class="clip"> that behaves like a GIF. -->
+    <section class="band" aria-labelledby="works-title">
+      <h2 class="visually-hidden" id="works-title">Selected work</h2>
+
+      <div class="band-body">
+        <!-- Shows the active frame's details on wide screens; filled by site.js from the frame itself -->
+        <div class="slate" aria-hidden="true" hidden>
+          <p class="slate-title"></p>
+          <p class="slate-desc"></p>
+          <a class="open slate-go" tabindex="-1"><span class="under"></span></a>
+        </div>
+
+        <ol class="roll">
+          <li class="frame is-active">
+            <a href="lenskart-eye-test.html" data-track="lk-card">
+              <span class="edge no">01 <span>Case study</span> <span class="name">Lenskart</span></span>
+              <span class="still">
+                <img src="assets/home/eye-test-hero.png" alt="Lenskart eye test case study: redesigning the in-store experience across 1600+ stores" width="3200" height="1800" fetchpriority="high" decoding="async">
+                <svg class="loop" aria-hidden="true" focusable="false"><use href="#pencil-wide"/></svg>
+              </span>
+              <div class="cap">
+                <h3 class="title">From 34 Minutes to 8: Redesigning Lenskart's <span class="nowrap">In-Store</span> Eye Test Experience</h3>
+                <p class="desc">Led designs of iPad, mobile &amp; TV apps for customers &amp; staff that reduced eye test wait time by 38% in 1600+ Lenskart stores.</p>
+                <span class="go"><span class="under">Open the case study</span></span>
+              </div>
+            </a>
+          </li>
+
+          <li class="frame">
+            <a href="https://www.figma.com/community/plugin/1653647181051443124/library-pulse" target="_blank" rel="noopener" data-track="lp-install">
+              <span class="edge no">02 <span>Figma plugin</span> <span class="name">Library Pulse</span></span>
+              <span class="still">
+                <img src="assets/library-pulse/cover.png" alt="Library Pulse: Slack alerts for Figma library publishes" width="1920" height="1080" decoding="async">
+                <svg class="loop" aria-hidden="true" focusable="false"><use href="#pencil-wide"/></svg>
+              </span>
+              <div class="cap">
+                <h3 class="title">Library Pulse</h3>
+                <p class="desc">Slack alerts the moment your Figma library is published, with exactly what changed.</p>
+                <span class="go"><span class="under">View on Figma Community</span></span>
+              </div>
+            </a>
+          </li>
+
+          <li class="frame">
+            <a href="https://www.figma.com/community/file/1516171459035590514/flags-library-svg" target="_blank" rel="noopener" data-track="flags-card">
+              <span class="edge no">03 <span>Figma file</span> <span class="name">Flags Library</span></span>
+              <span class="still">
+                <img src="assets/home/flags.png" alt="Flags Library: 253 SVG country flags, shown on a dotted world map" width="1920" height="1080" loading="lazy" decoding="async">
+                <svg class="loop" aria-hidden="true" focusable="false"><use href="#pencil-wide"/></svg>
+              </span>
+              <div class="cap">
+                <h3 class="title">Flags Library (SVG)</h3>
+                <p class="desc">253 country flags in rectangular SVG format, sorted by continent. Free to use under CC BY 4.0.</p>
+                <span class="go"><span class="under">View on Figma Community</span></span>
+              </div>
+            </a>
+          </li>
+
+          <li class="frame">
+            <a href="screening-room.html">
+              <span class="edge no">04 <span>Movie game</span> <span class="name">Screening Room</span></span>
+              <span class="still">
+                <img src="assets/home/screening-room-card.jpg" alt="Screening Room, a movie bracket game" width="1600" height="900" loading="lazy" decoding="async">
+                <svg class="loop" aria-hidden="true" focusable="false"><use href="#pencil-wide"/></svg>
+              </span>
+              <div class="cap">
+                <h3 class="title">Screening Room</h3>
+                <p class="desc">A movie bracket game that reveals my taste in cinema. Pick your favorite, round by round.</p>
+                <span class="go"><span class="under">Play</span></span>
+              </div>
+            </a>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p class="quote"></p>
+    <p class="credit">written &amp; directed by me. produced by claude</p>
+  </footer>
+
+  <!-- The red pencil mark, drawn once and reused by every frame -->
+  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <symbol id="pencil-wide" viewBox="0 0 320 180" preserveAspectRatio="none">
+      <path pathLength="100" d="M22 4C90 2 230 2 300 3c12 0 17 6 17 16 1 45 1 95-1 140 0 12-6 17-18 17-70 2-200 2-276-1-13 0-18-6-18-18C2 110 3 60 4 22 5 8 14 3 32 3c18 0 40 3 60 8"/>
+    </symbol>
+  </svg>
+
+  <script src="js/intro.js" defer></script>
+  <script src="js/cursor.js" defer></script>
+  <script src="js/site.js" defer></script>
+
+</body>
+</html>

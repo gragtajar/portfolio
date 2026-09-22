@@ -1,0 +1,24 @@
+{
+  "name": "Rajat Garg — Product Designer",
+  "short_name": "Rajat Garg",
+  "description": "Portfolio of Rajat Garg, a product designer with seven years of designing the software people run their workday on.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f4f5f5",
+  "theme_color": "#f4f5f5",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

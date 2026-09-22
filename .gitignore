@@ -1,0 +1,23 @@
+# OS and editor noise
+.DS_Store
+**/.DS_Store
+npm-debug.log
+node_modules/
+
+# Local tooling and notes are never part of the site (kept on disk, not versioned here)
+.claude/
+.impeccable/
+skills-lock.json
+DESIGN.md
+PRODUCT.md
+CHANGELOG.md
+
+# The private study tool at /cua/ lives in its own repository and is deployed from there
+cua/
+
+# Dev-only partial data files (the canonical file is data/movies.json)
+data/movies_part*.json
+
+# Build artifacts (none currently)
+/dist/
+/build/

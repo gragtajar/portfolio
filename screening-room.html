@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screening Room | Rajat Garg</title>
+  <meta name="description" content="A movie bracket game that reveals Rajat's taste in cinema. Pick your favorite, round by round.">
+  <meta name="author" content="Rajat Garg">
+  <meta name="theme-color" content="#f4f5f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#18191a" media="(prefers-color-scheme: dark)">
+
+  <link rel="canonical" href="https://rajatg.in/screening-room.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Rajat Garg">
+  <meta property="og:title" content="Screening Room | Rajat Garg">
+  <meta property="og:description" content="A movie bracket game that reveals Rajat's taste in cinema. Pick your favorite, round by round.">
+  <meta property="og:url" content="https://rajatg.in/screening-room.html">
+  <meta property="og:image" content="https://rajatg.in/assets/home/screening-room-card.jpg">
+  <meta property="og:image:width" content="1600">
+  <meta property="og:image:height" content="900">
+  <meta property="og:image:alt" content="Screening Room, a movie bracket game by Rajat Garg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Poster images come from TMDB; connect early so the first pair loads fast -->
+  <link rel="preconnect" href="https://image.tmdb.org" crossorigin>
+  <link rel="dns-prefetch" href="https://image.tmdb.org">
+
+  <!-- Fonts are served from this site (css/site.css declares them). The one
+       connection kept to fonts.gstatic.com is for the animated beer emoji. -->
+  <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Before first paint: the chosen theme -->
+  <script>
+    (function () {
+      var root = document.documentElement;
+      root.classList.add('js');
+      try {
+        var theme = localStorage.getItem('rg-theme');
+        if (theme === 'light' || theme === 'dark') root.dataset.theme = theme;
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/screening-room.css">
+
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="manifest" href="site.webmanifest">
+
+  <!-- Lottie player for the animated beer emoji -->
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+  <!-- Analytics: Cloudflare Web Analytics (cookieless, deferred) -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "599e70fe62dd40bf8b0fa8569f070d68"}'></script>
+
+  <!--
+    Analytics: Amplitude, loaded async by script injection so it never blocks
+    rendering. trackEvent() queues events fired before the SDK is ready.
+  -->
+  <script>
+  (function () {
+    window.trackEvent = function (name) {
+      if (window.amplitude && typeof window.amplitude.track === 'function') {
+        window.amplitude.track(name);
+      } else {
+        (window.__ampQueue = window.__ampQueue || []).push(name);
+      }
+    };
+    var s = document.createElement('script');
+    s.src = 'https://cdn.amplitude.com/script/8300beffc146f03833610e507db0468c.js';
+    s.async = true;
+    s.onload = function () {
+      if (!window.amplitude) return;
+      if (window.sessionReplay && window.amplitude.add) {
+        window.amplitude.add(window.sessionReplay.plugin({ sampleRate: 1 }));
+      }
+      window.amplitude.init('8300beffc146f03833610e507db0468c', {
+        fetchRemoteConfig: true,
+        autocapture: {
+          attribution: { trackingMethod: ['userProperty', 'eventProperty'] },
+          fileDownloads: true,
+          formInteractions: true,
+          pageViews: true,
+          sessions: true,
+          elementInteractions: true,
+          networkTracking: true,
+          webVitals: true,
+          frustrationInteractions: { thrashedCursor: true, errorClicks: true, deadClicks: true, rageClicks: true }
+        }
+      });
+      (window.__ampQueue || []).forEach(function (n) { window.amplitude.track(n); });
+      window.__ampQueue = [];
+    };
+    document.head.appendChild(s);
+  })();
+  </script>
+</head>
+<body class="page-game">
+
+  <a href="#main" class="skip-link">Skip to the game</a>
+
+  <header class="site-header">
+    <p class="way-home"><a href="index.html" class="home-link">Rajat Garg</a> <dotlottie-player id="cheers-lottie" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f37b/lottie.json" autoplay speed="1" aria-hidden="true"></dotlottie-player></p>
+    <nav class="tools" aria-label="Site">
+      <button type="button" class="switch sound-toggle" aria-pressed="false"><span class="under">Sound <span class="state">off</span></span></button>
+      <button type="button" class="switch theme-toggle" aria-pressed="true"><span class="under">Lights <span class="state">on</span></span></button>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- The game's logic (js/screening-room.js) and its films (data/movies.json)
+         are untouched. It finds everything by class name inside #screening-room,
+         so every sr- class below is kept; only the arrangement and the styling
+         around them are new. -->
+    <section class="screening-room" id="screening-room" aria-labelledby="screening-room-heading">
+      <h1 id="screening-room-heading">Screening Room</h1>
+
+      <!-- The stage: one band of film base. Words on the left, frames on the right. -->
+      <div class="band sr-stage">
+
+        <!-- The slate during a game: genre, round, and a way to start over -->
+        <div class="sr-slate">
+          <p class="sr-genre"></p>
+          <p class="sr-round"></p>
+          <button class="sr-restart" style="display:none;"><span class="under">Restart</span></button>
+        </div>
+
+        <!-- Start state -->
+        <div class="sr-start">
+          <div class="sr-slate sr-slate-start">
+            <p class="sr-tagline">Pick your favorite, round by round</p>
+            <button class="sr-play-btn" id="sr-play" aria-label="Play"><span class="under">Play</span></button>
+          </div>
+          <label class="sr-start-hint" for="sr-play" aria-hidden="true">
+            <span class="sr-blank">
+              <span class="sr-still"><span class="sr-placeholder-card"></span><svg class="loop" aria-hidden="true" focusable="false"></svg></span>
+            </span>
+            <span class="sr-vs">VS</span>
+            <span class="sr-blank">
+              <span class="sr-still"><span class="sr-placeholder-card"></span><svg class="loop" aria-hidden="true" focusable="false"></svg></span>
+            </span>
+          </label>
+        </div>
+
+        <!-- Game arena -->
+        <div class="sr-arena">
+          <div class="sr-cards">
+            <!-- Left card -->
+            <div class="sr-card sr-card-left">
+              <span class="sr-card-year edge"></span>
+              <div class="sr-still">
+                <div class="sr-poster"></div>
+                <svg class="loop" aria-hidden="true" focusable="false"></svg>
+              </div>
+              <div class="sr-card-info">
+                <div class="sr-card-title"></div>
+                <div class="sr-card-meta">
+                  <a class="sr-imdb-link" href="#" target="_blank" rel="noopener">IMDB &#8599;&#xFE0E;</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="sr-vs">VS</div>
+
+            <!-- Right card -->
+            <div class="sr-card sr-card-right">
+              <span class="sr-card-year edge"></span>
+              <div class="sr-still">
+                <div class="sr-poster"></div>
+                <svg class="loop" aria-hidden="true" focusable="false"></svg>
+              </div>
+              <div class="sr-card-info">
+                <div class="sr-card-title"></div>
+                <div class="sr-card-meta">
+                  <a class="sr-imdb-link" href="#" target="_blank" rel="noopener">IMDB &#8599;&#xFE0E;</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Winner state -->
+        <div class="sr-winner">
+          <div class="sr-winner-grid">
+            <div class="sr-winner-card">
+              <span class="sr-card-year edge"></span>
+              <div class="sr-still">
+                <div class="sr-poster"></div>
+                <svg class="loop" aria-hidden="true" focusable="false"></svg>
+              </div>
+              <div class="sr-card-info">
+                <div class="sr-card-title"></div>
+                <div class="sr-card-meta">
+                  <a class="sr-imdb-link" href="#" target="_blank" rel="noopener">IMDB &#8599;&#xFE0E;</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="sr-verdict">
+              <p class="sr-verdict-line"><span class="sr-winner-trophy"></span> <span class="sr-badge"></span></p>
+              <p class="sr-verdict-action"><a class="sr-imdb-cta" href="#" target="_blank" rel="noopener">Watch on IMDB &rarr;</a></p>
+            </div>
+
+            <div class="sr-recommendation" style="display:none;">
+              <p class="sr-rec-label">Try this instead</p>
+              <div class="sr-rec-card">
+                <div class="sr-poster"></div>
+                <div class="sr-card-info">
+                  <div class="sr-card-title"></div>
+                  <div class="sr-card-meta">
+                    <span class="sr-card-year"></span>
+                    <a class="sr-imdb-link" href="#" target="_blank" rel="noopener">IMDB &#8599;&#xFE0E;</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- All genres exhausted -->
+        <div class="sr-impressive">
+          <h2>You've Watched the Entire Reel <span class="sr-impressive-emoji" aria-hidden="true">🎬</span></h2>
+          <p>Rajat thinks you have impeccable taste. Let's discuss over chai &amp; movies.</p>
+          <p class="sr-impressive-action"><a class="sr-instagram-cta" href="https://www.instagram.com/gragtajar/" target="_blank" rel="noopener">@gragtajar on Instagram</a></p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p class="quote"></p>
+    <p class="credit">written &amp; directed by me. produced by claude</p>
+  </footer>
+
+  <!-- canvas-confetti is lazy-loaded inside screening-room.js when a game ends -->
+  <script src="js/cursor.js" defer></script>
+  <script src="js/site.js" defer></script>
+  <script src="js/screening-room.js" defer></script>
+
+</body>
+</html>

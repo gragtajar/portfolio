@@ -1,0 +1,423 @@
+/* ============================================
+   CASE STUDY
+   Long-form reading in the Contact Sheet world: the enlargements made from
+   the frames on the homepage. Everything here extends css/site.css and uses
+   its tokens; nothing here is specific to one case study.
+   ============================================ */
+
+.page-case {
+  /* The sticky index row on narrow screens: one Small line, 10px above and
+     below each link, 4px of padding, and its two hairlines */
+  --index-h: calc(0.875rem * 1.5 + 30px);
+}
+
+/* --- Layout: one reading column; from 64em a quiet index beside it --- */
+.page-case main { padding-top: clamp(40px, 7vw, 96px); }
+
+.cs-head, .cs-body { padding-inline: var(--pad); }
+
+.cs-body { max-width: calc(62rem + var(--pad) * 2); }
+
+/* --- Case study header --- */
+.cs-head h1 {
+  max-width: 22ch;
+  margin-top: clamp(20px, 3vw, 32px);
+  font-size: clamp(1.875rem, 1.2rem + 2.6vw, 3.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.cs-meta {
+  max-width: 37rem;
+  margin-top: clamp(28px, 4vw, 48px);
+}
+
+.cs-read-time, .cs-body .quiet, figcaption {
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+
+.cs-read-time { margin-top: 12px; }
+
+/* --- The section index: utilities, so grey and quiet; never the red --- */
+.cs-index {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  gap: 0 20px;
+  margin-top: clamp(28px, 4vw, 48px);
+  padding: 4px var(--pad);
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: var(--paper);
+  border-block: 1px solid var(--line);
+  font-size: 0.875rem;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.cs-index::-webkit-scrollbar { display: none; }
+
+/* padded flex items, so their words sit in a span.under */
+.cs-index a {
+  padding-block: 10px;
+  background: none;
+}
+
+.cs-index a:hover, .cs-index a:focus-visible { color: var(--ink); }
+
+/* The section being read: first ink, the heavier weight, and a solid line in
+   ink where the others have dots. The red is for what the pointer is on, the
+   ink for where the reader is. */
+.cs-index a[aria-current] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.cs-index a[aria-current] .under {
+  --stroke: var(--ink);
+  background-position: 0 100%, 0 100%;
+  background-size: 100% 2px, 4px 2px;
+}
+
+/* --- Reading --- */
+.cs-body > section {
+  margin-top: clamp(64px, 9vw, 120px);
+  padding-top: clamp(28px, 4vw, 48px);
+  border-top: 1px solid var(--line);
+  /* an index jump lands the section's hairline exactly under the index row's own */
+  scroll-margin-top: calc(var(--index-h) - 1px);
+}
+
+/* Each step down the ramp is a fifth or more, on a phone as well, so a skimmer
+   can tell the levels apart without reading them */
+.cs-body h2, .cs-talk h2 {
+  font-size: clamp(1.625rem, 1.4rem + 1vw, 2.125rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+
+.cs-body h3 {
+  margin-top: clamp(48px, 6vw, 80px);
+  font-size: clamp(1.3125rem, 1.24rem + 0.3vw, 1.4375rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+
+.cs-body h2 + h3 { margin-top: clamp(28px, 4vw, 40px); }
+
+/* Minor headings: an h4, an h5, or an h3 marked .minor for the outline's sake.
+   Never smaller than the sentences they head. */
+.cs-body :is(h4, h5), .cs-body .minor, .aside-label {
+  margin-top: 32px;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+/* A label names what follows it (a list, a picture, a set of notes). It is set
+   in the second ink, so it never reads as one of the heads it introduces, and
+   it stands clear of what came before and close to what it names. */
+.cs-body > section > h4, .aside-label { color: var(--ink-2); }
+
+.cs-body > section > h4 { margin-top: 40px; }
+
+.cs-body > section > h3 + h4 { margin-top: 16px; }
+
+.cs-body > section > h4 + :is(p, ul, ol, .fig, .figs, .slips, .pair) { margin-top: 12px; }
+
+.cs-body :is(p, ul, ol, dl, h2, h3, h4) { max-width: 37rem; }
+
+.cs-body :is(p, li) {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.cs-body :is(p, ul, ol, dl) { margin-top: 16px; }
+
+.cs-body :is(ul, ol) { padding-left: 1.25rem; }
+
+.cs-body li + li { margin-top: 8px; }
+
+.cs-body li::marker { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+
+/* One family, no italic: emphasis is the heavier weight */
+.cs-body :is(strong, em, code) { font: inherit; font-weight: 600; }
+
+/* A quiet note sits tight under the heading it qualifies */
+.cs-body .quiet { margin-top: 8px; }
+
+/* --- Hairline rows: term and detail --- */
+.rows > div {
+  display: grid;
+  grid-template-columns: minmax(0, 7.5rem) minmax(0, 1fr);
+  gap: 16px;
+  align-items: baseline;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.rows dd { color: var(--ink-2); }
+
+/* Figures in the rows sense: a measured value, then what it measures */
+.figures dt {
+  font-size: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.figures .dir { font-size: 0.7em; font-weight: 400; color: var(--ink-2); }
+
+.cs-body .rows { margin-top: 20px; }
+
+/* --- Slips: findings, each a title and a sentence, ruled off like index cards --- */
+.cs-body .slips {
+  display: grid;
+  gap: 0 40px;
+  max-width: none;
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+}
+
+/* .cs-body prefix: must outrank the 8px that ordinary list items get between them,
+   or the second column starts lower than the first */
+.cs-body .slips li {
+  margin: 0;
+  padding: 14px 0 18px;
+  border-top: 1px solid var(--line);
+}
+
+.cs-body .slips :is(h4, h5) { margin: 0; max-width: 28rem; }
+
+.cs-body .slips p {
+  max-width: 28rem;
+  margin-top: 6px;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+/* --- Pairs: two short columns set side by side --- */
+.pair {
+  display: grid;
+  gap: 24px 40px;
+  margin-top: 32px;
+}
+
+.pair :is(h4, h5, .minor) { margin-top: 0; }
+
+/* a column's head sits close to its own list */
+.pair :is(p, ul) { margin-top: 8px; }
+
+/* --- Asides: a note in the margin of the argument, ruled on its left --- */
+.aside {
+  max-width: 37rem;
+  margin-top: 32px;
+  padding-left: 20px;
+  border-left: 1px solid var(--line);
+}
+
+.aside > :first-child { margin-top: 0; }
+
+.aside :is(h4, .minor) { margin-top: 12px; }
+
+/* What a customer said, at the size of a lead */
+.cs-body .said {
+  font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+/* --- Pictures on paper: never cropped, a hairline for their edge --- */
+.fig {
+  margin-top: 28px;
+}
+
+.fig img, .fig video {
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+  outline: 1px solid var(--line);
+  outline-offset: -1px;
+}
+
+figcaption { margin-top: 10px; }
+
+.cs-hero { margin-top: clamp(32px, 5vw, 56px); }
+
+/* Small originals stay small */
+.w-12 { max-width: 12.5rem; }
+.w-15 { max-width: 15rem; }
+.w-20 { max-width: 20rem; }
+
+li > .fig { margin-block: 16px 8px; }
+
+/* A row of pictures shares one height, each at its own width (flex = its ratio) */
+.figs { margin-top: 28px; }
+
+.figs .fig { margin-top: 0; }
+
+.figs .fig + .fig { margin-top: 24px; }
+
+/* --- Boards: pictures whose lettering has to be read. A board never prints
+       below the width its lettering needs. Where the column is narrower than
+       that, the board keeps its width, runs off the right edge of the sheet
+       and slides sideways, as the strip on the homepage does; the cut edge is
+       the cue. Nothing is cropped and no smaller copy is made. --- */
+.board {
+  --legible: 62rem;
+  /* a flex column rather than a block: WebKit leaves a block scroller's end
+     padding out of the width it can scroll */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* out to the edge of the screen, with the gutter given back as padding, so
+     the end of the board comes to rest on the column's edge */
+  margin-right: calc(var(--pad) * -1);
+  padding-right: var(--pad);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+.board-54 { --legible: 54rem; }
+.board-45 { --legible: 45rem; }
+
+.board img {
+  /* The legible width once the column is under 85% of it; otherwise the
+     column's. The last term is a switch: hugely negative while the column is
+     wide enough, hugely positive once it is not. */
+  width: max(100%, min(var(--legible), (var(--legible) * 0.85 - 100%) * 9999));
+  max-width: none;
+}
+
+/* The caption stays where it is while its board slides */
+.board figcaption {
+  position: sticky;
+  left: 0;
+}
+
+/* case-study.js makes a sliding board focusable, so the arrow keys can pan it */
+.board:focus-visible { outline-offset: -2px; }
+
+/* --- The closing band: film base, where the page hands over to a conversation --- */
+.cs-talk {
+  margin-top: clamp(80px, 11vw, 144px);
+  padding: clamp(48px, 7vw, 88px) var(--pad) clamp(28px, 4vw, 48px);
+}
+
+.cs-talk-who {
+  margin-top: 12px;
+  color: var(--base-ink-2);
+}
+
+.cs-talk-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  margin-top: 24px;
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+/* padded flex items, so their words sit in a span.under */
+.cs-talk-links a {
+  padding-block: 6px;
+  background: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* The index hands the mark from one section to the next; it does not blink */
+  .cs-index a { transition: color 0.32s var(--ease-out), font-weight 0.32s var(--ease-out); }
+}
+
+/* --- From 40em: side-by-side where there is room --- */
+@media (min-width: 40em) {
+  .rows > div { grid-template-columns: minmax(0, 10rem) minmax(0, 1fr); }
+
+  .slips, .pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .figs {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .figs .fig + .fig { margin-top: 0; }
+}
+
+/* --- From 64em: the index leaves the top and stands beside the reading column --- */
+@media (min-width: 64em) {
+  .page-case main {
+    display: grid;
+    grid-template-columns: 11rem minmax(0, 1fr);
+    column-gap: clamp(24px, 4vw, 72px);
+    padding-left: var(--pad);
+  }
+
+  .cs-head, .cs-body {
+    grid-column: 2;
+    padding-left: 0;
+  }
+
+  /* one gutter now, not two: pictures run to 62rem and no further */
+  .cs-body { max-width: calc(62rem + var(--pad)); }
+
+  .cs-index {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: start;
+    top: 32px;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 0;
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    background: none;
+    white-space: normal;
+  }
+
+  .cs-index a { padding-block: 7px; }
+
+  .cs-body > section { scroll-margin-top: 32px; }
+
+  .cs-talk { grid-column: 1 / -1; margin-left: calc(var(--pad) * -1); padding-left: calc(var(--pad) + 11rem + clamp(24px, 4vw, 72px)); }
+}
+
+/* --- From 84em the reading column has its full 62rem, and the facts stand
+       beside the title instead of under it, so the first picture arrives
+       sooner. The read time's baseline meets the title's last baseline. --- */
+@media (min-width: 84em) {
+  .cs-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 18rem;
+    column-gap: 40px;
+    align-items: end;
+    align-items: last baseline;
+    max-width: calc(62rem + var(--pad));
+  }
+
+  /* the row holds the link; the link itself stays inline, so its underline keeps its place */
+  .cs-back { grid-column: 1 / -1; }
+
+  .cs-meta { margin-top: 0; }
+
+  .cs-meta > div { grid-template-columns: minmax(0, 5.5rem) minmax(0, 1fr); }
+}

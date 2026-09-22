@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lenskart Eye Test Case Study — Rajat Garg</title>
+  <meta name="description" content="From 34 minutes to 8: How Rajat Garg redesigned Lenskart's in-store eye test experience, reducing wait times by 38% across 1600+ stores.">
+  <meta name="author" content="Rajat Garg">
+  <meta name="theme-color" content="#f4f5f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#18191a" media="(prefers-color-scheme: dark)">
+
+  <link rel="canonical" href="https://rajatg.in/lenskart-eye-test.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Rajat Garg">
+  <meta property="og:title" content="From 34 Minutes to 8: Redesigning Lenskart's In-Store Eye Test Experience">
+  <meta property="og:description" content="Case study: How a redesign reduced eye test wait time by 38% across 1600+ Lenskart stores and lifted sales conversion 2.7%.">
+  <meta property="og:url" content="https://rajatg.in/lenskart-eye-test.html">
+  <meta property="og:image" content="https://rajatg.in/assets/lenskart/eye-test/eye-test-hero.png">
+  <meta property="og:image:width" content="3200">
+  <meta property="og:image:height" content="1800">
+  <meta property="og:image:alt" content="Lenskart case study by Rajat Garg">
+  <meta property="article:author" content="Rajat Garg">
+  <meta property="article:section" content="Case Study">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="From 34 Minutes to 8: Redesigning Lenskart's In-Store Eye Test Experience">
+  <meta name="twitter:description" content="Case study: 38% wait time reduction, 2.7% sales lift across 1600+ stores.">
+  <meta name="twitter:image" content="https://rajatg.in/assets/lenskart/eye-test/eye-test-hero.png">
+
+  <!-- Fonts are served from this site (css/site.css declares them). The one
+       connection kept to fonts.gstatic.com is for the animated beer emoji. -->
+  <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Before first paint: the chosen theme -->
+  <script>
+    (function () {
+      var root = document.documentElement;
+      root.classList.add('js');
+      try {
+        var theme = localStorage.getItem('rg-theme');
+        if (theme === 'light' || theme === 'dark') root.dataset.theme = theme;
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/case-study.css">
+
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="manifest" href="site.webmanifest">
+
+  <!-- Structured data: Article schema for SEO rich results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "From 34 Minutes to 8: Redesigning Lenskart's In-Store Eye Test Experience",
+    "description": "Case study: How a redesign reduced eye test wait time by 38% across 1600+ Lenskart stores and lifted sales conversion 2.7%.",
+    "image": "https://rajatg.in/assets/lenskart/eye-test/eye-test-hero.png",
+    "author": {
+      "@type": "Person",
+      "name": "Rajat Garg",
+      "url": "https://rajatg.in/"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Rajat Garg"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rajatg.in/lenskart-eye-test.html"
+    },
+    "datePublished": "2023-06-01",
+    "dateModified": "2026-09-22",
+    "articleSection": "Case Study"
+  }
+  </script>
+
+  <!-- Lottie player for the animated beer emoji -->
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+  <!-- Analytics: Cloudflare Web Analytics (cookieless, deferred) -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "599e70fe62dd40bf8b0fa8569f070d68"}'></script>
+
+  <!--
+    Analytics: Amplitude, loaded async by script injection so it never blocks
+    rendering. trackEvent() queues events fired before the SDK is ready.
+  -->
+  <script>
+  (function () {
+    window.trackEvent = function (name) {
+      if (window.amplitude && typeof window.amplitude.track === 'function') {
+        window.amplitude.track(name);
+      } else {
+        (window.__ampQueue = window.__ampQueue || []).push(name);
+      }
+    };
+    var s = document.createElement('script');
+    s.src = 'https://cdn.amplitude.com/script/8300beffc146f03833610e507db0468c.js';
+    s.async = true;
+    s.onload = function () {
+      if (!window.amplitude) return;
+      if (window.sessionReplay && window.amplitude.add) {
+        window.amplitude.add(window.sessionReplay.plugin({ sampleRate: 1 }));
+      }
+      window.amplitude.init('8300beffc146f03833610e507db0468c', {
+        fetchRemoteConfig: true,
+        autocapture: {
+          attribution: { trackingMethod: ['userProperty', 'eventProperty'] },
+          fileDownloads: true,
+          formInteractions: true,
+          pageViews: true,
+          sessions: true,
+          elementInteractions: true,
+          networkTracking: true,
+          webVitals: true,
+          frustrationInteractions: { thrashedCursor: true, errorClicks: true, deadClicks: true, rageClicks: true }
+        }
+      });
+      (window.__ampQueue || []).forEach(function (n) { window.amplitude.track(n); });
+      window.__ampQueue = [];
+    };
+    document.head.appendChild(s);
+  })();
+  </script>
+</head>
+<body class="page-case">
+
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <p class="way-home"><a href="index.html" class="home-link">Rajat Garg</a> <dotlottie-player id="cheers-lottie" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f37b/lottie.json" autoplay speed="1" aria-hidden="true"></dotlottie-player></p>
+    <nav class="tools" aria-label="Site">
+      <button type="button" class="switch sound-toggle" aria-pressed="false"><span class="under">Sound <span class="state">off</span></span></button>
+      <button type="button" class="switch theme-toggle" aria-pressed="true"><span class="under">Lights <span class="state">on</span></span></button>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ═══ CASE STUDY HEADER ═══ -->
+    <header class="cs-head">
+      <p class="cs-back"><a href="index.html">Back to Home</a></p>
+
+      <h1><span class="keep">From 34 Minutes to 8:</span> Redesigning Lenskart's <span class="nowrap">In-Store</span> <span class="nowrap">Eye Test</span> Experience</h1>
+
+      <div class="cs-facts">
+        <dl class="rows cs-meta">
+          <div><dt>Role:</dt> <dd>Senior Product Designer</dd></div>
+          <div><dt>Company:</dt> <dd>Lenskart</dd></div>
+          <div><dt>Platforms:</dt> <dd>iPad, Mobile, TV</dd></div>
+          <div><dt>Year:</dt> <dd>2023</dd></div>
+        </dl>
+
+        <p class="cs-read-time">12 min read</p>
+      </div>
+    </header>
+
+    <!-- ═══ SECTION INDEX (sticky) ═══ -->
+    <nav class="cs-index" aria-label="Sections">
+      <a href="#cs-about"><span class="under">About</span></a>
+      <a href="#cs-userflow"><span class="under">User Flow</span></a>
+      <a href="#cs-impact"><span class="under">Impact</span></a>
+      <a href="#cs-research"><span class="under">Research</span></a>
+      <a href="#cs-wireframes"><span class="under">Wireframes &amp; UI</span></a>
+      <a href="#cs-decisions"><span class="under">Decisions</span></a>
+    </nav>
+
+    <div class="cs-body">
+
+      <!-- ═══ HERO IMAGE ═══ -->
+      <figure class="fig cs-hero">
+        <img src="assets/lenskart/eye-test/eye-test-hero.png" alt="Lenskart eye test case study hero" width="3200" height="1800" fetchpriority="high" decoding="async">
+      </figure>
+
+      <!-- ═══ ABOUT PROJECT ═══ -->
+      <section id="cs-about">
+        <h2>About the Project</h2>
+
+        <!-- Problems at Store -->
+        <h3>Problems at Store</h3>
+        <div class="pair">
+          <div>
+            <h4>Customer Problems</h4>
+            <ul>
+              <li>Customers <strong>waited an average of 34 mins at stores</strong> from walking-in to receiving their prescriptions</li>
+              <li>They <strong>don't know the wait time upfront</strong> which added to frustration</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Store Staff Problems</h4>
+            <ul>
+              <li>Struggled to <strong>handle multiple customers during rush hours</strong> (like weekend evenings), especially eye tests</li>
+              <li><strong>No way to track or share wait times</strong> with individual customers</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Impact Results (preview) -->
+        <h3>Impact Results</h3>
+        <dl class="rows figures">
+          <div><dt>2.7% <span class="dir">&uarr;</span></dt> <dd>Store sales conversion increased</dd></div>
+          <div><dt>38% <span class="dir">&darr;</span></dt> <dd>Eye test wait time reduced</dd></div>
+          <div><dt>0.25 <span class="dir">&uarr;</span></dt> <dd>Eye test rating increased</dd></div>
+        </dl>
+
+        <!-- Users -->
+        <h3>Users</h3>
+        <dl class="rows">
+          <div><dt>Customers</dt> <dd>Walk-in visitors who purchase eyeglasses at stores</dd></div>
+          <div><dt>Optometrists</dt> <dd>Medically certified professionals who conduct eye tests</dd></div>
+          <div><dt>Sales Associates</dt> <dd>Store staff who attend customers and drive sales</dd></div>
+        </dl>
+
+        <!-- Optometrist explainer -->
+        <aside class="aside">
+          <p class="aside-label">Who are Optometrists?</p>
+          <p>An optometrist is an eye care professional medically certified to examine vision conditions in human beings.</p>
+          <p>Currently, nearly <strong>2,000 optometrists</strong> are enrolled with Lenskart across India.</p>
+          <figure class="fig w-15">
+            <img src="assets/lenskart/eye-test/optom.png" alt="An optometrist in a Lenskart store's clinic" width="1196" height="1595" loading="lazy" decoding="async">
+            <figcaption>An optometrist in a Lenskart store's clinic</figcaption>
+          </figure>
+        </aside>
+
+        <!-- Timeline -->
+        <h3>Timeline</h3>
+        <dl class="rows">
+          <div><dt>April 2023</dt> <dd>Project started</dd></div>
+          <div><dt>August 2023</dt> <dd>Released v1.0</dd></div>
+        </dl>
+      </section>
+
+      <!-- ═══ USER FLOW ═══ -->
+      <section id="cs-userflow">
+        <h2>User Flow</h2>
+        <figure class="fig board">
+          <img src="assets/lenskart/eye-test/user-flow.png" alt="End-to-end user flow: customer walk-in to prescription delivery" width="4822" height="10954" loading="lazy" decoding="async">
+        </figure>
+      </section>
+
+      <!-- ═══ IMPACT ═══ -->
+      <section id="cs-impact">
+        <h2>Impact</h2>
+
+        <p class="quiet">Data measured in 3 weeks of Q2 2023</p>
+
+        <!-- Key Metrics -->
+        <dl class="rows figures">
+          <div><dt>2.7% <span class="dir">&uarr;</span></dt> <dd>Sales conversion increased</dd></div>
+          <div><dt>38% <span class="dir">&darr;</span></dt> <dd>Eye test wait time reduced (north-star)</dd></div>
+          <div><dt>0.25 <span class="dir">&uarr;</span></dt> <dd>Eye test rating increased</dd></div>
+        </dl>
+
+        <!-- Graphs - full width, NOT side-by-side -->
+        <figure class="fig board">
+          <img src="assets/lenskart/eye-test/graph.png" alt="Mumbai Saturday weekly trends" width="1792" height="976" loading="lazy" decoding="async">
+          <figcaption>Look closely at the numbers inside the dotted line</figcaption>
+        </figure>
+
+        <figure class="fig">
+          <img src="assets/lenskart/eye-test/graph-2.png" alt="P90 wait time reduction from 34 to 21 minutes" width="5915" height="3706" loading="lazy" decoding="async">
+          <figcaption>Eye test wait time reducing from 34 mins to 21 mins</figcaption>
+        </figure>
+
+        <!-- Bullet points with hard numbers -->
+        <ul>
+          <li>
+            Time taken in an eye test on average came down from
+            <strong>34 mins (Apr 2023)</strong> to
+            <strong>21 mins (Nov 2023)</strong>.
+            Currently it's <strong>8.16 mins.</strong>
+          </li>
+          <li>
+            <strong>72.34%</strong> of eye tests happen in under 10 mins across all Lenskart stores.
+          </li>
+          <li>
+            Sales conversion at stores went from <strong>31.2% to 33.9%</strong> in 3 weeks of Q2 2023.
+          </li>
+        </ul>
+
+        <!-- Insight box: How did this lead to increased sales? -->
+        <aside class="aside">
+          <p class="aside-label">Key Insight</p>
+          <h3 class="minor">How did token system &amp; prescription automation lead to increased sales conversion?</h3>
+          <p>78% customers walk-in to buy new eyeglasses and only 12% come just for an eye test. Since glasses are prescription-based, they have a medical need too.</p>
+          <p>After this flow, store operations became smoother and less chaotic.</p>
+          <ul>
+            <li>
+              <strong>Faster and accurate eye tests</strong> mean customers spend less time inside clinic and more time shopping
+            </li>
+            <li>
+              Staff now have more time to sell and it's <strong>easier to convince customers to buy when there's a change in their eye power</strong>
+            </li>
+          </ul>
+        </aside>
+
+        <!-- Customer vs Business benefit -->
+        <div class="pair">
+          <div>
+            <h3 class="minor">Customer's Benefit</h3>
+            <p>Quick and accurate prescriptions let customers prioritise selecting eyeframes that fulfil their medical needs</p>
+          </div>
+          <div>
+            <h3 class="minor">Business' Benefit</h3>
+            <ul>
+              <li>Customers checking their eye power results in new or repeat purchases, boosting business growth</li>
+              <li>Store ATV: <strong>&#8377;2,040</strong></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ RESEARCH ═══ -->
+      <section id="cs-research">
+        <h2>Research</h2>
+
+        <!-- Why Redesign -->
+        <h3>Why Redesign?</h3>
+
+        <!-- 5 sticky notes - exact text from old page -->
+        <ul class="slips">
+          <li>
+            <h4>Customers prefer a fair, first-come-first-serve system</h4>
+            <p>They expect to be served in the order they arrive. A transparent token queue builds trust</p>
+          </li>
+          <li>
+            <h4>Eye test can be for someone other than the person giving number</h4>
+            <p>Many walk in with family or friends. We should capture who the service is actually for, not just who shared their number</p>
+          </li>
+          <li>
+            <h4>Optoms need the same walk-in queue</h4>
+            <p>Optoms should see the same real-time queue as store staff to avoid confusion</p>
+          </li>
+          <li>
+            <h4>Customers want live updates on their wait time</h4>
+            <p>Providing status and wait-time updates helps reduce frustration</p>
+          </li>
+          <li>
+            <h4>Inconsistent &amp; non-adaptive UI</h4>
+            <p>Legacy design language, inconsistent icons, small tap areas, and not usable in both iPad orientations</p>
+          </li>
+        </ul>
+
+        <!-- User quote from old page -->
+        <aside class="aside">
+          <p class="aside-label">User Quote</p>
+          <p class="said">"Pata nahi kitna time aur lagega"</p>
+          <p>"I have no idea how much longer this will take" - customer at a Lenskart store</p>
+        </aside>
+
+        <!-- UX Audit -->
+        <h3>UX Audit of Old Flows</h3>
+
+        <ul>
+          <li>
+            Usability heuristic evaluation of <strong>customer check-in flow</strong> when they walk-in to store
+          </li>
+          <li>
+            <strong>Eye test customer list</strong> used by optometrists
+          </li>
+        </ul>
+
+        <h4>Principles used in UX audit</h4>
+        <ol>
+          <li>Match between the System and the Real World</li>
+          <li>Recognition rather than Recall</li>
+          <li>Consistency and Standards</li>
+        </ol>
+
+        <h4>Pain points</h4>
+        <ul class="slips">
+          <li>
+            <h5>No Clear Ordering in Eye Test List</h5>
+            <p>Optometrist struggles to determine which customer to attend first, causing confusion</p>
+          </li>
+          <li>
+            <h5>No Clarity on Purpose of Visit</h5>
+            <p>Staff request personal details (phone number etc) without explaining purpose, making customers feel it's only for marketing</p>
+          </li>
+          <li>
+            <h5>Repetitive Data Entries</h5>
+            <p>Frequent customers must provide their details on every visit leading to frustration</p>
+          </li>
+          <li>
+            <h5>Lack of Search</h5>
+            <p>Staff often re-enters customer details instead of searching leading to duplicate entries and an overwhelming list</p>
+          </li>
+          <li>
+            <h5>Complex User Journeys</h5>
+            <p>The system is not intuitive requiring training for staff to navigate by themselves</p>
+          </li>
+        </ul>
+
+        <!-- UX Audit image -->
+        <figure class="fig board">
+          <img src="assets/lenskart/eye-test/ux-audit.png" alt="UX audit annotations on old store flows" width="3026" height="5172" loading="lazy" decoding="async">
+        </figure>
+
+        <!-- Benchmarking: Store Visits -->
+        <h3>Benchmarking: Lenskart Store Visits</h3>
+
+        <ul>
+          <li>
+            Visited several Lenskart stores at <strong>various times of the day</strong>
+          </li>
+          <li>
+            Engaged with customers and store staff through <strong>candid conversations and impromptu interviews</strong> to gather insights
+          </li>
+          <li>
+            Analysed staff behaviour during peak and non-peak hours, supported by <strong>CCTV footage analysis using Tango AI</strong>
+          </li>
+        </ul>
+
+        <div class="figs">
+          <figure class="fig" style="flex: 0.75">
+            <img src="assets/lenskart/eye-test/store.png" alt="On-site observation at a Lenskart store" width="1638" height="2184" loading="lazy" decoding="async">
+            <figcaption>From store visits</figcaption>
+          </figure>
+          <figure class="fig" style="flex: 1.469">
+            <img src="assets/lenskart/eye-test/cctv.jpeg" alt="CCTV footage analysis using Tango AI" width="592" height="403" loading="lazy" decoding="async">
+            <figcaption>Checked store's CCTV footages</figcaption>
+          </figure>
+        </div>
+
+        <h4>Observations</h4>
+
+        <div class="pair">
+          <div>
+            <h5>Positive takeaways</h5>
+            <ul>
+              <li>Customers prefer a <strong>quick check-in</strong> with minimal questions</li>
+              <li>Staff was already <strong>comfortable using the check-in and optometrist apps</strong> on iPad</li>
+            </ul>
+          </div>
+          <div>
+            <h5>Things to avoid</h5>
+            <ul>
+              <li>Asking for a phone number <strong>shouldn't feel like a marketing tactic</strong></li>
+              <li>Avoid changing staff's existing flow. <strong>Don't disrupt their current SOPs</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Benchmarking: Other Brands -->
+        <h3>Benchmarking: Other Brands' Stores, Offices &amp; Airport</h3>
+
+        <ul>
+          <li>
+            Visited places like <strong>McDonald's, KFC, airports and government offices</strong> to understand customer flow operations
+          </li>
+          <li>
+            Observed how different environments handle <strong>queues, waiting times and service efficiency</strong>
+          </li>
+        </ul>
+
+        <div class="figs">
+          <figure class="fig" style="flex: 0.75">
+            <img src="assets/lenskart/eye-test/mcd.jpeg" alt="Customer Kiosk at McDonald's" width="3024" height="4032" loading="lazy" decoding="async">
+            <figcaption>Customer Kiosk at McDonald's</figcaption>
+          </figure>
+          <figure class="fig" style="flex: 1.333">
+            <img src="assets/lenskart/eye-test/kfc.jpeg" alt="Token system at KFC" width="4032" height="3024" loading="lazy" decoding="async">
+            <figcaption>Tokens system at KFC</figcaption>
+          </figure>
+          <figure class="fig" style="flex: 1.333">
+            <img src="assets/lenskart/eye-test/airport.webp" alt="Flight status at Airport" width="1200" height="900" loading="lazy" decoding="async">
+            <figcaption>Flight status at Airport</figcaption>
+          </figure>
+        </div>
+
+        <h4>Observations</h4>
+
+        <div class="pair">
+          <div>
+            <h5>Positive takeaways</h5>
+            <ul>
+              <li><strong>Queue system</strong> should serve walk-ins on a first-come, first-served basis</li>
+              <li>Customers want <strong>live updates in-store</strong> to avoid frustration while waiting</li>
+              <li>iPad touch targets must be <strong>large and clearly visible</strong> since staff often operate them from a distance on tables</li>
+              <li><strong>Airport-style displays</strong> show status updates clearly and efficiently</li>
+            </ul>
+          </div>
+          <div>
+            <h5>Things to avoid</h5>
+            <ul>
+              <li>Avoid <strong>manual AR slip uploads and eye power entry</strong>. It wastes a lot of time and burdens optometrists</li>
+              <li>Don't assume the phone number belongs to the person getting eyes tested. Example: <strong>parents give their own phone number for kid's eye test</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Affinity Mapping & Feature Matrix -->
+        <h3>Collating Insights &amp; Affinity Mapping</h3>
+
+        <div class="figs">
+          <figure class="fig" style="flex: 1.564">
+            <img src="assets/lenskart/eye-test/affinity-1.png" alt="Affinity mapping session" width="1598" height="1022" loading="lazy" decoding="async">
+            <figcaption>Grouping insights on whiteboard</figcaption>
+          </figure>
+          <figure class="fig" style="flex: 1.246">
+            <img src="assets/lenskart/eye-test/affinity-2.jpeg" alt="Feature priority matrix" width="1500" height="1204" loading="lazy" decoding="async">
+            <figcaption>Created feature matrix with product manager</figcaption>
+          </figure>
+        </div>
+
+        <ul class="slips">
+          <li>
+            <h4>Token system brings order to walk-ins</h4>
+            <p>Token-based queue helps manage customer flow fairly and efficiently, reducing confusion and wait-time complaints</p>
+          </li>
+          <li>
+            <h4>Primary &amp; secondary profiles</h4>
+            <p>Capturing both the person giving the number and the one getting the eyes tested ensures smooth check-ins for families and groups</p>
+          </li>
+          <li>
+            <h4>Shared token visibility for optometrists</h4>
+            <p>Showing the same token queue in the optometrist's app aligns the entire staff, enabling timely and predictable eye tests</p>
+          </li>
+          <li>
+            <h4>Wireless prescription sync reduces manual work</h4>
+            <p>Auto-syncing AR prescriptions via Wi-Fi adapters saves 5-7 minutes per test, freeing optometrists to focus more on patient</p>
+          </li>
+        </ul>
+
+        <!-- Updating Design System -->
+        <h3>Updating Design System</h3>
+        <h4>Added Variants for Tablet (iPad) and TV Interfaces</h4>
+        <ul>
+          <li><code>Title XL</code> in Typography</li>
+          <li><code>xl</code> variant for Button</li>
+          <li><code>lg</code> variant for Checkbox &amp; Radio button</li>
+          <li>Modal popup</li>
+        </ul>
+      </section>
+
+      <!-- ═══ WIREFRAMES & UI ═══ -->
+      <section id="cs-wireframes">
+        <h2>Wireframe Explorations</h2>
+
+        <!-- 1. Purpose of Visit Screen -->
+        <h3>1. Purpose of Visit Screen</h3>
+
+        <!-- Old version image -->
+        <figure class="fig board board-54">
+          <img src="assets/lenskart/eye-test/visit-purpose-old.png" alt="Old Purpose of Visit screen with annotated issues" width="5158" height="3436" loading="lazy" decoding="async">
+        </figure>
+
+        <h4>Identified main elements:</h4>
+        <ol>
+          <li>All purposes should be <strong>visible in one glance</strong> without any nesting</li>
+          <li>Customers mostly select <strong>'eye test' and 'shopping'</strong> as their purpose of visit, moving them to higher priority</li>
+          <li>UI design should be <strong>eye-catchy</strong></li>
+        </ol>
+
+        <figure class="fig board board-45">
+          <img src="assets/lenskart/eye-test/visit-purpose-wireframe.png" alt="Wireframe explorations for Purpose of Visit" width="6156" height="6364" loading="lazy" decoding="async">
+        </figure>
+
+        <!-- Screen Divisions -->
+        <h4>Screen Divisions</h4>
+        <figure class="fig">
+          <img src="assets/lenskart/eye-test/visit-purpose-screen.png" alt="Screen division diagram showing interactive elements" width="2574" height="2876" loading="lazy" decoding="async">
+          <figcaption>Depicting interactive elements on screen</figcaption>
+        </figure>
+
+        <h4>Final Mockup</h4>
+        <figure class="fig">
+          <img src="assets/lenskart/eye-test/visit-purpose-mockup.png" alt="Final Purpose of Visit screen mockup" width="3477" height="2664" loading="lazy" decoding="async">
+        </figure>
+
+        <h4>Snapshot from Store</h4>
+        <figure class="fig">
+          <img src="assets/lenskart/eye-test/visit-purpose-store.jpeg" alt="Purpose of Visit screen deployed on iPad in store" width="4160" height="3123" loading="lazy" decoding="async">
+        </figure>
+
+        <!-- 2. Token Screen -->
+        <h3>2. Token Screen</h3>
+
+        <!-- Inspiration -->
+        <h4>Inspirations</h4>
+        <figure class="fig w-15">
+          <img src="assets/lenskart/eye-test/token-inspiration.png" alt="Physical receipt inspiration for token design" width="1144" height="2096" loading="lazy" decoding="async">
+          <figcaption>Got the idea of depicting token slip</figcaption>
+        </figure>
+
+        <h4>Identified main elements:</h4>
+        <ol>
+          <li><strong>Token number</strong> with approximate waiting time (in minutes)</li>
+          <li><strong>Customer details</strong> and their purpose of visit</li>
+          <li><strong>Date and time</strong> of token generation (current time)</li>
+          <li>Area for showing <strong>offers, customer incentives</strong> etc.</li>
+        </ol>
+
+        <!-- Video mockup -->
+        <h4>Final Mockup</h4>
+        <figure class="fig">
+          <video class="clip" muted loop playsinline controls width="3477" height="2664" preload="none" data-poster="assets/lenskart/eye-test/token-mockup.png" style="--poster: url('assets/lenskart/eye-test/token-mockup.png')">
+            <source src="assets/lenskart/eye-test/token-mockup.webm" type="video/webm">
+            Your browser does not support the video tag.
+          </video>
+        </figure>
+
+        <h4>Snapshot from Store</h4>
+        <figure class="fig w-20">
+          <img src="assets/lenskart/eye-test/token-store.jpeg" alt="Token generated at store" width="960" height="1280" loading="lazy" decoding="async">
+          <figcaption>Token generated at store</figcaption>
+        </figure>
+
+        <!-- 3. Customer's List for Eye Test -->
+        <h3>3. Customer's List for Eye Test</h3>
+
+        <!-- Old version image -->
+        <figure class="fig board">
+          <img src="assets/lenskart/eye-test/epb-old.png" alt="Old customer list UI with annotated issues" width="5852" height="3968" loading="lazy" decoding="async">
+        </figure>
+
+        <h4>Identified main elements:</h4>
+        <ol>
+          <li>Customer queue should be <strong>sorted by token number</strong></li>
+          <li><strong>Next customer</strong> for eye test should be clearly visible</li>
+          <li>Show upcoming customers as much as possible with <strong>minimal scrolling</strong></li>
+          <li>Optometrist should see as much <strong>customer info</strong> as possible</li>
+        </ol>
+
+        <figure class="fig board board-45">
+          <img src="assets/lenskart/eye-test/epb-wireframe.png" alt="Customer list wireframe exploration" width="6156" height="3872" loading="lazy" decoding="async">
+        </figure>
+
+        <h4>Final Mockup</h4>
+        <figure class="fig">
+          <img src="assets/lenskart/eye-test/epb-mockup.png" alt="Final customer list mockup" width="3477" height="2664" loading="lazy" decoding="async">
+        </figure>
+
+        <!-- 4. Automatic Prescription Retrieval -->
+        <h3>4. Automatic Prescription Retrieval</h3>
+
+        <!-- Old version evolution image -->
+        <figure class="fig board">
+          <img src="assets/lenskart/eye-test/rx-old.png" alt="Prescription retrieval evolution" width="6488" height="8288" loading="lazy" decoding="async">
+        </figure>
+
+        <h4>Identified main elements:</h4>
+        <ol>
+          <li>
+            Manual work of printing <strong>AR slips</strong>, uploading images and entering prescriptions was inefficient. We aimed to eliminate it
+            <!-- Restored from the original case study, where it sat in a popover on "AR slips" -->
+            <figure class="fig w-12">
+              <img src="assets/lenskart/eye-test/ar-slip.jpeg" alt="Physical AR slips" width="900" height="1600" loading="lazy" decoding="async">
+              <figcaption>Physical AR slips</figcaption>
+            </figure>
+          </li>
+          <li>
+            First, we introduced <strong>Wi-Fi adapters and a desktop app</strong> to sync AR prescriptions directly to the system
+          </li>
+          <li>
+            Version 2.0 let optometrists view all synced prescriptions and manually select the correct one. But this was still <strong>time-consuming</strong>
+          </li>
+          <li>
+            <strong>Final solution:</strong> Use a unique 4-digit code to map a customer's token to their AR prescription, showing only the right one instantly
+          </li>
+        </ol>
+
+        <!-- Final Rx Mockup -->
+        <h4>Final Mockup</h4>
+        <figure class="fig">
+          <img src="assets/lenskart/eye-test/rx-mockup.png" alt="Final prescription retrieval mockup with 4-digit code" width="3477" height="2664" loading="lazy" decoding="async">
+        </figure>
+      </section>
+
+      <!-- ═══ IMPORTANT DECISIONS ═══ -->
+      <section id="cs-decisions">
+        <h2>Important Decisions</h2>
+
+        <!-- Decision 1 -->
+        <h3>1. Get Customer's Visit Purpose Before Mobile Number</h3>
+
+        <figure class="fig board board-45">
+          <img src="assets/lenskart/eye-test/token-decision.png" alt="Comparison between the two flows" width="4377" height="4284" loading="lazy" decoding="async">
+          <figcaption>Comparison between the two flows - Clear intent builds trust</figcaption>
+        </figure>
+
+        <ul>
+          <li>
+            Asking for a phone number upfront without context <strong>makes it feel like a marketing tactic</strong>
+          </li>
+          <li>
+            <strong>Insight:</strong> Customers need to know <em>why</em> number is being asked and what comes next
+          </li>
+          <li>
+            Asking the visit purpose <em>before</em> the phone number made customers <strong>more comfortable and conversations smoother</strong>
+          </li>
+        </ul>
+
+        <!-- Decision 2 -->
+        <h3>2. Customer Profile Selection</h3>
+
+        <figure class="fig">
+          <img src="assets/lenskart/eye-test/profiles.png" alt="Multiple profiles linked to one phone number" width="3477" height="2664" loading="lazy" decoding="async">
+          <figcaption>Multiple profiles linked to one phone number</figcaption>
+        </figure>
+
+        <ul>
+          <li>
+            Customer profiles were <strong>not saved earlier</strong>. Staff re-entered all info on every visit
+          </li>
+          <li>
+            <strong>Insight:</strong> Often, one person (e.g. parent) gave their phone number for someone else's eye test (e.g. child)
+          </li>
+          <li>
+            I suggested the concept of <strong>customer profiling with primary and secondary profiles</strong>
+          </li>
+        </ul>
+
+        <!-- Decision 3 -->
+        <h3>3. Prescription Syncing Desktop App</h3>
+        <p class="quiet">Patent pending</p>
+
+        <figure class="fig">
+          <img src="assets/lenskart/eye-test/bifrost.png" alt="Prescription syncing Windows desktop app" width="3261" height="2784" loading="lazy" decoding="async">
+          <figcaption>Software to sync prescriptions from machines to Lenskart database via Wi-Fi adapters</figcaption>
+        </figure>
+
+        <ul>
+          <li>
+            AR machines are now connected via <strong>Wi-Fi adapters</strong> that relay info to a fixed IP address
+          </li>
+          <li>
+            To sync prescription data with Lenskart's database, we needed an <strong>app to listen to the IP</strong>
+          </li>
+          <li>
+            I designed a <strong>Windows desktop app</strong> (developed in-house) that receives and relays prescriptions wirelessly and securely
+          </li>
+        </ul>
+
+        <h4>About Adapters:</h4>
+        <ul>
+          <li>
+            These Wi-Fi adapters <strong>securely transfer recorded prescriptions</strong> to a fixed IP address
+          </li>
+          <li>
+            <strong>Patent is pending</strong> for these adapters
+          </li>
+        </ul>
+
+        <figure class="fig w-20">
+          <img src="assets/lenskart/eye-test/adapters.png" alt="Wi-Fi adapters connected with eye test machines" width="1109" height="1239" loading="lazy" decoding="async">
+          <figcaption>Wi-Fi adapters connected with eye test machines</figcaption>
+        </figure>
+      </section>
+
+      <!-- ═══ EVOLUTION (Reflections) ═══ -->
+      <section>
+        <h2>Evolution</h2>
+        <p>
+          Looking back, there are things I'd approach differently. The initial rollout could have benefited from more A/B testing on the token screen layout. The prescription syncing solution, while effective, required hardware procurement that slowed adoption in some stores.
+        </p>
+        <p>
+          What came next: the system expanded to cover more store operations beyond eye tests. The token system became the backbone for all in-store customer management, and the design patterns established here were adopted across Lenskart's retail technology stack.
+        </p>
+      </section>
+
+    </div>
+
+    <!-- ═══ LET'S TALK ═══ -->
+    <section class="band cs-talk" id="cs-talk">
+      <h2>Let's Talk</h2>
+      <p class="cs-talk-who">Rajat Garg — Product Designer</p>
+      <p class="cs-talk-links">
+        <a href="mailto:rajatgarg1809@gmail.com"><span class="under">rajatgarg1809@gmail.com</span></a>
+        <a href="https://linkedin.com/in/gragtajar" target="_blank" rel="noopener"><span class="under">LinkedIn</span></a>
+        <a href="https://github.com/gragtajar" target="_blank" rel="noopener" data-track="github"><span class="under">GitHub</span></a>
+        <a href="resume.pdf" download="Rajat-Garg-Lead-Product-Designer-Resume.pdf" data-track="resume"><span class="under">Download Resume</span></a>
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p class="quote"></p>
+    <p class="credit">written &amp; directed by me. produced by claude</p>
+  </footer>
+
+  <script src="js/cursor.js" defer></script>
+  <script src="js/site.js" defer></script>
+  <script src="js/case-study.js" defer></script>
+
+</body>
+</html>

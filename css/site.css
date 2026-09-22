@@ -1,0 +1,657 @@
+/* ============================================
+   rajatg.in
+   World: the contact sheet. Paper, ink, hairlines, one dark band of film
+   base, and a red chinagraph pencil that only ever marks what is selected
+   or clickable. One type family: Archivo, condensed for edge print.
+   ============================================ */
+
+/* The two faces are served from this site (assets/fonts, SIL Open Font
+   License, licence texts beside them). They are the same files Google Fonts
+   serves, split the same way, so latin-ext is fetched only by a page that
+   needs it. Archivo is variable: width 62 to 125, weight 100 to 900. */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url('../assets/fonts/archivo-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url('../assets/fonts/archivo-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Bebas Neue is not a system face: only the kept intro crawl asks for it */
+@font-face {
+  font-family: 'Bebas Neue';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/bebas-neue-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  --paper: #f4f5f5;
+  --ink: #141414;
+  --ink-2: #55585a;
+  --line: #d3d5d6;
+  --base: #111212;
+  --base-ink: #e9eaea;
+  --base-ink-2: #9a9d9f;
+  --base-line: transparent;
+  /* the hairline that gives a picture, or an edge, its line on film base */
+  --base-hair: rgb(255 255 255 / 0.1);
+  --pencil: #e5402a;
+  /* the dotted underline: the second ink of the ground it sits on */
+  --dots: var(--ink-2);
+
+  --font-sans: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --pad: clamp(20px, 4vw, 64px);
+  /* the room above the name; the homepage's utilities hang from the same line */
+  --head-top: clamp(40px, 8vw, 88px);
+  /* the room above and below the footer's lines */
+  --foot-top: clamp(24px, 3.5dvh, 32px);
+  --foot-bottom: clamp(32px, 4.5dvh, 40px);
+  /* small enough on phones that the next frame peeks in as the cue to swipe */
+  --frame-h: clamp(150px, 42vw, 280px);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color-scheme: light;
+}
+
+/* Lights off: the same sheet in a dark room. Follows the system unless the
+   visitor picked a side with the Lights toggle. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #18191a;
+    --ink: #ededec;
+    --ink-2: #a6a9ab;
+    --line: #303233;
+    --base: #0c0d0d;
+    --base-line: #2a2c2d;
+    --pencil: #f0503a;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #18191a;
+  --ink: #ededec;
+  --ink-2: #a6a9ab;
+  --line: #303233;
+  --base: #0c0d0d;
+  --base-line: #2a2c2d;
+  --pencil: #f0503a;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
+
+img, video, svg { display: block; max-width: 100%; }
+
+button, input { font: inherit; color: inherit; }
+
+::selection { background: var(--ink); color: var(--paper); }
+
+/* Everything that can be clicked wears one underline: a row of dots in the
+   second ink of its ground, a little clear of the words. On hover or keyboard
+   focus the red pencil writes a line over the dots from the left, and lifts
+   off to the right when the pointer leaves.
+
+   Both lines are backgrounds of an inline box, not text-decoration: only a
+   background can be written across, an inline box sits the same distance
+   under its words whatever surrounds it, and gradients paint alike in every
+   browser. A link or button laid out as a block, or padded for a bigger
+   target, keeps its words in a span.under, and the span wears the line. */
+a, .under {
+  color: inherit;
+  text-decoration: none;
+  padding-bottom: 0.25em;
+  background-image:
+    linear-gradient(var(--stroke, var(--pencil)), var(--stroke, var(--pencil))),
+    radial-gradient(circle at 2px 1px, var(--dots) 0.9px, transparent 1.15px);
+  background-repeat: no-repeat, round no-repeat;
+  background-position: 100% 100%, 0 100%;
+  background-size: 0 2px, 4px 2px;
+}
+
+/* Written: on keyboard focus, and while a finger or a button is down */
+a:focus-visible, a:active,
+:is(a, button):focus-visible .under, :is(a, button):active .under {
+  background-position: 0 100%, 0 100%;
+  background-size: 100% 2px, 4px 2px;
+}
+
+/* Hover only where a pointer can hover, so a tapped link is not left written */
+@media (hover: hover) {
+  a:hover, :is(a, button):hover .under {
+    background-position: 0 100%, 0 100%;
+    background-size: 100% 2px, 4px 2px;
+  }
+}
+
+/* Where the browser paints its own colours (Windows high contrast), gradients
+   may not show: fall back to a plain underline */
+@media (forced-colors: active) {
+  a, .under {
+    padding-bottom: 0;
+    background: none;
+    text-decoration: underline;
+  }
+}
+
+.nowrap { white-space: nowrap; }
+
+/* Words that stay on one line wherever they fit, and wrap only where they cannot */
+.keep { display: inline-block; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -64px;
+  z-index: 10003;
+  padding: 8px 12px;
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.skip-link:focus { top: 16px; }
+
+/* its ring takes the ink of the ground it lands on, not its own reversed text */
+.skip-link:focus-visible { outline-color: var(--ink); }
+
+/* On the dark band, selection flips to the band's own ink */
+:is(.band, .site-footer) ::selection { background: var(--base-ink); color: var(--base); }
+
+/* Edge print: the small condensed capitals along a strip of film */
+.edge {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  font-stretch: 75%;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+}
+
+/* A clip's poster waits in data-poster until the clip is near (site.js). With
+   no script to fetch it, the same picture shows as the clip's ground instead. */
+html:not(.js) .clip { background: var(--poster, none) center / contain no-repeat; }
+
+/* --- The kept intro --- */
+/* It asks for Geist on its skip button; the site no longer loads it */
+.intro-skip { font-family: inherit; }
+
+/* Already played this visit, or no script to ever lift it: never paint it */
+.intro-seen .intro-overlay,
+html:not(.js) .intro-overlay { display: none; }
+
+/* --- Header --- */
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding: var(--head-top) var(--pad) 0;
+}
+
+h1 {
+  font-size: clamp(2.25rem, 1.5rem + 2.4vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+/* The animated beer emoji rides on the name's baseline */
+h1 dotlottie-player {
+  display: inline-block;
+  width: 0.82em;
+  height: 0.82em;
+  vertical-align: -0.06em;
+}
+
+/* Inner pages: the name is the way home, level with the utilities. The emoji
+   stands beside the link, not inside it, so the line runs under the name only. */
+:is(.page-case, .page-game) { --head-top: clamp(32px, 5vw, 56px); }
+
+:is(.page-case, .page-game) .site-header { align-items: baseline; }
+
+.home-link { font-weight: 600; }
+
+.way-home dotlottie-player {
+  display: inline-block;
+  width: 1.3em;
+  height: 1.3em;
+  vertical-align: -0.3em;
+}
+
+.role {
+  margin-top: 8px;
+  font-size: 1.125rem;
+  color: var(--ink-2);
+}
+
+/* Utilities sit one step quieter than the contact sentence: second ink and
+   Small. They wear the same dotted underline as every link. */
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 24px;
+  font-size: 0.875rem;
+  color: var(--ink-2);
+}
+
+/* padded for a bigger target, so the words sit in a span.under */
+.switch { padding-block: 10px; }
+
+.switch:hover, .switch:focus-visible { color: var(--ink); }
+
+/* A switch is a name plus its state, never a command */
+.switch {
+  border: 0;
+  background: none;
+  padding-inline: 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+.switch .state { color: var(--ink); font-weight: 600; }
+
+/* --- About --- */
+.about {
+  display: grid;
+  gap: clamp(18px, 3dvh, 32px);
+  max-width: calc(37rem + var(--pad) * 2);
+  padding: clamp(20px, 3.5dvh, 40px) var(--pad) clamp(28px, 4dvh, 48px);
+}
+
+.bio {
+  font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.reach { line-height: 1.6; text-wrap: pretty; }
+
+/* --- The band: one dark strip of film base --- */
+.band, .site-footer {
+  background: var(--base);
+  color: var(--base-ink);
+  --dots: var(--base-ink-2);
+}
+
+.band {
+  /* one pixel of overlap with the footer, so a fractional layout boundary can
+     never show a seam of paper between two pieces of the same film base */
+  margin-bottom: -1px;
+  padding: 12px 0 1px;
+  border-top: 1px solid var(--base-line);
+}
+
+.band .edge, .desc, .quote, .credit { color: var(--base-ink-2); }
+
+.slate { display: none; }
+
+.roll {
+  display: flex;
+  gap: 28px;
+  min-width: 0;
+  margin: 0;
+  padding: 18px var(--pad) 16px;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #3b3d3e transparent;
+}
+
+.roll.dragging { cursor: grabbing; user-select: none; }
+
+.frame { flex: none; }
+
+/* On touch the strip settles on frame edges. A mouse wheel or a drag writes
+   the scroll position directly, and snapping would fight both. */
+@media (hover: none) and (pointer: coarse) {
+  .roll {
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: var(--pad);
+  }
+
+  .frame { scroll-snap-align: start; }
+}
+
+/* The frame is as wide as its picture; the caption wraps to that width */
+.frame a {
+  display: grid;
+  gap: 8px;
+  width: min-content;
+  /* the link wraps a whole card: its action line wears the underline, not the card */
+  padding-bottom: 0;
+  background: none;
+}
+
+/* room between the edge print and the picture for the pencil to pass through */
+.no { margin-bottom: 10px; }
+
+.no span { margin-left: 1.2em; }
+
+/* The work's name joins the edge print only when the caption below is hidden */
+.no .name { display: none; }
+
+.frame a:hover .edge, .frame a:focus-visible .edge { color: var(--base-ink); }
+
+.still { position: relative; display: block; }
+
+.still img, .still video {
+  width: auto;
+  max-width: none;
+  height: var(--frame-h);
+  border-radius: 2px;
+  /* a hairline so dark pictures keep an edge on the dark band */
+  outline: 1px solid var(--base-hair);
+  outline-offset: -1px;
+  -webkit-user-drag: none;
+}
+
+.cap {
+  display: grid;
+  gap: 4px;
+  width: 0;
+  min-width: 100%;
+  /* the mark's lower edge can reach 14px below the picture */
+  margin-top: 12px;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+
+.desc {
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.go {
+  justify-self: start;
+  margin-top: 2px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* The pencil mark. site.js draws one per frame in real pixels, so its weight
+   and its corners stay the same at every size and it always clears the
+   picture. Only the active frame shows it. */
+.loop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: var(--pencil);
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* site.js normalises the path's length to 1. The gap is a little longer
+     than the path and the offset sits just past its end, so round caps
+     cannot leave a dot where the undrawn mark begins. */
+  stroke-dasharray: 1 1.02;
+  stroke-dashoffset: 1.01;
+  pointer-events: none;
+}
+
+/* With site.js on its way, the stand-in symbol never shows */
+.js .loop use { display: none; }
+
+/* Without site.js the mark falls back to the stretched symbol in the page */
+html:not(.js) .loop {
+  inset: -12px;
+  width: calc(100% + 24px);
+  height: calc(100% + 24px);
+  stroke-width: 1.6;
+  stroke-dasharray: 100 102;
+  stroke-dashoffset: 101;
+}
+
+/* Exactly one frame wears the mark: the active one. Without site.js there is
+   no active frame to move, so plain hover draws it instead. */
+.is-active .loop,
+html:not(.js) .frame a:hover .loop,
+html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
+
+/* --- Footer: a film quote on the left, the sign-off on the right --- */
+.site-footer {
+  display: grid;
+  gap: 4px 24px;
+  padding: var(--foot-top) var(--pad) var(--foot-bottom);
+}
+
+.quote, .credit {
+  font-size: 0.75rem;
+  line-height: 1.3;
+}
+
+.quote:empty { display: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .loop { transition: stroke-dashoffset 0.32s var(--ease-out); }
+
+  /* the pencil is quick: most of the line is down in the first tenth of a second */
+  a, .under { transition: background-size 0.3s var(--ease-out); }
+
+  .band-body::before { transition: opacity 0.32s var(--ease-out); }
+
+  /* The slate's words arrive with the mark, not before it */
+  .slate.swap > * { animation: settle 0.32s var(--ease-out); }
+
+  /* Once the intro ends, the roll is pulled across the lightbox */
+  .intro-finished .frame {
+    animation: pull 0.7s var(--ease-out) backwards;
+    animation-delay: calc(var(--i, 0) * 60ms + 200ms);
+  }
+}
+
+@keyframes pull {
+  from { opacity: 0; transform: translateX(48px); }
+}
+
+@keyframes settle {
+  from { opacity: 0; transform: translateY(4px); }
+}
+
+/* --- Wide screens --- */
+@media (min-width: 64em) {
+  /* On the homepage the utilities go top-right, level with the name */
+  .page-home { position: relative; }
+
+  .page-home .tools {
+    position: absolute;
+    top: var(--head-top);
+    right: var(--pad);
+    font-size: 0.9375rem;
+  }
+
+  .site-footer { grid-template-columns: 1fr auto; }
+}
+
+/* --- One screen, no vertical scroll, when there is room for it.
+       The slate on the left carries the active frame's words, so the frames
+       take whatever height is left: everything else on the page, plus some
+       air above the band, adds up to about 32rem. Needs site.js (the slate),
+       hence .js. --- */
+@media (min-width: 64em) and (min-height: 44em) {
+  /* The band holds near two fifths of the screen, so at least two whole
+     frames and the start of a third are in view; spare height becomes air
+     above the band. The second term keeps the page from ever overflowing. */
+  :root { --frame-h: clamp(170px, min(28dvh, 100dvh - 32.75rem), 340px); }
+
+  .js .page-home {
+    display: grid;
+    grid-template: auto minmax(0, 1fr) auto / minmax(0, 1fr);
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .js .page-home main {
+    display: grid;
+    grid-template: minmax(0, 1fr) auto / minmax(0, 1fr);
+  }
+
+  .js .page-home { --head-top: clamp(44px, 9dvh, 112px); }
+  .js .about { align-self: start; }
+
+  .js .band-body {
+    position: relative;
+    display: grid;
+    grid-template-columns: min(24rem, 30vw) minmax(0, 1fr);
+  }
+
+  /* The slate's edge. Once frames have slid under it, a hairline and a short
+     fall of shade show where they went; with nothing under it, it is gone. */
+  .js .band-body::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: min(24rem, 30vw);
+    width: 72px;
+    border-left: 1px solid var(--base-hair);
+    background: linear-gradient(90deg, var(--base), color-mix(in srgb, var(--base) 72%, transparent) 28%, transparent);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .js .band-body.is-under::before { opacity: 1; }
+
+  .js .slate:not([hidden]) {
+    display: grid;
+    align-content: center;
+    gap: 10px;
+    padding: 0 8px 0 var(--pad);
+  }
+
+  .slate-title {
+    font-size: clamp(1.125rem, 0.95rem + 0.6vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  .slate-desc {
+    font-size: 0.9375rem;
+    line-height: 1.45;
+    color: var(--base-ink-2);
+  }
+
+  /* padded for a bigger target, so its words sit in a span.under */
+  .open {
+    justify-self: start;
+    font-weight: 600;
+    padding-block: 6px;
+    background: none;
+  }
+
+  .js .roll { padding-left: 24px; }
+
+  /* The slate speaks for the active frame, so the captions under the frames
+     step aside and each frame keeps its name in the edge print above it */
+  .js .cap { display: none; }
+  .js .no .name { display: inline; }
+}
+
+/* --- Figma cursor (desktop only), carried over unchanged --- */
+.figma-cursor {
+  position: fixed;
+  pointer-events: none;
+  /* Above the intro overlay (10000) and skip button (10001) so the custom
+     cursor stays visible at all times on desktop, including during the intro */
+  z-index: 10002;
+  display: none;
+  transition: opacity 0.2s;
+  will-change: transform;
+}
+
+@media (min-width: 769px) {
+  .figma-cursor { display: block; }
+}
+
+/* The system pointer is hidden only once cursor.js is tracking, and only for a mouse */
+@media (min-width: 769px) and (hover: hover) and (pointer: fine) {
+  .has-figma-cursor, .has-figma-cursor * { cursor: none !important; }
+}
+
+.figma-cursor svg { display: block; }
+
+.cursor-label {
+  position: absolute;
+  top: 22px;
+  left: 10px;
+  background: #7b61ff;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  line-height: 1.5;
+}
+
+.cursor-label-input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  width: 80px;
+  outline: none;
+  padding: 0;
+  letter-spacing: 0.3px;
+}

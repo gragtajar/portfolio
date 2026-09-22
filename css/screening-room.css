@@ -1,0 +1,460 @@
+/* ============================================
+   SCREENING ROOM
+   The movie game as a contact sheet of posters: two frames on the film base,
+   and the red pencil circles the one you pick. Words on the left, pictures on
+   the right, as on the homepage's band. Everything here extends css/site.css
+   and uses its tokens.
+
+   The game's logic (js/screening-room.js) is not ours to change. It finds its
+   elements by the sr- class names, shows and hides the states with inline
+   display values and an .active class, and moves the cards with five classes
+   (slide-out-left, slide-out-right, slide-in-left, slide-in-right,
+   winner-pulse) that it removes again within 380ms. This file only decides
+   what those states and classes look like.
+   ============================================ */
+
+/* The film base runs unbroken from the stage to the footer, however tall the screen */
+.page-game {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.page-game main,
+.screening-room {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.page-game {
+  --title-top: clamp(32px, 6dvh, 72px);
+  --title-size: clamp(1.875rem, 1.2rem + 2.6vw, 3.25rem);
+  --title-bottom: clamp(24px, 4dvh, 40px);
+  --stage-pad: clamp(28px, 4dvh, 40px);
+  /* a frame's edge print and the room under it, where the pencil passes */
+  --edge-h: calc(0.6875rem * 1.3 + 18px);
+}
+
+/* --- The page's title, on paper --- */
+.screening-room h1 {
+  padding: var(--title-top) var(--pad) var(--title-bottom);
+  font-size: var(--title-size);
+  line-height: 1.04;
+}
+
+/* --- The stage: one band of film base --- */
+.sr-stage {
+  /* Posters share one height. On a wide screen it is exactly what the rest of
+     the page leaves, so a whole round is in view without scrolling and no
+     band is left dead under it: the header (its room, and the switches' 41px
+     row), the title, the stage's own padding, a frame's edge print, the words
+     under a poster (5.3rem), the footer (its room and one 1rem line), and 8px
+     to spare. It stops at 28rem: the game's script fetches posters 342px wide,
+     and drawn much larger they go soft on a sharp screen. On a narrow screen
+     two posters and the gutter fill the column. */
+  --poster-h: clamp(15rem, 100dvh - var(--head-top) - 41px - var(--title-top) - var(--title-size) * 1.04 - var(--title-bottom) - var(--stage-pad) * 2 - var(--edge-h) - 5.3rem - var(--foot-top) - var(--foot-bottom) - 1rem - 8px, 28rem);
+  /* room between two posters for both pencil marks and the "VS" */
+  --gutter: 3.5rem;
+  --poster-w: min(var(--poster-h) * 2 / 3, (100vw - var(--pad) * 2 - var(--gutter)) / 2);
+
+  flex: 1;
+  display: grid;
+  align-content: start;
+  padding: var(--stage-pad) var(--pad);
+  /* a card that is leaving must not give the page a sideways scroll */
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+/* --- The slate: what is being played, and the action --- */
+.sr-slate {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+}
+
+/* Before a game the slate is the start state's own: the invitation and Play,
+   then the two blank frames */
+.sr-start {
+  display: grid;
+  gap: 24px;
+}
+
+/* During a game on a narrow screen: the words on the left, Restart on the
+   right. Until the script fills it the slate is empty and takes no room, so
+   the space under it belongs to its last line, not to the slate. */
+.sr-stage > .sr-slate {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 16px;
+}
+
+.sr-stage > .sr-slate > .sr-round:not(:empty) { margin-bottom: 24px; }
+
+.sr-stage > .sr-slate > .sr-restart {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: start;
+}
+
+.sr-genre, .sr-tagline, .sr-badge {
+  font-size: clamp(1.125rem, 0.95rem + 0.6vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.sr-round, .sr-card-meta {
+  color: var(--base-ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-round {
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+
+/* nothing to say yet: no gap where the words will be */
+.sr-genre:empty, .sr-round:empty { display: none; }
+
+/* The two actions are words with the underline, never boxes. They are padded
+   for a bigger target, so the words sit in a span.under. */
+.sr-play-btn, .sr-restart {
+  border: 0;
+  background: none;
+  padding: 6px 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+.sr-play-btn { font-weight: 600; }
+
+.sr-restart {
+  font-size: 0.875rem;
+  color: var(--base-ink-2);
+}
+
+.sr-restart:hover, .sr-restart:focus-visible { color: var(--base-ink); }
+
+/* --- Frames: two posters and the gutter between them --- */
+.sr-cards, .sr-start-hint {
+  display: grid;
+  grid-template-columns: var(--poster-w) var(--gutter) var(--poster-w);
+  justify-content: start;
+  align-items: start;
+}
+
+.sr-card, .sr-winner-card, .sr-blank {
+  display: block;
+  width: var(--poster-w);
+}
+
+/* The two blank frames are Play's label: pressing one starts the game too */
+.sr-start-hint { cursor: pointer; }
+
+/* a blank frame has no year yet: keep the room its edge print will take */
+.sr-blank { padding-top: var(--edge-h); }
+
+.sr-blank .sr-still, .sr-blank .sr-placeholder-card { display: block; }
+
+/* A frame's year is its edge print, above the picture, as a frame's number is on the strip */
+.sr-card > .sr-card-year, .sr-winner-card > .sr-card-year {
+  display: block;
+  min-height: 1.3em;
+  margin-bottom: 18px;
+}
+
+.sr-card {
+  cursor: pointer;
+  /* a sideways swipe picks; an up or down one still scrolls the page */
+  touch-action: pan-y;
+}
+
+.sr-still {
+  position: relative;
+  aspect-ratio: 2 / 3;
+}
+
+/* A poster keeps its edge on the dark band with a hairline, like any picture there */
+.sr-poster, .sr-placeholder-card {
+  aspect-ratio: 2 / 3;
+  border-radius: 2px;
+  outline: 1px solid var(--base-hair);
+  outline-offset: -1px;
+  background: rgb(255 255 255 / 0.03);
+}
+
+.sr-poster {
+  height: 100%;
+  overflow: hidden;
+}
+
+.sr-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* "VS" in edge print, level with the middle of the posters */
+.sr-vs {
+  margin-top: calc(var(--edge-h) + var(--poster-w) * 0.75 - 0.65em);
+  color: var(--base-ink-2);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  font-stretch: 75%;
+  letter-spacing: 0.09em;
+  line-height: 1.3;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* While a poster is on its way */
+.sr-poster-skeleton {
+  width: 100%;
+  height: 100%;
+  background: rgb(255 255 255 / 0.05);
+}
+
+/* No poster to show: the film's name stands in for it */
+.sr-poster-fallback {
+  display: grid;
+  align-content: end;
+  height: 100%;
+  padding: 16px;
+  color: var(--base-ink-2);
+  font-weight: 600;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+/* --- Under a poster: the film, its year, and where to read about it --- */
+.sr-card-info {
+  /* the mark's lower edge can reach 14px below the poster */
+  margin-top: 20px;
+  /* room for a two-line title and the line under it whether or not the title
+     needs both, so a long title in the next round does not move the page */
+  min-height: calc(2.5em + 4px + 0.875rem * 1.45);
+}
+
+.sr-card-title {
+  display: -webkit-box;
+  overflow: hidden;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.sr-card-meta {
+  margin-top: 4px;
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+/* only the small suggestion keeps its year on this line */
+.sr-card-meta .sr-card-year { margin-right: 12px; }
+
+/* --- The pencil mark: on the poster under the pointer, on the one just
+       picked, and on the winner --- */
+.sr-card.winner-pulse .loop,
+.sr-winner.active .loop { stroke-dashoffset: 0; }
+
+@media (hover: hover) {
+  .sr-card:hover .loop,
+  .sr-blank:hover .loop { stroke-dashoffset: 0; }
+}
+
+/* Pointing at Play, or focusing it, circles the first blank frame. These two
+   stand in rules of their own on purpose: a browser without :has() drops the
+   whole rule it appears in, and must lose nothing but this flourish. */
+.sr-start:has(.sr-play-btn:focus-visible) .sr-blank:first-child .loop { stroke-dashoffset: 0; }
+
+@media (hover: hover) {
+  .sr-start:has(.sr-play-btn:hover) .sr-blank:first-child .loop { stroke-dashoffset: 0; }
+}
+
+/* --- States the script switches between --- */
+.sr-arena, .sr-winner, .sr-impressive { display: none; }
+
+.sr-arena.active, .sr-winner.active, .sr-impressive.active { display: block; }
+
+/* --- The winner: the circled poster, and Rajat's verdict beside it --- */
+.sr-winner-grid {
+  display: grid;
+  grid-template-columns: var(--poster-w) minmax(0, 24rem);
+  gap: 28px 24px;
+  justify-content: start;
+  align-items: start;
+}
+
+/* The verdict stands in the rejected frame's place, centred on the poster as the slate is */
+.sr-verdict {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+  align-content: center;
+  min-height: calc(var(--poster-w) * 1.5);
+  margin-top: var(--edge-h);
+}
+
+/* the trophy starts the line it belongs to, as the beer ends the name's */
+.sr-verdict-line {
+  display: flex;
+  gap: 0.4em;
+  align-items: baseline;
+}
+
+.sr-winner-trophy {
+  flex: none;
+  font-size: clamp(1.125rem, 0.95rem + 0.6vw, 1.5rem);
+  line-height: 1.15;
+}
+
+.sr-verdict-action, .sr-impressive-action { font-weight: 600; }
+
+/* "Try this instead": a label in the second ink, then a small frame with its words beside it */
+.sr-recommendation {
+  grid-column: 1 / -1;
+  max-width: 37rem;
+  padding-top: 20px;
+  border-top: 1px solid var(--base-hair);
+}
+
+.sr-rec-label {
+  color: var(--base-ink-2);
+  font-weight: 600;
+}
+
+.sr-rec-card {
+  display: grid;
+  grid-template-columns: calc(var(--poster-w) * 0.45) minmax(0, 1fr);
+  gap: 16px;
+  align-items: end;
+  margin-top: 12px;
+}
+
+.sr-rec-card .sr-card-info {
+  min-height: 0;
+  margin-top: 0;
+}
+
+/* --- Every genre played --- */
+.sr-impressive { max-width: 37rem; }
+
+.sr-impressive h2 {
+  font-size: clamp(1.625rem, 1.4rem + 1vw, 2.125rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+
+/* an emoji rides at the end of a line of type, as the beer does beside the name */
+.sr-impressive-emoji { font-size: 0.82em; }
+
+.sr-impressive p {
+  margin-top: 12px;
+  color: var(--base-ink-2);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+.sr-impressive .sr-impressive-action {
+  margin-top: 20px;
+  color: inherit;
+  font-size: 1rem;
+}
+
+/* --- Motion: a rejected frame drops away, the next one comes in from its side,
+       and the winner arrives before its mark is drawn --- */
+@media (prefers-reduced-motion: no-preference) {
+  .sr-card.slide-out-left { animation: sr-drop-left 0.3s ease-in forwards; }
+  .sr-card.slide-out-right { animation: sr-drop-right 0.3s ease-in forwards; }
+  .sr-card.slide-in-left { animation: sr-come-left 0.35s var(--ease-out) backwards; }
+  .sr-card.slide-in-right { animation: sr-come-right 0.35s var(--ease-out) backwards; }
+
+  .sr-winner.active, .sr-impressive.active { animation: sr-arrive 0.5s var(--ease-out) backwards; }
+
+  .sr-winner.active .loop { transition-delay: 0.35s; }
+
+  .sr-poster-skeleton { animation: sr-wait 0.9s ease-in-out infinite alternate; }
+}
+
+@keyframes sr-drop-left {
+  to { opacity: 0; transform: translateY(16px) rotate(-2deg); }
+}
+
+@keyframes sr-drop-right {
+  to { opacity: 0; transform: translateY(16px) rotate(2deg); }
+}
+
+@keyframes sr-come-left {
+  from { opacity: 0; transform: translateX(-28px); }
+}
+
+@keyframes sr-come-right {
+  from { opacity: 0; transform: translateX(28px); }
+}
+
+@keyframes sr-arrive {
+  from { opacity: 0; transform: translateY(12px); }
+}
+
+@keyframes sr-wait {
+  to { opacity: 0.4; }
+}
+
+@media (min-width: 40em) {
+  .sr-winner-grid { column-gap: 40px; }
+}
+
+/* --- From 64em: the band splits as the homepage's does, the slate on the left
+       and the pictures on the right --- */
+@media (min-width: 64em) {
+  /* the slate is as wide as the homepage's, which counts the gutter; so the
+     pictures start on the same line on both pages */
+  .sr-stage {
+    --slate-w: calc(min(24rem, 30vw) - var(--pad));
+    /* two posters and their gutter must also fit beside the slate */
+    --poster-w: min(var(--poster-h) * 2 / 3, (100vw - var(--pad) * 2 - var(--slate-w) - 24px - var(--gutter)) / 2);
+    grid-template-columns: var(--slate-w) minmax(0, 1fr);
+    column-gap: 24px;
+  }
+
+  /* the start state's own slate and frames take their places in the same grid */
+  .sr-start { display: contents; }
+
+  .sr-slate {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: start;
+    align-content: center;
+    gap: 10px;
+    /* centred on the posters, not on the edge print above or the words under them */
+    min-height: calc(var(--poster-w) * 1.5);
+    margin-top: var(--edge-h);
+    padding-right: 8px;
+  }
+
+  .sr-stage > .sr-slate {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .sr-stage > .sr-slate > .sr-round:not(:empty) { margin-bottom: 0; }
+
+  .sr-stage > .sr-slate > .sr-restart {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .sr-start-hint, .sr-arena, .sr-winner, .sr-impressive {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .sr-impressive { align-self: center; }
+}
