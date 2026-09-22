@@ -1,0 +1,83 @@
+name: Deploy Website to cPanel
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:        # allow a manual run from the Actions tab
+
+# Finish the deploy in flight, then run the newest one; never two at once
+concurrency:
+  group: deploy-main
+  cancel-in-progress: false
+
+jobs:
+  web-deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+
+    steps:
+    - name: Checkout code
+      # actions/checkout v4.4.0, pinned to its commit
+      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+
+    - name: Verify FTP secrets are configured
+      run: |
+        if [ -z "${{ secrets.FTP_SERVER }}" ]; then echo "::error::FTP_SERVER secret is missing"; exit 1; fi
+        if [ -z "${{ secrets.FTP_USERNAME }}" ]; then echo "::error::FTP_USERNAME secret is missing"; exit 1; fi
+        if [ -z "${{ secrets.FTP_PASSWORD }}" ]; then echo "::error::FTP_PASSWORD secret is missing"; exit 1; fi
+        echo "All FTP secrets present."
+
+    # /cua/ is a private tool that lives in gragtajar/cua and deploys from
+    # there into the same site. This repository must never carry a cua folder:
+    # if one appeared here, the sync below would start managing the server's
+    # /cua/ and could overwrite or delete what the other repository put there.
+    - name: Refuse to deploy if a cua folder is present
+      run: |
+        if [ -e cua ]; then
+          echo "::error::A cua/ folder exists in this checkout. /cua/ is deployed from gragtajar/cua; remove the folder here."
+          exit 1
+        fi
+        echo "No cua folder in the checkout, as expected."
+
+    - name: Sync files to cPanel
+      # SamKirkland/FTP-Deploy-Action v4.3.5, pinned to its commit
+      uses: SamKirkland/FTP-Deploy-Action@8e83cea8672e3fbcbb9fdafff34debf6ae4c5f65
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        port: 21
+        protocol: ftp
+        # The FTP user's login directory is the site root, so "./" is the site.
+        server-dir: ./
+        log-level: standard
+        # The sync state file the action keeps on the server. Same name as the
+        # previous repository used, so this repository continues from the
+        # server's current state instead of re-uploading everything. Bump the
+        # name to force a full re-sync.
+        state-name: .ftp-deploy-sync-state-v3.json
+        # Never upload or delete these. The action applies this list to the
+        # server's state as well as to the local tree, so the cua patterns keep
+        # it from ever touching the server's /cua/.
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/.github/**
+          **/node_modules/**
+          **/*.md
+          **/data/movies_part*.json
+          **/.DS_Store
+          cua/
+          cua/**
+          **/cua/**
+
+    - name: Deploy summary
+      if: always()
+      run: |
+        echo "Deploy job finished with status: ${{ job.status }}"
+        echo "Commit deployed: ${{ github.sha }}"
+        echo "Triggered by: ${{ github.actor }} via ${{ github.event_name }}"
