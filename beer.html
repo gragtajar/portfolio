@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beer From Scratch</title>
+  <meta name="description" content="A beginner's reference on beer: 66 styles with BJCP specs, an eight-rung starter ladder, serving and pairing, Indian label law, excise tiers and brand ownership.">
+  <meta name="author" content="Rajat Garg">
+  <meta name="theme-color" content="#f4f5f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#18191a" media="(prefers-color-scheme: dark)">
+
+  <link rel="canonical" href="https://rajatg.in/beer">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Rajat Garg">
+  <meta property="og:title" content="Beer From Scratch">
+  <meta property="og:description" content="A beginner's reference on beer: 66 styles with BJCP specs, an eight-rung starter ladder, serving and pairing, Indian label law, excise tiers and brand ownership.">
+  <meta property="og:url" content="https://rajatg.in/beer">
+
+  <!-- Fonts are served from this site (css/site.css declares them). The one
+       connection kept to fonts.gstatic.com is for the animated beer emoji. -->
+  <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Before first paint: the chosen theme -->
+  <script>
+    (function () {
+      var root = document.documentElement;
+      root.classList.add('js');
+      try {
+        var theme = localStorage.getItem('rg-theme');
+        if (theme === 'light' || theme === 'dark') root.dataset.theme = theme;
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/case-study.css">
+  <link rel="stylesheet" href="css/beer.css">
+
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="manifest" href="site.webmanifest">
+
+  <!-- Lottie player for the animated beer emoji -->
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+  <!-- Analytics: Cloudflare Web Analytics (cookieless, deferred) -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "599e70fe62dd40bf8b0fa8569f070d68"}'></script>
+
+  <!--
+    Analytics: Amplitude, loaded async by script injection so it never blocks
+    rendering. trackEvent() queues events fired before the SDK is ready.
+  -->
+  <script>
+  (function () {
+    window.trackEvent = function (name) {
+      if (window.amplitude && typeof window.amplitude.track === 'function') {
+        window.amplitude.track(name);
+      } else {
+        (window.__ampQueue = window.__ampQueue || []).push(name);
+      }
+    };
+    var s = document.createElement('script');
+    s.src = 'https://cdn.amplitude.com/script/8300beffc146f03833610e507db0468c.js';
+    s.async = true;
+    s.onload = function () {
+      if (!window.amplitude) return;
+      if (window.sessionReplay && window.amplitude.add) {
+        window.amplitude.add(window.sessionReplay.plugin({ sampleRate: 1 }));
+      }
+      window.amplitude.init('8300beffc146f03833610e507db0468c', {
+        fetchRemoteConfig: true,
+        autocapture: {
+          attribution: { trackingMethod: ['userProperty', 'eventProperty'] },
+          fileDownloads: true,
+          formInteractions: true,
+          pageViews: true,
+          sessions: true,
+          elementInteractions: true,
+          networkTracking: true,
+          webVitals: true,
+          frustrationInteractions: { thrashedCursor: true, errorClicks: true, deadClicks: true, rageClicks: true }
+        }
+      });
+      (window.__ampQueue || []).forEach(function (n) { window.amplitude.track(n); });
+      window.__ampQueue = [];
+    };
+    document.head.appendChild(s);
+  })();
+  </script>
+</head>
+<body class="page-case page-beer">
+
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <p class="way-home"><a href="index.html" class="home-link">Rajat Garg</a> <dotlottie-player id="cheers-lottie" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f37b/lottie.json" autoplay speed="1" aria-hidden="true"></dotlottie-player></p>
+    <nav class="tools" aria-label="Site">
+      <button type="button" class="switch sound-toggle" aria-pressed="false"><span class="under">Sound <span class="state">off</span></span></button>
+      <button type="button" class="switch theme-toggle" aria-pressed="true"><span class="under">Lights <span class="state">on</span></span></button>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ═══ MASTHEAD ═══ -->
+    <header class="cs-head">
+      <h1>Beer, <span class="from">from scratch</span></h1>
+
+      <p class="lede">You are not learning to brew. You are learning to <strong>read</strong>: a glass, a can, a tap list, a price board in a Gurugram microbrewery. This is the vocabulary, the numbers, the styles, what to order first, and the Indian legal and commercial reality behind all of it.</p>
+
+      <p class="cs-read-time">A grounded primer · built from BJCP, Cicerone, FSSAI and company filings</p>
+
+      <figure class="fig srm">
+        <div class="srm-strip" role="img" aria-label="The SRM colour scale, from 2 (straw) through 14 (amber) to 40 (black)"><span style="background:#FFD878"></span><span style="background:#FFCA5A"></span><span style="background:#FFBF42"></span><span style="background:#FBB123"></span><span style="background:#F8A733"></span><span style="background:#F39C00"></span><span style="background:#EA8F00"></span><span style="background:#E58500"></span><span style="background:#DE7C00"></span><span style="background:#D77200"></span><span style="background:#CF6900"></span><span style="background:#CB6200"></span><span style="background:#C35900"></span><span style="background:#BB5100"></span><span style="background:#B54C00"></span><span style="background:#B04500"></span><span style="background:#A63E00"></span><span style="background:#A13700"></span><span style="background:#9B3200"></span><span style="background:#952D00"></span><span style="background:#8E2900"></span><span style="background:#882300"></span><span style="background:#821E00"></span><span style="background:#7B1A00"></span><span style="background:#771900"></span><span style="background:#701400"></span><span style="background:#6A0E00"></span><span style="background:#660D00"></span><span style="background:#5E0B00"></span><span style="background:#5A0A02"></span><span style="background:#560903"></span><span style="background:#520907"></span><span style="background:#4C0505"></span><span style="background:#470606"></span><span style="background:#440607"></span><span style="background:#3F0708"></span><span style="background:#3B0607"></span><span style="background:#3A070B"></span><span style="background:#36080A"></span></div>
+        <p class="srm-labels" aria-hidden="true"><span>SRM 2 · straw</span><span>SRM 14 · amber</span><span>SRM 40 · black</span></p>
+        <figcaption>Colour is the first thing beer tells you about itself. Every style below sits somewhere on this strip.</figcaption>
+      </figure>
+
+      <dl class="rows figures stats">
+        <div><dt>66</dt> <dd>styles with verified specs</dd></div>
+        <div><dt>8</dt> <dd>rungs from lager to the frontier</dd></div>
+        <div><dt>8.0%</dt> <dd>India's legal ABV ceiling</dd></div>
+        <div><dt>12.7 ml</dt> <dd>one Indian standard drink</dd></div>
+      </dl>
+    </header>
+
+    <!-- ═══ SECTION INDEX (sticky) ═══ -->
+    <nav class="cs-index" aria-label="Sections">
+      <a href="#what"><span class="under"><span class="num">01</span>What beer is</span></a>
+      <a href="#split"><span class="under"><span class="num">02</span>Ale vs lager</span></a>
+      <a href="#ingredients"><span class="under"><span class="num">03</span>Ingredients</span></a>
+      <a href="#numbers"><span class="under"><span class="num">04</span>The numbers</span></a>
+      <a href="#styles"><span class="under"><span class="num">05</span>Style explorer</span></a>
+      <a href="#start"><span class="under"><span class="num">06</span>Where to start</span></a>
+      <a href="#serving"><span class="under"><span class="num">07</span>Serving &amp; pairing</span></a>
+      <a href="#india"><span class="under"><span class="num">08</span>India</span></a>
+      <a href="#brands"><span class="under"><span class="num">09</span>Indian brands</span></a>
+      <a href="#tasting"><span class="under"><span class="num">10</span>Tasting &amp; faults</span></a>
+      <a href="#history"><span class="under"><span class="num">11</span>History</span></a>
+      <a href="#gaps"><span class="under"><span class="num">12</span>Gaps &amp; sources</span></a>
+    </nav>
+
+    <div class="cs-body">
+
+      <!-- ═══ 01 WHAT BEER IS ═══ -->
+      <section id="what">
+        <h2>What beer actually is</h2>
+        <p class="lede"><strong>Definition.</strong> Four ingredients, one process, endless variation. India has a legal definition, which is a useful place for a beginner to start because it is precise.</p>
+
+        <aside class="aside">
+          <p class="aside-label">FSSAI, Alcoholic Beverages Regulations 2018, reg. 4.1</p>
+          <blockquote><p>"Beer is a fermented alcoholic beverage made from barley malt or other malted grains, sometimes with added adjuncts like wheat, maize, corn, rice or other cereal crops, and with hops or hop extracts to impart a bitter taste and flavour."</p></blockquote>
+        </aside>
+
+        <p>Unpack that and you get the whole craft. <strong>Malted grain</strong> supplies sugar and colour. <strong>Water</strong> is the medium and, less obviously, a flavour ingredient. <strong>Hops</strong> supply bitterness, aroma and preservation. <strong>Yeast</strong> eats the sugar, makes alcohol and CO₂, and, the part beginners always miss, creates a large share of the flavour itself.</p>
+
+        <div class="pair">
+          <div>
+            <p class="label">Fermented, not distilled</p>
+            <h3>Beer sits at the low end</h3>
+            <p>Fermentation alone can only take alcohol so far. Beer typically lands between roughly 3% and 12% ABV. Spirits get past that by distilling, concentrating alcohol after fermentation. Beer never does.</p>
+            <p class="muted">In India the law draws the line hard: anything sold as "beer" must be <strong>0.5% to 8.0% ABV</strong>. Above 8%, it is legally something else.</p>
+          </div>
+          <div>
+            <p class="label">Grain choice is identity</p>
+            <h3>Barley is the default, not the rule</h3>
+            <p>Barley malt dominates because barley husks form a natural filter bed and barley is rich in the enzymes that convert starch to sugar. Wheat, oats, rye, maize and rice all appear, each changing body, haze and mouthfeel.</p>
+            <p class="muted">Indian regulation explicitly permits wheat, maize, corn and rice as adjuncts, which is why most mass-market Indian lager is not all-malt.</p>
+          </div>
+        </div>
+
+        <aside class="aside flag">
+          <p class="aside-label">A distinction worth fixing early</p>
+          <p><strong>Strength and bitterness are independent.</strong> A Belgian Dark Strong Ale is 8–12% ABV with only 20–35 IBU: very strong, barely bitter. An American Pale Ale is 4.5–6.2% with 30–50 IBU: weak, noticeably bitter. Beginners routinely read "strong" as "bitter". They are different axes, and the explorer below lets you see them separately.</p>
+        </aside>
+      </section>
+
+      <!-- ═══ 02 ALE VS LAGER ═══ -->
+      <section id="split">
+        <h2>Ale versus lager</h2>
+        <p class="lede"><strong>The one split that organises everything.</strong> Almost every beer in the world falls on one side of this line. It is a difference of yeast species and temperature, and everything else follows from it.</p>
+
+        <div class="pair">
+          <div>
+            <p class="label">Top-fermenting</p>
+            <h3>Ale</h3>
+            <p><strong>Yeast:</strong> <em>Saccharomyces cerevisiae</em>, the same species as bread and wine yeast. Works warm, works fast, and rises to the top of the vessel during fermentation.</p>
+            <p><strong>What you taste:</strong> yeast-derived fruit and spice. Banana and clove in a German Weissbier, pear and pepper in Belgian ales, soft stone fruit in English bitters. The yeast is a visible author of the flavour.</p>
+            <p class="muted">Ales: IPA, pale ale, stout, porter, wheat beer, all Belgian styles, bitter, barleywine.</p>
+          </div>
+          <div>
+            <p class="label">Bottom-fermenting</p>
+            <h3>Lager</h3>
+            <p><strong>Yeast:</strong> <em>Saccharomyces pastorianus</em>, a hybrid species that works cold, works slowly, and settles to the bottom. Its wild parent, <em>S. eubayanus</em>, was only identified in 2011.</p>
+            <p><strong>What you taste:</strong> almost no yeast character at all. Lagering, meaning extended cold conditioning (German <em>lagern</em>, "to store"), strips out rough edges. Malt and hops have nowhere to hide.</p>
+            <p class="muted">Lagers: pilsner, helles, Märzen, bock, dunkel, schwarzbier, and nearly every mass-market beer on earth.</p>
+          </div>
+        </div>
+
+        <h3>The instructive exceptions</h3>
+        <dl class="rows defs">
+          <div><dt>Kölsch</dt> <dd>Fermented warm with ale yeast, then cold-conditioned like a lager. Result: a pale, delicate beer that drinks like a lager but carries a faint ale fruitiness. Cologne, Germany.</dd></div>
+          <div><dt>Baltic Porter</dt> <dd>Called a porter, historically an ale style, but fermented cold with lager yeast. 6.5–9.5% ABV, dark, smooth, dried-fruit rich. The name tells you nothing about the yeast.</dd></div>
+          <div><dt>Lambic &amp; Gueuze</dt> <dd>Neither. Spontaneously fermented by wild yeast and bacteria from the open air of Brussels' Senne Valley. Sour, funky, and at 0–10 IBU essentially unbittered.</dd></div>
+        </dl>
+        <p class="muted">Takeaway: style names are historical accidents, not a taxonomy. The yeast is the real fact.</p>
+      </section>
+
+      <!-- ═══ 03 INGREDIENTS ═══ -->
+      <section id="ingredients">
+        <h2>The four ingredients, and what each does to the glass</h2>
+        <p class="lede"><strong>Composition.</strong> Read this as a drinker: the question is never "how is it made", it is "why does it taste like that".</p>
+
+        <div class="pair">
+          <div>
+            <p class="label">Ingredient one</p>
+            <h3>Water, the invisible ingredient</h3>
+            <p>Beer is overwhelmingly water, and its dissolved minerals change what the other ingredients taste like. This is not a subtlety. It is why entire styles exist only where they do.</p>
+            <ul>
+              <li><strong>Burton-on-Trent, England:</strong> very high sulphate. Sulphate sharpens and dries hop bitterness, which is why Burton became the pale ale and IPA capital. Brewers elsewhere still add gypsum to imitate it, a practice called <em>burtonisation</em>.</li>
+              <li><strong>Plzeň, Bohemia:</strong> exceptionally soft water. Soft water lets a heavy hopping rate stay round rather than harsh, which is half the reason Pilsner Urquell tastes the way it does.</li>
+            </ul>
+          </div>
+          <div>
+            <p class="label">Ingredient two</p>
+            <h3>Malt: colour, sweetness, body</h3>
+            <p>Grain is steeped, allowed to germinate, then dried in a kiln. <strong>How hot and how long that kiln runs decides the colour and much of the flavour.</strong> The spectrum runs continuously:</p>
+            <ul>
+              <li><strong>Palest kilning</strong> gives bready, cracker-like, neutral. The base of pilsners and pale lagers.</li>
+              <li><strong>Medium kilning</strong> gives toast, biscuit, bread crust. Munich and Vienna malts, the backbone of Märzen and dunkel.</li>
+              <li><strong>Caramelised</strong> gives toffee, caramel, raisin. Crystal malts, which give bitters and ambers their sweetness.</li>
+              <li><strong>Roasted</strong> gives coffee, dark chocolate, char. Chocolate malt and roasted barley, what makes a stout black and bitter in a way hops never could.</li>
+            </ul>
+          </div>
+        </div>
+
+        <aside class="aside">
+          <p class="aside-label">A documented turning point</p>
+          <p>Before the hydrometer arrived around 1770, brewers could not measure yield. Once they could, they found brown malt produced <strong>54 lb</strong> of extract per quarter against pale malt's <strong>80 lb</strong>. Brewers switched to pale malt as the base for <em>every</em> beer and added small amounts of dark malt purely for colour. Daniel Wheeler's drum roaster of <strong>1817</strong> then created patent black malt, making that approach practical. Modern dark beer is a consequence of an accounting insight.</p>
+        </aside>
+
+        <div class="pair">
+          <div>
+            <p class="label">Ingredient three</p>
+            <h3>Hops: bitterness, aroma, preservation</h3>
+            <p>Hops are the cone-shaped flower of a climbing vine. They do two jobs that pull in opposite directions, and <strong>when the brewer adds them decides which job they do</strong>.</p>
+            <ul>
+              <li><strong>Added early, boiled long:</strong> the resins isomerise and you get bitterness, but the aroma boils away.</li>
+              <li><strong>Added late, or after fermentation (dry-hopping):</strong> aroma and flavour with almost no added bitterness. This is why a Hazy IPA can smell enormous and taste comparatively soft, at 25–60 IBU against a classic American IPA's 40–70.</li>
+            </ul>
+            <p>Hops also preserve. That property is why they displaced the older herb mixture <em>gruit</em> across medieval Europe: unhopped beer spoiled too fast to export.</p>
+            <p class="muted">Named varieties carry recognisable character. Saaz defines Czech pilsner's floral-spicy note; Cascade and Chinook carried the American craft movement's citrus-and-pine signature.</p>
+          </div>
+          <div>
+            <p class="label">Ingredient four</p>
+            <h3>Yeast, the hidden author</h3>
+            <p>Yeast converts sugar into alcohol and CO₂. It also manufactures aroma compounds, and in ales those compounds are often the dominant flavour in the glass.</p>
+            <ul>
+              <li><strong>Esters</strong> give fruit. The banana in a Weissbier is not an additive, it is an ester the yeast made.</li>
+              <li><strong>Phenols</strong> give spice. The clove alongside that banana, and the pepper in a Saison.</li>
+              <li><strong>Wild organisms</strong> (<em>Brettanomyces</em>, <em>Lactobacillus</em>, <em>Pediococcus</em>) produce the funk and acidity of lambic, gueuze and Flanders reds.</li>
+            </ul>
+            <p>Two names to know: <strong>Louis Pasteur</strong>, whose 1857 work established that yeast drives fermentation, and <strong>Emil Christian Hansen</strong>, who at the Carlsberg Laboratory in <strong>1883</strong> first isolated a pure yeast cell. Every lager yeast in commercial use descends from Hansen's isolate.</p>
+          </div>
+        </div>
+
+        <aside class="aside flag">
+          <p class="aside-label">Coverage note</p>
+          <p>This section carries only what was verifiable. <strong>Left out rather than guessed:</strong> the full hop-variety descriptor table (Citra, Mosaic, Simcoe, Nelson Sauvin, Galaxy), hop oil chemistry, fermentation temperature bands, macronutrient breakdown, calories by style, and gluten content. All listed in <a href="#gaps">Gaps and sources</a>.</p>
+        </aside>
+      </section>
+
+      <!-- ═══ 04 THE NUMBERS ═══ -->
+      <section id="numbers">
+        <h2>Reading the numbers on a tap list</h2>
+        <p class="lede"><strong>Units.</strong> Four abbreviations do almost all the work. The ranges quoted here are derived from the 66-style dataset below, so they describe the real span of beer rather than a textbook ideal.</p>
+
+        <dl class="rows defs units">
+          <div>
+            <dt>ABV <span class="sub">Alcohol by volume</span></dt>
+            <dd><strong>What share of the liquid is pure alcohol.</strong> A 5% beer is 5% ethanol by volume. Across the styles below it runs from <strong>2.8%</strong> (American Light Lager, Berliner Weisse) to <strong>14%</strong> (Eisbock). In India, beer is legally capped at <strong>8.0%</strong>.</dd>
+          </div>
+          <div>
+            <dt>IBU <span class="sub">International Bitterness Units</span></dt>
+            <dd><strong>A laboratory measure of bitter compounds.</strong> Across these styles it runs from <strong>0</strong> (Lambic, Gueuze) to <strong>100</strong> (Double IPA, American Barleywine). Critically, <strong>IBU is not perceived bitterness</strong>, because sweetness masks it. An Imperial Stout at 50–90 IBU tastes far less bitter than an American Pale Ale at 30–50, because the stout has enormous residual malt sweetness to balance against.</dd>
+          </div>
+          <div>
+            <dt>SRM <span class="sub">Standard Reference Method</span></dt>
+            <dd><strong>Colour, as a number.</strong> Low is pale, high is dark. In this dataset <strong>2</strong> is palest straw (American Light Lager, Berliner Weisse), <strong>10–17</strong> is amber to copper, and <strong>40</strong> is effectively black (Irish Stout, Imperial Stout). Europe uses <strong>EBC</strong> instead, which is roughly double the SRM figure.</dd>
+          </div>
+          <div>
+            <dt>OG / FG <span class="sub">Original &amp; final gravity</span></dt>
+            <dd><strong>Sugar density before and after fermentation</strong>, written as 1.048, 1.012 and so on. The gap between them is what the yeast ate, so it predicts alcohol; how high the FG lands predicts body and sweetness. Czech Premium Pale Lager runs OG <strong>1.044–1.060</strong> down to FG <strong>1.013–1.017</strong>.</dd>
+          </div>
+          <div>
+            <dt>°P <span class="sub">Degrees Plato</span></dt>
+            <dd><strong>The same sugar measurement on a different scale</strong>, standard in continental Europe. <strong>This is the most common beginner trap.</strong> A Czech beer labelled "12°" is <em>12 degrees Plato</em>, a measure of sugar density, not strength. That beer is around 5% ABV, not 12%. Czech pubs label beers 10°, 11°, 12° routinely.</dd>
+          </div>
+        </dl>
+
+        <aside class="aside flag">
+          <p class="aside-label">Honest limitation</p>
+          <p>The ranges above are <strong>derived from the verified 66-style dataset in this guide</strong>, not from a fetched metrological standard. The formal definitions (IBU as milligrams per litre of isomerised alpha acid, the exact SRM-to-EBC conversion, the Plato-to-gravity formula, and the legal volumes of an imperial versus US pint) could not be sourced and are queued for a later pass.</p>
+        </aside>
+      </section>
+
+      <!-- ═══ 05 STYLE EXPLORER ═══ -->
+      <section id="styles">
+        <h2>66 styles, with real specifications</h2>
+        <p class="lede"><strong>The map.</strong> Every figure here comes directly from the BJCP 2021 Style Guidelines, the reference beer judges are examined against. Filter, search and sort to find your way around.</p>
+
+        <div class="explorer">
+          <div class="explorer-tools">
+            <div class="filters" role="group" aria-label="Fermentation type">
+              <button type="button" class="filter" aria-pressed="true" data-filter="all"><span class="under">All</span></button>
+              <button type="button" class="filter" aria-pressed="false" data-filter="lager"><span class="under">Lager</span></button>
+              <button type="button" class="filter" aria-pressed="false" data-filter="ale"><span class="under">Ale</span></button>
+              <button type="button" class="filter" aria-pressed="false" data-filter="wild"><span class="under">Wild / sour</span></button>
+            </div>
+            <label class="field search">
+              <span class="visually-hidden">Search styles</span>
+              <input type="search" placeholder="Search: stout, Belgium, IPA…" autocomplete="off" data-search>
+            </label>
+            <label class="field sort">
+              <span class="visually-hidden">Sort styles by</span>
+              <select data-sort>
+                <option value="code">BJCP order</option>
+                <option value="abv">Strongest first</option>
+                <option value="ibu">Most bitter first</option>
+                <option value="srm">Darkest first</option>
+              </select>
+            </label>
+          </div>
+          <p class="count" aria-live="polite"><span data-count>66</span> of 66 styles</p>
+
+          <div class="table-scroll" tabindex="0">
+            <table class="data styles">
+              <thead>
+                <tr>
+                  <th scope="col">Style</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Origin</th>
+                  <th scope="col">ABV</th>
+                  <th scope="col">IBU</th>
+                  <th scope="col">Colour · SRM</th>
+                  <th scope="col">Try</th>
+                </tr>
+              </thead>
+              <tbody data-rows>
+                <tr data-code="1A" data-ferment="lager" data-abv="4.2" data-ibu="12" data-srm="3" data-text="1a american light lager usa extremely light and fizzy, built to be drunk ice-cold. bud light, miller lite">
+                  <th scope="row"><span class="code">1A</span><span class="name">American Light Lager</span><span class="desc">Extremely light and fizzy, built to be drunk ice-cold.</span></th>
+                  <td class="type">Lager</td>
+                  <td class="origin">USA</td>
+                  <td class="num"><span class="range">2.8–4.2%</span><span class="bar" aria-hidden="true"><span style="left:20.00%;width:10.00%"></span></span></td>
+                  <td class="num"><span class="range">8–12</span><span class="bar" aria-hidden="true"><span style="left:8.00%;width:4.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFD878,#FFCA5A)" aria-hidden="true"></span><span class="range">2–3</span></td>
+                  <td class="try">Bud Light, Miller Lite</td>
+                </tr>
+                <tr data-code="1B" data-ferment="lager" data-abv="5.3" data-ibu="18" data-srm="3.5" data-text="1b american lager usa the classic pale, neutral american beer, barely bitter. budweiser, pabst blue ribbon">
+                  <th scope="row"><span class="code">1B</span><span class="name">American Lager</span><span class="desc">The classic pale, neutral American beer, barely bitter.</span></th>
+                  <td class="type">Lager</td>
+                  <td class="origin">USA</td>
+                  <td class="num"><span class="range">4.2–5.3%</span><span class="bar" aria-hidden="true"><span style="left:30.00%;width:7.86%"></span></span></td>
+                  <td class="num"><span class="range">8–18</span><span class="bar" aria-hidden="true"><span style="left:8.00%;width:10.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFD878,#FFBF42)" aria-hidden="true"></span><span class="range">2–3.5</span></td>
+                  <td class="try">Budweiser, Pabst Blue Ribbon</td>
+                </tr>
+                <tr data-code="2A" data-ferment="lager" data-abv="6" data-ibu="25" data-srm="6" data-text="2a international pale lager worldwide a slightly fuller, mildly more bitter global mass-market lager. heineken, corona extra">
+                  <th scope="row"><span class="code">2A</span><span class="name">International Pale Lager</span><span class="desc">A slightly fuller, mildly more bitter global mass-market lager.</span></th>
+                  <td class="type">Lager</td>
+                  <td class="origin">Worldwide</td>
+                  <td class="num"><span class="range">4.5–6%</span><span class="bar" aria-hidden="true"><span style="left:32.14%;width:10.71%"></span></span></td>
+                  <td class="num"><span class="range">18–25</span><span class="bar" aria-hidden="true"><span style="left:18.00%;width:7.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFD878,#F8A733)" aria-hidden="true"></span><span class="range">2–6</span></td>
+                  <td class="try">Heineken, Corona Extra</td>
+                </tr>
+                <tr data-code="3A" data-ferment="lager" data-abv="4.1" data-ibu="35" data-srm="6" data-text="3a czech pale lager czechia the czech everyday session beer: light-bodied but genuinely hoppy. bernard 10, radegast razna 10">
+                  <th scope="row"><span class="code">3A</span><span class="name">Czech Pale Lager</span><span class="desc">The Czech everyday session beer: light-bodied but genuinely hoppy.</span></th>
+                  <td class="type">Lager</td>
+                  <td class="origin">Czechia</td>
+                  <td class="num"><span class="range">3–4.1%</span><span class="bar" aria-hidden="true"><span style="left:21.43%;width:7.86%"></span></span></td>
+                  <td class="num"><span class="range">20–35</span><span class="bar" aria-hidden="true"><span style="left:20.00%;width:15.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFCA5A,#F8A733)" aria-hidden="true"></span><span class="range">3–6</span></td>
+                  <td class="try">Bernard 10, Radegast Razna 10</td>
+                </tr>
+                <tr data-code="3B" data-ferment="lager" data-abv="5.8" data-ibu="45" data-srm="6" data-text="3b czech premium pale lager czechia the original pilsner: bready malt, soft firm bitterness, long finish. pilsner urquell, budvar 33">
+                  <th scope="row"><span class="code">3B</span><span class="name">Czech Premium Pale Lager</span><span class="desc">The original pilsner: bready malt, soft firm bitterness, long finish.</span></th>
+                  <td class="type">Lager</td>
+                  <td class="origin">Czechia</td>
+                  <td class="num"><span class="range">4.2–5.8%</span><span class="bar" aria-hidden="true"><span style="left:30.00%;width:11.43%"></span></span></td>
+                  <td class="num"><span class="range">30–45</span><span class="bar" aria-hidden="true"><span style="left:30.00%;width:15.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFBF42,#F8A733)" aria-hidden="true"></span><span class="range">3.5–6</span></td>
+                  <td class="try">Pilsner Urquell, Budvar 33</td>
+                </tr>
+                <tr data-code="3D" data-ferment="lager" data-abv="5.8" data-ibu="34" data-srm="35" data-text="3d czech dark lager czechia dark czech lager with caramel and chocolate depth, light roast. u fleku 13, kozel dark">
+                  <th scope="row"><span class="code">3D</span><span class="name">Czech Dark Lager</span><span class="desc">Dark Czech lager with caramel and chocolate depth, light roast.</span></th>
+                  <td class="type">Lager</td>
+                  <td class="origin">Czechia</td>
+                  <td class="num"><span class="range">4.4–5.8%</span><span class="bar" aria-hidden="true"><span style="left:31.43%;width:10.00%"></span></span></td>
+                  <td class="num"><span class="range">18–34</span><span class="bar" aria-hidden="true"><span style="left:18.00%;width:16.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#B04500,#470606)" aria-hidden="true"></span><span class="range">17–35</span></td>
+                  <td class="try">U Fleku 13, Kozel Dark</td>
+                </tr>
+                <tr data-code="4A" data-ferment="lager" data-abv="5.4" data-ibu="22" data-srm="5" data-text="4a munich helles germany gold, smooth, gently malty with a soft dry finish. bavaria's daily beer. augustiner lagerbier hell, weihenstephaner original">
+                  <th scope="row"><span class="code">4A</span><span class="name">Munich Helles</span><span class="desc">Gold, smooth, gently malty with a soft dry finish. Bavaria's daily beer.</span></th>
+                  <td class="type">Lager</td>
+                  <td class="origin">Germany</td>
+                  <td class="num"><span class="range">4.7–5.4%</span><span class="bar" aria-hidden="true"><span style="left:33.57%;width:5.00%"></span></span></td>
+                  <td class="num"><span class="range">16–22</span><span class="bar" aria-hidden="true"><span style="left:16.00%;width:6.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFCA5A,#FBB123)" aria-hidden="true"></span><span class="range">3–5</span></td>
+                  <td class="try">Augustiner Lagerbier Hell, Weihenstephaner Original</td>
+                </tr>
+                <tr data-code="4B" data-ferment="lager" data-abv="6.3" data-ibu="25" data-srm="6" data-text="4b festbier germany the modern golden oktoberfest beer: stronger than helles, still drinkable. paulaner oktoberfest, hofbrau oktoberfestbier">
+                  <th scope="row"><span class="code">4B</span><span class="name">Festbier</span><span class="desc">The modern golden Oktoberfest beer: stronger than helles, still drinkable.</span></th>
+                  <td class="type">Lager</td>
+                  <td class="origin">Germany</td>
+                  <td class="num"><span class="range">5.8–6.3%</span><span class="bar" aria-hidden="true"><span style="left:41.43%;width:3.57%"></span></span></td>
+                  <td class="num"><span class="range">18–25</span><span class="bar" aria-hidden="true"><span style="left:18.00%;width:7.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFBF42,#F8A733)" aria-hidden="true"></span><span class="range">4–6</span></td>
+                  <td class="try">Paulaner Oktoberfest, Hofbrau Oktoberfestbier</td>
+                </tr>
+                <tr data-code="5B" data-ferment="hybrid" data-abv="5.2" data-ibu="30" data-srm="5" data-text="5b kolsch germany delicate pale beer, ale-fermented then cold-aged. lightly fruity, very clean. reissdorf kolsch, fruh kolsch">
+                  <th scope="row"><span class="code">5B</span><span class="name">Kolsch</span><span class="desc">Delicate pale beer, ale-fermented then cold-aged. Lightly fruity, very clean.</span></th>
+                  <td class="type">Hybrid</td>
+                  <td class="origin">Germany</td>
+                  <td class="num"><span class="range">4.4–5.2%</span><span class="bar" aria-hidden="true"><span style="left:31.43%;width:5.71%"></span></span></td>
+                  <td class="num"><span class="range">18–30</span><span class="bar" aria-hidden="true"><span style="left:18.00%;width:12.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFBF42,#FBB123)" aria-hidden="true"></span><span class="range">3.5–5</span></td>
+                  <td class="try">Reissdorf Kolsch, Fruh Kolsch</td>
+                </tr>
+                <tr data-code="5D" data-ferment="lager" data-abv="5.2" data-ibu="40" data-srm="4" data-text="5d german pils germany pale, crisp and dry with flowery-spicy hops and firm bitterness. jever pilsener, rothaus pils">
+                  <th scope="row"><span class="code">5D</span><span class="name">German Pils</span><span class="desc">Pale, crisp and dry with flowery-spicy hops and firm bitterness.</span></th>
+                  <td class="type">Lager</td>
+                  <td class="origin">Germany</td>
+                  <td class="num"><span class="range">4.4–5.2%</span><span class="bar" aria-hidden="true"><span style="left:31.43%;width:5.71%"></span></span></td>
+                  <td class="num"><span class="range">22–40</span><span class="bar" aria-hidden="true"><span style="left:22.00%;width:18.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFD878,#FFBF42)" aria-hidden="true"></span><span class="range">2–4</span></td>
+                  <td class="try">Jever Pilsener, Rothaus Pils</td>
+                </tr>
+                <tr data-code="6A" data-ferment="lager" data-abv="6.3" data-ibu="24" data-srm="17" data-text="6a marzen germany amber lager with rich toasty bread-crust malt and a dry finish. paulaner oktoberfest, hacker-pschorr marzen">
+                  <th scope="row"><span class="code">6A</span><span class="name">Marzen</span><span class="desc">Amber lager with rich toasty bread-crust malt and a dry finish.</span></th>
+                  <td class="type">Lager</td>
+                  <td class="origin">Germany</td>
+                  <td class="num"><span class="range">5.6–6.3%</span><span class="bar" aria-hidden="true"><span style="left:40.00%;width:5.00%"></span></span></td>
+                  <td class="num"><span class="range">18–24</span><span class="bar" aria-hidden="true"><span style="left:18.00%;width:6.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#EA8F00,#B04500)" aria-hidden="true"></span><span class="range">8–17</span></td>
+                  <td class="try">Paulaner Oktoberfest, Hacker-Pschorr Marzen</td>
+                </tr>
+                <tr data-code="6B" data-ferment="lager" data-abv="6" data-ibu="30" data-srm="22" data-text="6b rauchbier germany a marzen brewed with beechwood-smoked malt: woody, smoky, almost bacon-like. schlenkerla rauchbier marzen, spezial rauchbier">
+                  <th scope="row"><span class="code">6B</span><span class="name">Rauchbier</span><span class="desc">A Marzen brewed with beechwood-smoked malt: woody, smoky, almost bacon-like.</span></th>
+                  <td class="type">Lager</td>
+                  <td class="origin">Germany</td>
+                  <td class="num"><span class="range">4.8–6%</span><span class="bar" aria-hidden="true"><span style="left:34.29%;width:8.57%"></span></span></td>
+                  <td class="num"><span class="range">20–30</span><span class="bar" aria-hidden="true"><span style="left:20.00%;width:10.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#CF6900,#8E2900)" aria-hidden="true"></span><span class="range">12–22</span></td>
+                  <td class="try">Schlenkerla Rauchbier Marzen, Spezial Rauchbier</td>
+                </tr>
+                <tr data-code="7A" data-ferment="lager" data-abv="5.5" data-ibu="30" data-srm="15" data-text="7a vienna lager austria amber lager, soft toasty malt, balanced bitterness, fairly dry. ottakringer wiener original, schell's firebrick">
+                  <th scope="row"><span class="code">7A</span><span class="name">Vienna Lager</span><span class="desc">Amber lager, soft toasty malt, balanced bitterness, fairly dry.</span></th>
+                  <td class="type">Lager</td>
+                  <td class="origin">Austria</td>
+                  <td class="num"><span class="range">4.7–5.5%</span><span class="bar" aria-hidden="true"><span style="left:33.57%;width:5.71%"></span></span></td>
+                  <td class="num"><span class="range">18–30</span><span class="bar" aria-hidden="true"><span style="left:18.00%;width:12.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#E58500,#BB5100)" aria-hidden="true"></span><span class="range">9–15</span></td>
+                  <td class="try">Ottakringer Wiener Original, Schell's Firebrick</td>
+                </tr>
+                <tr data-code="8A" data-ferment="lager" data-abv="5.6" data-ibu="28" data-srm="28" data-text="8a munich dunkel germany brown bavarian lager: toasted bread crust, nuts, chocolate. never burnt. ayinger altbairisch dunkel, hofbrauhaus dunkel">
+                  <th scope="row"><span class="code">8A</span><span class="name">Munich Dunkel</span><span class="desc">Brown Bavarian lager: toasted bread crust, nuts, chocolate. Never burnt.</span></th>
+                  <td class="type">Lager</td>
+                  <td class="origin">Germany</td>
+                  <td class="num"><span class="range">4.5–5.6%</span><span class="bar" aria-hidden="true"><span style="left:32.14%;width:7.86%"></span></span></td>
+                  <td class="num"><span class="range">18–28</span><span class="bar" aria-hidden="true"><span style="left:18.00%;width:10.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#B04500,#6A0E00)" aria-hidden="true"></span><span class="range">17–28</span></td>
+                  <td class="try">Ayinger Altbairisch Dunkel, Hofbrauhaus Dunkel</td>
+                </tr>
+                <tr data-code="8B" data-ferment="lager" data-abv="5.4" data-ibu="35" data-srm="30" data-text="8b schwarzbier germany near-black lager, gentle coffee-chocolate roast, light body, dry finish. kostritzer schwarzbier, monchshof schwarzbier">
+                  <th scope="row"><span class="code">8B</span><span class="name">Schwarzbier</span><span class="desc">Near-black lager, gentle coffee-chocolate roast, light body, dry finish.</span></th>
+                  <td class="type">Lager</td>
+                  <td class="origin">Germany</td>
+                  <td class="num"><span class="range">4.4–5.4%</span><span class="bar" aria-hidden="true"><span style="left:31.43%;width:7.14%"></span></span></td>
+                  <td class="num"><span class="range">20–35</span><span class="bar" aria-hidden="true"><span style="left:20.00%;width:15.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#A13700,#5E0B00)" aria-hidden="true"></span><span class="range">19–30</span></td>
+                  <td class="try">Kostritzer Schwarzbier, Monchshof Schwarzbier</td>
+                </tr>
+                <tr data-code="9A" data-ferment="lager" data-abv="10" data-ibu="26" data-srm="25" data-text="9a doppelbock germany very strong, intensely malty german lager. 'liquid bread'. dark or pale. paulaner salvator, ayinger celebrator">
+                  <th scope="row"><span class="code">9A</span><span class="name">Doppelbock</span><span class="desc">Very strong, intensely malty German lager. 'Liquid bread'. Dark or pale.</span></th>
+                  <td class="type">Lager</td>
+                  <td class="origin">Germany</td>
+                  <td class="num"><span class="range">7–10%</span><span class="bar" aria-hidden="true"><span style="left:50.00%;width:21.43%"></span></span></td>
+                  <td class="num"><span class="range">16–26</span><span class="bar" aria-hidden="true"><span style="left:16.00%;width:10.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#F8A733,#7B1A00)" aria-hidden="true"></span><span class="range">6–25</span></td>
+                  <td class="try">Paulaner Salvator, Ayinger Celebrator</td>
+                </tr>
+                <tr data-code="9B" data-ferment="lager" data-abv="14" data-ibu="35" data-srm="30" data-text="9b eisbock germany a doppelbock partly frozen and de-iced to concentrate it: thick, sweet, warming. kulmbacher eisbock">
+                  <th scope="row"><span class="code">9B</span><span class="name">Eisbock</span><span class="desc">A doppelbock partly frozen and de-iced to concentrate it: thick, sweet, warming.</span></th>
+                  <td class="type">Lager</td>
+                  <td class="origin">Germany</td>
+                  <td class="num"><span class="range">9–14%</span><span class="bar" aria-hidden="true"><span style="left:64.29%;width:35.71%"></span></span></td>
+                  <td class="num"><span class="range">25–35</span><span class="bar" aria-hidden="true"><span style="left:25.00%;width:10.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#B04500,#5E0B00)" aria-hidden="true"></span><span class="range">17–30</span></td>
+                  <td class="try">Kulmbacher Eisbock</td>
+                </tr>
+                <tr data-code="9C" data-ferment="lager" data-abv="9.5" data-ibu="40" data-srm="30" data-text="9c baltic porter baltic strong dark lager-fermented porter: smooth, malty, dried-fruit rich. zywiec porter, sinebrychoff porter">
+                  <th scope="row"><span class="code">9C</span><span class="name">Baltic Porter</span><span class="desc">Strong dark lager-fermented porter: smooth, malty, dried-fruit rich.</span></th>
+                  <td class="type">Lager</td>
+                  <td class="origin">Baltic</td>
+                  <td class="num"><span class="range">6.5–9.5%</span><span class="bar" aria-hidden="true"><span style="left:46.43%;width:21.43%"></span></span></td>
+                  <td class="num"><span class="range">20–40</span><span class="bar" aria-hidden="true"><span style="left:20.00%;width:20.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#B04500,#5E0B00)" aria-hidden="true"></span><span class="range">17–30</span></td>
+                  <td class="try">Zywiec Porter, Sinebrychoff Porter</td>
+                </tr>
+                <tr data-code="10A" data-ferment="ale" data-abv="5.6" data-ibu="15" data-srm="6" data-text="10a weissbier germany pale, fluffy wheat beer whose yeast gives it banana and clove. weihenstephaner hefeweissbier, schneider weisse">
+                  <th scope="row"><span class="code">10A</span><span class="name">Weissbier</span><span class="desc">Pale, fluffy wheat beer whose yeast gives it banana and clove.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">Germany</td>
+                  <td class="num"><span class="range">4.3–5.6%</span><span class="bar" aria-hidden="true"><span style="left:30.71%;width:9.29%"></span></span></td>
+                  <td class="num"><span class="range">8–15</span><span class="bar" aria-hidden="true"><span style="left:8.00%;width:7.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFD878,#F8A733)" aria-hidden="true"></span><span class="range">2–6</span></td>
+                  <td class="try">Weihenstephaner Hefeweissbier, Schneider Weisse</td>
+                </tr>
+                <tr data-code="10B" data-ferment="ale" data-abv="5.6" data-ibu="18" data-srm="23" data-text="10b dunkles weissbier germany the dark version of banana-clove wheat beer, plus toast and caramel. ayinger ur-weisse, weihenstephaner dunkel">
+                  <th scope="row"><span class="code">10B</span><span class="name">Dunkles Weissbier</span><span class="desc">The dark version of banana-clove wheat beer, plus toast and caramel.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">Germany</td>
+                  <td class="num"><span class="range">4.3–5.6%</span><span class="bar" aria-hidden="true"><span style="left:30.71%;width:9.29%"></span></span></td>
+                  <td class="num"><span class="range">10–18</span><span class="bar" aria-hidden="true"><span style="left:10.00%;width:8.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#C35900,#882300)" aria-hidden="true"></span><span class="range">14–23</span></td>
+                  <td class="try">Ayinger Ur-Weisse, Weihenstephaner Dunkel</td>
+                </tr>
+                <tr data-code="10C" data-ferment="ale" data-abv="9" data-ibu="30" data-srm="25" data-text="10c weizenbock germany wheat-beer yeast at bock strength: big, malty, pale or dark. schneider aventinus, weihenstephaner vitus">
+                  <th scope="row"><span class="code">10C</span><span class="name">Weizenbock</span><span class="desc">Wheat-beer yeast at bock strength: big, malty, pale or dark.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">Germany</td>
+                  <td class="num"><span class="range">6.5–9%</span><span class="bar" aria-hidden="true"><span style="left:46.43%;width:17.86%"></span></span></td>
+                  <td class="num"><span class="range">15–30</span><span class="bar" aria-hidden="true"><span style="left:15.00%;width:15.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#F8A733,#7B1A00)" aria-hidden="true"></span><span class="range">6–25</span></td>
+                  <td class="try">Schneider Aventinus, Weihenstephaner Vitus</td>
+                </tr>
+                <tr data-code="11A" data-ferment="ale" data-abv="3.8" data-ibu="35" data-srm="14" data-text="11a ordinary bitter england the lightest english pub bitter: low alcohol, easy pint after pint. fuller's chiswick bitter, brakspear gravity">
+                  <th scope="row"><span class="code">11A</span><span class="name">Ordinary Bitter</span><span class="desc">The lightest English pub bitter: low alcohol, easy pint after pint.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">England</td>
+                  <td class="num"><span class="range">3.2–3.8%</span><span class="bar" aria-hidden="true"><span style="left:22.86%;width:4.29%"></span></span></td>
+                  <td class="num"><span class="range">25–35</span><span class="bar" aria-hidden="true"><span style="left:25.00%;width:10.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#EA8F00,#C35900)" aria-hidden="true"></span><span class="range">8–14</span></td>
+                  <td class="try">Fuller's Chiswick Bitter, Brakspear Gravity</td>
+                </tr>
+                <tr data-code="11B" data-ferment="ale" data-abv="4.6" data-ibu="40" data-srm="16" data-text="11b best bitter england a step up in strength and malt from ordinary bitter, still a session beer. fuller's london pride, timothy taylor landlord">
+                  <th scope="row"><span class="code">11B</span><span class="name">Best Bitter</span><span class="desc">A step up in strength and malt from ordinary bitter, still a session beer.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">England</td>
+                  <td class="num"><span class="range">3.8–4.6%</span><span class="bar" aria-hidden="true"><span style="left:27.14%;width:5.71%"></span></span></td>
+                  <td class="num"><span class="range">25–40</span><span class="bar" aria-hidden="true"><span style="left:25.00%;width:15.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#EA8F00,#B54C00)" aria-hidden="true"></span><span class="range">8–16</span></td>
+                  <td class="try">Fuller's London Pride, Timothy Taylor Landlord</td>
+                </tr>
+                <tr data-code="11C" data-ferment="ale" data-abv="6.2" data-ibu="50" data-srm="18" data-text="11c strong bitter england the strongest bitter: fuller malt and hop flavour, more alcohol. bass ale, shepherd neame bishop's finger">
+                  <th scope="row"><span class="code">11C</span><span class="name">Strong Bitter</span><span class="desc">The strongest bitter: fuller malt and hop flavour, more alcohol.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">England</td>
+                  <td class="num"><span class="range">4.6–6.2%</span><span class="bar" aria-hidden="true"><span style="left:32.86%;width:11.43%"></span></span></td>
+                  <td class="num"><span class="range">30–50</span><span class="bar" aria-hidden="true"><span style="left:30.00%;width:20.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#EA8F00,#A63E00)" aria-hidden="true"></span><span class="range">8–18</span></td>
+                  <td class="try">Bass Ale, Shepherd Neame Bishop's Finger</td>
+                </tr>
+                <tr data-code="12A" data-ferment="ale" data-abv="5" data-ibu="45" data-srm="5" data-text="12a british golden ale england a pale, hop-forward, refreshing british answer to lager. hop back summer lightning, oakham jhb">
+                  <th scope="row"><span class="code">12A</span><span class="name">British Golden Ale</span><span class="desc">A pale, hop-forward, refreshing British answer to lager.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">England</td>
+                  <td class="num"><span class="range">3.8–5%</span><span class="bar" aria-hidden="true"><span style="left:27.14%;width:8.57%"></span></span></td>
+                  <td class="num"><span class="range">20–45</span><span class="bar" aria-hidden="true"><span style="left:20.00%;width:25.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFD878,#FBB123)" aria-hidden="true"></span><span class="range">2–5</span></td>
+                  <td class="try">Hop Back Summer Lightning, Oakham JHB</td>
+                </tr>
+                <tr data-code="13A" data-ferment="ale" data-abv="3.8" data-ibu="25" data-srm="25" data-text="13a dark mild england dark, very low-alcohol, malty. made for drinking in quantity. moorhouse black cat, theakston traditional mild">
+                  <th scope="row"><span class="code">13A</span><span class="name">Dark Mild</span><span class="desc">Dark, very low-alcohol, malty. Made for drinking in quantity.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">England</td>
+                  <td class="num"><span class="range">3–3.8%</span><span class="bar" aria-hidden="true"><span style="left:21.43%;width:5.71%"></span></span></td>
+                  <td class="num"><span class="range">10–25</span><span class="bar" aria-hidden="true"><span style="left:10.00%;width:15.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#C35900,#7B1A00)" aria-hidden="true"></span><span class="range">14–25</span></td>
+                  <td class="try">Moorhouse Black Cat, Theakston Traditional Mild</td>
+                </tr>
+                <tr data-code="13B" data-ferment="ale" data-abv="5.9" data-ibu="30" data-srm="22" data-text="13b british brown ale england malty, caramel-and-nutty brown ale with no roasty bite. newcastle brown ale, sam smith's nut brown">
+                  <th scope="row"><span class="code">13B</span><span class="name">British Brown Ale</span><span class="desc">Malty, caramel-and-nutty brown ale with no roasty bite.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">England</td>
+                  <td class="num"><span class="range">4.2–5.9%</span><span class="bar" aria-hidden="true"><span style="left:30.00%;width:12.14%"></span></span></td>
+                  <td class="num"><span class="range">20–30</span><span class="bar" aria-hidden="true"><span style="left:20.00%;width:10.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#CF6900,#8E2900)" aria-hidden="true"></span><span class="range">12–22</span></td>
+                  <td class="try">Newcastle Brown Ale, Sam Smith's Nut Brown</td>
+                </tr>
+                <tr data-code="13C" data-ferment="ale" data-abv="5.4" data-ibu="35" data-srm="30" data-text="13c english porter england dark brown ale with gentle chocolate-caramel roast, never burnt. fuller's london porter, taddy porter">
+                  <th scope="row"><span class="code">13C</span><span class="name">English Porter</span><span class="desc">Dark brown ale with gentle chocolate-caramel roast, never burnt.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">England</td>
+                  <td class="num"><span class="range">4–5.4%</span><span class="bar" aria-hidden="true"><span style="left:28.57%;width:10.00%"></span></span></td>
+                  <td class="num"><span class="range">18–35</span><span class="bar" aria-hidden="true"><span style="left:18.00%;width:17.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#9B3200,#5E0B00)" aria-hidden="true"></span><span class="range">20–30</span></td>
+                  <td class="try">Fuller's London Porter, Taddy Porter</td>
+                </tr>
+                <tr data-code="14B" data-ferment="ale" data-abv="3.9" data-ibu="20" data-srm="20" data-text="14b scottish heavy scotland low-alcohol malty ale: caramel, toffee, a touch of roast dryness. mcewan's 70, orkney raven ale">
+                  <th scope="row"><span class="code">14B</span><span class="name">Scottish Heavy</span><span class="desc">Low-alcohol malty ale: caramel, toffee, a touch of roast dryness.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">Scotland</td>
+                  <td class="num"><span class="range">3.3–3.9%</span><span class="bar" aria-hidden="true"><span style="left:23.57%;width:4.29%"></span></span></td>
+                  <td class="num"><span class="range">10–20</span><span class="bar" aria-hidden="true"><span style="left:10.00%;width:10.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#CF6900,#9B3200)" aria-hidden="true"></span><span class="range">12–20</span></td>
+                  <td class="try">McEwan's 70, Orkney Raven Ale</td>
+                </tr>
+                <tr data-code="14C" data-ferment="ale" data-abv="6" data-ibu="30" data-srm="20" data-text="14c scottish export scotland the stronger scottish malty ale: caramel, toffee, toast, lightly dry. belhaven scottish ale, mcewan's export">
+                  <th scope="row"><span class="code">14C</span><span class="name">Scottish Export</span><span class="desc">The stronger Scottish malty ale: caramel, toffee, toast, lightly dry.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">Scotland</td>
+                  <td class="num"><span class="range">3.9–6%</span><span class="bar" aria-hidden="true"><span style="left:27.86%;width:15.00%"></span></span></td>
+                  <td class="num"><span class="range">15–30</span><span class="bar" aria-hidden="true"><span style="left:15.00%;width:15.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#CF6900,#9B3200)" aria-hidden="true"></span><span class="range">12–20</span></td>
+                  <td class="try">Belhaven Scottish Ale, McEwan's Export</td>
+                </tr>
+                <tr data-code="15A" data-ferment="ale" data-abv="5" data-ibu="28" data-srm="14" data-text="15a irish red ale ireland easy-drinking reddish ale, light caramel, dry roasted finish. smithwick's, o'hara's irish red">
+                  <th scope="row"><span class="code">15A</span><span class="name">Irish Red Ale</span><span class="desc">Easy-drinking reddish ale, light caramel, dry roasted finish.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">Ireland</td>
+                  <td class="num"><span class="range">3.8–5%</span><span class="bar" aria-hidden="true"><span style="left:27.14%;width:8.57%"></span></span></td>
+                  <td class="num"><span class="range">18–28</span><span class="bar" aria-hidden="true"><span style="left:18.00%;width:10.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#E58500,#C35900)" aria-hidden="true"></span><span class="range">9–14</span></td>
+                  <td class="try">Smithwick's, O'Hara's Irish Red</td>
+                </tr>
+                <tr data-code="15B" data-ferment="ale" data-abv="5" data-ibu="45" data-srm="40" data-text="15b irish stout ireland black, coffee-like dry stout, famously creamy on a nitro pour. guinness draught, murphy's irish stout">
+                  <th scope="row"><span class="code">15B</span><span class="name">Irish Stout</span><span class="desc">Black, coffee-like dry stout, famously creamy on a nitro pour.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">Ireland</td>
+                  <td class="num"><span class="range">3.8–5%</span><span class="bar" aria-hidden="true"><span style="left:27.14%;width:8.57%"></span></span></td>
+                  <td class="num"><span class="range">25–45</span><span class="bar" aria-hidden="true"><span style="left:25.00%;width:20.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#7B1A00,#36080A)" aria-hidden="true"></span><span class="range">25–40</span></td>
+                  <td class="try">Guinness Draught, Murphy's Irish Stout</td>
+                </tr>
+                <tr data-code="15C" data-ferment="ale" data-abv="6.5" data-ibu="50" data-srm="40" data-text="15c irish extra stout ireland stronger, fuller bottled stout with coffee and dark chocolate depth. guinness extra stout, o'hara's leann follain">
+                  <th scope="row"><span class="code">15C</span><span class="name">Irish Extra Stout</span><span class="desc">Stronger, fuller bottled stout with coffee and dark chocolate depth.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">Ireland</td>
+                  <td class="num"><span class="range">5–6.5%</span><span class="bar" aria-hidden="true"><span style="left:35.71%;width:10.71%"></span></span></td>
+                  <td class="num"><span class="range">35–50</span><span class="bar" aria-hidden="true"><span style="left:35.00%;width:15.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#5E0B00,#36080A)" aria-hidden="true"></span><span class="range">30–40</span></td>
+                  <td class="try">Guinness Extra Stout, O'Hara's Leann Follain</td>
+                </tr>
+                <tr data-code="16A" data-ferment="ale" data-abv="6" data-ibu="40" data-srm="40" data-text="16a sweet stout england a sweet, creamy 'milk stout'. coffee with cream. mackeson's xxx, left hand milk stout">
+                  <th scope="row"><span class="code">16A</span><span class="name">Sweet Stout</span><span class="desc">A sweet, creamy 'milk stout'. Coffee with cream.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">England</td>
+                  <td class="num"><span class="range">4–6%</span><span class="bar" aria-hidden="true"><span style="left:28.57%;width:14.29%"></span></span></td>
+                  <td class="num"><span class="range">20–40</span><span class="bar" aria-hidden="true"><span style="left:20.00%;width:20.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#5E0B00,#36080A)" aria-hidden="true"></span><span class="range">30–40</span></td>
+                  <td class="try">Mackeson's XXX, Left Hand Milk Stout</td>
+                </tr>
+                <tr data-code="16B" data-ferment="ale" data-abv="5.9" data-ibu="40" data-srm="40" data-text="16b oatmeal stout england roasty stout made silky and full-bodied by oats. sam smith oatmeal stout, young's london stout">
+                  <th scope="row"><span class="code">16B</span><span class="name">Oatmeal Stout</span><span class="desc">Roasty stout made silky and full-bodied by oats.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">England</td>
+                  <td class="num"><span class="range">4.2–5.9%</span><span class="bar" aria-hidden="true"><span style="left:30.00%;width:12.14%"></span></span></td>
+                  <td class="num"><span class="range">25–40</span><span class="bar" aria-hidden="true"><span style="left:25.00%;width:15.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#8E2900,#36080A)" aria-hidden="true"></span><span class="range">22–40</span></td>
+                  <td class="try">Sam Smith Oatmeal Stout, Young's London Stout</td>
+                </tr>
+                <tr data-code="16C" data-ferment="ale" data-abv="8" data-ibu="50" data-srm="40" data-text="16c tropical stout caribbean strong, sweet, fruity stout brewed for hot climates. smooth, never burnt. dragon stout, lion stout">
+                  <th scope="row"><span class="code">16C</span><span class="name">Tropical Stout</span><span class="desc">Strong, sweet, fruity stout brewed for hot climates. Smooth, never burnt.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">Caribbean</td>
+                  <td class="num"><span class="range">5.5–8%</span><span class="bar" aria-hidden="true"><span style="left:39.29%;width:17.86%"></span></span></td>
+                  <td class="num"><span class="range">30–50</span><span class="bar" aria-hidden="true"><span style="left:30.00%;width:20.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#5E0B00,#36080A)" aria-hidden="true"></span><span class="range">30–40</span></td>
+                  <td class="try">Dragon Stout, Lion Stout</td>
+                </tr>
+                <tr data-code="16D" data-ferment="ale" data-abv="8" data-ibu="70" data-srm="40" data-text="16d foreign extra stout ireland strong, dry, heavily roasted stout originally built for long sea voyages. guinness foreign extra stout, coopers best extra">
+                  <th scope="row"><span class="code">16D</span><span class="name">Foreign Extra Stout</span><span class="desc">Strong, dry, heavily roasted stout originally built for long sea voyages.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">Ireland</td>
+                  <td class="num"><span class="range">6.3–8%</span><span class="bar" aria-hidden="true"><span style="left:45.00%;width:12.14%"></span></span></td>
+                  <td class="num"><span class="range">50–70</span><span class="bar" aria-hidden="true"><span style="left:50.00%;width:20.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#5E0B00,#36080A)" aria-hidden="true"></span><span class="range">30–40</span></td>
+                  <td class="try">Guinness Foreign Extra Stout, Coopers Best Extra</td>
+                </tr>
+                <tr data-code="17B" data-ferment="ale" data-abv="9" data-ibu="60" data-srm="22" data-text="17b old ale england strong, malty aged ale with dried-fruit and sherry-like maturity. theakston old peculier, gale's prize old ale">
+                  <th scope="row"><span class="code">17B</span><span class="name">Old Ale</span><span class="desc">Strong, malty aged ale with dried-fruit and sherry-like maturity.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">England</td>
+                  <td class="num"><span class="range">5.5–9%</span><span class="bar" aria-hidden="true"><span style="left:39.29%;width:25.00%"></span></span></td>
+                  <td class="num"><span class="range">30–60</span><span class="bar" aria-hidden="true"><span style="left:30.00%;width:30.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#DE7C00,#8E2900)" aria-hidden="true"></span><span class="range">10–22</span></td>
+                  <td class="try">Theakston Old Peculier, Gale's Prize Old Ale</td>
+                </tr>
+                <tr data-code="17D" data-ferment="ale" data-abv="12" data-ibu="70" data-srm="22" data-text="17d english barleywine england the strongest english ale: rich, chewy, warming. a winter sipper. fuller's golden pride, robinson's old tom">
+                  <th scope="row"><span class="code">17D</span><span class="name">English Barleywine</span><span class="desc">The strongest English ale: rich, chewy, warming. A winter sipper.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">England</td>
+                  <td class="num"><span class="range">8–12%</span><span class="bar" aria-hidden="true"><span style="left:57.14%;width:28.57%"></span></span></td>
+                  <td class="num"><span class="range">35–70</span><span class="bar" aria-hidden="true"><span style="left:35.00%;width:35.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#EA8F00,#8E2900)" aria-hidden="true"></span><span class="range">8–22</span></td>
+                  <td class="try">Fuller's Golden Pride, Robinson's Old Tom</td>
+                </tr>
+                <tr data-code="18A" data-ferment="ale" data-abv="5.5" data-ibu="28" data-srm="6" data-text="18a blonde ale usa clean, lightly malty golden ale. the friendly entry-level craft beer. kona big wave, firestone walker 805">
+                  <th scope="row"><span class="code">18A</span><span class="name">Blonde Ale</span><span class="desc">Clean, lightly malty golden ale. The friendly entry-level craft beer.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">USA</td>
+                  <td class="num"><span class="range">3.8–5.5%</span><span class="bar" aria-hidden="true"><span style="left:27.14%;width:12.14%"></span></span></td>
+                  <td class="num"><span class="range">15–28</span><span class="bar" aria-hidden="true"><span style="left:15.00%;width:13.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFCA5A,#F8A733)" aria-hidden="true"></span><span class="range">3–6</span></td>
+                  <td class="try">Kona Big Wave, Firestone Walker 805</td>
+                </tr>
+                <tr data-code="18B" data-ferment="ale" data-abv="6.2" data-ibu="50" data-srm="10" data-text="18b american pale ale usa citrusy, piney american hops lead, but malt keeps it drinkable. sierra nevada pale ale, deschutes mirror pond">
+                  <th scope="row"><span class="code">18B</span><span class="name">American Pale Ale</span><span class="desc">Citrusy, piney American hops lead, but malt keeps it drinkable.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">USA</td>
+                  <td class="num"><span class="range">4.5–6.2%</span><span class="bar" aria-hidden="true"><span style="left:32.14%;width:12.14%"></span></span></td>
+                  <td class="num"><span class="range">30–50</span><span class="bar" aria-hidden="true"><span style="left:30.00%;width:20.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FBB123,#DE7C00)" aria-hidden="true"></span><span class="range">5–10</span></td>
+                  <td class="try">Sierra Nevada Pale Ale, Deschutes Mirror Pond</td>
+                </tr>
+                <tr data-code="19A" data-ferment="ale" data-abv="6.2" data-ibu="40" data-srm="17" data-text="19a american amber ale usa amber, caramel-malty, with a solid hop kick. north coast red seal, bell's amber">
+                  <th scope="row"><span class="code">19A</span><span class="name">American Amber Ale</span><span class="desc">Amber, caramel-malty, with a solid hop kick.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">USA</td>
+                  <td class="num"><span class="range">4.5–6.2%</span><span class="bar" aria-hidden="true"><span style="left:32.14%;width:12.14%"></span></span></td>
+                  <td class="num"><span class="range">25–40</span><span class="bar" aria-hidden="true"><span style="left:25.00%;width:15.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#DE7C00,#B04500)" aria-hidden="true"></span><span class="range">10–17</span></td>
+                  <td class="try">North Coast Red Seal, Bell's Amber</td>
+                </tr>
+                <tr data-code="19C" data-ferment="ale" data-abv="6.2" data-ibu="30" data-srm="35" data-text="19c american brown ale usa chocolate and caramel malt plus hops that complement rather than clash. big sky moose drool, brooklyn brown ale">
+                  <th scope="row"><span class="code">19C</span><span class="name">American Brown Ale</span><span class="desc">Chocolate and caramel malt plus hops that complement rather than clash.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">USA</td>
+                  <td class="num"><span class="range">4.3–6.2%</span><span class="bar" aria-hidden="true"><span style="left:30.71%;width:13.57%"></span></span></td>
+                  <td class="num"><span class="range">20–30</span><span class="bar" aria-hidden="true"><span style="left:20.00%;width:10.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#A63E00,#470606)" aria-hidden="true"></span><span class="range">18–35</span></td>
+                  <td class="try">Big Sky Moose Drool, Brooklyn Brown Ale</td>
+                </tr>
+                <tr data-code="20A" data-ferment="ale" data-abv="6.5" data-ibu="50" data-srm="40" data-text="20a american porter usa dark, roasty, chocolatey. maltier and more bitter than its english ancestor. great lakes edmund fitzgerald, anchor porter">
+                  <th scope="row"><span class="code">20A</span><span class="name">American Porter</span><span class="desc">Dark, roasty, chocolatey. Maltier and more bitter than its English ancestor.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">USA</td>
+                  <td class="num"><span class="range">4.8–6.5%</span><span class="bar" aria-hidden="true"><span style="left:34.29%;width:12.14%"></span></span></td>
+                  <td class="num"><span class="range">25–50</span><span class="bar" aria-hidden="true"><span style="left:25.00%;width:25.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#8E2900,#36080A)" aria-hidden="true"></span><span class="range">22–40</span></td>
+                  <td class="try">Great Lakes Edmund Fitzgerald, Anchor Porter</td>
+                </tr>
+                <tr data-code="20B" data-ferment="ale" data-abv="7" data-ibu="75" data-srm="40" data-text="20b american stout usa jet-black, big coffee-and-chocolate roast, aggressive american hopping. deschutes obsidian stout, sierra nevada stout">
+                  <th scope="row"><span class="code">20B</span><span class="name">American Stout</span><span class="desc">Jet-black, big coffee-and-chocolate roast, aggressive American hopping.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">USA</td>
+                  <td class="num"><span class="range">5–7%</span><span class="bar" aria-hidden="true"><span style="left:35.71%;width:14.29%"></span></span></td>
+                  <td class="num"><span class="range">35–75</span><span class="bar" aria-hidden="true"><span style="left:35.00%;width:40.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#5E0B00,#36080A)" aria-hidden="true"></span><span class="range">30–40</span></td>
+                  <td class="try">Deschutes Obsidian Stout, Sierra Nevada Stout</td>
+                </tr>
+                <tr data-code="20C" data-ferment="ale" data-abv="12" data-ibu="90" data-srm="40" data-text="20c imperial stout england/usa a huge sipping stout: roast, dark fruit and warming alcohol in one. north coast old rasputin, bell's expedition">
+                  <th scope="row"><span class="code">20C</span><span class="name">Imperial Stout</span><span class="desc">A huge sipping stout: roast, dark fruit and warming alcohol in one.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">England/USA</td>
+                  <td class="num"><span class="range">8–12%</span><span class="bar" aria-hidden="true"><span style="left:57.14%;width:28.57%"></span></span></td>
+                  <td class="num"><span class="range">50–90</span><span class="bar" aria-hidden="true"><span style="left:50.00%;width:40.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#5E0B00,#36080A)" aria-hidden="true"></span><span class="range">30–40</span></td>
+                  <td class="try">North Coast Old Rasputin, Bell's Expedition</td>
+                </tr>
+                <tr data-code="21A" data-ferment="ale" data-abv="7.5" data-ibu="70" data-srm="14" data-text="21a american ipa usa decidedly hoppy and bitter, moderately strong, pale. the modern benchmark. bell's two-hearted, russian river blind pig">
+                  <th scope="row"><span class="code">21A</span><span class="name">American IPA</span><span class="desc">Decidedly hoppy and bitter, moderately strong, pale. The modern benchmark.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">USA</td>
+                  <td class="num"><span class="range">5.5–7.5%</span><span class="bar" aria-hidden="true"><span style="left:39.29%;width:14.29%"></span></span></td>
+                  <td class="num"><span class="range">40–70</span><span class="bar" aria-hidden="true"><span style="left:40.00%;width:30.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#F8A733,#C35900)" aria-hidden="true"></span><span class="range">6–14</span></td>
+                  <td class="try">Bell's Two-Hearted, Russian River Blind Pig</td>
+                </tr>
+                <tr data-code="21C" data-ferment="ale" data-abv="9" data-ibu="60" data-srm="7" data-text="21c hazy ipa usa soft, opaque, juicy-fruity ipa with big hop flavour and less bite. tree house julius, trillium congress street">
+                  <th scope="row"><span class="code">21C</span><span class="name">Hazy IPA</span><span class="desc">Soft, opaque, juicy-fruity IPA with big hop flavour and less bite.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">USA</td>
+                  <td class="num"><span class="range">6–9%</span><span class="bar" aria-hidden="true"><span style="left:42.86%;width:21.43%"></span></span></td>
+                  <td class="num"><span class="range">25–60</span><span class="bar" aria-hidden="true"><span style="left:25.00%;width:35.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFCA5A,#F39C00)" aria-hidden="true"></span><span class="range">3–7</span></td>
+                  <td class="try">Tree House Julius, Trillium Congress Street</td>
+                </tr>
+                <tr data-code="22A" data-ferment="ale" data-abv="10" data-ibu="100" data-srm="14" data-text="22a double ipa usa stronger and more intensely hopped than an ipa, but clean and dry. russian river pliny the elder, fat heads hop juju">
+                  <th scope="row"><span class="code">22A</span><span class="name">Double IPA</span><span class="desc">Stronger and more intensely hopped than an IPA, but clean and dry.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">USA</td>
+                  <td class="num"><span class="range">7.5–10%</span><span class="bar" aria-hidden="true"><span style="left:53.57%;width:17.86%"></span></span></td>
+                  <td class="num"><span class="range">60–100</span><span class="bar" aria-hidden="true"><span style="left:60.00%;width:40.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#F8A733,#C35900)" aria-hidden="true"></span><span class="range">6–14</span></td>
+                  <td class="try">Russian River Pliny the Elder, Fat Heads Hop Juju</td>
+                </tr>
+                <tr data-code="22B" data-ferment="ale" data-abv="10" data-ibu="100" data-srm="18" data-text="22b american strong ale usa strong, caramel-malty and very bitter amber ale. stone arrogant bastard, oskar blues g'knight">
+                  <th scope="row"><span class="code">22B</span><span class="name">American Strong Ale</span><span class="desc">Strong, caramel-malty and very bitter amber ale.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">USA</td>
+                  <td class="num"><span class="range">6.3–10%</span><span class="bar" aria-hidden="true"><span style="left:45.00%;width:26.43%"></span></span></td>
+                  <td class="num"><span class="range">50–100</span><span class="bar" aria-hidden="true"><span style="left:50.00%;width:50.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#F39C00,#A63E00)" aria-hidden="true"></span><span class="range">7–18</span></td>
+                  <td class="try">Stone Arrogant Bastard, Oskar Blues G'Knight</td>
+                </tr>
+                <tr data-code="22C" data-ferment="ale" data-abv="12" data-ibu="100" data-srm="18" data-text="22c american barleywine usa very strong, rich, chewy and hop-bitter. meant for slow sipping. sierra nevada bigfoot, anchor old foghorn">
+                  <th scope="row"><span class="code">22C</span><span class="name">American Barleywine</span><span class="desc">Very strong, rich, chewy and hop-bitter. Meant for slow sipping.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">USA</td>
+                  <td class="num"><span class="range">8–12%</span><span class="bar" aria-hidden="true"><span style="left:57.14%;width:28.57%"></span></span></td>
+                  <td class="num"><span class="range">50–100</span><span class="bar" aria-hidden="true"><span style="left:50.00%;width:50.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#E58500,#A63E00)" aria-hidden="true"></span><span class="range">9–18</span></td>
+                  <td class="try">Sierra Nevada Bigfoot, Anchor Old Foghorn</td>
+                </tr>
+                <tr data-code="23A" data-ferment="wild" data-abv="3.8" data-ibu="8" data-srm="3" data-text="23a berliner weisse germany very pale, very low-alcohol, sharply lemony-sour wheat beer. bayerischer bahnhof berliner weisse, berliner berg">
+                  <th scope="row"><span class="code">23A</span><span class="name">Berliner Weisse</span><span class="desc">Very pale, very low-alcohol, sharply lemony-sour wheat beer.</span></th>
+                  <td class="type">Wild</td>
+                  <td class="origin">Germany</td>
+                  <td class="num"><span class="range">2.8–3.8%</span><span class="bar" aria-hidden="true"><span style="left:20.00%;width:7.14%"></span></span></td>
+                  <td class="num"><span class="range">3–8</span><span class="bar" aria-hidden="true"><span style="left:3.00%;width:5.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFD878,#FFCA5A)" aria-hidden="true"></span><span class="range">2–3</span></td>
+                  <td class="try">Bayerischer Bahnhof Berliner Weisse, Berliner Berg</td>
+                </tr>
+                <tr data-code="23B" data-ferment="wild" data-abv="6.5" data-ibu="25" data-srm="17" data-text="23b flanders red ale belgium reddish-brown sour ale aged in wooden vats: fruity, tannic, almost red wine. rodenbach grand cru, duchesse de bourgogne">
+                  <th scope="row"><span class="code">23B</span><span class="name">Flanders Red Ale</span><span class="desc">Reddish-brown sour ale aged in wooden vats: fruity, tannic, almost red wine.</span></th>
+                  <td class="type">Wild</td>
+                  <td class="origin">Belgium</td>
+                  <td class="num"><span class="range">4.6–6.5%</span><span class="bar" aria-hidden="true"><span style="left:32.86%;width:13.57%"></span></span></td>
+                  <td class="num"><span class="range">10–25</span><span class="bar" aria-hidden="true"><span style="left:10.00%;width:15.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#DE7C00,#B04500)" aria-hidden="true"></span><span class="range">10–17</span></td>
+                  <td class="try">Rodenbach Grand Cru, Duchesse de Bourgogne</td>
+                </tr>
+                <tr data-code="23D" data-ferment="wild" data-abv="6.5" data-ibu="10" data-srm="6" data-text="23d lambic belgium wild-fermented sour wheat beer, traditionally served flat. often barnyard-funky. cantillon grand cru bruocsella, boon draught">
+                  <th scope="row"><span class="code">23D</span><span class="name">Lambic</span><span class="desc">Wild-fermented sour wheat beer, traditionally served flat. Often barnyard-funky.</span></th>
+                  <td class="type">Wild</td>
+                  <td class="origin">Belgium</td>
+                  <td class="num"><span class="range">5–6.5%</span><span class="bar" aria-hidden="true"><span style="left:35.71%;width:10.71%"></span></span></td>
+                  <td class="num"><span class="range">0–10</span><span class="bar" aria-hidden="true"><span style="left:0.00%;width:10.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFCA5A,#F8A733)" aria-hidden="true"></span><span class="range">3–6</span></td>
+                  <td class="try">Cantillon Grand Cru Bruocsella, Boon draught</td>
+                </tr>
+                <tr data-code="23E" data-ferment="wild" data-abv="8" data-ibu="10" data-srm="6" data-text="23e gueuze belgium blend of young and old lambics, hugely fizzy: sour, funky, refreshing. cantillon classic gueuze, oude gueuze boon">
+                  <th scope="row"><span class="code">23E</span><span class="name">Gueuze</span><span class="desc">Blend of young and old lambics, hugely fizzy: sour, funky, refreshing.</span></th>
+                  <td class="type">Wild</td>
+                  <td class="origin">Belgium</td>
+                  <td class="num"><span class="range">5–8%</span><span class="bar" aria-hidden="true"><span style="left:35.71%;width:21.43%"></span></span></td>
+                  <td class="num"><span class="range">0–10</span><span class="bar" aria-hidden="true"><span style="left:0.00%;width:10.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FBB123,#F8A733)" aria-hidden="true"></span><span class="range">5–6</span></td>
+                  <td class="try">Cantillon Classic Gueuze, Oude Gueuze Boon</td>
+                </tr>
+                <tr data-code="23F" data-ferment="wild" data-abv="7" data-ibu="10" data-srm="7" data-text="23f fruit lambic belgium a gueuze fermented with fruit such as cherries or raspberries. oude kriek boon, cantillon fou'foune">
+                  <th scope="row"><span class="code">23F</span><span class="name">Fruit Lambic</span><span class="desc">A gueuze fermented with fruit such as cherries or raspberries.</span></th>
+                  <td class="type">Wild</td>
+                  <td class="origin">Belgium</td>
+                  <td class="num"><span class="range">5–7%</span><span class="bar" aria-hidden="true"><span style="left:35.71%;width:14.29%"></span></span></td>
+                  <td class="num"><span class="range">0–10</span><span class="bar" aria-hidden="true"><span style="left:0.00%;width:10.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFCA5A,#F39C00)" aria-hidden="true"></span><span class="range">3–7</span></td>
+                  <td class="try">Oude Kriek Boon, Cantillon Fou'Foune</td>
+                </tr>
+                <tr data-code="23G" data-ferment="wild" data-abv="4.8" data-ibu="12" data-srm="4" data-text="23g gose germany hazy, tart wheat beer with a pinch of salt and lemony coriander. original ritterguts gose, westbrook gose">
+                  <th scope="row"><span class="code">23G</span><span class="name">Gose</span><span class="desc">Hazy, tart wheat beer with a pinch of salt and lemony coriander.</span></th>
+                  <td class="type">Wild</td>
+                  <td class="origin">Germany</td>
+                  <td class="num"><span class="range">4.2–4.8%</span><span class="bar" aria-hidden="true"><span style="left:30.00%;width:4.29%"></span></span></td>
+                  <td class="num"><span class="range">5–12</span><span class="bar" aria-hidden="true"><span style="left:5.00%;width:7.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFCA5A,#FFBF42)" aria-hidden="true"></span><span class="range">3–4</span></td>
+                  <td class="try">Original Ritterguts Gose, Westbrook Gose</td>
+                </tr>
+                <tr data-code="24A" data-ferment="ale" data-abv="5.5" data-ibu="20" data-srm="4" data-text="24a witbier belgium cloudy pale wheat beer spiced with coriander and orange peel. hoegaarden wit, allagash white">
+                  <th scope="row"><span class="code">24A</span><span class="name">Witbier</span><span class="desc">Cloudy pale wheat beer spiced with coriander and orange peel.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">Belgium</td>
+                  <td class="num"><span class="range">4.5–5.5%</span><span class="bar" aria-hidden="true"><span style="left:32.14%;width:7.14%"></span></span></td>
+                  <td class="num"><span class="range">8–20</span><span class="bar" aria-hidden="true"><span style="left:8.00%;width:12.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFD878,#FFBF42)" aria-hidden="true"></span><span class="range">2–4</span></td>
+                  <td class="try">Hoegaarden Wit, Allagash White</td>
+                </tr>
+                <tr data-code="24B" data-ferment="ale" data-abv="5.5" data-ibu="30" data-srm="14" data-text="24b belgian pale ale belgium easy-drinking copper ale, malty and fruity, without heavy yeast funk. de koninck bolleke, palm">
+                  <th scope="row"><span class="code">24B</span><span class="name">Belgian Pale Ale</span><span class="desc">Easy-drinking copper ale, malty and fruity, without heavy yeast funk.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">Belgium</td>
+                  <td class="num"><span class="range">4.8–5.5%</span><span class="bar" aria-hidden="true"><span style="left:34.29%;width:5.00%"></span></span></td>
+                  <td class="num"><span class="range">20–30</span><span class="bar" aria-hidden="true"><span style="left:20.00%;width:10.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#EA8F00,#C35900)" aria-hidden="true"></span><span class="range">8–14</span></td>
+                  <td class="try">De Koninck Bolleke, Palm</td>
+                </tr>
+                <tr data-code="25A" data-ferment="ale" data-abv="7.5" data-ibu="30" data-srm="6" data-text="25a belgian blond ale belgium golden, smooth, deceptively strong, gentle citrus-pepper yeast, dry finish. leffe blond, affligem blond">
+                  <th scope="row"><span class="code">25A</span><span class="name">Belgian Blond Ale</span><span class="desc">Golden, smooth, deceptively strong, gentle citrus-pepper yeast, dry finish.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">Belgium</td>
+                  <td class="num"><span class="range">6–7.5%</span><span class="bar" aria-hidden="true"><span style="left:42.86%;width:10.71%"></span></span></td>
+                  <td class="num"><span class="range">15–30</span><span class="bar" aria-hidden="true"><span style="left:15.00%;width:15.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFBF42,#F8A733)" aria-hidden="true"></span><span class="range">4–6</span></td>
+                  <td class="try">Leffe Blond, Affligem Blond</td>
+                </tr>
+                <tr data-code="25B" data-ferment="ale" data-abv="9.5" data-ibu="35" data-srm="22" data-text="25b saison belgium bone-dry, highly fizzy, peppery-fruity farmhouse ale. three strength bands. saison dupont, boulevard tank 7">
+                  <th scope="row"><span class="code">25B</span><span class="name">Saison</span><span class="desc">Bone-dry, highly fizzy, peppery-fruity farmhouse ale. Three strength bands.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">Belgium</td>
+                  <td class="num"><span class="range">3.5–9.5%</span><span class="bar" aria-hidden="true"><span style="left:25.00%;width:42.86%"></span></span></td>
+                  <td class="num"><span class="range">20–35</span><span class="bar" aria-hidden="true"><span style="left:20.00%;width:15.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FBB123,#8E2900)" aria-hidden="true"></span><span class="range">5–22</span></td>
+                  <td class="try">Saison Dupont, Boulevard Tank 7</td>
+                </tr>
+                <tr data-code="25C" data-ferment="ale" data-abv="10.5" data-ibu="35" data-srm="6" data-text="25c belgian golden strong ale belgium pale, sparkling and dangerously strong: pear-like, light-bodied, dry. duvel, delirium tremens">
+                  <th scope="row"><span class="code">25C</span><span class="name">Belgian Golden Strong Ale</span><span class="desc">Pale, sparkling and dangerously strong: pear-like, light-bodied, dry.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">Belgium</td>
+                  <td class="num"><span class="range">7.5–10.5%</span><span class="bar" aria-hidden="true"><span style="left:53.57%;width:21.43%"></span></span></td>
+                  <td class="num"><span class="range">22–35</span><span class="bar" aria-hidden="true"><span style="left:22.00%;width:13.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFCA5A,#F8A733)" aria-hidden="true"></span><span class="range">3–6</span></td>
+                  <td class="try">Duvel, Delirium Tremens</td>
+                </tr>
+                <tr data-code="26A" data-ferment="ale" data-abv="6" data-ibu="45" data-srm="5" data-text="26a belgian single belgium the monks' own daily beer: blond, hoppy, bitter and very dry. westmalle extra, chimay gold">
+                  <th scope="row"><span class="code">26A</span><span class="name">Belgian Single</span><span class="desc">The monks' own daily beer: blond, hoppy, bitter and very dry.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">Belgium</td>
+                  <td class="num"><span class="range">4.8–6%</span><span class="bar" aria-hidden="true"><span style="left:34.29%;width:8.57%"></span></span></td>
+                  <td class="num"><span class="range">25–45</span><span class="bar" aria-hidden="true"><span style="left:25.00%;width:20.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFCA5A,#FBB123)" aria-hidden="true"></span><span class="range">3–5</span></td>
+                  <td class="try">Westmalle Extra, Chimay Gold</td>
+                </tr>
+                <tr data-code="26B" data-ferment="ale" data-abv="7.6" data-ibu="25" data-srm="17" data-text="26b belgian dubbel belgium reddish-brown, malty and rich with raisin and plum, yet finishes dry. westmalle dubbel, chimay red">
+                  <th scope="row"><span class="code">26B</span><span class="name">Belgian Dubbel</span><span class="desc">Reddish-brown, malty and rich with raisin and plum, yet finishes dry.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">Belgium</td>
+                  <td class="num"><span class="range">6–7.6%</span><span class="bar" aria-hidden="true"><span style="left:42.86%;width:11.43%"></span></span></td>
+                  <td class="num"><span class="range">15–25</span><span class="bar" aria-hidden="true"><span style="left:15.00%;width:10.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#DE7C00,#B04500)" aria-hidden="true"></span><span class="range">10–17</span></td>
+                  <td class="try">Westmalle Dubbel, Chimay Red</td>
+                </tr>
+                <tr data-code="26C" data-ferment="ale" data-abv="9.5" data-ibu="40" data-srm="7" data-text="26c belgian tripel belgium strong pale ale hiding its alcohol behind spicy citrus yeast and a crisp finish. westmalle tripel, st. bernardus tripel">
+                  <th scope="row"><span class="code">26C</span><span class="name">Belgian Tripel</span><span class="desc">Strong pale ale hiding its alcohol behind spicy citrus yeast and a crisp finish.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">Belgium</td>
+                  <td class="num"><span class="range">7.5–9.5%</span><span class="bar" aria-hidden="true"><span style="left:53.57%;width:14.29%"></span></span></td>
+                  <td class="num"><span class="range">20–40</span><span class="bar" aria-hidden="true"><span style="left:20.00%;width:20.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#FFBF42,#F39C00)" aria-hidden="true"></span><span class="range">4.5–7</span></td>
+                  <td class="try">Westmalle Tripel, St. Bernardus Tripel</td>
+                </tr>
+                <tr data-code="26D" data-ferment="ale" data-abv="12" data-ibu="35" data-srm="22" data-text="26d belgian dark strong ale belgium very strong dark ale loaded with dried fruit and spice. dangerously smooth. rochefort 10, st. bernardus abt 12">
+                  <th scope="row"><span class="code">26D</span><span class="name">Belgian Dark Strong Ale</span><span class="desc">Very strong dark ale loaded with dried fruit and spice. Dangerously smooth.</span></th>
+                  <td class="type">Ale</td>
+                  <td class="origin">Belgium</td>
+                  <td class="num"><span class="range">8–12%</span><span class="bar" aria-hidden="true"><span style="left:57.14%;width:28.57%"></span></span></td>
+                  <td class="num"><span class="range">20–35</span><span class="bar" aria-hidden="true"><span style="left:20.00%;width:15.00%"></span></span></td>
+                  <td class="num"><span class="swatch" style="background:linear-gradient(90deg,#CF6900,#8E2900)" aria-hidden="true"></span><span class="range">12–22</span></td>
+                  <td class="try">Rochefort 10, St. Bernardus Abt 12</td>
+                </tr>
+                <tr class="empty" hidden><td colspan="7">No styles match that search.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="caption">ABV bars are drawn to a shared 0–14% scale and IBU bars to a shared 0–100 scale, so rows are directly comparable. Colour swatches are an illustrative rendering of the SRM figure, not an official colour standard. Saison is shown across its full table-to-strong range (3.5–9.5%); the guideline defines three strength bands within the style. This covers BJCP categories 1 to 26 only; categories 27 to 34 are not yet included.</p>
+        </div>
+      </section>
+
+      <!-- ═══ 06 WHERE TO START ═══ -->
+      <section id="start">
+        <h2>Where to start, in eight rungs</h2>
+        <p class="lede"><strong>The route in.</strong> Every rung introduces exactly one new idea, and each is chosen so its numbers make the lesson obvious. Climb in order and you will understand beer by tasting rather than by reading.</p>
+
+        <aside class="aside">
+          <p class="aside-label">How this ladder was built</p>
+          <p>The specifications on each rung are verified BJCP figures. <strong>The ordering itself is my editorial recommendation</strong>, reasoned from those specifications, not a ranking published by any authority. The logic: hold alcohol low early, introduce one variable at a time, and delay bitterness until after you have met malt, yeast and roast, because bitterness is the trait beginners most often mistake for "beer I dislike".</p>
+        </aside>
+
+        <dl class="rows figures ladder">
+          <div>
+            <dt>0</dt>
+            <dd>
+              <h3 class="minor">Where you already are: International Pale Lager</h3>
+              <p class="spec">4.5–6.0% ABV · 18–25 IBU · SRM 2–6</p>
+              <p>Kingfisher, Budweiser, Heineken, Corona, Tuborg. This is the baseline, not an insult. Know its numbers so every later rung has something to measure against: mild bitterness, pale colour, minimal yeast character.</p>
+            </dd>
+          </div>
+          <div>
+            <dt>1</dt>
+            <dd>
+              <h3 class="minor">The same thing, done properly: Munich Helles or German Pils</h3>
+              <p class="spec">Helles 4.7–5.4% · 16–22 IBU &nbsp;|&nbsp; Pils 4.4–5.2% · 22–40 IBU</p>
+              <p>Identical family, identical strength, far more flavour. Helles shows you what malt tastes like when nothing is hiding it. German Pils, at up to 40 IBU, shows you what hop bitterness feels like in a beer you already understand. <strong>Lesson: flavour is not a function of strength.</strong></p>
+            </dd>
+          </div>
+          <div>
+            <dt>2</dt>
+            <dd>
+              <h3 class="minor">Meet yeast: Weissbier or Witbier</h3>
+              <p class="spec">Weissbier 4.3–5.6% · 8–15 IBU &nbsp;|&nbsp; Witbier 4.5–5.5% · 8–20 IBU</p>
+              <p>Among the least bitter beers in the entire guide, yet enormously flavourful: banana and clove in the German, coriander and orange peel in the Belgian. <strong>This is the rung for anyone who thinks they dislike beer.</strong> If the problem was bitterness, these solve it at a stroke.</p>
+            </dd>
+          </div>
+          <div>
+            <dt>3</dt>
+            <dd>
+              <h3 class="minor">Meet malt and break the colour myth: Munich Dunkel or Vienna Lager</h3>
+              <p class="spec">Dunkel 4.5–5.6% · 18–28 IBU · SRM 17–28 &nbsp;|&nbsp; Vienna 4.7–5.5% · 18–30 IBU · SRM 9–15</p>
+              <p>Visibly dark, no stronger than a Kingfisher, and no more bitter. Toasted bread crust, nuts, light chocolate. <strong>Lesson: dark does not mean strong, heavy or bitter.</strong> That single correction unlocks half the beer world.</p>
+            </dd>
+          </div>
+          <div>
+            <dt>4</dt>
+            <dd>
+              <h3 class="minor">Meet roast: Irish Stout</h3>
+              <p class="spec">3.8–5.0% ABV · 25–45 IBU · SRM 25–40</p>
+              <p>Black as it gets, and <em>weaker than most Indian lagers</em>. Coffee and dark chocolate come from roasted grain, not from hops or alcohol. On a nitro pour it is also your introduction to how gas changes texture. <strong>Lesson: roast is a fourth flavour axis, separate from malt sweetness, hops and yeast.</strong></p>
+            </dd>
+          </div>
+          <div>
+            <dt>5</dt>
+            <dd>
+              <h3 class="minor">Meet hops properly: American Pale Ale, then American IPA</h3>
+              <p class="spec">APA 4.5–6.2% · 30–50 IBU &nbsp;|&nbsp; IPA 5.5–7.5% · 40–70 IBU</p>
+              <p>Do these in this order, and only now. Citrus, pine and resin are hop <em>flavours</em>, distinct from hop bitterness. If the IPA is too much, try a Hazy IPA (6–9%, 25–60 IBU): same aroma intensity, markedly less bite, because the hops went in late rather than early.</p>
+            </dd>
+          </div>
+          <div>
+            <dt>6</dt>
+            <dd>
+              <h3 class="minor">Meet Belgian yeast: Dubbel, then Tripel</h3>
+              <p class="spec">Dubbel 6.0–7.6% · 15–25 IBU &nbsp;|&nbsp; Tripel 7.5–9.5% · 20–40 IBU</p>
+              <p>Now the alcohol climbs, and the point is how well it hides. A Tripel at 9.5% with only 20–40 IBU tastes of spice and citrus rather than heat. <strong>Lesson: strength is something a brewer can conceal, which is precisely why it is worth counting your standard drinks.</strong></p>
+            </dd>
+          </div>
+          <div>
+            <dt>7</dt>
+            <dd>
+              <h3 class="minor">The frontier: Gose, then Imperial Stout or Barleywine</h3>
+              <p class="spec">Gose 4.2–4.8% · 5–12 IBU &nbsp;|&nbsp; Imperial Stout 8–12% · 50–90 IBU</p>
+              <p>Gose is the gentlest possible door into sour beer: low alcohol, nearly no bitterness, tart and faintly salty. At the other extreme, Imperial Stout and Barleywine are sipping beers where every axis is turned up at once. If these still read as "beer", you have arrived.</p>
+            </dd>
+          </div>
+        </dl>
+
+        <aside class="aside good">
+          <p class="aside-label">Two shortcuts</p>
+          <p><strong>If you dislike bitterness,</strong> go 0 → 2 → 3 → 6 and skip rung 5 entirely. Wheat beers, dunkels and Belgian dubbels are a complete and satisfying path that never exceeds about 28 IBU.</p>
+          <p><strong>If you find beer boring,</strong> go 0 → 4 → 5 → 7. Roast and hops are the fastest routes to intensity.</p>
+        </aside>
+      </section>
+
+      <!-- ═══ 07 SERVING & PAIRING ═══ -->
+      <section id="serving">
+        <h2>Temperature, glass, pour and food</h2>
+        <p class="lede"><strong>Handling.</strong> Most bad beer is mishandled rather than badly brewed. Four variables account for nearly all of it, and one of them matters enormously if you eat Indian food.</p>
+
+        <h3>Temperature</h3>
+        <p>The Certified Cicerone syllabus states the band plainly: beer "should be served between 38 and 55 °F (3–13 °C) depending upon its style", and "reveals more flavor as its temperature increases".</p>
+        <p>There is <strong>no style-by-style temperature table</strong> in any authoritative source retrieved for this guide, so none is invented here. What exists is the governing rule, from the Brewers Association: <strong>"Assume that the higher the ABV, the warmer the serving temperature."</strong> Around 45–50 °F (7–10 °C) is described as common for many styles.</p>
+
+        <div class="pair">
+          <div>
+            <p class="label">Why ice-cold hurts</p>
+            <h4>Cold is an anaesthetic</h4>
+            <p>Beer served near freezing "blinds the taste experience", with taste buds numbed and a bland result. It also retains more CO₂, which makes the beer more filling. This is exactly why mass-market lager is served so cold: at 2 °C you cannot taste much, which is fine when there is not much to taste.</p>
+          </div>
+          <div>
+            <p class="label">Frosted glasses are a mistake</p>
+            <h4>Never use a freezer glass</h4>
+            <p>Both the Brewers Association and Cicerone advise against frosted glassware. An ice sheet on the glass triggers rapid CO₂ release and excessive foaming, chills the beer below its style range, and can carry frozen sanitiser or freezer odours into the drink. Room-temperature or chilled-but-dry is correct. The Brewers Association notes room-temperature glassware is preferred for most craft styles, with chilled glass acceptable for standard lagers.</p>
+          </div>
+        </div>
+
+        <aside class="aside">
+          <p class="aside-label">The 3-30-300 rule</p>
+          <p>Cited by the Brewers Association from a large brewery study: the same amount of flavour loss results from <strong>3 days at 90 °F</strong>, <strong>30 days at room temperature (72 °F)</strong>, or <strong>300 days at 38 °F</strong>. Heat is time. A crate left in an Indian summer boot for an afternoon has aged meaningfully.</p>
+        </aside>
+
+        <h3>Glassware</h3>
+        <p>The Brewers Association publishes a five-shape chart with explicit style mappings and stated functions. Those five are below. Cicerone adds two selection rules: <strong>higher-alcohol beers go in smaller glasses</strong>, and the glass must leave room for an appropriately sized head.</p>
+
+        <div class="table-scroll" tabindex="0">
+          <table class="data glasses">
+            <thead>
+              <tr><th scope="col">Glass</th><th scope="col">Style families</th><th scope="col">What the shape does</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Tulip</th><td>Belgian styles, Bocks, Dark Lagers, Hybrids, IPAs, Pale Ales, Scottish Ales, Specialty, Wild/Sour</td><td>Sensory enhancement, temperature control, aesthetics</td></tr>
+              <tr><th scope="row">Pilsener flute</th><td>Dark Lagers, Hybrids, Pilseners &amp; Pale Lagers, Specialty, Wheat, Wild/Sour</td><td>Sensory enhancement, temperature control, foam support, aesthetics, historical</td></tr>
+              <tr><th scope="row">Vase <span class="sub">(weizen)</span></th><td>Dark Lagers, Specialty, Wheat Beers, Pilseners &amp; Pale Lagers</td><td>Sensory enhancement, foam support, aesthetics, historical</td></tr>
+              <tr><th scope="row">Nonic <span class="sub">(British pint)</span></th><td>Brown Ales, Hybrids, IPAs, Pale Ales, Specialty, Stouts</td><td>Aesthetics and historical tradition only. The chart claims no sensory, temperature or foam benefit.</td></tr>
+              <tr><th scope="row">Snifter</th><td>Specialty Beers, Strong Ales, Wild/Sour Beers</td><td>Sensory enhancement, temperature control, aesthetics</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="muted">The mechanisms, in the chart's own terms: a stem or handle keeps body heat away from the beer; an outward-curved upper shape traps and concentrates aroma; an inward-curving shape concentrates foam; a large bowl invites you to cup and deliberately warm a strong beer.</p>
+
+        <aside class="aside flag">
+          <p class="aside-label">Not sourced, so not claimed</p>
+          <p><strong>Teku, stange and goblet/chalice</strong> appear in no source retrieved for this guide, and neither does <strong>laser-etched nucleation</strong>. They may well be legitimate; this guide simply has no basis to describe them.</p>
+        </aside>
+
+        <h3>The pour</h3>
+        <div class="pair">
+          <div>
+            <p class="label">Standard CO₂ beer</p>
+            <h4>Forty-five degrees, then straight</h4>
+            <ul>
+              <li>Hold the glass at <strong>45°</strong>, about an inch below the tap. Never let the tap touch the beer or foam.</li>
+              <li>Open the tap <strong>fully and fast</strong>. A half-open tap causes turbulence, excess foam and waste.</li>
+              <li>Pour down the side until <strong>half full</strong>, then tilt upright and pour down the middle.</li>
+              <li>Finish with a <strong>one-inch collar of foam</strong>. German wheat beers and Belgian ales traditionally take 2–3 inches.</li>
+            </ul>
+            <p class="muted">That head is not decoration: it releases aromatic volatiles and enhances the palate-cleansing effect of carbonation.</p>
+          </div>
+          <div>
+            <p class="label">Nitro beer</p>
+            <h4>Why Guinness is different</h4>
+            <p>Nitrogenated beer carries much lower dissolved CO₂ (1.1–1.7 volumes) plus nitrogen, and is dispensed through a <strong>75% nitrogen / 25% CO₂ blend</strong> and a restrictor plate that forces the beer through tiny holes. That turbulence produces the cascade.</p>
+            <p><strong>Nitrogen bubbles are smaller than CO₂ bubbles</strong>, which creates the creamy mouthfeel and a markedly more stable, longer-lasting head. The trade-off, stated by the Brewers Association: nitro will <strong>subdue aroma and soften the perception of bitterness</strong>.</p>
+            <p class="muted">The two-part pour is heritage: it descends from Guinness once being blended from two casks, one aged and one fresh. Today it controls the head.</p>
+          </div>
+        </div>
+
+        <h3>Beer and Indian food</h3>
+        <p>The standard framework has three principles: <strong>complement</strong> (shared flavours resonate), <strong>contrast</strong> (an opposing flavour highlights the dish), and <strong>cut</strong> (carbonation, sourness and bitterness lift rich or fatty flavours off the palate). Before any of those, <strong>match intensities</strong> so neither side overwhelms the other.</p>
+        <p>Then there is chilli, and here the Cicerone syllabus is unusually specific. It lists which beer traits act on capsaicin heat, and the answer is counterintuitive:</p>
+
+        <div class="pair heat">
+          <div>
+            <h4>Soothe the heat</h4>
+            <ul>
+              <li><strong>Malt flavours</strong> soothe and soften capsaicin heat</li>
+              <li><strong>Sweetness</strong> soothes capsaicin heat and other spices</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Amplify the heat</h4>
+            <ul>
+              <li><strong>Carbonation</strong> accentuates capsaicin heat</li>
+              <li><strong>Bitterness</strong> accentuates capsaicin heat</li>
+              <li><strong>Alcohol</strong> can accentuate capsaicin heat</li>
+            </ul>
+          </div>
+        </div>
+
+        <aside class="aside">
+          <p class="aside-label">What that implies, stated as synthesis rather than as a sourced pairing</p>
+          <p>Reading those five rules together: with a genuinely hot dish, reach for something <strong>malty, slightly sweet, moderately carbonated and low in bitterness</strong>. A Munich Dunkel, a Sweet Stout or a Dunkles Weissbier fit. The <strong>IPA is the worst possible choice</strong>, because it is high on all three amplifiers at once: bitterness, carbonation and alcohol. The ice-cold strong lager that is the Indian default is working against you on two of the three.</p>
+          <p>One sourced pairing points the same way: the syllabus's own example is that <em>"an Indian curry with cloves resonates with the clove flavors found in a Dunkles Weissbier"</em>, because yeast-derived phenols complement spices while contrasting fat and umami. That is the single most useful pairing in this guide for Indian cooking.</p>
+        </aside>
+
+        <h3>Foam, lacing and freshness</h3>
+        <div class="pair">
+          <div>
+            <p class="label">What lacing actually tells you</p>
+            <h4>It is a glass test, not a beer test</h4>
+            <p>If the glass is clean, foam adheres in <strong>parallel rings after each sip</strong>. If it is not, foam adheres randomly or not at all. Likewise, <strong>bubbles clinging to the inside of the glass</strong> in the liquid mean the glass is not clean.</p>
+            <p><strong>Grease is the enemy.</strong> Washing beer glasses alongside food dishes transfers grease that destroys foam, as do fat- or oil-based detergents, and dairy residue from coffee mugs in a shared washer. Air-dry inverted; towel-drying leaves lint.</p>
+          </div>
+          <div>
+            <p class="label">How long it keeps</p>
+            <h4>Freshness, by package</h4>
+            <ul>
+              <li>Non-pasteurised draught: <strong>45–60 days</strong></li>
+              <li>Pasteurised draught: <strong>90–120 days</strong></li>
+              <li>Bottled or canned: <strong>up to 6 months</strong></li>
+              <li><strong>Hoppy styles such as IPA: changes in as little as 3 months, even refrigerated</strong></li>
+            </ul>
+            <p class="muted">Beer must never exceed 25 °C, which causes rapid degradation. Only <strong>strong, sour and smoked</strong> beers age well. Hoppy beers are the clear drink-fresh category.</p>
+          </div>
+        </div>
+
+        <aside class="aside flag">
+          <p class="aside-label">Light damage, ranked</p>
+          <p>Skunking is caused by sunlight, fluorescent light and most LED light, and <strong>may be evident after just a couple of minutes of exposure</strong>. Protection, best to worst: <strong>cans and closed case boxes</strong> (maximum), <strong>brown glass</strong> (blocks most of the damaging wavelengths), <strong>green glass</strong> (blocks very little), <strong>clear glass</strong> (no protection at all). A beer sitting under a lit fridge display in a clear bottle is being damaged while you look at it.</p>
+        </aside>
+      </section>
+
+      <!-- ═══ 08 INDIA, THE LAW ═══ -->
+      <section id="india">
+        <h2>Reading an Indian beer label</h2>
+        <p class="lede"><strong>India, the law.</strong> India regulates beer labels in unusual detail, and several of those rules explain things you have probably noticed without understanding, including why the ABV is so often a band rather than a number.</p>
+
+        <div class="india">
+          <figure class="mock">
+            <div class="lm" role="img" aria-label="A mock Indian beer label: a dark band reading Premium, Example Lager, Strong Beer; a boxed statutory warning; 650 ml; above 5% upto 8% abv; an expiry date and a licence number">
+              <div class="lm-band">
+                <span class="edge">Premium</span>
+                <span class="lm-name">Example Lager</span>
+                <span class="edge">Strong Beer</span>
+              </div>
+              <p class="lm-warn">Consumption of alcohol is injurious to health.<br>Be safe-dont drink and drive.</p>
+              <p class="lm-row"><span>650 ml</span><span>above 5% upto 8% abv</span></p>
+              <p class="lm-line">Expiry date: 11/2026 · Lic. No. 10021XXXXXXXX</p>
+            </div>
+            <figcaption>Illustrative composite, not a real product</figcaption>
+          </figure>
+
+          <ol class="notes">
+            <li><strong>The statutory warning.</strong> Mandated in two lines by reg. 5.12, and it must sit inside a box. Minimum text height is 1.5 mm on packs up to 200 ml and 3 mm above that. The odd punctuation of "Be safe-dont drink and drive" is how the regulation itself prints it.</li>
+            <li><strong>Alcohol content.</strong> Must be expressed as "% abv" or as proof. <strong>But for beer specifically the label may state a band instead of a figure</strong>: "upto 5%" for regular, "above 5% upto 8%" for strong. That is why so many Indian beers never tell you the actual number. Legal tolerance is ±0.3%.</li>
+            <li><strong>Expiry, not "best before".</strong> For any alcoholic beverage under 10% alcohol, which is all beer, the label <em>must</em> carry "Expiry date" or "Use by" with date, month and year. "Best before" is permitted only as additional information, never as the required declaration.</li>
+            <li><strong>No green or brown dot.</strong> The veg / non-veg mark used on Indian food packaging is explicitly disapplied to alcoholic beverages. The one exception anywhere in the rules is wine containing egg-white or isinglass residue.</li>
+            <li><strong>No health claims, and almost no nutrition panel.</strong> Health claims are banned outright. Nutritional information is excluded too, with a single carve-out: energy content in kcal, which a brand may declare voluntarily.</li>
+            <li><strong>FSSAI licence number</strong> alongside the FSSAI logo: the brand owner's, plus the bottler's or importer's if different. Net quantity follows the Legal Metrology Act, not FSSAI.</li>
+          </ol>
+        </div>
+
+        <h3>Mild versus strong: two different rulebooks</h3>
+        <p>This is a genuine trap. <strong>Food law and excise law draw the line in different places, and excise law is set state by state.</strong> Both are real, and they do not agree.</p>
+
+        <div class="pair">
+          <div>
+            <p class="label">Rulebook one, national</p>
+            <h4>FSSAI food-safety tiers</h4>
+            <table class="data tiers">
+              <thead><tr><th scope="col">Category</th><th scope="col">% v/v at 20 °C</th></tr></thead>
+              <tbody>
+                <tr><td>Regular or Mild</td><td class="num">&gt; 0.5 – 5.0</td></tr>
+                <tr><td>Strong</td><td class="num">&gt; 5.0 – 8.0</td></tr>
+                <tr><td>Alcohol free beer</td><td class="num">0.0</td></tr>
+                <tr><td>Craft beer, Regular</td><td class="num">up to 5.0</td></tr>
+                <tr><td>Craft beer, Strong</td><td class="num">&gt; 5.0 – 8.0</td></tr>
+              </tbody>
+            </table>
+            <p class="muted">This is what governs the label band you read in the shop.</p>
+          </div>
+          <div>
+            <p class="label">Rulebook two, state by state</p>
+            <h4>Excise tiers, Haryana 2025-27</h4>
+            <table class="data tiers">
+              <thead><tr><th scope="col">Category</th><th scope="col">% v/v</th></tr></thead>
+              <tbody>
+                <tr><td>Super Mild Beer</td><td class="num">up to 3.5</td></tr>
+                <tr><td>Mild Beer</td><td class="num">&gt; 3.5 – 5.5</td></tr>
+                <tr><td>Strong Beer</td><td class="num">&gt; 5.5</td></tr>
+              </tbody>
+            </table>
+            <p class="muted"><strong>Different thresholds, and an extra tier.</strong> This is what sets the duty and therefore the price. Each state writes its own policy, so <strong>do not generalise these numbers beyond Haryana</strong>.</p>
+          </div>
+        </div>
+        <p class="muted">FSSAI also sets hard limits for beer sold in India: pH 3.3–4.8, CO₂ 1.8–3.6 volumes, methanol max 50 mg/l, lead max 0.2 mg/l. Beer must be clear, wheat beer excepted, and bottled or canned beer must be pasteurised or filter-sterilised. <strong>Draught beer is exempt from that last rule</strong>, which is precisely why draught at a microbrewery can taste fresher and fuller than the same beer from a bottle.</p>
+
+        <h3>How much are you actually drinking?</h3>
+        <p>India has an official standard drink, defined in the beer regulation itself: <strong>one standard drink contains 12.7 ml of alcohol by volume at 20 °C</strong> (reg. 5.2). Printing the count on the label is voluntary, so you will rarely see it, which makes it worth computing yourself.</p>
+
+        <form class="calc" data-calc>
+          <div class="calc-in">
+            <label class="field">
+              <span>Serving</span>
+              <select data-volume>
+                <option value="330">330 ml can / bottle</option>
+                <option value="375">375 ml</option>
+                <option value="500">500 ml can</option>
+                <option value="650" selected>650 ml bottle</option>
+                <option value="1000">1 litre</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>ABV %</span>
+              <input type="number" min="0" max="20" step="0.1" value="5" inputmode="decimal" data-abv>
+            </label>
+            <label class="field range">
+              <span>ABV, as a slider</span>
+              <input type="range" min="0" max="12" step="0.1" value="5" data-slider>
+            </label>
+          </div>
+          <dl class="rows figures calc-out" aria-live="polite">
+            <div><dt><output data-ml>32.5</output> ml</dt> <dd>pure alcohol</dd></div>
+            <div><dt><output data-drinks>2.6</output></dt> <dd>Indian standard drinks</dd></div>
+            <div><dt><output data-tier>Mild</output></dt> <dd>FSSAI tier</dd></div>
+          </dl>
+          <p class="caption">Formula: (volume × ABV ÷ 100) ÷ 12.7. Derived arithmetic from FSSAI's definition. The regulation gives its own worked example of a 750 ml beverage at 8%, stated as "approximately 4.8 standard drinks". The tier shown is the FSSAI band, not your state's excise band.</p>
+        </form>
+
+        <aside class="aside flag">
+          <p class="aside-label">Driving: Motor Vehicles Act 1988, Section 185</p>
+          <p>The legal limit in India is <strong>30 mg of alcohol per 100 ml of blood</strong>, among the stricter limits worldwide. A first offence carries up to six months' imprisonment or a fine of <strong>₹10,000</strong>, or both; a repeat offence up to two years or <strong>₹15,000</strong>, or both. Since a single 650 ml strong beer is over four standard drinks, the practical reading is simple: if you have had a beer, do not drive.</p>
+        </aside>
+
+        <aside class="aside flag">
+          <p class="aside-label">Deliberately not stated here</p>
+          <p>Several India facts could <strong>not</strong> be verified from a primary source, so this guide does not assert them: state-by-state legal drinking ages, the current list of dry states, whether an Indian "pint" bottle is 325, 330 or 375 ml, and the volume of a draught pint in Indian pubs. Nagaland's total-prohibition Act of 1989 and Bihar's prohibition were both confirmed to exist; Gujarat, Mizoram and Lakshadweep were not checked.</p>
+        </aside>
+      </section>
+
+      <!-- ═══ 09 INDIAN BRANDS ═══ -->
+      <section id="brands">
+        <h2>What is actually in the fridge</h2>
+        <p class="lede"><strong>India, the market.</strong> Four companies account for most of what you can buy in India. Here is who owns what, and one finding that matters more than the roster itself.</p>
+
+        <aside class="aside flag">
+          <p class="aside-label">The finding</p>
+          <p><strong>Not one Indian brand owner publishes ABV figures on any source that could be reached for this guide.</strong> United Breweries' 179-page Integrated Annual Report 2025-26 contains the string "ABV" zero times. Carlsberg India's product pages give beer type, country of origin and launch year, but no strength. Simba and Mohan Meakin list beers without figures.</p>
+          <p>The practical consequence: <strong>the physical label is the only place strength appears</strong>, and the label is legally allowed to show a band rather than a number. If you want to know what you are drinking, you must read the bottle, and even then you may only get "above 5% upto 8%". The other citable route would be a state excise department's brand-registration schedule, which lists declared v/v per brand.</p>
+        </aside>
+
+        <h3>Who owns what</h3>
+        <p>Styles below are only as the company itself describes them. Blank means the company does not state it.</p>
+
+        <div class="table-scroll" tabindex="0">
+          <table class="data owners">
+            <thead>
+              <tr><th scope="col">Brands</th><th scope="col">Company-stated style</th><th scope="col">Owner</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Kingfisher</strong> (Premium, Strong, Ultra, Ultra Max, Ultra Witbier, Smooth, Lemon Masala, Mango Berry Twist)</td><td>Not stated per variant</td><td>United Breweries Ltd</td></tr>
+              <tr><td><strong>Heineken</strong>, Heineken Silver, Heineken 0.0</td><td>Not stated</td><td>United Breweries Ltd</td></tr>
+              <tr><td><strong>Amstel</strong>, Amstel Grande</td><td>Not stated</td><td>United Breweries Ltd</td></tr>
+              <tr><td>London Pilsner, Bullet, Cannon 10000, <strong>Kalyani Black Label</strong>, Zingaro, UB Export, Maharaja Indian Pilsner, Taj Mahal, Flying Horse</td><td>Not stated</td><td>United Breweries Ltd</td></tr>
+              <tr><td><strong>Budweiser</strong>, Budweiser 0.0, Budweiser Magnum, <strong>Corona</strong>, Corona Cero, <strong>Hoegaarden</strong></td><td>Not stated for India</td><td>AB InBev</td></tr>
+              <tr><td><strong>Haywards 5000</strong></td><td>Lager. "India's original strong beer"</td><td>AB InBev</td></tr>
+              <tr><td>Knockout, Royal Challenge</td><td>Not stated</td><td>AB InBev</td></tr>
+              <tr><td><strong>Tuborg Strong</strong> (India, 2010)</td><td>Lager, "a strong beer". Carlsberg's largest India brand</td><td>Carlsberg India</td></tr>
+              <tr><td>Tuborg Green (2009), Tuborg Ice Draft (2022), Tuborg Classic with Scotch Malts (2017)</td><td>Lager</td><td>Carlsberg India</td></tr>
+              <tr><td>Carlsberg Smooth (2018), Carlsberg Elephant (2011)</td><td>Lager. Smooth described as "European style lager"</td><td>Carlsberg India</td></tr>
+              <tr><td>1664 Blanc (2024)</td><td>Wheat</td><td>Carlsberg India</td></tr>
+              <tr><td><strong>Simba</strong> Wit, Stout, Lager, Strong</td><td>Wit / Stout / Lager / Strong</td><td>Sona Beverages</td></tr>
+              <tr><td>Meakins 10000, Golden Eagle Lager, Golden Eagle Strong, Old Monk Beer, Asia 72, IQ Wheat Beer</td><td>Implied by name only</td><td>Mohan Meakin Ltd</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="muted"><strong>Heineken N.V. holds 61.5% of United Breweries Limited.</strong> Note that Simba's four-way split (Wit, Stout, Lager, Strong) is unusually informative for an Indian brand: most competitors name a beer without ever naming its style.</p>
+
+        <aside class="aside flag">
+          <p class="aside-label">Not verified, so not listed</p>
+          <p><strong>Bira 91</strong> and all its variants could not be verified: bira91.com presents a TLS certificate for an unrelated host, and b9beverages.com did not respond. Also unverified: Bee Young, Godfather, Thunderbolt. <strong>Lion</strong> appears in Mohan Meakin's history but is <em>not</em> among the six beers on its current product page, so it may be discontinued.</p>
+        </aside>
+
+        <h3>Market structure</h3>
+        <div class="pair">
+          <div>
+            <p class="label">United Breweries, FY2025-26</p>
+            <h4>The volume leader</h4>
+            <ul>
+              <li><strong>207 million cases</strong> of beer sold</li>
+              <li>Net revenue <strong>₹9,233 crore</strong>, up 3.67% year on year</li>
+              <li>PAT <strong>₹413 crore</strong>, down 6.35%</li>
+              <li><strong>18</strong> operating breweries of 21 owned</li>
+              <li>28 states and 8 union territories; exports just 1.28% of turnover</li>
+              <li>Kingfisher Ultra portfolio <strong>+27%</strong>, Ultra Max <strong>+59%</strong></li>
+            </ul>
+            <p class="muted">Self-described "largest beer manufacturer in India". Heineken's 2025 report claims "market leadership" in India.</p>
+          </div>
+          <div>
+            <p class="label">Carlsberg India, 2025</p>
+            <h4>The fast climber</h4>
+            <ul>
+              <li>Market share grown from <strong>5% in 2011 to 23% in 2025</strong></li>
+              <li>Group table lists India position as <strong>No. 2</strong></li>
+              <li><strong>+9%</strong> volume growth in 2025</li>
+              <li>No. 1 or 2 in 5 of the 22 states where it operates</li>
+              <li>Seven owned breweries plus eight co-manufacturers</li>
+              <li>Publicly "exploring options" that may include an India IPO</li>
+            </ul>
+          </div>
+        </div>
+
+        <aside class="aside flag">
+          <p class="aside-label">Read these claims carefully</p>
+          <p>Heineken/UBL claims market leadership; Carlsberg claims No. 2 with 23% share. <strong>Both are self-reported by direct competitors and were not reconciled against any independent measurement.</strong> No third-party India market-share table could be sourced. <strong>AB InBev discloses no India-specific volume, revenue or share figure at all</strong>, folding India into its Asia Pacific segment.</p>
+        </aside>
+
+        <h3>Microbreweries, as a state actually regulates them</h3>
+        <p>Haryana's Excise Policy 2025-27 is a concrete example of the licensing regime behind every brewpub you drink at. A microbrewery licence is <strong>form L-10C</strong>, and it is restrictive:</p>
+        <ul>
+          <li>Granted only to existing hotel or restaurant licence holders (L-4 / L-5)</li>
+          <li>Beer produced <strong>must not exceed 8% v/v</strong></li>
+          <li><strong>On-site consumption only.</strong> The licensee may not sell it for off-premises drinking, which is why you cannot buy a growler to take home</li>
+          <li>Licence fee <strong>₹30 lakh in Gurugram</strong>, ₹20 lakh in Faridabad, Panchkula and Sonepat, ₹10 lakh elsewhere, plus ₹2 lakh security</li>
+          <li>Excise duty ₹40 per bulk litre on installed fermenting-tank capacity</li>
+          <li>Every batch certified fit by a qualified chemist; monthly government lab sampling</li>
+        </ul>
+        <p class="muted">The policy's stated rationale is "to promote healthy drinking habit of liquor with low alcoholic content". United Breweries describes craft and microbrewery segments as "relatively small" but "influencing consumer preferences around taste, freshness, and experience".</p>
+
+        <aside class="aside">
+          <p class="aside-label">The one number everyone quotes, and why it is not here</p>
+          <p><strong>India's per-capita beer consumption is repeatedly described as low, but no sourced figure could be retrieved</strong>, and none is invented here. Carlsberg's and Heineken's 2025 annual reports contain the phrase "per capita" zero times. United Breweries states only that consumption is "significantly below global averages" and the market is "underpenetrated". The one hard adjacent number it does give: <strong>nearly 23 million</strong> Indians reach legal drinking age each year.</p>
+          <p>Likewise, the widely repeated claim that Indian volume skews heavily to strong beer <strong>could not be sourced as a percentage</strong>. The directional evidence is real (United Breweries calls the market "anchored by the strong and mild beer segments", AB InBev's Haywards is "India's original strong beer", Carlsberg's biggest India brand is Tuborg Strong) but no share figure is asserted.</p>
+        </aside>
+      </section>
+
+      <!-- ═══ 10 TASTING & FAULTS ═══ -->
+      <section id="tasting">
+        <h2>Tasting, and what "off" tastes like</h2>
+        <p class="lede"><strong>Sensory.</strong> Professional judging follows a fixed order. Learning it gives you language for things you already perceive but cannot name.</p>
+
+        <dl class="rows figures ladder steps">
+          <div><dt>1</dt><dd><h3 class="minor">Appearance</h3><p>Colour, clarity, head size, head retention, lacing down the glass. Use a consistent background.</p></dd></div>
+          <div><dt>2</dt><dd><h3 class="minor">Aroma</h3><p>Swirl and sniff. Most of what you call "taste" is smell. Malt, hop and yeast character separate out here first.</p></dd></div>
+          <div><dt>3</dt><dd><h3 class="minor">Flavour</h3><p>Let it reach the whole mouth. Identify malt, hop, yeast, and the balance between sweetness and bitterness.</p></dd></div>
+          <div><dt>4</dt><dd><h3 class="minor">Mouthfeel</h3><p>Body, carbonation, warmth, creaminess, and astringency, which is a mouthfeel rather than a flavour.</p></dd></div>
+          <div><dt>5</dt><dd><h3 class="minor">Finish</h3><p>What happens after you swallow. Dry or sweet, short or lingering. Perception continues past the swallow.</p></dd></div>
+        </dl>
+
+        <aside class="aside">
+          <p class="aside-label">How it is weighted</p>
+          <h3 class="minor">The BJCP 50 points</h3>
+          <p class="spec">Aroma 12 · Flavour 20 · Mouthfeel 5 · Appearance 3 · Overall 10</p>
+          <p class="muted">Flavour and aroma carry two-thirds of the score. Appearance carries almost none.</p>
+        </aside>
+
+        <h3>Building vocabulary, one rung at a time</h3>
+        <p>The BJCP grades judges on descriptive precision, and its own escalation example is the clearest guide to getting better. The same beer, described at five levels of skill:</p>
+        <dl class="rows defs levels">
+          <div><dt>Beginner</dt> <dd>"hoppy aroma"</dd></div>
+          <div><dt>Recognised</dt> <dd>"American hop aroma"</dd></div>
+          <div><dt>Certified</dt> <dd>"moderate American hop aroma"</dd></div>
+          <div><dt>National</dt> <dd>"moderate citrusy American hop aroma"</dd></div>
+          <div><dt>Master</dt> <dd>"moderate citrusy American hop aroma, with notes of tangerine and grapefruit"</dd></div>
+        </dl>
+        <p class="muted">The pattern: add <em>intensity</em>, then <em>origin</em>, then <em>specific descriptors</em>. That is the whole skill.</p>
+
+        <h3>The 21 named faults</h3>
+        <p>This is the BJCP's own fault list, with its own descriptors. Learning to spot even four or five changes how you drink: you stop blaming yourself for not liking a beer that was simply mishandled.</p>
+
+        <div class="table-scroll" tabindex="0">
+          <table class="data faults">
+            <thead>
+              <tr><th scope="col">Fault</th><th scope="col">Descriptors</th><th scope="col">Cause</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Light-struck</th><td>Skunky, catty</td><td>Sunlight on beer after hopping; clear or green glass</td></tr>
+              <tr><th scope="row">Oxidized</th><td>Stale, papery, cardboard</td><td>Oxygen after fermentation; warm storage; old beer</td></tr>
+              <tr><th scope="row">Diacetyl</th><td>Butter, butterscotch, movie popcorn</td><td>Yeast health, high fermentation temperature, no diacetyl rest</td></tr>
+              <tr><th scope="row">Acetaldehyde</th><td>Fresh cut green apples, grass, latex paint</td><td>Incomplete fermentation; beer pulled off the yeast early</td></tr>
+              <tr><th scope="row">DMS (dimethyl sulfide)</th><td>Cooked corn</td><td>Short or covered boil; slow cooling; weak yeast starter</td></tr>
+              <tr><th scope="row">Medicinal (chlorophenolic)</th><td>Chloroseptic, medicine cabinet</td><td>Chlorine or chloramine in water; bleach sanitizers</td></tr>
+              <tr><th scope="row">Sulfury</th><td>Rotten eggs, burning matches</td><td>Infection, high water sulfates, yeast autolysis</td></tr>
+              <tr><th scope="row">Astringent</th><td>Mouth-puckering, husk-like harshness</td><td>Oversparging, overcrushed grain, too much dark malt</td></tr>
+              <tr><th scope="row">Sour / acidic</th><td>Sharp, clean sourness</td><td>Infection; yeast strain; long low-temperature mashes</td></tr>
+              <tr><th scope="row">Vinegary</th><td>Vinegar-like sourness</td><td>Acetobacter infection, which is aerobic, so oxygen is the route in</td></tr>
+              <tr><th scope="row">Alcoholic / hot</th><td>Spicy, vinous, warming</td><td>High fermentation temperature, too many fermentables, underpitching</td></tr>
+              <tr><th scope="row">Estery</th><td>Fruity: strawberry, pear, banana, apple, citrus</td><td>Warm fermentation, estery yeast, high gravity, yeast stress</td></tr>
+              <tr><th scope="row">Grassy</th><td>Fresh-cut grass, green leaves</td><td>Excess dry-hopping, oxygen pickup, stale hops or malt</td></tr>
+              <tr><th scope="row">Metallic</th><td>Coins, blood</td><td>Metallic ions in water, rust, unpassivated stainless, sanitizer residue</td></tr>
+              <tr><th scope="row">Musty</th><td>Stale, mouldy, cellar-like</td><td>Oxidation, sanitation, stale water, old malt or hops</td></tr>
+              <tr><th scope="row">Plastic</th><td>Band-aid, electrical tape, styrene</td><td>Infection; yeast strain or health; high fermentation temperature</td></tr>
+              <tr><th scope="row">Solvent / fusel</th><td>Hot burning on the palate</td><td>High fermentation temperature, underpitching, infection</td></tr>
+              <tr><th scope="row">Smoky (phenolic)</th><td>Smoke, charcoal, burnt</td><td>Scorched mash or boil; excess dark malts; infection</td></tr>
+              <tr><th scope="row">Spicy (phenolic)</th><td>Clove, pepper, vanilla</td><td>Yeast strain and hop variety; fermentation temperature</td></tr>
+              <tr><th scope="row">Vegetal</th><td>Cooked or canned vegetables: cabbage, celery, onion</td><td>Slow fermentation start allowing bacteria; stale ingredients</td></tr>
+              <tr><th scope="row">Yeasty</th><td>Bready, sulfury, yeast-like</td><td>Low-flocculation yeast, insufficient settling, young beer</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <aside class="aside flag">
+          <p class="aside-label">Important caveat</p>
+          <p>Several of these are <strong>expected</strong> in the right style rather than faults: clove-like spicy phenols belong in a German Weissbier, peppery phenols in a Saison, fruity esters in most Belgian ales, and clean lactic sourness in a Berliner Weisse or lambic. The BJCP faults page does not itself mark which are style-acceptable, so context is decisive. It also names no chemical compounds beyond those in the fault names, so the compound names commonly cited elsewhere are not asserted here.</p>
+        </aside>
+      </section>
+
+      <!-- ═══ 11 HISTORY ═══ -->
+      <section id="history">
+        <h2>A short history, with the myths marked</h2>
+        <p class="lede"><strong>Origins.</strong> Beer may predate agriculture. It certainly predates most of what we think we know about it, including the story of the IPA.</p>
+
+        <dl class="rows timeline">
+          <div>
+            <dt>c. 11,000 BCE</dt>
+            <dd>
+              <h3 class="minor">Raqefet Cave, Israel</h3>
+              <p>Stone mortars in a Natufian burial cave, dated 13,700–11,700 years before present, held 121 starch granules from wheat or barley, oat and legumes. The excavators concluded Natufians stored malted seeds and made beer as part of mortuary ritual, <strong>several millennia before cereals were domesticated</strong>. The authors note the wider "beer drove agriculture" hypothesis remains controversial.</p>
+            </dd>
+          </div>
+          <div>
+            <dt>c. 3500 BCE</dt>
+            <dd>
+              <h3 class="minor">Godin Tepe, Iran</h3>
+              <p>Jug fragments coated in beerstone give the earliest chemically confirmed barley beer.</p>
+            </dd>
+          </div>
+          <div>
+            <dt>c. 3000 BCE</dt>
+            <dd>
+              <h3 class="minor">Beer as wages</h3>
+              <p>Workers at Uruk were paid in beer. Labourers on the Great Pyramid at Giza received four to five litres daily. In 2021 a 5,000-year-old beer factory was excavated at Abydos, dated to the reign of King Narmer.</p>
+            </dd>
+          </div>
+          <div>
+            <dt>c. 1800 BCE</dt>
+            <dd>
+              <h3 class="minor">The Hymn to Ninkasi</h3>
+              <p>A 3,900-year-old Sumerian poem to the goddess of brewing contains the oldest surviving beer recipe, beer made from barley by way of bread. Clay tablets indicate most Mesopotamian brewers were women, and brewing was the only profession under divine protection.</p>
+            </dd>
+          </div>
+          <div>
+            <dt>822 CE</dt>
+            <dd>
+              <h3 class="minor">Hops enter the record</h3>
+              <p>Abbot Adalard of Corbie writes about hops in beer. Adoption was slow but decisive: unhopped <em>gruit</em> beer spoiled too fast to export, and the alternative, raising alcohol, was expensive. <strong>Hops won on economics, not taste.</strong></p>
+            </dd>
+          </div>
+          <div>
+            <dt>1516</dt>
+            <dd>
+              <h3 class="minor">The Reinheitsgebot</h3>
+              <p>Duke William IV adopts the Bavarian purity law on 23 April. It restricted ingredients to <strong>water, barley and hops</strong> (yeast is absent, as brewers treated it as process rather than ingredient) and also fixed prices and capped innkeepers' profits. One motive was keeping wheat and rye for bakers so bread stayed affordable.</p>
+              <p class="muted">"Unchanged since 1516" is false. Bavaria allowed coriander and bay leaf by the mid-1500s; wheat beer survived only via an exclusive family privilege. A 1987 European Court ruling struck it down for imported beer, and today it functions essentially as a labelling standard.</p>
+            </dd>
+          </div>
+          <div>
+            <dt>1760–1817</dt>
+            <dd>
+              <h3 class="minor">Measurement changes everything</h3>
+              <p>Thermometer (1760), hydrometer (1770), improved steam engines (1765). Brewers could finally measure, and pale malt's superior yield reorganised the industry. Wheeler's drum roaster (1817) produced patent black malt.</p>
+            </dd>
+          </div>
+          <div>
+            <dt>1842</dt>
+            <dd>
+              <h3 class="minor">Plzeň invents golden beer</h3>
+              <p>Bavarian brewer Josef Groll brewed the first batch in Plzeň on <strong>5 October 1842</strong>; it was first served on <strong>11 November</strong>. Soft Plzeň water, English-style indirectly kilned pale malt and Saaz hops produced a beer that was <em>golden</em>, then a novelty. In Bohemia, lager breweries went from 32.5% of all breweries in 1860 to 97.9% by 1870.</p>
+            </dd>
+          </div>
+          <div>
+            <dt>1870</dt>
+            <dd>
+              <h3 class="minor">Refrigeration</h3>
+              <p>Carl von Linde built the first large-scale refrigerated lagering tanks for Sedlmayr's Spaten brewery in Munich. Before that, brewers dug ice cellars and planted chestnut trees for shade above them, which is literally where the beer garden comes from.</p>
+            </dd>
+          </div>
+          <div>
+            <dt>1883</dt>
+            <dd>
+              <h3 class="minor">Pure yeast</h3>
+              <p>Emil Christian Hansen isolates the first pure yeast cell at the Carlsberg Laboratory. All commercial lager yeast descends from it.</p>
+            </dd>
+          </div>
+          <div>
+            <dt>1855</dt>
+            <dd>
+              <h3 class="minor">Beer arrives in India, commercially</h3>
+              <p>Edward Dyer set up a brewery at Kasauli in the Himalayas, incorporated as Dyer Breweries in 1855 and described as Asia's first. Its brand <strong>Lion</strong> was <em>originally an India Pale Ale and became a lager only in the 1960s</em>. It led the Indian market from the 1840s to the 1960s, succeeded by Golden Eagle, then Kingfisher from the 1980s. H. G. Meakin bought the Shimla and Solan breweries in 1887; the businesses merged after the First World War and became Mohan Meakin in 1967.</p>
+            </dd>
+          </div>
+          <div>
+            <dt>1978–1999</dt>
+            <dd>
+              <h3 class="minor">Kingfisher takes over</h3>
+              <p>From United Breweries' own milestones: Kingfisher Premium launched 1978, canned 1981, exported to the UK 1982. <strong>Kingfisher Strong launched in 1999 and "soon becomes India's No.1 beer by volume"</strong>, a fact that tells you a great deal about which way Indian taste ran. Ultra followed in 2009, Ultra Witbier in 2019.</p>
+            </dd>
+          </div>
+          <div>
+            <dt>1919–1933</dt>
+            <dd>
+              <h3 class="minor">American Prohibition</h3>
+              <p>The Eighteenth Amendment was ratified on 16 January 1919 and Prohibition began in 1920, destroying most American breweries. The Twenty-first Amendment repealed it on 5 December 1933, the only amendment to repeal another.</p>
+            </dd>
+          </div>
+          <div>
+            <dt>1971–1980</dt>
+            <dd>
+              <h3 class="minor">The craft revival</h3>
+              <p>CAMRA was founded on 16 March 1971, in a bar in County Kerry, Ireland, not England, and reached 5,000 members by 1973. In the US, Fritz Maytag's 1965 rescue of Anchor is the usual turning point; New Albion followed in 1976, homebrewing was legalised in 1978, and Sierra Nevada brewed its first Pale Ale in November 1980. Today an estimated <strong>over 40% of US craft beer is IPA</strong>.</p>
+            </dd>
+          </div>
+        </dl>
+
+        <aside class="aside flag">
+          <p class="aside-label">The IPA myth, handled carefully</p>
+          <p>You will be told IPA was invented strong and heavily hopped so it could survive the sea voyage to India. <strong>Beer historians dispute this.</strong> What is documented: George Hodgson's Bow Brewery dominated early exports to India partly because it sat two miles from the East India Docks and offered <em>18 months' credit</em>. What he shipped included an <em>existing</em> style, his old ale, which "benefited exceptionally from conditions of the voyage". Early IPAs were only slightly stronger than other beers of the period. And porter, not an IPA, was also shipped successfully to India and California.</p>
+          <p>Burton brewers entered the trade after the Napoleonic blockade cost them their European market; Allsopp's maltster Job Goodhead developed a pale ale in Hodgson's style, and Burton's high-sulphate water did the rest. Domestic English demand for the style only developed around 1840. The sceptical literature is Martyn Cornell's <em>Amber, Gold &amp; Black</em>, Ron Pattinson's research, and Alan Pryor's "Indian Pale Ale: an Icon of Empire".</p>
+        </aside>
+      </section>
+
+      <!-- ═══ 12 GAPS & SOURCES ═══ -->
+      <section id="gaps">
+        <h2>What is verified, and what is still open</h2>
+        <p class="lede"><strong>Integrity.</strong> The standing rule for this guide is that nothing appears unless a document was actually retrieved to support it. Here is the ledger.</p>
+
+        <div class="pair ledger">
+          <div>
+            <h3>Verified</h3>
+            <ul>
+              <li>All 66 style specifications, direct from BJCP 2021</li>
+              <li>The complete BJCP fault list and judging weights</li>
+              <li>Cicerone serving band, glassware rules, pour technique, nitro mechanics</li>
+              <li>Brewers Association glassware chart, freshness and light-damage data</li>
+              <li>Capsaicin interaction rules for spicy food</li>
+              <li>FSSAI beer definition, ABV tiers and labelling rules</li>
+              <li>Haryana excise tiers and microbrewery licensing, 2025-27</li>
+              <li>India's official standard drink: 12.7 ml</li>
+              <li>Motor Vehicles Act §185 BAC limit and penalties</li>
+              <li>Brand ownership from company filings and annual reports</li>
+              <li>UBL and Carlsberg India financials and share claims</li>
+              <li>Reinheitsgebot, pilsner, refrigeration and craft-revival chronology</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Still open</h3>
+            <ul>
+              <li><strong>BJCP categories 27 to 34</strong>, and the sub-styles skipped inside 1 to 26</li>
+              <li>Formal IBU, SRM/EBC and Plato definitions and conversions</li>
+              <li>Pint, keg and cask volumes; whether an Indian "pint" is 325, 330 or 375 ml</li>
+              <li>State-wise drinking ages and the current dry-state list</li>
+              <li>ABV figures for Indian brands (labels or excise registers only)</li>
+              <li>Bira 91 and B9 Beverages entirely; Bee Young, Godfather, Thunderbolt</li>
+              <li>Independent third-party India market share</li>
+              <li>Share of Indian volume that is "strong"; per-capita consumption</li>
+              <li>Number of microbreweries and legalisation year by state</li>
+              <li>Hop variety descriptors and hop chemistry</li>
+              <li>Calories, macronutrients and gluten</li>
+              <li>A style-by-style serving temperature table (none exists in the sources)</li>
+              <li>Teku, stange and goblet glassware; nucleation</li>
+              <li>Beer cultures by country, festivals, health guidance, hangover science</li>
+            </ul>
+          </div>
+        </div>
+
+        <aside class="aside flag">
+          <p class="aside-label">Quality caveat on the history section</p>
+          <p>Britannica's article body, World History Encyclopedia and the Penn Museum could not be retrieved by the fetcher, so <strong>much of <a href="#history">section 11</a> rests on general encyclopedic sources rather than academic ones</strong>. The Raqefet Cave entry is the exception and traces to the peer-reviewed Liu et al. 2018 paper. The history deserves re-verification against primary scholarship.</p>
+        </aside>
+
+        <h3 id="sources">Sources</h3>
+        <ul class="sources">
+          <li><a href="https://www.bjcp.org/style/2021/beer" target="_blank" rel="noopener">BJCP 2021 Beer Style Guidelines</a>, all style specifications, from the per-style pages under bjcp.org/style/2021/</li>
+          <li><a href="https://www.bjcp.org/education-training/education-resources/beer-faults/" target="_blank" rel="noopener">BJCP Beer Faults reference</a> and <a href="https://www.bjcp.org/exam-certification/exam-grading/bjcp-scoresheet-guide/" target="_blank" rel="noopener">BJCP Scoresheet Guide</a></li>
+          <li><a href="https://www.cicerone.org/sites/default/files/resources/US_English_CC_Syllabus_V4.1.pdf" target="_blank" rel="noopener">Certified Cicerone Syllabus v4.1</a>, serving temperature, glassware selection, pour technique, cask ale, flavour interactions and capsaicin rules</li>
+          <li><a href="https://www.craftbeer.com/educational-resources/beer-glassware-features" target="_blank" rel="noopener">Brewers Association / CraftBeer.com glassware chart</a>, <a href="https://www.craftbeer.com/tasting-tools/beer-food-chart" target="_blank" rel="noopener">beer and food chart</a>, and <a href="https://www.craftbeer.com/educational-resources/beer-aging-considerations-for-retailers" target="_blank" rel="noopener">beer aging guide</a></li>
+          <li>Brewers Association, <a href="https://cdn.brewersassociation.org/wp-content/uploads/2022/04/04193712/BP22-DBQMR-FINAL.pdf" target="_blank" rel="noopener">Draught Beer Quality for Retailers</a>, <a href="https://cdn.brewersassociation.org/wp-content/uploads/2019/08/Temperature-Tips-for-Retailers.pdf" target="_blank" rel="noopener">temperature tips</a> and <a href="https://cdn.brewersassociation.org/wp-content/uploads/2020/11/BAtech20-DBQ-One-Pager-Nitro-Beer-201-4.pdf" target="_blank" rel="noopener">nitro beer guide</a></li>
+          <li>FSSAI, Food Safety and Standards (Alcoholic Beverages) Regulations 2018, <a href="https://web.archive.org/web/20260415034200if_/https://fssai.gov.in/upload/uploadfiles/files/Comp_Alcoholic_Beverages_V_04_12_2025.pdf" target="_blank" rel="noopener">Compendium Version V</a>, and <a href="https://web.archive.org/web/20260803163913if_/https://fssai.gov.in/docs/food-law/regulations/Comp_Labelling%20Display_Version%20VIII_09_09_2025.pdf" target="_blank" rel="noopener">Labelling and Display Regulations 2020, Compendium VIII</a></li>
+          <li><a href="https://haryanatax.gov.in/Website_Content_Files/ExcisePolicy2025_27/Excise_Policy_2025_27.pdf" target="_blank" rel="noopener">Haryana Excise Policy 2025-27</a>, excise beer tiers and microbrewery (L-10C) licensing</li>
+          <li><a href="https://web.archive.org/web/20250804185944if_/https://www.indiacode.nic.in/bitstream/123456789/1798/1/aA1988-59.pdf" target="_blank" rel="noopener">Motor Vehicles Act 1988</a>, Section 185</li>
+          <li><a href="https://www.unitedbreweries.com/sites/united-breweries/files/united-breweries/shareholders_information/Integrated%20Annual%20Report%202025-2026.pdf" target="_blank" rel="noopener">United Breweries Ltd Integrated Annual Report 2025-26</a> · <a href="https://www.sec.gov/Archives/edgar/data/1668717/000119312526088105/d65314d20f.htm" target="_blank" rel="noopener">AB InBev SEC Form 20-F</a> · Carlsberg Group Annual Report 2025 and <a href="https://carlsbergindia.com/products" target="_blank" rel="noopener">carlsbergindia.com</a> · <a href="https://www.theheinekencompany.com/sites/heineken-corp/files/2026-02/2025_Heineken_NV_Annual_Report_Interactive_100226_FINAL.pdf" target="_blank" rel="noopener">Heineken N.V. Annual Report 2025</a> · <a href="https://simbabeer.com/our-beers/" target="_blank" rel="noopener">simbabeer.com</a> · <a href="https://mohanmeakin.com/beer/" target="_blank" rel="noopener">mohanmeakin.com</a></li>
+          <li>Liu, Wang, Rosenberg, Zhao, Lengyel &amp; Nadel (2018), "Fermented beverage and food storage in 13,000 y-old stone mortars at Raqefet Cave, Israel", <em>Journal of Archaeological Science: Reports</em> 21, 783–793</li>
+        </ul>
+
+        <p class="quiet closing">Updated 24 September 2026. Nothing here is medical or legal advice. The open items in <a href="#gaps">section 12</a> are the standing agenda for the next pass.</p>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p class="quote"></p>
+    <p class="credit">written &amp; directed by me. produced by claude</p>
+  </footer>
+
+  <script src="js/cursor.js" defer></script>
+  <script src="js/site.js" defer></script>
+  <script src="js/case-study.js" defer></script>
+  <script src="js/beer.js" defer></script>
+
+</body>
+</html>

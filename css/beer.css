@@ -1,0 +1,630 @@
+/* ============================================
+   BEER FROM SCRATCH
+   A reference page in the Contact Sheet world, built on the long-form reading
+   patterns the case study established (css/case-study.css): the section index,
+   hairline rows and figures, pairs, asides, labels. Only what this page adds
+   is here: the SRM strip, hairline tables, range bars, the ladder, the
+   timeline, the mock label, the calculator and the explorer's controls.
+   ============================================ */
+
+/* Index jumps glide, unless the visitor asked for less motion */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* The sticky row keeps clear of a phone's notch */
+.page-beer .cs-index { top: env(safe-area-inset-top, 0px); }
+
+/* --- Masthead: everything the contract names lands above the fold at 900px tall --- */
+.page-beer main { padding-top: clamp(32px, 5vw, 72px); }
+
+.page-beer .cs-head h1 { max-width: 14ch; }
+
+/* the second half of the title on its own line, at the lighter weight */
+.page-beer .cs-head h1 .from {
+  display: block;
+  font-weight: 400;
+}
+
+.page-beer .lede {
+  max-width: 37rem;
+  font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.page-beer .cs-head .lede { margin-top: clamp(20px, 3vw, 24px); }
+
+/* --- The SRM strip: beer's own colour scale, as a picture on paper --- */
+.page-beer .srm {
+  max-width: 62rem;
+  margin-top: 24px;
+}
+
+.srm-strip {
+  display: flex;
+  height: 56px;
+  border-radius: 2px;
+  overflow: hidden;
+  outline: 1px solid var(--line);
+  outline-offset: -1px;
+}
+
+.srm-strip span { flex: 1 1 0; }
+
+.srm-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.page-beer .stats {
+  max-width: 37rem;
+  margin-top: 24px;
+}
+
+/* --- Section numbers: the text refers to sections by number, so the index shows them --- */
+.cs-index .num {
+  margin-right: 0.5em;
+  color: var(--ink-2);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Labels: a line that names what follows it, in the second ink --- */
+.page-beer .label {
+  margin-top: 0;
+  color: var(--ink-2);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.page-beer .label + h3,
+.page-beer .label + h4 { margin-top: 12px; }
+
+/* --- Pairs: two ruled columns of prose --- */
+.page-beer .pair {
+  gap: 32px 40px;
+  margin-top: 28px;
+}
+
+.page-beer .pair > div > :first-child { margin-top: 0; }
+
+.page-beer .pair h3 { margin-top: 0; }
+
+.page-beer .pair :is(p, ul) { margin-top: 12px; }
+
+/* inside a pair too, a label stands 12px from the head it names (this must
+   outrank the two rules above) */
+.page-beer .pair .label + :is(h3, h4) { margin-top: 12px; }
+
+/* Secondary sentences, one step quieter */
+.page-beer .muted {
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+/* --- Asides: a regulation quoted, a note weighted --- */
+.page-beer .aside blockquote > p:first-child { margin-top: 12px; }
+
+.page-beer .aside .spec { margin-top: 8px; }
+
+/* --- Definition rows: a term, then its meaning at reading size --- */
+.page-beer .defs {
+  max-width: 50rem;
+  margin-top: 20px;
+}
+
+.page-beer .defs > div {
+  align-items: start;
+  padding: 12px 0 14px;
+}
+
+.page-beer .defs dt { font-weight: 600; }
+
+.page-beer .defs dd {
+  color: var(--ink);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+.page-beer .defs .sub {
+  display: block;
+  color: var(--ink-2);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.page-beer .levels dd { font-size: 1rem; }
+
+/* --- The ladder: a numbered rung, then its title, its figures and its why --- */
+.page-beer .ladder {
+  max-width: 50rem;
+  margin-top: 28px;
+}
+
+.page-beer .ladder > div {
+  grid-template-columns: 3rem minmax(0, 1fr);
+  align-items: start;
+  padding: 20px 0 24px;
+}
+
+.page-beer .ladder dd { color: var(--ink); }
+
+.page-beer .ladder h3 {
+  margin-top: 0;
+  max-width: none;
+}
+
+.page-beer .spec {
+  margin-top: 6px;
+  color: var(--ink-2);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+}
+
+.page-beer .ladder dd > p:not(.spec) {
+  margin-top: 10px;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+/* --- The timeline: a date, then what happened --- */
+.page-beer .timeline {
+  max-width: 50rem;
+  margin-top: 28px;
+}
+
+.page-beer .timeline > div {
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  align-items: start;
+  padding: 20px 0 24px;
+}
+
+.page-beer .timeline dt {
+  padding-top: 0.15em;
+  font-weight: 400;
+  line-height: 1.3;
+  font-variant-numeric: tabular-nums;
+}
+
+.page-beer .timeline dd { color: var(--ink); }
+
+.page-beer .timeline h3 {
+  margin-top: 0;
+  max-width: none;
+}
+
+.page-beer .timeline dd p {
+  margin-top: 10px;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+.page-beer .timeline dd p.muted {
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+/* --- Tables: hairlines between rows, scrolling sideways in their own box --- */
+.page-beer .table-scroll {
+  /* a flex column rather than a block: WebKit leaves a block scroller's end
+     padding out of the width it can scroll */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 20px;
+  /* out to the edge of the sheet, with the gutter given back as padding, so a
+     wide table's cut edge is the screen's edge, as the strip's is, and its end
+     comes to rest on the column's edge */
+  margin-right: calc(var(--pad) * -1);
+  padding-right: var(--pad);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+.page-beer .table-scroll > table { flex: none; width: 100%; }
+
+.page-beer .table-scroll:focus-visible { outline-offset: -2px; }
+
+.page-beer .data {
+  width: 100%;
+  /* the separate model, not collapse: a cell that sticks (the style table's
+     first column on a phone) keeps its own lines only in this model */
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+
+/* every body row starts with a hairline; the first one is the line under the
+   head, whichever row the explorer shows first */
+.page-beer .data th,
+.page-beer .data td {
+  padding: 10px 20px 12px 0;
+  vertical-align: top;
+  text-align: left;
+  border-top: 1px solid var(--line);
+}
+
+.page-beer .data :is(th, td):last-child { padding-right: 0; }
+
+.page-beer .data thead th {
+  padding-top: 0;
+  border-top: 0;
+  color: var(--ink-2);
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.page-beer .data tbody th { font-weight: 400; }
+
+.page-beer .data .num {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.page-beer .data .sub {
+  color: var(--ink-2);
+  font-weight: 400;
+}
+
+/* the small tables inside a pair follow the column, not the whole page */
+.page-beer .tiers { margin-top: 12px; }
+
+/* --- The style table --- */
+.page-beer .styles { min-width: 58rem; }
+
+.page-beer .styles tbody th { min-width: 15.5rem; }
+
+.page-beer .styles .code {
+  margin-right: 0.45em;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.page-beer .styles .name { font-weight: 600; }
+
+.page-beer .styles .desc {
+  display: block;
+  margin-top: 2px;
+  color: var(--ink-2);
+  font-size: 0.875rem;
+}
+
+.page-beer .styles .type { color: var(--ink-2); }
+
+.page-beer .styles .try {
+  min-width: 11rem;
+  color: var(--ink-2);
+}
+
+.page-beer .styles .empty td {
+  padding: 24px 0;
+  color: var(--ink-2);
+}
+
+/* A range on a shared scale: a 3px segment of ink on a hairline rule */
+.page-beer .bar {
+  position: relative;
+  display: block;
+  width: 6.25rem;
+  height: 3px;
+  margin-top: 8px;
+  background: linear-gradient(var(--line), var(--line)) center / 100% 1px no-repeat;
+}
+
+.page-beer .bar > span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--ink);
+}
+
+/* The SRM figure, as the colour it names */
+.page-beer .swatch {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  vertical-align: -3px;
+  border-radius: 2px;
+  outline: 1px solid var(--line);
+  outline-offset: -1px;
+}
+
+/* --- The explorer's controls: words, not boxes --- */
+.page-beer .explorer { margin-top: 28px; }
+
+.page-beer .explorer-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  align-items: end;
+}
+
+.page-beer .filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 20px;
+}
+
+/* a filter is a name that states whether it is on, like a switch */
+.page-beer .filter {
+  border: 0;
+  padding: 8px 0;
+  background: none;
+  color: var(--ink-2);
+  font: inherit;
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+
+.page-beer .filter:hover,
+.page-beer .filter:focus-visible { color: var(--ink); }
+
+.page-beer .filter[aria-pressed="true"] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* the one that is on keeps a solid line in ink, as the index does for the section being read */
+.page-beer .filter[aria-pressed="true"] .under {
+  --stroke: var(--ink);
+  background-position: 0 100%, 0 100%;
+  background-size: 100% 2px, 4px 2px;
+}
+
+/* A field: its name above, the value on a hairline */
+.page-beer .field {
+  display: grid;
+  gap: 4px;
+  color: var(--ink-2);
+  font-size: 0.875rem;
+}
+
+.page-beer .field > span { font-weight: 600; }
+
+.page-beer .field :is(input, select) {
+  width: 100%;
+  min-height: 40px;
+  padding: 6px 0;
+  border: 0;
+  border-bottom: 1px solid var(--ink-2);
+  border-radius: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+}
+
+.page-beer .field :is(input, select):focus-visible { border-bottom-color: var(--ink); }
+
+.page-beer .field input::placeholder {
+  color: var(--ink-2);
+  opacity: 1;
+}
+
+/* The slider: a hairline track and a square thumb of ink, not the browser's pill and circle */
+.page-beer .field input[type="range"] {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+.page-beer .field input[type="range"]::-webkit-slider-runnable-track {
+  height: 1px;
+  background: var(--line);
+}
+
+.page-beer .field input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -6.5px;
+  border: 0;
+  border-radius: 0;
+  background: var(--ink);
+}
+
+.page-beer .field input[type="range"]::-moz-range-track {
+  height: 1px;
+  background: var(--line);
+}
+
+.page-beer .field input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 0;
+  border-radius: 0;
+  background: var(--ink);
+}
+
+.page-beer .search { flex: 1 1 14rem; }
+
+.page-beer .sort { flex: 0 1 11rem; }
+
+.page-beer .count {
+  margin-top: 12px;
+  color: var(--ink-2);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.page-beer .caption {
+  max-width: 37rem;
+  margin-top: 12px;
+  color: var(--ink-2);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+/* --- The mock label and its notes --- */
+.page-beer .india {
+  display: grid;
+  gap: 32px;
+  margin-top: 28px;
+}
+
+.page-beer .mock {
+  max-width: 18rem;
+  margin-top: 0;
+}
+
+/* The label is a picture of a printed object, so it keeps a printed object's
+   parts: a dark band, a boxed warning, small print */
+.lm {
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  /* printed colours, the same in both themes, as the SRM strip keeps its own:
+     a label does not change with the lights */
+  background: #f4f5f5;
+  color: #141414;
+  font-variant-numeric: tabular-nums;
+}
+
+.lm-band {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  padding: 22px 16px;
+  background: #111212;
+  color: #e9eaea;
+  text-align: center;
+}
+
+.lm-band .edge { color: #9a9d9f; }
+
+.lm-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+.page-beer .lm-warn {
+  max-width: none;
+  margin: 14px 14px 0;
+  padding: 8px 10px;
+  border: 2px solid #141414;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  font-stretch: 75%;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.page-beer .lm-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 12px 14px 0;
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.page-beer .lm-line {
+  margin: 4px 14px 14px;
+  color: #55585a;
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.page-beer .mock figcaption { text-align: center; }
+
+.page-beer .notes {
+  max-width: 37rem;
+  margin-top: 0;
+}
+
+.page-beer .notes li + li { margin-top: 12px; }
+
+/* --- The calculator --- */
+.page-beer .calc {
+  max-width: 37rem;
+  margin-top: 24px;
+}
+
+.page-beer .calc-in {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 16px 24px;
+}
+
+.page-beer .calc-in .range { grid-column: 1 / -1; }
+
+.page-beer .calc .caption { margin-top: 16px; }
+
+/* --- The ledger --- */
+.page-beer .ledger ul { margin-top: 12px; }
+
+/* --- Sources, inside the ledger --- */
+.page-beer ul.sources { margin-top: 16px; }
+
+.page-beer ul.sources li {
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+.page-beer .closing { margin-top: 28px; }
+
+/* --- Below 48em: the style table slides under its first column, so a style's
+   name stays in view while its figures pass by --- */
+@media (max-width: 47.99em) {
+  .page-beer .styles thead th:first-child,
+  .page-beer .styles tbody th {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    width: 10.5rem;
+    min-width: 10.5rem;
+    padding-right: 16px;
+    background: var(--paper);
+    /* a hairline where the sliding columns pass under */
+    border-right: 1px solid var(--line);
+  }
+
+  .page-beer .styles thead th:first-child + th,
+  .page-beer .styles tbody th + td { padding-left: 16px; }
+}
+
+/* --- From 40em --- */
+@media (min-width: 40em) {
+  .page-beer .timeline > div { grid-template-columns: 9rem minmax(0, 1fr); }
+}
+
+/* --- From 64em: the label and its notes stand side by side --- */
+@media (min-width: 64em) {
+  .page-beer .cs-index { top: calc(32px + env(safe-area-inset-top, 0px)); }
+
+  .page-beer .india {
+    grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
+    gap: 48px;
+    align-items: start;
+  }
+}
+
+/* --- From 84em the case study puts its facts beside its title; this page has none --- */
+@media (min-width: 84em) {
+  .page-beer .cs-head {
+    display: block;
+    max-width: calc(62rem + var(--pad));
+  }
+}
