@@ -91,12 +91,25 @@ body.intro-finished .site-footer {
 }
 
 #content {
-  /* Slower scroll so the longer copy is comfortably readable */
-  animation: scroll 42s linear 0.5s;
+  /* The crawl moves at the speed it always has (110px a second on a desktop).
+     The copy lost four lines, so it has that much less distance to travel and
+     ends as far past the last line as it did before. The lines wrap
+     differently at each size of the board, so each size has its own end point
+     and duration (measured: the four lines were 15.2%, 18% and 23.6% of the
+     board's height). */
+  animation: scroll 38.13s linear 0.5s;
   position: absolute;
   top: 100%;
   text-align: center;
   width: 100%;
+}
+
+@media (max-width: 768px) {
+  #content { animation: scroll-md 37.42s linear 0.5s; }
+}
+
+@media (max-width: 480px) {
+  #content { animation: scroll-sm 35.99s linear 0.5s; }
 }
 
 /* Final punch-line — extra breathing room above it (the blank line) */
@@ -120,7 +133,17 @@ body.intro-finished .site-footer {
 
 @keyframes scroll {
   0% { top: 100%; }
-  100% { top: -65%; }
+  100% { top: -49.79%; }
+}
+
+@keyframes scroll-md {
+  0% { top: 100%; }
+  100% { top: -47%; }
+}
+
+@keyframes scroll-sm {
+  0% { top: 100%; }
+  100% { top: -41.41%; }
 }
 
 /* Skip button */

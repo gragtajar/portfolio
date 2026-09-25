@@ -65,8 +65,10 @@
     }, 550);
   }
 
-  // 42s animation + 0.5s start delay = total ~42.5s
-  const autoEnd = setTimeout(endIntro, 42500);
+  // The longest crawl (desktop, css/intro.css) is 38.13s after a 0.5s start
+  // delay. The crawl's own animationend below normally ends it first; this is
+  // the fallback.
+  const autoEnd = setTimeout(endIntro, 38700);
 
   // Skip button
   if (skipBtn) {
