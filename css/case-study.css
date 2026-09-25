@@ -414,9 +414,6 @@ li > .fig { margin-block: 16px 8px; }
     max-width: calc(62rem + var(--pad));
   }
 
-  /* the row holds the link; the link itself stays inline, so its underline keeps its place */
-  .cs-back { grid-column: 1 / -1; }
-
   .cs-meta { margin-top: 0; }
 
   .cs-meta > div { grid-template-columns: minmax(0, 5.5rem) minmax(0, 1fr); }

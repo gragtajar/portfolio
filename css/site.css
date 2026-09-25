@@ -267,12 +267,10 @@ h1 dotlottie-player {
 
 :is(.page-case, .page-game) .site-header { align-items: baseline; }
 
-.home-link { font-weight: 600; }
-
-/* On the game and the beer page the name is a plain wordmark, as it is on the
-   homepage: no line under it, at rest or on hover. Keyboard focus still shows
-   its ring. */
-:is(.page-game, .page-beer) .home-link {
+/* The name is a plain wordmark on every page, as it is on the homepage: no
+   line under it, at rest or on hover. Keyboard focus still shows its ring. */
+.home-link {
+  font-weight: 600;
   padding-bottom: 0;
   background: none;
 }
