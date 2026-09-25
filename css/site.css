@@ -1,8 +1,9 @@
 /* ============================================
    rajatg.in
-   World: the contact sheet. Paper, ink, hairlines, one dark band of film
-   base, and a red chinagraph pencil that only ever marks what is selected
-   or clickable. One type family: Archivo, condensed for edge print.
+   World: the contact sheet. Paper, ink, hairlines, one band that turns to
+   film base when the lights go off, and a red chinagraph pencil that only
+   ever marks what is selected or clickable. One type family: Archivo,
+   condensed for edge print.
    ============================================ */
 
 /* The two faces are served from this site (assets/fonts, SIL Open Font
@@ -44,12 +45,16 @@
   --ink: #141414;
   --ink-2: #55585a;
   --line: #d3d5d6;
-  --base: #111212;
-  --base-ink: #e9eaea;
-  --base-ink-2: #9a9d9f;
-  --base-line: transparent;
-  /* the hairline that gives a picture, or an edge, its line on film base */
-  --base-hair: rgb(255 255 255 / 0.1);
+  /* The band (the work strip, the game's stage, the case study's close) and
+     the footer follow the lights. With them on, the band is the same paper as
+     the sheet, set off by a hairline; with them off it is film base, a step
+     darker than the sheet. */
+  --base: #f4f5f5;
+  --base-ink: #141414;
+  --base-ink-2: #55585a;
+  --base-line: #d3d5d6;
+  /* the hairline that gives a picture, or an edge, its line on the band */
+  --base-hair: rgb(20 20 20 / 0.1);
   --pencil: #e5402a;
   /* the dotted underline: the second ink of the ground it sits on */
   --dots: var(--ink-2);
@@ -77,7 +82,10 @@
     --ink-2: #a6a9ab;
     --line: #303233;
     --base: #0c0d0d;
+    --base-ink: #e9eaea;
+    --base-ink-2: #9a9d9f;
     --base-line: #2a2c2d;
+    --base-hair: rgb(255 255 255 / 0.1);
     --pencil: #f0503a;
     color-scheme: dark;
   }
@@ -89,7 +97,10 @@
   --ink-2: #a6a9ab;
   --line: #303233;
   --base: #0c0d0d;
+  --base-ink: #e9eaea;
+  --base-ink-2: #9a9d9f;
   --base-line: #2a2c2d;
+  --base-hair: rgb(255 255 255 / 0.1);
   --pencil: #f0503a;
   color-scheme: dark;
 }
@@ -258,6 +269,14 @@ h1 dotlottie-player {
 
 .home-link { font-weight: 600; }
 
+/* On the game and the beer page the name is a plain wordmark, as it is on the
+   homepage: no line under it, at rest or on hover. Keyboard focus still shows
+   its ring. */
+:is(.page-game, .page-beer) .home-link {
+  padding-bottom: 0;
+  background: none;
+}
+
 .way-home dotlottie-player {
   display: inline-block;
   width: 1.3em;
@@ -305,20 +324,40 @@ h1 dotlottie-player {
   padding: clamp(20px, 3.5dvh, 40px) var(--pad) clamp(28px, 4dvh, 48px);
 }
 
+/* The homepage's name and words stand three times as far in from the sides
+   as the strip below them does */
+.page-home { --pad-home: calc(var(--pad) * 3); }
+
+.page-home .site-header { padding-inline: var(--pad-home); }
+
+.page-home .about {
+  max-width: calc(37rem + var(--pad-home) * 2);
+  padding-inline: var(--pad-home);
+}
+
+/* The name at two thirds of the display size, and the words under it at the
+   reading size, one step below the lead they were set in */
+.page-home .ident h1 { font-size: clamp(1.5rem, 1rem + 1.6vw, 2.3333rem); }
+
 .bio {
-  font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
-  line-height: 1.4;
+  font-size: 1.0625rem;
+  line-height: 1.6;
   text-wrap: pretty;
 }
 
 .reach { line-height: 1.6; text-wrap: pretty; }
 
-/* --- The band: one dark strip of film base --- */
+/* --- The band: paper with the lights on, a strip of film base with them off --- */
 .band, .site-footer {
   background: var(--base);
   color: var(--base-ink);
   --dots: var(--base-ink-2);
 }
+
+/* Where the footer follows the page's own paper rather than a band (the beer
+   page), a hairline sets it off, as one sets off every band. A browser
+   without :has() drops this rule and the footer simply goes without. */
+main:not(:has(.band:last-child)) + .site-footer { border-top: 1px solid var(--base-line); }
 
 .band {
   /* one pixel of overlap with the footer, so a fractional layout boundary can
@@ -341,9 +380,12 @@ h1 dotlottie-player {
   list-style: none;
   overflow-x: auto;
   overscroll-behavior-x: contain;
-  scrollbar-width: thin;
-  scrollbar-color: #3b3d3e transparent;
+  /* The strip moves by wheel, drag, swipe and the arrow keys, and the next
+     frame peeks in as the cue; the browser's own bar stays hidden */
+  scrollbar-width: none;
 }
+
+.roll::-webkit-scrollbar { display: none; }
 
 .roll.dragging { cursor: grabbing; user-select: none; }
 
@@ -512,7 +554,7 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
   .page-home .tools {
     position: absolute;
     top: var(--head-top);
-    right: var(--pad);
+    right: var(--pad-home);
     font-size: 0.9375rem;
   }
 

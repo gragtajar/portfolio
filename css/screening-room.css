@@ -1,9 +1,10 @@
 /* ============================================
    SCREENING ROOM
-   The movie game as a contact sheet of posters: two frames on the film base,
-   and the red pencil circles the one you pick. Words on the left, pictures on
-   the right, as on the homepage's band. Everything here extends css/site.css
-   and uses its tokens.
+   The movie game as a contact sheet of posters: two frames on the band, and
+   the red pencil circles the one you pick. The pair of posters stands at the
+   middle of the screen; on a wide screen the slate's words take the room to
+   their left. Everything here extends css/site.css and uses its tokens, so
+   the stage follows the lights as the homepage's band does.
 
    The game's logic (js/screening-room.js) is not ours to change. It finds its
    elements by the sr- class names, shows and hides the states with inline
@@ -74,8 +75,8 @@
   justify-items: start;
 }
 
-/* Before a game the slate is the start state's own: the invitation and Play,
-   then the two blank frames */
+/* Before a game the slate is the start state's own: the invitation, then the
+   big Play over two blurred posters */
 .sr-start {
   display: grid;
   gap: 24px;
@@ -118,17 +119,15 @@
 /* nothing to say yet: no gap where the words will be */
 .sr-genre:empty, .sr-round:empty { display: none; }
 
-/* The two actions are words with the underline, never boxes. They are padded
-   for a bigger target, so the words sit in a span.under. */
-.sr-play-btn, .sr-restart {
+/* Restart is a word with the underline, never a box. It is padded for a
+   bigger target, so the word sits in a span.under. */
+.sr-restart {
   border: 0;
   background: none;
   padding: 6px 0;
   color: inherit;
   cursor: pointer;
 }
-
-.sr-play-btn { font-weight: 600; }
 
 .sr-restart {
   font-size: 0.875rem;
@@ -137,26 +136,87 @@
 
 .sr-restart:hover, .sr-restart:focus-visible { color: var(--base-ink); }
 
-/* --- Frames: two posters and the gutter between them --- */
+/* --- Frames: two posters and the gutter between them, at the middle of the stage --- */
 .sr-cards, .sr-start-hint {
   display: grid;
   grid-template-columns: var(--poster-w) var(--gutter) var(--poster-w);
-  justify-content: start;
+  justify-content: center;
   align-items: start;
 }
 
-.sr-card, .sr-winner-card, .sr-blank {
+.sr-card, .sr-winner-card {
   display: block;
   width: var(--poster-w);
 }
 
-/* The two blank frames are Play's label: pressing one starts the game too */
-.sr-start-hint { cursor: pointer; }
+/* --- Before a game: two posters from the game's own list, blurred and
+       washed back, with a big Play over them. The whole picture is the
+       button, so pressing anywhere on it starts the game. --- */
+.sr-start-hint { position: relative; }
 
-/* a blank frame has no year yet: keep the room its edge print will take */
-.sr-blank { padding-top: var(--edge-h); }
+/* each sits where a poster of the first round will, below the room its year will take */
+.sr-teaser {
+  display: block;
+  margin-top: var(--edge-h);
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  border-radius: 2px;
+  outline: 1px solid var(--base-hair);
+  outline-offset: -1px;
+}
 
-.sr-blank .sr-still, .sr-blank .sr-placeholder-card { display: block; }
+.sr-teaser:last-of-type { grid-column: 3; }
+
+.sr-teaser img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* scaled a little past the frame, so the blur never shows a soft edge inside it */
+  transform: scale(1.12);
+  filter: blur(10px);
+  opacity: 0.55;
+}
+
+.sr-play-btn {
+  position: absolute;
+  top: var(--edge-h);
+  right: 0;
+  left: 0;
+  height: calc(var(--poster-w) * 1.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--base-ink);
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* The disc: ink on the band, with a ring of the band's own ground so it stands
+   clear of the posters under it in either light */
+.sr-play-disc {
+  display: grid;
+  place-items: center;
+  width: clamp(64px, 6vw, 88px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--base-ink);
+  color: var(--base);
+  box-shadow: 0 0 0 6px var(--base);
+}
+
+/* nudged right of centre: a triangle's weight sits on its flat side */
+.sr-play-disc svg {
+  width: 40%;
+  height: 40%;
+  margin-left: 8%;
+  fill: currentColor;
+}
 
 /* A frame's year is its edge print, above the picture, as a frame's number is on the strip */
 .sr-card > .sr-card-year, .sr-winner-card > .sr-card-year {
@@ -176,13 +236,15 @@
   aspect-ratio: 2 / 3;
 }
 
-/* A poster keeps its edge on the dark band with a hairline, like any picture there */
-.sr-poster, .sr-placeholder-card {
+/* A poster keeps its edge on the band with a hairline, like any picture
+   there. Until it arrives its frame is the faintest wash of the band's ink,
+   so it shows in either light. */
+.sr-poster {
   aspect-ratio: 2 / 3;
   border-radius: 2px;
   outline: 1px solid var(--base-hair);
   outline-offset: -1px;
-  background: rgb(255 255 255 / 0.03);
+  background: color-mix(in srgb, var(--base-ink) 4%, transparent);
 }
 
 .sr-poster {
@@ -213,7 +275,7 @@
 .sr-poster-skeleton {
   width: 100%;
   height: 100%;
-  background: rgb(255 255 255 / 0.05);
+  background: color-mix(in srgb, var(--base-ink) 7%, transparent);
 }
 
 /* No poster to show: the film's name stands in for it */
@@ -258,35 +320,49 @@
 .sr-card-meta .sr-card-year { margin-right: 12px; }
 
 /* --- The pencil mark: on the poster under the pointer, on the one just
-       picked, and on the winner --- */
+       picked, and on the winner. Only ever on one poster at a time. --- */
 .sr-card.winner-pulse .loop,
 .sr-winner.active .loop { stroke-dashoffset: 0; }
 
 @media (hover: hover) {
-  .sr-card:hover .loop,
-  .sr-blank:hover .loop { stroke-dashoffset: 0; }
+  .sr-card:hover .loop { stroke-dashoffset: 0; }
 }
 
-/* Pointing at Play, or focusing it, circles the first blank frame. These two
-   stand in rules of their own on purpose: a browser without :has() drops the
-   whole rule it appears in, and must lose nothing but this flourish. */
-.sr-start:has(.sr-play-btn:focus-visible) .sr-blank:first-child .loop { stroke-dashoffset: 0; }
-
+/* While the pointer is on one poster the other keeps no mark, not even the
+   one just picked, which otherwise holds its mark for the moment the next
+   film takes to arrive. A rule of its own: a browser without :has() drops
+   the whole rule, and loses nothing but this. */
 @media (hover: hover) {
-  .sr-start:has(.sr-play-btn:hover) .sr-blank:first-child .loop { stroke-dashoffset: 0; }
+  .sr-cards:has(.sr-card:hover:not(.slide-out-left, .slide-out-right)) .sr-card:not(:hover) .loop {
+    stroke-dashoffset: 1.01;
+    transition: none;
+  }
 }
+
+/* A poster on its way out never takes the mark, even if the pointer crosses
+   it (one class more than the hover rules, so it wins wherever they stand) */
+.sr-cards .sr-card.slide-out-left .loop,
+.sr-cards .sr-card.slide-out-right .loop {
+  stroke-dashoffset: 1.01;
+  transition: none;
+}
+
+/* The start state's button: the pencil writes its word, as on any link, and
+   the disc gives a little under a press */
+.sr-play-btn:active .sr-play-disc { transform: scale(0.96); }
 
 /* --- States the script switches between --- */
 .sr-arena, .sr-winner, .sr-impressive { display: none; }
 
 .sr-arena.active, .sr-winner.active, .sr-impressive.active { display: block; }
 
-/* --- The winner: the circled poster, and Rajat's verdict beside it --- */
+/* --- The winner: the circled poster, and Rajat's verdict beside it, at the
+       middle of the stage as the pair was --- */
 .sr-winner-grid {
   display: grid;
   grid-template-columns: var(--poster-w) minmax(0, 24rem);
   gap: 28px 24px;
-  justify-content: start;
+  justify-content: center;
   align-items: start;
 }
 
@@ -368,11 +444,12 @@
   font-size: 1rem;
 }
 
-/* --- Motion: a rejected frame drops away, the next one comes in from its side,
+/* --- Motion: a rejected frame slides out to its own side, tilting as it
+       goes (the game's original exit), the next one comes in from that side,
        and the winner arrives before its mark is drawn --- */
 @media (prefers-reduced-motion: no-preference) {
-  .sr-card.slide-out-left { animation: sr-drop-left 0.3s ease-in forwards; }
-  .sr-card.slide-out-right { animation: sr-drop-right 0.3s ease-in forwards; }
+  .sr-card.slide-out-left { animation: sr-out-left 0.35s ease forwards; }
+  .sr-card.slide-out-right { animation: sr-out-right 0.35s ease forwards; }
   .sr-card.slide-in-left { animation: sr-come-left 0.35s var(--ease-out) backwards; }
   .sr-card.slide-in-right { animation: sr-come-right 0.35s var(--ease-out) backwards; }
 
@@ -381,14 +458,24 @@
   .sr-winner.active .loop { transition-delay: 0.35s; }
 
   .sr-poster-skeleton { animation: sr-wait 0.9s ease-in-out infinite alternate; }
+
+  /* On a poster the mark leaves at once and only drawing takes time, and it
+     draws quicker than elsewhere: the pencil follows the pointer from one
+     poster to the other without lingering on the one it left */
+  .sr-card .loop { transition: none; }
+
+  .sr-card:hover .loop,
+  .sr-card.winner-pulse .loop { transition: stroke-dashoffset 0.22s var(--ease-out); }
+
+  .sr-play-disc { transition: transform 0.12s var(--ease-out); }
 }
 
-@keyframes sr-drop-left {
-  to { opacity: 0; transform: translateY(16px) rotate(-2deg); }
+@keyframes sr-out-left {
+  to { opacity: 0; transform: translateX(-120%) rotate(-5deg); }
 }
 
-@keyframes sr-drop-right {
-  to { opacity: 0; transform: translateY(16px) rotate(2deg); }
+@keyframes sr-out-right {
+  to { opacity: 0; transform: translateX(120%) rotate(5deg); }
 }
 
 @keyframes sr-come-left {
@@ -411,16 +498,16 @@
   .sr-winner-grid { column-gap: 40px; }
 }
 
-/* --- From 64em: the band splits as the homepage's does, the slate on the left
-       and the pictures on the right --- */
+/* --- From 64em: the pictures stand at the middle of the screen and the
+       slate's words take the room on their left; an equal room on their
+       right stays empty, so the middle is the screen's own --- */
 @media (min-width: 64em) {
-  /* the slate is as wide as the homepage's, which counts the gutter; so the
-     pictures start on the same line on both pages */
   .sr-stage {
-    --slate-w: calc(min(24rem, 30vw) - var(--pad));
-    /* two posters and their gutter must also fit beside the slate */
-    --poster-w: min(var(--poster-h) * 2 / 3, (100vw - var(--pad) * 2 - var(--slate-w) - 24px - var(--gutter)) / 2);
-    grid-template-columns: var(--slate-w) minmax(0, 1fr);
+    /* the least room the slate keeps beside the pictures */
+    --slate-min: 13rem;
+    /* two posters and their gutter must fit between two such rooms */
+    --poster-w: min(var(--poster-h) * 2 / 3, (100vw - var(--pad) * 2 - (var(--slate-min) + 24px) * 2 - var(--gutter)) / 2);
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     column-gap: 24px;
   }
 
