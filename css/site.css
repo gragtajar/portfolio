@@ -269,6 +269,14 @@ h1 dotlottie-player {
 
 .home-link { font-weight: 600; }
 
+/* On the game and the beer page the name is a plain wordmark, as it is on the
+   homepage: no line under it, at rest or on hover. Keyboard focus still shows
+   its ring. */
+:is(.page-game, .page-beer) .home-link {
+  padding-bottom: 0;
+  background: none;
+}
+
 .way-home dotlottie-player {
   display: inline-block;
   width: 1.3em;
