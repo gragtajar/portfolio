@@ -1,8 +1,9 @@
 /* ============================================
    rajatg.in
-   World: the contact sheet. Paper, ink, hairlines, one dark band of film
-   base, and a red chinagraph pencil that only ever marks what is selected
-   or clickable. One type family: Archivo, condensed for edge print.
+   World: the contact sheet. Paper, ink, hairlines, one band that turns to
+   film base when the lights go off, and a red chinagraph pencil that only
+   ever marks what is selected or clickable. One type family: Archivo,
+   condensed for edge print.
    ============================================ */
 
 /* The two faces are served from this site (assets/fonts, SIL Open Font
@@ -44,12 +45,16 @@
   --ink: #141414;
   --ink-2: #55585a;
   --line: #d3d5d6;
-  --base: #111212;
-  --base-ink: #e9eaea;
-  --base-ink-2: #9a9d9f;
-  --base-line: transparent;
-  /* the hairline that gives a picture, or an edge, its line on film base */
-  --base-hair: rgb(255 255 255 / 0.1);
+  /* The band (the work strip, the game's stage, the case study's close) and
+     the footer follow the lights. With them on, the band is the same paper as
+     the sheet, set off by a hairline; with them off it is film base, a step
+     darker than the sheet. */
+  --base: #f4f5f5;
+  --base-ink: #141414;
+  --base-ink-2: #55585a;
+  --base-line: #d3d5d6;
+  /* the hairline that gives a picture, or an edge, its line on the band */
+  --base-hair: rgb(20 20 20 / 0.1);
   --pencil: #e5402a;
   /* the dotted underline: the second ink of the ground it sits on */
   --dots: var(--ink-2);
@@ -77,7 +82,10 @@
     --ink-2: #a6a9ab;
     --line: #303233;
     --base: #0c0d0d;
+    --base-ink: #e9eaea;
+    --base-ink-2: #9a9d9f;
     --base-line: #2a2c2d;
+    --base-hair: rgb(255 255 255 / 0.1);
     --pencil: #f0503a;
     color-scheme: dark;
   }
@@ -89,7 +97,10 @@
   --ink-2: #a6a9ab;
   --line: #303233;
   --base: #0c0d0d;
+  --base-ink: #e9eaea;
+  --base-ink-2: #9a9d9f;
   --base-line: #2a2c2d;
+  --base-hair: rgb(255 255 255 / 0.1);
   --pencil: #f0503a;
   color-scheme: dark;
 }
@@ -313,12 +324,17 @@ h1 dotlottie-player {
 
 .reach { line-height: 1.6; text-wrap: pretty; }
 
-/* --- The band: one dark strip of film base --- */
+/* --- The band: paper with the lights on, a strip of film base with them off --- */
 .band, .site-footer {
   background: var(--base);
   color: var(--base-ink);
   --dots: var(--base-ink-2);
 }
+
+/* Where the footer follows the page's own paper rather than a band (the beer
+   page), a hairline sets it off, as one sets off every band. A browser
+   without :has() drops this rule and the footer simply goes without. */
+main:not(:has(.band:last-child)) + .site-footer { border-top: 1px solid var(--base-line); }
 
 .band {
   /* one pixel of overlap with the footer, so a fractional layout boundary can
