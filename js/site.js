@@ -118,9 +118,26 @@
     // frame activates when the pointer slows down on it, or rests on it.
     let lastMove = null;
     let dwell = 0;
+    // While the wheel moves the strip, the scroll decides (below). And a
+    // pointer event from where the pointer already was, which a browser may
+    // send once the content has scrolled under a resting pointer, is not the
+    // visitor pointing at anything, so it changes nothing either.
+    let wheelAt = -Infinity;
+    let at = null;                       // where the pointer last was, from any event
+    const wheeling = () => performance.now() - wheelAt < 250;
+
+    roll.addEventListener('wheel', (e) => {
+      wheelAt = performance.now();
+      at = { x: e.clientX, y: e.clientY };
+      lastMove = null;
+      clearTimeout(dwell);
+    }, { passive: true });
 
     roll.addEventListener('pointermove', (e) => {
       if (e.pointerType !== 'mouse') return;
+      const moved = !at || e.clientX !== at.x || e.clientY !== at.y;
+      at = { x: e.clientX, y: e.clientY };
+      if (!moved || wheeling()) return;
       const frame = e.target.closest('.frame');
       if (!frame) return;
       const now = performance.now();
@@ -142,17 +159,28 @@
 
     frames.forEach((frame) => frame.addEventListener('focusin', () => activate(frame)));
 
-    // On touch (or any scroll with no pointer resting on a frame) the mark
-    // follows the frame that has come to rest at the strip's leading edge
+    // When the strip scrolls on its own account (a swipe, or the wheel moving
+    // it under a resting pointer) the mark follows the scroll. Its anchor
+    // slides from the strip's leading edge at the start to its trailing edge
+    // at the end, so the last frame, which can never reach the leading edge,
+    // is marked once the strip reaches its end. A pointer that is moving over
+    // the frames keeps the say: hover intent above decides then.
     let settle = 0;
     roll.addEventListener('scroll', () => {
-      if (hovering) return;
+      if (hovering && !wheeling()) return;
       cancelAnimationFrame(settle);
       settle = requestAnimationFrame(() => {
-        const edge = roll.getBoundingClientRect().left + parseFloat(getComputedStyle(roll).paddingLeft);
+        const box = roll.getBoundingClientRect();
+        const style = getComputedStyle(roll);
+        const lead = box.left + parseFloat(style.paddingLeft);
+        const trail = box.right - parseFloat(style.paddingRight);
+        const max = roll.scrollWidth - roll.clientWidth;
+        const t = max > 0 ? Math.min(Math.max(roll.scrollLeft / max, 0), 1) : 0;
+        const anchor = lead + (trail - lead) * t;
         let best = null, bestGap = Infinity;
         frames.forEach((frame) => {
-          const gap = Math.abs(frame.getBoundingClientRect().left - edge);
+          const r = frame.getBoundingClientRect();
+          const gap = Math.abs(r.left + r.width * t - anchor);
           if (gap < bestGap) { bestGap = gap; best = frame; }
         });
         activate(best);

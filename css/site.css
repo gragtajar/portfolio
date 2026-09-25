@@ -380,9 +380,12 @@ main:not(:has(.band:last-child)) + .site-footer { border-top: 1px solid var(--ba
   list-style: none;
   overflow-x: auto;
   overscroll-behavior-x: contain;
-  scrollbar-width: thin;
-  scrollbar-color: #3b3d3e transparent;
+  /* The strip moves by wheel, drag, swipe and the arrow keys, and the next
+     frame peeks in as the cue; the browser's own bar stays hidden */
+  scrollbar-width: none;
 }
+
+.roll::-webkit-scrollbar { display: none; }
 
 .roll.dragging { cursor: grabbing; user-select: none; }
 
