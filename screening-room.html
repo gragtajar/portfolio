@@ -119,7 +119,8 @@
     <section class="screening-room" id="screening-room" aria-labelledby="screening-room-heading">
       <h1 id="screening-room-heading">Screening Room</h1>
 
-      <!-- The stage: one band of film base. Words on the left, frames on the right. -->
+      <!-- The stage: one band, paper or film base with the lights. The frames
+           stand at the middle of the screen, the slate's words to their left. -->
       <div class="band sr-stage">
 
         <!-- The slate during a game: genre, round, and a way to start over -->
@@ -129,21 +130,22 @@
           <button class="sr-restart" style="display:none;"><span class="under">Restart</span></button>
         </div>
 
-        <!-- Start state -->
+        <!-- Start state: the invitation, and a big Play over two posters from
+             the game's own list (Blade Runner 2049 and The Grand Budapest
+             Hotel), blurred. The button covers both posters, so pressing
+             anywhere on them starts the game. -->
         <div class="sr-start">
           <div class="sr-slate sr-slate-start">
             <p class="sr-tagline">Pick your favorite, round by round</p>
-            <button class="sr-play-btn" id="sr-play" aria-label="Play"><span class="under">Play</span></button>
           </div>
-          <label class="sr-start-hint" for="sr-play" aria-hidden="true">
-            <span class="sr-blank">
-              <span class="sr-still"><span class="sr-placeholder-card"></span><svg class="loop" aria-hidden="true" focusable="false"></svg></span>
-            </span>
-            <span class="sr-vs">VS</span>
-            <span class="sr-blank">
-              <span class="sr-still"><span class="sr-placeholder-card"></span><svg class="loop" aria-hidden="true" focusable="false"></svg></span>
-            </span>
-          </label>
+          <div class="sr-start-hint">
+            <span class="sr-teaser" aria-hidden="true"><img src="https://image.tmdb.org/t/p/w185/gajva2L0rPYkEWjzgFlBXCAVBE5.jpg" alt="" width="185" height="278" decoding="async"></span>
+            <span class="sr-teaser" aria-hidden="true"><img src="https://image.tmdb.org/t/p/w185/eWdyYQreja6JGCzqHWXpWHDrrPo.jpg" alt="" width="185" height="278" decoding="async"></span>
+            <button class="sr-play-btn" id="sr-play">
+              <span class="sr-play-disc" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 4.5v15l12.5-7.5z"/></svg></span>
+              <span class="under">Play</span>
+            </button>
+          </div>
         </div>
 
         <!-- Game arena -->
