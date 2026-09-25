@@ -210,11 +210,13 @@
   box-shadow: 0 0 0 6px var(--base);
 }
 
-/* nudged right of centre: a triangle's weight sits on its flat side */
+/* Centred in the disc. The triangle itself is drawn a little right of the
+   middle of its 24-unit box (its bounding box's centre is 1.25 units right,
+   its centroid 0.83 left), the usual optical offset for a play mark, so it
+   reads as centred without any further nudge. */
 .sr-play-disc svg {
   width: 40%;
   height: 40%;
-  margin-left: 8%;
   fill: currentColor;
 }
 
