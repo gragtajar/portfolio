@@ -282,9 +282,11 @@ h1 dotlottie-player {
   vertical-align: -0.3em;
 }
 
+/* The role is the name's caption: a quiet label in the second ink, one step
+   below the bio, so it is read with the name rather than competing with the bio */
 .role {
   margin-top: 8px;
-  font-size: 1.125rem;
+  font-size: 1rem;
   color: var(--ink-2);
 }
 
@@ -317,7 +319,7 @@ h1 dotlottie-player {
 /* --- About --- */
 .about {
   display: grid;
-  gap: clamp(18px, 3dvh, 32px);
+  gap: clamp(16px, 2.2dvh, 24px);
   max-width: calc(37rem + var(--pad) * 2);
   padding: clamp(20px, 3.5dvh, 40px) var(--pad) clamp(28px, 4dvh, 48px);
 }
@@ -333,17 +335,29 @@ h1 dotlottie-player {
   padding-inline: var(--pad-home);
 }
 
-/* The name at two thirds of the display size, and the words under it at the
-   reading size, one step below the lead they were set in */
-.page-home .ident h1 { font-size: clamp(1.5rem, 1rem + 1.6vw, 2.3333rem); }
+/* The homepage's four text roles, each a clear step from the next:
+     name      the anchor: 600, two thirds of the display size on a wide screen
+               (37px), never under 28px, so it outranks the bio on a phone too
+     role      its caption: 16px in the second ink (see .role)
+     bio       the one paragraph read first: 18px on a phone to 20px, in ink
+     contact   an action line: the sentence steps back into the second ink and
+               the link words stay in ink with their underline, so the four
+               places to go read as the clickable parts */
+.page-home .ident h1 { font-size: clamp(1.75rem, 1rem + 1.6vw, 2.3333rem); }
 
 .bio {
-  font-size: 1.0625rem;
+  font-size: clamp(1.125rem, 1rem + 0.35vw, 1.25rem);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.reach {
+  color: var(--ink-2);
   line-height: 1.6;
   text-wrap: pretty;
 }
 
-.reach { line-height: 1.6; text-wrap: pretty; }
+.reach a { color: var(--ink); }
 
 /* --- The band: paper with the lights on, a strip of film base with them off --- */
 .band, .site-footer {
