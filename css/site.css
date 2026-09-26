@@ -660,9 +660,11 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
   .js .no .name { display: inline; }
 }
 
-/* --- Figma cursor (desktop only), carried over unchanged --- */
+/* --- Figma cursor (desktop only), carried over; cursor.js moves it by transform --- */
 .figma-cursor {
   position: fixed;
+  top: 0;
+  left: 0;
   pointer-events: none;
   /* Above the intro overlay (10000) and skip button (10001) so the custom
      cursor stays visible at all times on desktop, including during the intro */
@@ -682,6 +684,52 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
 }
 
 .figma-cursor svg { display: block; }
+
+/* Over anything clickable the arrow gives way to the white-glove hand, and on
+   the Screening Room's posters to the clapper. Each sits with its hotspot on
+   the pointer: the hand's fingertip, the clapper's middle. Both are drawn at
+   0.14 of Phosphor's 256 grid, which makes the outline 2.24px. */
+.figma-cursor .cursor-hand,
+.figma-cursor .cursor-slate {
+  position: absolute;
+  display: none;
+  max-width: none; /* the reset's 100% is of a box that has no width once the arrow hides */
+}
+
+.figma-cursor .cursor-hand {
+  top: -0.5px;
+  left: -11.9px;
+  width: 27.16px;
+  height: 31.64px;
+  transform-origin: 11.9px 0.5px;
+}
+
+.figma-cursor .cursor-slate {
+  top: -13.58px;
+  left: -14.14px;
+  width: 28.28px;
+  height: 27.16px;
+}
+
+.figma-cursor[data-state] .cursor-arrow { display: none; }
+.figma-cursor[data-state="hand"] .cursor-hand,
+.figma-cursor[data-state="slate"] .cursor-slate { display: block; }
+
+/* The name tag keeps to the glyph's lower right */
+.figma-cursor[data-state="hand"] .cursor-label { top: 30px; left: 14px; }
+.figma-cursor[data-state="slate"] .cursor-label { top: 17px; left: 10px; }
+
+/* A press: the glyph gives a little under the finger, and springs back */
+@media (prefers-reduced-motion: no-preference) {
+  .figma-cursor .cursor-hand,
+  .figma-cursor .cursor-slate { transition: transform 0.16s var(--ease-out); }
+
+  .figma-cursor.is-pressed .cursor-hand,
+  .figma-cursor.is-pressed .cursor-slate {
+    transform: scale(0.9);
+    transition-duration: 0.1s;
+  }
+}
 
 .cursor-label {
   position: absolute;
