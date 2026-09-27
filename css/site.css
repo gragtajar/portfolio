@@ -409,15 +409,30 @@ main:not(:has(.band:last-child)) + .site-footer { border-top: 1px solid var(--ba
 
 .frame { flex: none; }
 
-/* On touch the strip settles on frame edges. A mouse wheel or a drag writes
-   the scroll position directly, and snapping would fight both. */
+/* On touch the strip moves one frame per swipe, however hard the flick, and
+   each frame comes to rest at the left with the next one peeking in. A mouse
+   wheel or a drag writes the scroll position directly, and snapping would
+   fight both, so this is for touch only. */
 @media (hover: none) and (pointer: coarse) {
   .roll {
-    scroll-snap-type: x proximity;
+    scroll-snap-type: x mandatory;
     scroll-padding-inline: var(--pad);
   }
 
-  .frame { scroll-snap-align: start; }
+  .frame {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  /* Room after the last frame, so it too can rest at the left like the
+     others: the width left beside one frame (every frame is 16:9) and the
+     gap before it, and the end padding over, which not every browser
+     counts in a scroller's width */
+  .roll::after {
+    content: '';
+    flex: none;
+    width: calc(100% - var(--frame-h) * 16 / 9 - 28px + var(--pad));
+  }
 }
 
 /* The frame is as wide as its picture; the caption wraps to that width */
