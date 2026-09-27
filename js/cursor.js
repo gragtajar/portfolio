@@ -3,9 +3,9 @@
    Carried over from the old site's main.js so every page can share it.
    Press `/` to rename the cursor label.
 
-   Over anything that takes a click the arrow becomes a big white-glove hand,
-   the size Figma's help center uses (about 28 px, a 2.25 px outline), and over
-   the Screening Room's posters it becomes a film clapper. Both glyphs are
+   Over a link (or a button that reads as one) the arrow becomes a big
+   white-glove hand, the size Figma's help center uses (about 28 px, a 2.25 px
+   outline), and over the Screening Room's posters it becomes a film clapper. Both glyphs are
    Phosphor Icons (MIT licence, phosphoricons.com), "hand-pointing" and
    "film-slate" in the regular weight: the icon's own outline in black over
    its inner shape in white.
@@ -89,13 +89,11 @@
 
   // ─── What the pointer is over picks the glyph ───────────
   const SLATE_ON = '.sr-card .sr-still, .sr-play-btn';
-  const HAND_ON = [
-    'a[href]', 'button:not(:disabled)', 'summary', 'select', 'label[for]',
-    '[role="button"]', '[role="link"]', '[role="tab"]',
-    'input[type="checkbox"]', 'input[type="radio"]', 'input[type="range"]',
-    'input[type="button"]', 'input[type="submit"]', 'input[type="reset"]',
-    '.sr-card', // the whole card picks the film, not only its poster
-  ].join(', ');
+  // The hand only on links, and on the buttons that read as links (Sound,
+  // Lights, Restart, Skip Intro); the clapper only on the posters; the purple
+  // arrow everywhere else, a game card's words and the beer page's form
+  // fields included
+  const HAND_ON = 'a[href], button:not(:disabled), [role="button"], [role="link"]';
   const strip = document.querySelector('.roll');
   let over = null;
   let state = 'arrow';

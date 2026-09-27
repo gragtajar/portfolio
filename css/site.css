@@ -693,7 +693,12 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
   .has-figma-cursor, .has-figma-cursor * { cursor: none !important; }
 }
 
-.figma-cursor svg { display: block; }
+/* none of the three glyphs takes the reset's max-width: 100%, which is of a
+   1px box here and would squeeze the arrow to a hairline */
+.figma-cursor svg {
+  display: block;
+  max-width: none;
+}
 
 /* Over anything clickable the arrow gives way to the white-glove hand, and on
    the Screening Room's posters to the clapper. Each sits with its hotspot on
@@ -703,7 +708,6 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
 .figma-cursor .cursor-slate {
   position: absolute;
   display: none;
-  max-width: none; /* the reset's 100% is of a box that has no width once the arrow hides */
 }
 
 .figma-cursor .cursor-hand {
