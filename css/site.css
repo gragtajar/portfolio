@@ -591,6 +591,24 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
   from { opacity: 0; transform: translateY(4px); }
 }
 
+/* --- Narrower than the wide layout (phones, tablets) ---
+   On the homepage the switches get a row of their own at the top, over the
+   name, right-aligned with the words' column as they are on a wide screen:
+   under the contact sentence they read as part of it, and beside the name
+   there is no room on a phone. The name steps down to make the room. */
+@media (max-width: 63.99em) {
+  .page-home {
+    position: relative;
+    --head-top: calc(clamp(40px, 8vw, 88px) + 32px);
+  }
+
+  .page-home .tools {
+    position: absolute;
+    top: calc(var(--head-top) - 58px);
+    right: var(--pad-home);
+  }
+}
+
 /* --- Wide screens --- */
 @media (min-width: 64em) {
   /* On the homepage the utilities go top-right, level with the name */
