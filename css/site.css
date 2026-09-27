@@ -69,6 +69,12 @@
   /* small enough on phones that the next frame peeks in as the cue to swipe */
   --frame-h: clamp(150px, 42vw, 280px);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  /* for things that move across the screen: slow away, quick through, slow in */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  /* easeOutCubic (easings.net; GSAP's power3.out): moving at once and slowing
+     evenly, so a motion is seen travelling, not just arriving. The lights'
+     sweep and the game's title card. */
+  --ease-out-soft: cubic-bezier(0.33, 1, 0.68, 1);
 
   color-scheme: light;
 }
@@ -282,9 +288,11 @@ h1 dotlottie-player {
   vertical-align: -0.3em;
 }
 
+/* The role is the name's caption: a quiet label in the second ink, one step
+   below the bio, so it is read with the name rather than competing with the bio */
 .role {
   margin-top: 8px;
-  font-size: 1.125rem;
+  font-size: 1rem;
   color: var(--ink-2);
 }
 
@@ -317,7 +325,7 @@ h1 dotlottie-player {
 /* --- About --- */
 .about {
   display: grid;
-  gap: clamp(18px, 3dvh, 32px);
+  gap: clamp(16px, 2.2dvh, 24px);
   max-width: calc(37rem + var(--pad) * 2);
   padding: clamp(20px, 3.5dvh, 40px) var(--pad) clamp(28px, 4dvh, 48px);
 }
@@ -333,17 +341,29 @@ h1 dotlottie-player {
   padding-inline: var(--pad-home);
 }
 
-/* The name at two thirds of the display size, and the words under it at the
-   reading size, one step below the lead they were set in */
-.page-home .ident h1 { font-size: clamp(1.5rem, 1rem + 1.6vw, 2.3333rem); }
+/* The homepage's four text roles, each a clear step from the next:
+     name      the anchor: 600, two thirds of the display size on a wide screen
+               (37px), never under 28px, so it outranks the bio on a phone too
+     role      its caption: 16px in the second ink (see .role)
+     bio       the one paragraph read first: 18px on a phone to 20px, in ink
+     contact   an action line: the sentence steps back into the second ink and
+               the link words stay in ink with their underline, so the four
+               places to go read as the clickable parts */
+.page-home .ident h1 { font-size: clamp(1.75rem, 1rem + 1.6vw, 2.3333rem); }
 
 .bio {
-  font-size: 1.0625rem;
+  font-size: clamp(1.125rem, 1rem + 0.35vw, 1.25rem);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.reach {
+  color: var(--ink-2);
   line-height: 1.6;
   text-wrap: pretty;
 }
 
-.reach { line-height: 1.6; text-wrap: pretty; }
+.reach a { color: var(--ink); }
 
 /* --- The band: paper with the lights on, a strip of film base with them off --- */
 .band, .site-footer {
@@ -646,9 +666,15 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
   .js .no .name { display: inline; }
 }
 
-/* --- Figma cursor (desktop only), carried over unchanged --- */
+/* --- Figma cursor (desktop only), carried over; cursor.js moves it by transform --- */
 .figma-cursor {
   position: fixed;
+  top: 0;
+  left: 0;
+  /* a box of its own even when every glyph in it is placed absolutely: a view
+     transition draws the cursor's picture at the size of this box */
+  width: 1px;
+  height: 1px;
   pointer-events: none;
   /* Above the intro overlay (10000) and skip button (10001) so the custom
      cursor stays visible at all times on desktop, including during the intro */
@@ -668,6 +694,52 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
 }
 
 .figma-cursor svg { display: block; }
+
+/* Over anything clickable the arrow gives way to the white-glove hand, and on
+   the Screening Room's posters to the clapper. Each sits with its hotspot on
+   the pointer: the hand's fingertip, the clapper's middle. Both are drawn at
+   0.14 of Phosphor's 256 grid, which makes the outline 2.24px. */
+.figma-cursor .cursor-hand,
+.figma-cursor .cursor-slate {
+  position: absolute;
+  display: none;
+  max-width: none; /* the reset's 100% is of a box that has no width once the arrow hides */
+}
+
+.figma-cursor .cursor-hand {
+  top: -0.5px;
+  left: -11.9px;
+  width: 27.16px;
+  height: 31.64px;
+  transform-origin: 11.9px 0.5px;
+}
+
+.figma-cursor .cursor-slate {
+  top: -13.58px;
+  left: -14.14px;
+  width: 28.28px;
+  height: 27.16px;
+}
+
+.figma-cursor[data-state] .cursor-arrow { display: none; }
+.figma-cursor[data-state="hand"] .cursor-hand,
+.figma-cursor[data-state="slate"] .cursor-slate { display: block; }
+
+/* The name tag keeps to the glyph's lower right */
+.figma-cursor[data-state="hand"] .cursor-label { top: 30px; left: 14px; }
+.figma-cursor[data-state="slate"] .cursor-label { top: 17px; left: 10px; }
+
+/* A press: the glyph gives a little under the finger, and springs back */
+@media (prefers-reduced-motion: no-preference) {
+  .figma-cursor .cursor-hand,
+  .figma-cursor .cursor-slate { transition: transform 0.16s var(--ease-out); }
+
+  .figma-cursor.is-pressed .cursor-hand,
+  .figma-cursor.is-pressed .cursor-slate {
+    transform: scale(0.9);
+    transition-duration: 0.1s;
+  }
+}
 
 .cursor-label {
   position: absolute;
@@ -694,4 +766,148 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
   outline: none;
   padding: 0;
   letter-spacing: 0.3px;
+}
+
+/* --- The lights: a sweep from the switch (site.js) ---
+   The page is pictured before and after; with the lights coming on the new
+   picture is uncovered by a circle growing from the switch, with them going
+   off the old picture shrinks into it. site.js animates the circle. */
+.lights-up::view-transition-old(root),
+.lights-up::view-transition-new(root),
+.lights-down::view-transition-old(root),
+.lights-down::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+.lights-down::view-transition-old(root) { z-index: 1; }
+
+/* reduced motion: the two pictures simply crossfade, quickly */
+.lights-fade::view-transition-group(root) { animation-duration: 0.2s; }
+
+/* --- Page transitions (site.js) ---
+   Between the homepage and a work's page, the rest of the page crossfades
+   while the work's picture and title (named work-shot and work-title by
+   site.js, only for those pairs) travel between their two places. */
+@view-transition { navigation: auto; }
+
+::view-transition-group(root) { animation-duration: 0.35s; }
+
+::view-transition-group(work-shot),
+::view-transition-group(work-title) {
+  animation-duration: 0.5s;
+  animation-timing-function: var(--ease-in-out);
+}
+
+/* The title flies above the picture (the game's stage is an opaque band that
+   would pass over it), and the cursor above both */
+::view-transition-group(work-title) { z-index: 1; }
+::view-transition-group(figma-cursor) { z-index: 2; }
+
+/* The two pictures of the shot keep their proportions and fill the moving
+   box between them, cropping rather than stretching: the game's card is 16:9,
+   its stage much wider */
+::view-transition-old(work-shot),
+::view-transition-new(work-shot) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The shot's two pictures trade places at the card's end of the trip, while
+   the box is still card-sized: early on the way to the work, late on the way
+   home (site.js marks which). The game's card, a dark still, would otherwise
+   pass through grey on its way into a lit stage. */
+.vt-to-work::view-transition-old(work-shot) { animation: work-shot-out-early 0.5s linear both; }
+.vt-to-work::view-transition-new(work-shot) { animation: work-shot-in-early 0.5s linear both; }
+.vt-to-home::view-transition-old(work-shot) { animation: work-shot-out-late 0.5s linear both; }
+.vt-to-home::view-transition-new(work-shot) { animation: work-shot-in-late 0.5s linear both; }
+
+@keyframes work-shot-out-early { 0% { opacity: 1; } 30%, 100% { opacity: 0; } }
+@keyframes work-shot-in-early { 0% { opacity: 0; } 30%, 100% { opacity: 1; } }
+@keyframes work-shot-out-late { 0%, 70% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes work-shot-in-late { 0%, 70% { opacity: 0; } 100% { opacity: 1; } }
+
+/* The two titles are the same words at two sizes in boxes of different
+   widths. Scaled by height, as the lines are, their letters stay close in
+   size all the way, and they trade places in the middle third of the trip
+   instead of showing both for all of it. */
+::view-transition-old(work-title),
+::view-transition-new(work-title) {
+  width: auto;
+  height: 100%;
+}
+
+/* Better still, when site.js knows both sizes of the letters: each picture
+   at its own size, scaled from its top left corner by their ratio */
+.vt-scale-title::view-transition-old(work-title),
+.vt-scale-title::view-transition-new(work-title) {
+  height: auto;
+  transform-origin: 0 0;
+}
+
+::view-transition-old(work-title) { animation: work-title-out 0.5s linear both; }
+::view-transition-new(work-title) { animation: work-title-in 0.5s linear both; }
+
+@keyframes work-title-out {
+  0%, 33% { opacity: 1; }
+  66%, 100% { opacity: 0; }
+}
+
+@keyframes work-title-in {
+  0%, 33% { opacity: 0; }
+  66%, 100% { opacity: 1; }
+}
+
+/* Coming home, the pencil circles the work's frame once its picture has landed */
+.is-landing .loop { stroke-dashoffset: 1.01; }
+
+/* The cursor stays live above every transition, the Lights sweep and page
+   changes alike, instead of freezing in the page's picture */
+.figma-cursor { view-transition-name: figma-cursor; }
+
+::view-transition-group(figma-cursor),
+::view-transition-new(figma-cursor) { animation: none; }
+
+::view-transition-old(figma-cursor) { display: none; }
+
+/* --- Openings (site.js): the homepage settles in every time it opens ---
+   The words rise a few pixels into place, a line at a time, and the strip is
+   pulled a short way across, frame after frame. After the intro the strip
+   keeps the intro's own longer pull. Whatever a page transition carried in
+   has already arrived and stays put. */
+.page-home .role, .page-home .tools { --k: 1; }
+.page-home .bio, .slate-title { --k: 2; }
+.page-home .reach, .slate-desc { --k: 3; }
+.slate-go { --k: 4; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .entering .page-home :is(.ident > *, .about > *, .slate:not(.swap) > *):not(.is-carried) {
+    animation: rise 0.6s var(--ease-out) backwards;
+    animation-delay: calc(var(--k, 0) * 60ms);
+  }
+
+  .entering .page-home:not(.intro-finished) .frame:not(.is-carried) {
+    animation: pull-soft 0.7s var(--ease-out) backwards;
+    animation-delay: calc(var(--i, 0) * 60ms + 180ms);
+  }
+}
+
+/* With reduced motion the page only fades in, without moving */
+@media (prefers-reduced-motion: reduce) {
+  .entering .page-home :is(.site-header, .about, .band-body) {
+    animation: fade-in 0.4s ease backwards;
+  }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+}
+
+@keyframes pull-soft {
+  from { opacity: 0; transform: translateX(24px); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
 }

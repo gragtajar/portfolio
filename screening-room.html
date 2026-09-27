@@ -17,7 +17,7 @@
   <meta property="og:title" content="Screening Room | Rajat Garg">
   <meta property="og:description" content="A movie bracket game that reveals Rajat's taste in cinema. Pick your favorite, round by round.">
   <meta property="og:url" content="https://rajatg.in/screening-room.html">
-  <meta property="og:image" content="https://rajatg.in/assets/home/screening-room-card.jpg">
+  <meta property="og:image" content="https://rajatg.in/assets/home/screening-room.jpg">
   <meta property="og:image:width" content="1600">
   <meta property="og:image:height" content="900">
   <meta property="og:image:alt" content="Screening Room, a movie bracket game by Rajat Garg">
@@ -32,7 +32,7 @@
   <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- Before first paint: the chosen theme -->
+  <!-- Before first paint: the chosen theme, and the opening -->
   <script>
     (function () {
       var root = document.documentElement;
@@ -41,11 +41,21 @@
         var theme = localStorage.getItem('rg-theme');
         if (theme === 'light' || theme === 'dark') root.dataset.theme = theme;
       } catch (e) {}
+      // the stage settles in as the page opens (site.js takes the class off)
+      root.classList.add('entering');
     })();
   </script>
 
-  <link rel="stylesheet" href="css/site.css?v=2026-09-25.2">
-  <link rel="stylesheet" href="css/screening-room.css?v=2026-09-25.2">
+  <link rel="stylesheet" href="css/site.css?v=2026-09-27">
+  <link rel="stylesheet" href="css/screening-room.css?v=2026-09-27">
+
+  <!-- The site's own scripts run before the page is first drawn
+       (blocking="render"; a browser without it runs them as plain deferred
+       scripts), so a page transition finds the page ready: the right frame
+       on the strip, the cursor under the mouse. They come before the remote
+       scripts below, which deferred scripts would otherwise wait for. -->
+  <script src="js/cursor.js?v=2026-09-27" defer blocking="render"></script>
+  <script src="js/site.js?v=2026-09-27" defer blocking="render"></script>
 
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="manifest" href="site.webmanifest">
@@ -118,7 +128,7 @@
          #screening-room, so every sr- class below is kept; only the
          arrangement and the styling around them are new. -->
     <section class="screening-room" id="screening-room" aria-labelledby="screening-room-heading">
-      <h1 id="screening-room-heading">Screening Room</h1>
+      <h1 id="screening-room-heading"><span class="sr-title">Screening Room</span></h1>
 
       <!-- The stage: one band, paper or film base with the lights. The frames
            stand at the middle of the screen, the slate's words to their left. -->
@@ -242,9 +252,7 @@
   </footer>
 
   <!-- canvas-confetti is lazy-loaded inside screening-room.js when a game ends -->
-  <script src="js/cursor.js?v=2026-09-25.2" defer></script>
-  <script src="js/site.js?v=2026-09-25.2" defer></script>
-  <script src="js/screening-room.js?v=2026-09-25.2" defer></script>
+  <script src="js/screening-room.js?v=2026-09-27" defer></script>
 
 </body>
 </html>

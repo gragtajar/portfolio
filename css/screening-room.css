@@ -44,6 +44,13 @@
   line-height: 1.04;
 }
 
+/* The words' own box, tight to them: it travels to and from the slate's
+   title on the homepage (site.js) */
+.sr-title {
+  display: block;
+  width: fit-content;
+}
+
 /* --- The stage: one band of film base --- */
 .sr-stage {
   /* Posters share one height. On a wide screen it is exactly what the rest of
@@ -470,6 +477,80 @@
   .sr-card.winner-pulse .loop { transition: stroke-dashoffset 0.22s var(--ease-out); }
 
   .sr-play-disc { transition: transform 0.12s var(--ease-out); }
+}
+
+/* --- Opening (site.js): the page settles in every time it opens ---
+   The title rises into place, then the invitation; the two posters come up
+   out of the dark a beat apart, and the Play disc arrives last. When the
+   stage and the title came in from the homepage's card they have already
+   arrived, and only what was not carried moves. */
+@media (prefers-reduced-motion: no-preference) {
+  .entering .sr-title:not(.is-carried) { animation: rise 0.6s var(--ease-out) backwards; }
+
+  .entering .sr-stage:not(.is-carried) .sr-tagline { animation: rise 0.6s var(--ease-out) 0.08s backwards; }
+
+  .entering .sr-stage:not(.is-carried) .sr-teaser { animation: sr-develop 0.9s var(--ease-out) 0.12s backwards; }
+
+  .entering .sr-stage:not(.is-carried) .sr-teaser:last-of-type { animation-delay: 0.22s; }
+
+  .entering .sr-stage:not(.is-carried) .sr-play-disc { animation: sr-disc-in 0.5s var(--ease-out) 0.45s backwards; }
+
+  .entering .sr-stage:not(.is-carried) .sr-play-btn > .under { animation: rise 0.5s var(--ease-out) 0.55s backwards; }
+}
+
+/* With reduced motion the page only fades in, without moving */
+@media (prefers-reduced-motion: reduce) {
+  .entering .page-game :is(.sr-title, .sr-stage):not(.is-carried) { animation: fade-in 0.4s ease backwards; }
+}
+
+/* --- The title card (site.js): as a game starts its genre and round rise
+       into view word by word from under an unseen edge, and the two posters
+       rise into their frames --- */
+.word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* room inside the mask for descenders and accents, without moving the line */
+  padding-block: 0.12em;
+  margin-block: -0.12em;
+}
+
+.word { display: inline-block; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .revealing .word {
+    animation: sr-word-rise 0.8s var(--ease-out-soft) backwards;
+    animation-delay: calc(var(--w, 0) * 40ms);
+  }
+
+  .revealing .sr-round .word { animation-delay: calc(140ms + var(--w, 0) * 40ms); }
+
+  .revealing .sr-arena .sr-poster { animation: sr-unmask 0.8s var(--ease-out-soft) 60ms backwards; }
+
+  .revealing .sr-arena .sr-card-right .sr-poster { animation-delay: 150ms; }
+}
+
+/* With reduced motion the words and posters only fade in */
+@media (prefers-reduced-motion: reduce) {
+  .revealing :is(.word, .sr-arena .sr-poster) { animation: fade-in 0.3s ease backwards; }
+}
+
+@keyframes sr-word-rise {
+  from { transform: translateY(120%); }
+}
+
+/* both ends in inset(), so the edge travels (to "none" it would only jump) */
+@keyframes sr-unmask {
+  from { clip-path: inset(100% 0 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes sr-develop {
+  from { opacity: 0; transform: translateY(12px); }
+}
+
+@keyframes sr-disc-in {
+  from { opacity: 0; transform: scale(0.9); }
 }
 
 @keyframes sr-out-left {
