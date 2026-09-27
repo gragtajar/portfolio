@@ -442,6 +442,9 @@ main:not(:has(.band:last-child)) + .site-footer { border-top: 1px solid var(--ba
 
 .still { position: relative; display: block; }
 
+/* a frame with a phone picture keeps its <img> as the frame's own picture */
+.still picture { display: contents; }
+
 .still img, .still video {
   width: auto;
   max-width: none;

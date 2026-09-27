@@ -175,7 +175,9 @@
     </section>
 
     <!-- The contact strip: one frame per work. Adding a work = one more <li class="frame">.
-         Media can be an <img>, or a <video class="clip"> that behaves like a GIF. -->
+         Media can be an <img>, or a <video class="clip"> that behaves like a GIF.
+         A site's frame can show its phone layout on a phone: a <picture> with a
+         (max-width: 767px) source, the same 16:9 as the frames around it. -->
     <section class="band" aria-labelledby="works-title">
       <h2 class="visually-hidden" id="works-title">Selected work</h2>
 
@@ -222,7 +224,10 @@
             <a href="screening-room.html">
               <span class="edge no">03 <span>Movie game</span> <span class="name">Screening Room</span></span>
               <span class="still">
-                <img src="assets/home/screening-room.jpg" alt="Screening Room, a movie bracket game: two blurred posters under a Play button" width="1600" height="900" loading="lazy" decoding="async">
+                <picture>
+                  <source media="(max-width: 767px)" srcset="assets/home/screening-room-mobile.jpg" width="1170" height="658">
+                  <img src="assets/home/screening-room.jpg" alt="Screening Room, a movie bracket game: two blurred posters under a Play button" width="1600" height="900" loading="lazy" decoding="async">
+                </picture>
                 <svg class="loop" aria-hidden="true" focusable="false"><use href="#pencil-wide"/></svg>
               </span>
               <div class="cap">
@@ -237,7 +242,10 @@
             <a href="https://learncivicsense.in/" target="_blank" rel="noopener" data-track="lcs-card">
               <span class="edge no">04 <span>Website</span> <span class="name">learncivicsense.in</span></span>
               <span class="still">
-                <img src="assets/home/learncivicsense.jpg" alt="learncivicsense.in, a free library of short lessons on civic sense in India, on a laptop and a phone" width="1920" height="1080" loading="lazy" decoding="async">
+                <picture>
+                  <source media="(max-width: 767px)" srcset="assets/home/learncivicsense-mobile.jpg" width="1170" height="658">
+                  <img src="assets/home/learncivicsense-desktop.jpg" alt="The homepage of learncivicsense.in, a free library of short lessons on civic sense in India" width="1920" height="1080" loading="lazy" decoding="async">
+                </picture>
                 <svg class="loop" aria-hidden="true" focusable="false"><use href="#pencil-wide"/></svg>
               </span>
               <div class="cap">
