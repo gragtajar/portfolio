@@ -655,6 +655,74 @@
     if (roundLine) watcher.observe(roundLine, lines);
   }
 
+  // ─── The game on a touch screen: a poster follows the finger ──────
+  // The game rejects a poster swiped 60px toward its own edge (its script
+  // decides when the finger lifts), but the poster used to stand still under
+  // the finger. Now it travels with the finger toward its edge, tilting as it
+  // goes and fading a little, and resists the other way. Let go past the
+  // game's mark and the game's own exit carries it on from where it is; let go
+  // before, and it springs back. The game's script is untouched.
+  document.querySelectorAll('.sr-card-left, .sr-card-right').forEach((card) => {
+    const edge = card.classList.contains('sr-card-left') ? -1 : 1;
+    const sliding = () => /\bslide-(out|in)-/.test(card.className);
+    let startX = null;
+    let startY = 0;
+    let across = null;                   // decided on the first few pixels: across (ours) or down (a scroll)
+
+    const settle = () => {
+      card.style.transition = '';
+      card.style.transform = '';
+      card.style.opacity = '';
+    };
+
+    card.addEventListener('touchstart', (e) => {
+      if (e.touches.length !== 1 || sliding()) return;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      across = null;
+      card.style.transition = 'none';
+    }, { passive: true });
+
+    card.addEventListener('touchmove', (e) => {
+      if (startX === null) return;
+      const mx = e.touches[0].clientX - startX;
+      const my = e.touches[0].clientY - startY;
+      if (across === null) {
+        if (Math.abs(mx) < 6 && Math.abs(my) < 6) return;
+        across = Math.abs(mx) > Math.abs(my);
+      }
+      if (!across) {
+        startX = null;
+        settle();
+        return;
+      }
+      const out = mx * edge > 0;
+      const dx = out ? mx : mx * 0.25;
+      card.style.transform = `translateX(${dx}px) rotate(${(dx * 0.04).toFixed(2)}deg)`;
+      card.style.opacity = out ? String(Math.max(0.6, 1 - Math.abs(dx) / 300)) : '';
+    }, { passive: true });
+
+    const release = () => {
+      if (startX === null) return;
+      startX = null;
+      // the game's own handler has run by the next frame: rejected, or not
+      requestAnimationFrame(() => {
+        if (/\bslide-out-/.test(card.className)) return;
+        card.style.transition = reducedMotion.matches ? 'none' : 'transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out)';
+        card.style.transform = '';
+        card.style.opacity = '';
+      });
+    };
+    card.addEventListener('touchend', release, { passive: true });
+    card.addEventListener('touchcancel', release, { passive: true });
+
+    // Once the exit is over (the game takes the class off to deal the next
+    // film), the poster's place is its own again, before the next one slides in
+    new MutationObserver(() => {
+      if (startX === null && !/\bslide-out-/.test(card.className)) settle();
+    }).observe(card, { attributes: true, attributeFilter: ['class'] });
+  });
+
   // ─── Footer: a random film quote on every load ─────────
   const quote = document.querySelector('.quote');
   if (quote) {
