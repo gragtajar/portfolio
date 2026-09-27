@@ -542,17 +542,22 @@
     wins.forEach((el) => watcher.observe(el, { attributes: true, attributeFilter: ['class'], attributeOldValue: true }));
   }
 
-  // ─── The game's title card: each genre rises into view through a mask ──
+  // ─── The game's slate: the title card, and the round rolling over ──
   // As a game starts, and at every restart, the genre and the round come up
   // word by word from under an unseen edge (the masked reveal), and the two
-  // posters rise into their frames (css/screening-room.css). The game's own
-  // script is not ours to change, so this watches for the genre it writes.
+  // posters rise into their frames. Each round after that, the round rolls
+  // over like the number on a slate: the words that changed leave upward
+  // through a mask as the new ones come up from below (css/screening-room.css).
+  // The game's own script is not ours to change, so this watches the lines it
+  // writes.
   const genreLine = document.querySelector('.sr-genre');
   const stage = genreLine && genreLine.closest('.sr-stage');
   if (stage) {
     const roundLine = stage.querySelector('.sr-round');
     let shownGenre = '';
+    let shownRound = '';
     let reveals = 0;
+    let rolls = 0;
     // words in masks, spaces kept between them, so the line reads as before
     const split = (line) => {
       const words = line.textContent.trim().split(/\s+/).filter(Boolean);
@@ -569,20 +574,60 @@
         line.append(mask);
       });
     };
-    new MutationObserver(() => {
-      const text = genreLine.textContent.trim();
-      if (!text || text === shownGenre) return;   // the masks just put in, or no change
-      shownGenre = text;
-      split(genreLine);
-      if (roundLine && roundLine.textContent.trim()) split(roundLine);
-      stage.classList.remove('revealing');
-      void stage.offsetWidth;
-      stage.classList.add('revealing');
-      const mine = ++reveals;
-      afterAnimations(stage, ['sr-word-rise', 'sr-unmask', 'fade-in'], () => {
-        if (mine === reveals) stage.classList.remove('revealing');
+    // Only the words that changed roll ("Round 3" to "Round 4": the number);
+    // with nothing in common ("Final round") the whole line does
+    const roll = (from, to) => {
+      const was = from.split(/\s+/);
+      const now = to.split(/\s+/);
+      let same = 0;
+      while (same < was.length - 1 && same < now.length - 1 && was[same] === now[same]) same++;
+      roundLine.textContent = same ? now.slice(0, same).join(' ') + ' ' : '';
+      const mask = document.createElement('span');
+      const gone = document.createElement('span');
+      const come = document.createElement('span');
+      mask.className = 'word-mask sr-roll';
+      gone.className = 'sr-roll-out';
+      gone.setAttribute('aria-hidden', 'true');
+      gone.textContent = was.slice(same).join(' ');
+      come.className = 'sr-roll-in';
+      come.textContent = now.slice(same).join(' ');
+      mask.append(gone, come);
+      roundLine.append(mask);
+      const mine = ++rolls;
+      afterAnimations(roundLine, ['sr-roll-out', 'sr-roll-in'], () => {
+        if (mine !== rolls) return;
+        roundLine.textContent = to;
+        watcher.takeRecords();
       });
-    }).observe(genreLine, { childList: true, characterData: true, subtree: true });
+    };
+    const watcher = new MutationObserver(() => {
+      const genre = genreLine.textContent.trim();
+      const round = roundLine ? roundLine.textContent.trim() : '';
+      if (genre && genre !== shownGenre) {
+        // a new game: the title card (and no roll left over from the last one)
+        shownGenre = genre;
+        shownRound = round;
+        rolls++;
+        split(genreLine);
+        if (round) split(roundLine);
+        stage.classList.remove('revealing');
+        void stage.offsetWidth;
+        stage.classList.add('revealing');
+        const mine = ++reveals;
+        afterAnimations(stage, ['sr-word-rise', 'sr-unmask', 'fade-in'], () => {
+          if (mine === reveals) stage.classList.remove('revealing');
+        });
+      } else if (round && shownRound && round !== shownRound) {
+        const from = shownRound;
+        shownRound = round;
+        if (!reducedMotion.matches) roll(from, round);
+      }
+      // what was just rearranged here is not news
+      watcher.takeRecords();
+    });
+    const lines = { childList: true, characterData: true, subtree: true };
+    watcher.observe(genreLine, lines);
+    if (roundLine) watcher.observe(roundLine, lines);
   }
 
   // ─── Footer: a random film quote on every load ─────────

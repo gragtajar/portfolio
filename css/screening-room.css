@@ -583,6 +583,28 @@
   .revealing :is(.word, .sr-arena .sr-poster) { animation: fade-in 0.3s ease backwards; }
 }
 
+/* --- The round rolls over like the number on a slate (site.js): what changed
+       leaves upward through the mask as the new words come up from below, in
+       one cell so the line keeps its place. The time of a card's slide. With
+       reduced motion the round simply changes. --- */
+.sr-roll { display: inline-grid; }
+
+.sr-roll > * { grid-area: 1 / 1; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .sr-roll-out { animation: sr-roll-out 0.35s var(--ease-in-out) forwards; }
+
+  .sr-roll-in { animation: sr-roll-in 0.35s var(--ease-in-out) backwards; }
+}
+
+@keyframes sr-roll-out {
+  to { transform: translateY(-120%); }
+}
+
+@keyframes sr-roll-in {
+  from { transform: translateY(120%); }
+}
+
 @keyframes sr-word-rise {
   from { transform: translateY(120%); }
 }
