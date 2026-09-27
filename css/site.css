@@ -409,15 +409,39 @@ main:not(:has(.band:last-child)) + .site-footer { border-top: 1px solid var(--ba
 
 .frame { flex: none; }
 
-/* On touch the strip settles on frame edges. A mouse wheel or a drag writes
-   the scroll position directly, and snapping would fight both. */
+/* On touch the strip moves one frame per swipe, however hard the flick, and
+   each frame comes to rest at the left with the next one peeking in. A mouse
+   wheel or a drag writes the scroll position directly, and snapping would
+   fight both, so this is for touch only. */
 @media (hover: none) and (pointer: coarse) {
   .roll {
-    scroll-snap-type: x proximity;
+    scroll-snap-type: x mandatory;
     scroll-padding-inline: var(--pad);
   }
 
-  .frame { scroll-snap-align: start; }
+  .frame {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  /* Room after the last frame, so it too can rest at the left like the
+     others: the width left beside one frame (every frame is 16:9) and the
+     gap before it, and the end padding over, which not every browser
+     counts in a scroller's width */
+  .roll::after {
+    content: '';
+    flex: none;
+    width: calc(100% - var(--frame-h) * 16 / 9 - 28px + var(--pad));
+  }
+}
+
+/* With no hover to point with, the pencil waits for a tap: the strip's scroll
+   no longer carries the mark along, and the frame tapped last keeps it
+   (site.js). A page transition home still holds it until the picture lands. */
+@media (hover: none) {
+  .frame:not(.is-tapped) .loop { stroke-dashoffset: 1.01; }
+
+  .is-tapped .loop { stroke-dashoffset: 0; }
 }
 
 /* The frame is as wide as its picture; the caption wraps to that width */
@@ -441,6 +465,9 @@ main:not(:has(.band:last-child)) + .site-footer { border-top: 1px solid var(--ba
 .frame a:hover .edge, .frame a:focus-visible .edge { color: var(--base-ink); }
 
 .still { position: relative; display: block; }
+
+/* a frame with a phone picture keeps its <img> as the frame's own picture */
+.still picture { display: contents; }
 
 .still img, .still video {
   width: auto;
@@ -562,6 +589,24 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
 
 @keyframes settle {
   from { opacity: 0; transform: translateY(4px); }
+}
+
+/* --- Narrower than the wide layout (phones, tablets) ---
+   On the homepage the switches get a row of their own at the top, over the
+   name, right-aligned with the words' column as they are on a wide screen:
+   under the contact sentence they read as part of it, and beside the name
+   there is no room on a phone. The name steps down to make the room. */
+@media (max-width: 63.99em) {
+  .page-home {
+    position: relative;
+    --head-top: calc(clamp(40px, 8vw, 88px) + 32px);
+  }
+
+  .page-home .tools {
+    position: absolute;
+    top: calc(var(--head-top) - 58px);
+    right: var(--pad-home);
+  }
 }
 
 /* --- Wide screens --- */
@@ -693,7 +738,12 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
   .has-figma-cursor, .has-figma-cursor * { cursor: none !important; }
 }
 
-.figma-cursor svg { display: block; }
+/* none of the three glyphs takes the reset's max-width: 100%, which is of a
+   1px box here and would squeeze the arrow to a hairline */
+.figma-cursor svg {
+  display: block;
+  max-width: none;
+}
 
 /* Over anything clickable the arrow gives way to the white-glove hand, and on
    the Screening Room's posters to the clapper. Each sits with its hotspot on
@@ -703,7 +753,6 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
 .figma-cursor .cursor-slate {
   position: absolute;
   display: none;
-  max-width: none; /* the reset's 100% is of a box that has no width once the arrow hides */
 }
 
 .figma-cursor .cursor-hand {

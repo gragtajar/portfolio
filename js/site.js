@@ -181,6 +181,29 @@
 
     frames.forEach((frame) => frame.addEventListener('focusin', () => activate(frame)));
 
+    // With no hover to point with (a touch screen), the pencil marks the frame
+    // tapped last, not the one the strip's scroll comes to (css/site.css). A
+    // frame that opens a page of this site lets the pencil draw first, a beat
+    // before the page changes; one that opens a new tab keeps its mark for
+    // when the visitor comes back.
+    const noHover = window.matchMedia('(hover: none)');
+    let tappedAt = 0;
+    const markTapped = (frame) => frames.forEach((f) => f.classList.toggle('is-tapped', f === frame));
+
+    roll.addEventListener('click', (e) => {
+      if (!noHover.matches || e.defaultPrevented) return;
+      const frame = e.target.closest('.frame');
+      if (!frame) return;
+      markTapped(frame);
+      const link = frame.querySelector('a');
+      if (link.target === '_blank' || reducedMotion.matches || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      if (Date.now() - tappedAt < 1000) return;   // a second tap on the way out
+      tappedAt = Date.now();
+      followed = { href: link.href, t: tappedAt };  // for the page transition (see there)
+      setTimeout(() => window.location.assign(link.href), 180);
+    });
+
     // When the strip scrolls on its own account (a swipe, or the wheel moving
     // it under a resting pointer) the mark follows the scroll. Its anchor
     // slides from the strip's leading edge at the start to its trailing edge
@@ -244,6 +267,8 @@
       activateQuietly: (frame) => activate(frame, true),
       bringIn(frame) {
         activate(frame, true);
+        // on a touch screen the frame came back from is the one tapped last
+        if (noHover.matches) markTapped(frame);
         const box = roll.getBoundingClientRect();
         const lead = box.left + parseFloat(getComputedStyle(roll).paddingLeft);
         const r = frame.getBoundingClientRect();
@@ -542,17 +567,22 @@
     wins.forEach((el) => watcher.observe(el, { attributes: true, attributeFilter: ['class'], attributeOldValue: true }));
   }
 
-  // ─── The game's title card: each genre rises into view through a mask ──
+  // ─── The game's slate: the title card, and the round rolling over ──
   // As a game starts, and at every restart, the genre and the round come up
   // word by word from under an unseen edge (the masked reveal), and the two
-  // posters rise into their frames (css/screening-room.css). The game's own
-  // script is not ours to change, so this watches for the genre it writes.
+  // posters rise into their frames. Each round after that, the round rolls
+  // over like the number on a slate: the words that changed leave upward
+  // through a mask as the new ones come up from below (css/screening-room.css).
+  // The game's own script is not ours to change, so this watches the lines it
+  // writes.
   const genreLine = document.querySelector('.sr-genre');
   const stage = genreLine && genreLine.closest('.sr-stage');
   if (stage) {
     const roundLine = stage.querySelector('.sr-round');
     let shownGenre = '';
+    let shownRound = '';
     let reveals = 0;
+    let rolls = 0;
     // words in masks, spaces kept between them, so the line reads as before
     const split = (line) => {
       const words = line.textContent.trim().split(/\s+/).filter(Boolean);
@@ -569,21 +599,129 @@
         line.append(mask);
       });
     };
-    new MutationObserver(() => {
-      const text = genreLine.textContent.trim();
-      if (!text || text === shownGenre) return;   // the masks just put in, or no change
-      shownGenre = text;
-      split(genreLine);
-      if (roundLine && roundLine.textContent.trim()) split(roundLine);
-      stage.classList.remove('revealing');
-      void stage.offsetWidth;
-      stage.classList.add('revealing');
-      const mine = ++reveals;
-      afterAnimations(stage, ['sr-word-rise', 'sr-unmask', 'fade-in'], () => {
-        if (mine === reveals) stage.classList.remove('revealing');
+    // Only the words that changed roll ("Round 3" to "Round 4": the number);
+    // with nothing in common ("Final round") the whole line does
+    const roll = (from, to) => {
+      const was = from.split(/\s+/);
+      const now = to.split(/\s+/);
+      let same = 0;
+      while (same < was.length - 1 && same < now.length - 1 && was[same] === now[same]) same++;
+      roundLine.textContent = same ? now.slice(0, same).join(' ') + ' ' : '';
+      const mask = document.createElement('span');
+      const gone = document.createElement('span');
+      const come = document.createElement('span');
+      mask.className = 'word-mask sr-roll';
+      gone.className = 'sr-roll-out';
+      gone.setAttribute('aria-hidden', 'true');
+      gone.textContent = was.slice(same).join(' ');
+      come.className = 'sr-roll-in';
+      come.textContent = now.slice(same).join(' ');
+      mask.append(gone, come);
+      roundLine.append(mask);
+      const mine = ++rolls;
+      afterAnimations(roundLine, ['sr-roll-out', 'sr-roll-in'], () => {
+        if (mine !== rolls) return;
+        roundLine.textContent = to;
+        watcher.takeRecords();
       });
-    }).observe(genreLine, { childList: true, characterData: true, subtree: true });
+    };
+    const watcher = new MutationObserver(() => {
+      const genre = genreLine.textContent.trim();
+      const round = roundLine ? roundLine.textContent.trim() : '';
+      if (genre && genre !== shownGenre) {
+        // a new game: the title card (and no roll left over from the last one)
+        shownGenre = genre;
+        shownRound = round;
+        rolls++;
+        split(genreLine);
+        if (round) split(roundLine);
+        stage.classList.remove('revealing');
+        void stage.offsetWidth;
+        stage.classList.add('revealing');
+        const mine = ++reveals;
+        afterAnimations(stage, ['sr-word-rise', 'sr-unmask', 'fade-in'], () => {
+          if (mine === reveals) stage.classList.remove('revealing');
+        });
+      } else if (round && shownRound && round !== shownRound) {
+        const from = shownRound;
+        shownRound = round;
+        if (!reducedMotion.matches) roll(from, round);
+      }
+      // what was just rearranged here is not news
+      watcher.takeRecords();
+    });
+    const lines = { childList: true, characterData: true, subtree: true };
+    watcher.observe(genreLine, lines);
+    if (roundLine) watcher.observe(roundLine, lines);
   }
+
+  // ─── The game on a touch screen: a poster follows the finger ──────
+  // The game rejects a poster swiped 60px toward its own edge (its script
+  // decides when the finger lifts), but the poster used to stand still under
+  // the finger. Now it travels with the finger toward its edge, tilting as it
+  // goes and fading a little, and resists the other way. Let go past the
+  // game's mark and the game's own exit carries it on from where it is; let go
+  // before, and it springs back. The game's script is untouched.
+  document.querySelectorAll('.sr-card-left, .sr-card-right').forEach((card) => {
+    const edge = card.classList.contains('sr-card-left') ? -1 : 1;
+    const sliding = () => /\bslide-(out|in)-/.test(card.className);
+    let startX = null;
+    let startY = 0;
+    let across = null;                   // decided on the first few pixels: across (ours) or down (a scroll)
+
+    const settle = () => {
+      card.style.transition = '';
+      card.style.transform = '';
+      card.style.opacity = '';
+    };
+
+    card.addEventListener('touchstart', (e) => {
+      if (e.touches.length !== 1 || sliding()) return;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      across = null;
+      card.style.transition = 'none';
+    }, { passive: true });
+
+    card.addEventListener('touchmove', (e) => {
+      if (startX === null) return;
+      const mx = e.touches[0].clientX - startX;
+      const my = e.touches[0].clientY - startY;
+      if (across === null) {
+        if (Math.abs(mx) < 6 && Math.abs(my) < 6) return;
+        across = Math.abs(mx) > Math.abs(my);
+      }
+      if (!across) {
+        startX = null;
+        settle();
+        return;
+      }
+      const out = mx * edge > 0;
+      const dx = out ? mx : mx * 0.25;
+      card.style.transform = `translateX(${dx}px) rotate(${(dx * 0.04).toFixed(2)}deg)`;
+      card.style.opacity = out ? String(Math.max(0.6, 1 - Math.abs(dx) / 300)) : '';
+    }, { passive: true });
+
+    const release = () => {
+      if (startX === null) return;
+      startX = null;
+      // the game's own handler has run by the next frame: rejected, or not
+      requestAnimationFrame(() => {
+        if (/\bslide-out-/.test(card.className)) return;
+        card.style.transition = reducedMotion.matches ? 'none' : 'transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out)';
+        card.style.transform = '';
+        card.style.opacity = '';
+      });
+    };
+    card.addEventListener('touchend', release, { passive: true });
+    card.addEventListener('touchcancel', release, { passive: true });
+
+    // Once the exit is over (the game takes the class off to deal the next
+    // film), the poster's place is its own again, before the next one slides in
+    new MutationObserver(() => {
+      if (startX === null && !/\bslide-out-/.test(card.className)) settle();
+    }).observe(card, { attributes: true, attributeFilter: ['class'] });
+  });
 
   // ─── Footer: a random film quote on every load ─────────
   const quote = document.querySelector('.quote');

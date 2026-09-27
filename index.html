@@ -40,17 +40,17 @@
     })();
   </script>
 
-  <link rel="stylesheet" href="css/intro.css?v=2026-09-27">
-  <link rel="stylesheet" href="css/site.css?v=2026-09-27">
+  <link rel="stylesheet" href="css/intro.css?v=2026-09-28">
+  <link rel="stylesheet" href="css/site.css?v=2026-09-28">
 
   <!-- The site's own scripts run before the page is first drawn
        (blocking="render"; a browser without it runs them as plain deferred
        scripts), so a page transition finds the page ready: the right frame
        on the strip, the cursor under the mouse. They come before the remote
        scripts below, which deferred scripts would otherwise wait for. -->
-  <script src="js/intro.js?v=2026-09-27" defer blocking="render"></script>
-  <script src="js/cursor.js?v=2026-09-27" defer blocking="render"></script>
-  <script src="js/site.js?v=2026-09-27" defer blocking="render"></script>
+  <script src="js/intro.js?v=2026-09-28" defer blocking="render"></script>
+  <script src="js/cursor.js?v=2026-09-28" defer blocking="render"></script>
+  <script src="js/site.js?v=2026-09-28" defer blocking="render"></script>
 
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="manifest" href="site.webmanifest">
@@ -175,7 +175,9 @@
     </section>
 
     <!-- The contact strip: one frame per work. Adding a work = one more <li class="frame">.
-         Media can be an <img>, or a <video class="clip"> that behaves like a GIF. -->
+         Media can be an <img>, or a <video class="clip"> that behaves like a GIF.
+         A site's frame can show its phone layout on a phone: a <picture> with a
+         (max-width: 767px) source, the same 16:9 as the frames around it. -->
     <section class="band" aria-labelledby="works-title">
       <h2 class="visually-hidden" id="works-title">Selected work</h2>
 
@@ -219,25 +221,13 @@
           </li>
 
           <li class="frame">
-            <a href="https://www.figma.com/community/file/1516171459035590514/flags-library-svg" target="_blank" rel="noopener" data-track="flags-card">
-              <span class="edge no">03 <span>Figma file</span> <span class="name">Flags Library</span></span>
-              <span class="still">
-                <img src="assets/home/flags.png" alt="Flags Library: 253 SVG country flags, shown on a dotted world map" width="1920" height="1080" loading="lazy" decoding="async">
-                <svg class="loop" aria-hidden="true" focusable="false"><use href="#pencil-wide"/></svg>
-              </span>
-              <div class="cap">
-                <h3 class="title">Flags Library (SVG)</h3>
-                <p class="desc">253 country flags in rectangular SVG format, sorted by continent. Free to use under CC BY 4.0.</p>
-                <span class="go"><span class="under">View on Figma Community</span></span>
-              </div>
-            </a>
-          </li>
-
-          <li class="frame">
             <a href="screening-room.html">
-              <span class="edge no">04 <span>Movie game</span> <span class="name">Screening Room</span></span>
+              <span class="edge no">03 <span>Movie game</span> <span class="name">Screening Room</span></span>
               <span class="still">
-                <img src="assets/home/screening-room.jpg" alt="Screening Room, a movie bracket game: two blurred posters under a Play button" width="1600" height="900" loading="lazy" decoding="async">
+                <picture>
+                  <source media="(max-width: 767px)" srcset="assets/home/screening-room-mobile.jpg" width="1170" height="658">
+                  <img src="assets/home/screening-room.jpg" alt="Screening Room, a movie bracket game: two blurred posters under a Play button" width="1600" height="900" loading="lazy" decoding="async">
+                </picture>
                 <svg class="loop" aria-hidden="true" focusable="false"><use href="#pencil-wide"/></svg>
               </span>
               <div class="cap">
@@ -250,15 +240,33 @@
 
           <li class="frame">
             <a href="https://learncivicsense.in/" target="_blank" rel="noopener" data-track="lcs-card">
-              <span class="edge no">05 <span>Website</span> <span class="name">learncivicsense.in</span></span>
+              <span class="edge no">04 <span>Website</span> <span class="name">learncivicsense.in</span></span>
               <span class="still">
-                <img src="assets/home/learncivicsense.jpg" alt="learncivicsense.in, a free library of short lessons on civic sense in India, on a laptop and a phone" width="1920" height="1080" loading="lazy" decoding="async">
+                <picture>
+                  <source media="(max-width: 767px)" srcset="assets/home/learncivicsense-mobile.jpg" width="1170" height="658">
+                  <img src="assets/home/learncivicsense-desktop.jpg" alt="The homepage of learncivicsense.in, a free library of short lessons on civic sense in India" width="1920" height="1080" loading="lazy" decoding="async">
+                </picture>
                 <svg class="loop" aria-hidden="true" focusable="false"><use href="#pencil-wide"/></svg>
               </span>
               <div class="cap">
                 <h3 class="title">learncivicsense.in</h3>
                 <p class="desc">Short, practical lessons on civic sense in India, drawn from real situations. Free, no login, no lectures.</p>
                 <span class="go"><span class="under">Visit the site</span></span>
+              </div>
+            </a>
+          </li>
+
+          <li class="frame">
+            <a href="https://www.figma.com/community/file/1516171459035590514/flags-library-svg" target="_blank" rel="noopener" data-track="flags-card">
+              <span class="edge no">05 <span>Figma file</span> <span class="name">Flags Library</span></span>
+              <span class="still">
+                <img src="assets/home/flags.png" alt="Flags Library: 253 SVG country flags, shown on a dotted world map" width="1920" height="1080" loading="lazy" decoding="async">
+                <svg class="loop" aria-hidden="true" focusable="false"><use href="#pencil-wide"/></svg>
+              </span>
+              <div class="cap">
+                <h3 class="title">Flags Library (SVG)</h3>
+                <p class="desc">253 country flags in rectangular SVG format, sorted by continent. Free to use under CC BY 4.0.</p>
+                <span class="go"><span class="under">View on Figma Community</span></span>
               </div>
             </a>
           </li>

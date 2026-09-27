@@ -79,15 +79,12 @@ body.intro-finished .site-footer {
   }
 }
 
-#board:after {
-  position: absolute;
-  content: ' ';
-  bottom: 60%;
-  left: 0;
-  right: 0;
-  top: 0;
-  background: linear-gradient(to top, transparent 0%, #000 100%);
-  pointer-events: none;
+/* The crawl fades as it recedes into the distance. It used to be covered by a
+   black gradient; a mask fades the words the same way (clear at 40% of the
+   board's height, gone at its far end) and lets the stars show through. */
+#board {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 40%);
+  mask-image: linear-gradient(to bottom, transparent, #000 40%);
 }
 
 #content {
@@ -175,21 +172,56 @@ body.intro-finished .site-footer {
   pointer-events: none;
 }
 
-/* Subtle starfield behind the crawl */
+/* On a phone the button waits at the top right, clear of the crawl and of the
+   browser's own bar along the bottom; on a desktop it stays bottom right */
+@media (max-width: 768px) {
+  .intro-skip {
+    top: calc(16px + env(safe-area-inset-top, 0px));
+    right: 16px;
+    bottom: auto;
+  }
+}
+
+/* The night sky behind the crawl: four layers of stars drawn by the browser
+   (no image to fetch), tiled at sizes that share no rhythm (211, 293, 443 and
+   997px) so no pattern shows. Fixed, no motion. */
 .intro-overlay::before {
   content: '';
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.7), transparent),
-    radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,0.5), transparent),
-    radial-gradient(1px 1px at 80% 20%, rgba(255,255,255,0.6), transparent),
-    radial-gradient(1px 1px at 30% 80%, rgba(255,255,255,0.4), transparent),
-    radial-gradient(1px 1px at 90% 50%, rgba(255,255,255,0.5), transparent),
-    radial-gradient(1px 1px at 10% 60%, rgba(255,255,255,0.6), transparent),
-    radial-gradient(1px 1px at 70% 10%, rgba(255,255,255,0.5), transparent),
-    radial-gradient(1px 1px at 45% 45%, rgba(255,255,255,0.4), transparent);
-  background-size: 200% 200%;
-  opacity: 0.6;
+    radial-gradient(circle at 97px 116px, rgb(255 255 255 / 0.47) 0.7px, transparent 1.6px),
+    radial-gradient(circle at 30px 188px, rgb(255 255 255 / 0.44) 0.7px, transparent 1.6px),
+    radial-gradient(circle at 207px 76px, rgb(255 255 255 / 0.40) 0.7px, transparent 1.6px),
+    radial-gradient(circle at 71px 10px, rgb(255 255 255 / 0.40) 0.6px, transparent 1.5px),
+    radial-gradient(circle at 5px 39px, rgb(255 255 255 / 0.56) 0.7px, transparent 1.6px),
+    radial-gradient(circle at 93px 227px, rgb(255 255 255 / 0.60) 0.6px, transparent 1.5px),
+    radial-gradient(circle at 237px 4px, rgb(255 255 255 / 0.37) 0.6px, transparent 1.5px),
+    radial-gradient(circle at 180px 283px, rgb(255 255 255 / 0.36) 0.6px, transparent 1.5px),
+    radial-gradient(circle at 102px 283px, rgb(255 255 255 / 0.59) 0.8px, transparent 1.7px),
+    radial-gradient(circle at 236px 175px, rgb(255 255 255 / 0.46) 0.6px, transparent 1.5px),
+    radial-gradient(circle at 48px 66px, rgb(255 255 255 / 0.54) 0.6px, transparent 1.5px),
+    radial-gradient(circle at 436px 239px, rgb(255 255 255 / 0.67) 1.1px, transparent 2.0px),
+    radial-gradient(circle at 160px 99px, rgb(255 255 255 / 0.70) 1.1px, transparent 2.0px),
+    radial-gradient(circle at 70px 432px, rgb(255 255 255 / 0.65) 1.1px, transparent 2.0px),
+    radial-gradient(circle at 439px 273px, rgb(255 255 255 / 0.73) 1.1px, transparent 2.0px),
+    radial-gradient(circle at 129px 253px, rgb(255 255 255 / 0.78) 1.1px, transparent 2.0px),
+    radial-gradient(circle at 420px 149px, rgb(255 255 255 / 0.77) 1.2px, transparent 2.1px),
+    radial-gradient(circle at 93px 429px, rgb(255 255 255 / 0.66) 0.9px, transparent 1.8px),
+    radial-gradient(circle at 27px 45px, rgb(255 255 255 / 0.63) 1.0px, transparent 1.9px),
+    radial-gradient(circle at 483px 781px, rgb(255 255 255 / 0.90) 1.4px, transparent 2.3px),
+    radial-gradient(circle at 882px 492px, rgb(255 255 255 / 0.92) 1.5px, transparent 2.4px),
+    radial-gradient(circle at 709px 321px, rgb(255 255 255 / 0.93) 1.3px, transparent 2.2px),
+    radial-gradient(circle at 669px 940px, rgb(255 255 255 / 0.92) 1.3px, transparent 2.2px),
+    radial-gradient(circle at 611px 718px, rgb(255 255 255 / 0.93) 1.4px, transparent 2.3px),
+    radial-gradient(circle at 234px 99px, rgb(255 255 255 / 0.88) 1.4px, transparent 2.3px);
+  background-size:
+    211px 211px, 211px 211px, 211px 211px, 211px 211px,
+    211px 211px, 293px 293px, 293px 293px, 293px 293px,
+    293px 293px, 293px 293px, 293px 293px, 443px 443px,
+    443px 443px, 443px 443px, 443px 443px, 443px 443px,
+    443px 443px, 443px 443px, 443px 443px, 997px 997px,
+    997px 997px, 997px 997px, 997px 997px, 997px 997px,
+    997px 997px;
   pointer-events: none;
 }

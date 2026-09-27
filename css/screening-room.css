@@ -261,6 +261,54 @@
   overflow: hidden;
 }
 
+/* --- The posters float a little above the sheet ---
+   A print lifted off the light table: a tight contact shadow, a near one and
+   a soft wide one, falling below. In the band's own ink with the lights on
+   (never pure black on paper), deeper with them off, where only a stronger
+   shadow shows on film base. --lift sets how high a poster floats: 1 at rest;
+   it rises with the poster when a game starts, and a little more under the
+   pointer. */
+@property --lift {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 1;
+}
+
+.page-game {
+  --shade: 20 20 20;
+  --shade-k: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .page-game {
+    --shade: 0 0 0;
+    --shade-k: 3.2;
+  }
+}
+
+:root[data-theme="dark"] .page-game {
+  --shade: 0 0 0;
+  --shade-k: 3.2;
+}
+
+.sr-poster, .sr-teaser {
+  box-shadow:
+    0 1px 1px rgb(var(--shade) / calc(0.06 * var(--shade-k) * var(--lift))),
+    0 4px 8px -2px rgb(var(--shade) / calc(0.1 * var(--shade-k) * var(--lift))),
+    0 16px 32px -8px rgb(var(--shade) / calc(0.22 * var(--shade-k) * var(--lift)));
+}
+
+/* Under the pointer, a poster in play rises 3px and its shadow deepens */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .sr-card .sr-still { transition: transform 0.2s var(--ease-out); }
+
+  .sr-card .sr-poster { transition: --lift 0.2s var(--ease-out); }
+
+  .sr-card:hover:not(.slide-out-left, .slide-out-right) .sr-still { transform: translateY(-3px); }
+
+  .sr-card:hover:not(.slide-out-left, .slide-out-right) .sr-poster { --lift: 1.5; }
+}
+
 .sr-poster img {
   width: 100%;
   height: 100%;
@@ -535,14 +583,38 @@
   .revealing :is(.word, .sr-arena .sr-poster) { animation: fade-in 0.3s ease backwards; }
 }
 
+/* --- The round rolls over like the number on a slate (site.js): what changed
+       leaves upward through the mask as the new words come up from below, in
+       one cell so the line keeps its place. The time of a card's slide. With
+       reduced motion the round simply changes. --- */
+.sr-roll { display: inline-grid; }
+
+.sr-roll > * { grid-area: 1 / 1; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .sr-roll-out { animation: sr-roll-out 0.35s var(--ease-in-out) forwards; }
+
+  .sr-roll-in { animation: sr-roll-in 0.35s var(--ease-in-out) backwards; }
+}
+
+@keyframes sr-roll-out {
+  to { transform: translateY(-120%); }
+}
+
+@keyframes sr-roll-in {
+  from { transform: translateY(120%); }
+}
+
 @keyframes sr-word-rise {
   from { transform: translateY(120%); }
 }
 
-/* both ends in inset(), so the edge travels (to "none" it would only jump) */
+/* Both ends in inset(), so the edge travels (to "none" it would only jump).
+   The sides and the foot of the clip reach 48px out, past the poster's
+   shadow, which grows in with it instead of appearing once it is up. */
 @keyframes sr-unmask {
-  from { clip-path: inset(100% 0 0 0); }
-  to { clip-path: inset(0 0 0 0); }
+  from { clip-path: inset(100% -48px -48px -48px); --lift: 0; }
+  to { clip-path: inset(-48px); --lift: 1; }
 }
 
 @keyframes sr-develop {
