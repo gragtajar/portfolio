@@ -12,6 +12,25 @@
   const roll = document.querySelector('.roll');
   const introActive = () => document.body.classList.contains('intro-active');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  // a page's file name, the way the site links it: "index.html" for the root
+  const fileOf = (url) => {
+    try { return new URL(url, window.location.href).pathname.split('/').pop() || 'index.html'; } catch (_) { return ''; }
+  };
+  let strip = null;                      // set by the contact strip, used by the page transitions
+
+  // Run done once every animation of the given names inside el has played:
+  // looked for a frame after the class that starts them goes on, awaited in
+  // the animations' own time (so a late first paint cannot cut one short),
+  // with a long backstop in case one never gets to run.
+  function afterAnimations(el, names, done) {
+    let called = false;
+    const once = () => { if (!called) { called = true; done(); } };
+    setTimeout(once, 6000);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const running = el.getAnimations({ subtree: true }).filter((a) => names.includes(a.animationName));
+      Promise.all(running.map((a) => a.finished.catch(() => {}))).then(once);
+    }));
+  }
 
   // ─── The pencil mark: one hand-drawn box per picture, in real pixels ──
   // Drawn from the picture's own size, so the stroke weight and the corners
@@ -91,7 +110,9 @@
     let active = null;
     let hovering = false;
 
-    const activate = (frame) => {
+    // quiet: the words are put in place without their settle, for the page's
+    // first picture and for a page transition, which bring their own motion
+    const activate = (frame, quiet) => {
       if (!frame || frame === active) return;
       if (active) active.classList.remove('is-active');
       active = frame;
@@ -109,6 +130,7 @@
       go.dataset.track = link.dataset.track || '';
       // restart the settle animation so the words arrive with the mark
       slate.classList.remove('swap');
+      if (quiet) return;
       void slate.offsetWidth;
       slate.classList.add('swap');
     };
@@ -166,7 +188,9 @@
     // is marked once the strip reaches its end. A pointer that is moving over
     // the frames keeps the say: hover intent above decides then.
     let settle = 0;
+    let placing = false;                 // the strip is being scrolled to a frame on purpose (bringIn)
     roll.addEventListener('scroll', () => {
+      if (placing) return;
       if (hovering && !wheeling()) return;
       cancelAnimationFrame(settle);
       settle = requestAnimationFrame(() => {
@@ -207,8 +231,29 @@
       next.focus();
     });
 
-    activate(roll.querySelector('.frame.is-active') || frames[0]);
+    // Quiet: the homepage's entrance (css/site.css) is what brings the slate in
+    activate(roll.querySelector('.frame.is-active') || frames[0], true);
     if (slate) slate.hidden = false;
+
+    // For page transitions (below): the frame of a given page, and a way to
+    // make a frame the active one and bring it to the strip's leading edge
+    // before the page is first drawn
+    strip = {
+      slate,
+      frameFor: (file) => frames.find((frame) => fileOf(frame.querySelector('a').href) === file) || null,
+      activateQuietly: (frame) => activate(frame, true),
+      bringIn(frame) {
+        activate(frame, true);
+        const box = roll.getBoundingClientRect();
+        const lead = box.left + parseFloat(getComputedStyle(roll).paddingLeft);
+        const r = frame.getBoundingClientRect();
+        if (r.left >= lead - 1 && r.right <= box.right + 1) return;
+        // the scroll this causes must not hand the mark to another frame
+        placing = true;
+        roll.scrollLeft += r.left - lead;
+        requestAnimationFrame(() => requestAnimationFrame(() => { placing = false; }));
+      },
+    };
 
     // When the page itself has nowhere to scroll, the wheel moves the strip
     window.addEventListener('wheel', (e) => {
@@ -314,14 +359,54 @@
     });
   }
 
+  // Turning the lights on, the new light spreads from the switch in a widening
+  // circle; turning them off, the old light drains back into the switch. With
+  // reduced motion it is a short crossfade instead, and a browser without view
+  // transitions switches at once, as it always did.
+  let shifts = 0;
+  const SHIFT_CLASSES = ['lights-shift', 'lights-up', 'lights-down', 'lights-fade'];
+
+  function switchLights(next) {
+    const apply = () => {
+      root.dataset.theme = next;
+      try { localStorage.setItem('rg-theme', next); } catch (_) {}
+      renderLights();
+    };
+    if (!document.startViewTransition) {
+      apply();
+      return;
+    }
+    const mine = ++shifts;
+    const calm = reducedMotion.matches;
+    const on = next === 'light';
+    const box = lights.getBoundingClientRect();
+    const x = box.left + box.width / 2;
+    const y = box.top + box.height / 2;
+    // far enough to reach the corner of the screen furthest from the switch
+    const reach = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+
+    root.classList.remove(...SHIFT_CLASSES);
+    root.classList.add('lights-shift', calm ? 'lights-fade' : on ? 'lights-up' : 'lights-down');
+    const shift = document.startViewTransition(apply);
+    shift.ready.then(() => {
+      if (calm) return;
+      const circle = [`circle(0px at ${x}px ${y}px)`, `circle(${reach}px at ${x}px ${y}px)`];
+      root.animate({ clipPath: on ? circle : circle.reverse() }, {
+        duration: 700,
+        easing: getComputedStyle(root).getPropertyValue('--ease-out-soft').trim() || 'ease-out',
+        fill: 'both',
+        pseudoElement: on ? '::view-transition-new(root)' : '::view-transition-old(root)',
+      });
+    }).catch(() => {});
+    shift.finished.finally(() => {
+      if (mine === shifts) root.classList.remove(...SHIFT_CLASSES);
+    });
+  }
+
   if (lights) {
     renderLights();
     systemDark.addEventListener('change', renderLights);
-    lights.addEventListener('click', () => {
-      root.dataset.theme = currentTheme() === 'dark' ? 'light' : 'dark';
-      try { localStorage.setItem('rg-theme', root.dataset.theme); } catch (_) {}
-      renderLights();
-    });
+    lights.addEventListener('click', () => switchLights(currentTheme() === 'dark' ? 'light' : 'dark'));
   }
 
   // ─── UI sound: synthesized, off until the visitor turns it on ─────
@@ -457,6 +542,49 @@
     wins.forEach((el) => watcher.observe(el, { attributes: true, attributeFilter: ['class'], attributeOldValue: true }));
   }
 
+  // ─── The game's title card: each genre rises into view through a mask ──
+  // As a game starts, and at every restart, the genre and the round come up
+  // word by word from under an unseen edge (the masked reveal), and the two
+  // posters rise into their frames (css/screening-room.css). The game's own
+  // script is not ours to change, so this watches for the genre it writes.
+  const genreLine = document.querySelector('.sr-genre');
+  const stage = genreLine && genreLine.closest('.sr-stage');
+  if (stage) {
+    const roundLine = stage.querySelector('.sr-round');
+    let shownGenre = '';
+    let reveals = 0;
+    // words in masks, spaces kept between them, so the line reads as before
+    const split = (line) => {
+      const words = line.textContent.trim().split(/\s+/).filter(Boolean);
+      line.textContent = '';
+      words.forEach((word, i) => {
+        if (i) line.append(' ');
+        const mask = document.createElement('span');
+        const inner = document.createElement('span');
+        mask.className = 'word-mask';
+        inner.className = 'word';
+        inner.style.setProperty('--w', i);
+        inner.textContent = word;
+        mask.append(inner);
+        line.append(mask);
+      });
+    };
+    new MutationObserver(() => {
+      const text = genreLine.textContent.trim();
+      if (!text || text === shownGenre) return;   // the masks just put in, or no change
+      shownGenre = text;
+      split(genreLine);
+      if (roundLine && roundLine.textContent.trim()) split(roundLine);
+      stage.classList.remove('revealing');
+      void stage.offsetWidth;
+      stage.classList.add('revealing');
+      const mine = ++reveals;
+      afterAnimations(stage, ['sr-word-rise', 'sr-unmask', 'fade-in'], () => {
+        if (mine === reveals) stage.classList.remove('revealing');
+      });
+    }).observe(genreLine, { childList: true, characterData: true, subtree: true });
+  }
+
   // ─── Footer: a random film quote on every load ─────────
   const quote = document.querySelector('.quote');
   if (quote) {
@@ -492,4 +620,220 @@
       replay();
     }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
   }
+
+  // ─── Openings: the homepage and the game settle in every time they open ──
+  // The class .entering on <html> runs the entrance (css/site.css and
+  // css/screening-room.css). The page's head script sets it before the first
+  // picture on a normal load; here it is set when the intro lifts, and again
+  // when the page comes back from the browser's back-forward cache. It comes
+  // off once the entrance is over, with the marks of anything a page
+  // transition carried in (that already arrived, and does not enter twice).
+  const opens = !!document.querySelector('.page-home, .page-game');
+  const OPENING = ['rise', 'pull-soft', 'fade-in', 'sr-develop', 'sr-disc-in'];
+  let openings = 0;
+
+  function finishOpening() {
+    const mine = ++openings;
+    afterAnimations(document.body, OPENING, () => {
+      if (mine !== openings) return;
+      root.classList.remove('entering');
+      document.querySelectorAll('.is-carried').forEach((el) => el.classList.remove('is-carried'));
+    });
+  }
+
+  function open() {
+    root.classList.remove('entering');
+    void root.offsetWidth;               // a fresh start for animations that already ran
+    root.classList.add('entering');
+    finishOpening();
+  }
+
+  if (opens) {
+    if (root.classList.contains('entering')) finishOpening();
+    // The intro's own fade-in stays as it was; the words settle in with it
+    if (introActive()) {
+      new MutationObserver((_, observer) => {
+        if (!document.body.classList.contains('intro-finished')) return;
+        observer.disconnect();
+        open();
+      }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    }
+    window.addEventListener('pageshow', (e) => { if (e.persisted) open(); });
+    // Past the intro, its finish has done its work: without it, a return to
+    // this page opens like any other
+    window.addEventListener('pagehide', () => document.body.classList.remove('intro-finished'));
+  }
+
+  // ─── Page transitions ───────────────────────────────────
+  // Between the homepage and a work's own page the work's picture and title
+  // carry over: the card's picture grows into the case study's cover (the
+  // game's stage), the slate's title into the page's heading, and both come
+  // back on the way home. The rest of the page crossfades (css/site.css).
+  // Needs cross-document view transitions; skipped with reduced motion, where
+  // the plain crossfade stays, and into the intro.
+  const WORKS = ['lenskart-eye-test.html', 'screening-room.html'];
+  const HERE = fileOf(window.location.href);
+  const isHome = HERE === 'index.html';
+  let dressed = [];
+
+  // The work shared by this page and the other one, if the pair is one of ours
+  function workWith(url) {
+    const other = fileOf(url);
+    if (isHome) return WORKS.includes(other) ? other : null;
+    return WORKS.includes(HERE) && other === 'index.html' ? HERE : null;
+  }
+
+  function targets(work) {
+    if (isHome) {
+      const frame = strip && strip.frameFor(work);
+      if (!frame) return null;
+      const slateShown = strip.slate && getComputedStyle(strip.slate).display !== 'none';
+      return {
+        frame,
+        shot: frame.querySelector('.still img, .still video'),
+        title: slateShown ? strip.slate.querySelector('.slate-title') : frame.querySelector('.title'),
+      };
+    }
+    if (HERE === 'lenskart-eye-test.html') {
+      return { shot: document.querySelector('.cs-hero img'), title: document.querySelector('.cs-head h1') };
+    }
+    return { shot: document.querySelector('.sr-stage'), title: document.querySelector('.sr-title') };
+  }
+
+  function undress() {
+    dressed.forEach((el) => {
+      el.style.viewTransitionName = '';
+      el.style.translate = '';
+    });
+    dressed = [];
+  }
+
+  // Name an element for the transition. One that is out of sight (the case
+  // study read far down, a caption below the fold) first moves to just past
+  // the nearest edge of the screen, so it travels in from where it lies
+  // instead of from far away.
+  function dress(el, name) {
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const dx = r.right < 0 ? -r.right : r.left > vw ? vw - r.left : 0;
+    const dy = r.bottom < 0 ? -r.bottom : r.top > vh ? vh - r.top : 0;
+    if (dx || dy) el.style.translate = `${dx}px ${dy}px`;
+    el.style.viewTransitionName = name;
+    dressed.push(el);
+  }
+
+  // A handshake between the two pages: the page that is left notes the work
+  // it dressed, and the size of its title's letters; the page that opens
+  // dresses only for that same work, fresh (a browser that names only one
+  // side would leave the other side's picture waiting in an empty slot).
+  const NOTE_KEY = 'rg-vt-note';
+
+  // The measure of a title's words: the size of its letters, and, when it
+  // sits on one line, the width the words take (their letter-spacing can
+  // differ between the two places, so on one line the width matches better)
+  function measure(title) {
+    const range = document.createRange();
+    range.selectNodeContents(title);
+    const rects = [...range.getClientRects()].filter((r) => r.width > 0);
+    const lines = new Set(rects.map((r) => Math.round(r.top))).size;
+    return {
+      size: parseFloat(getComputedStyle(title).fontSize),
+      width: lines === 1 ? range.getBoundingClientRect().width : 0,
+    };
+  }
+
+  function leaveNote(work, title) {
+    try {
+      const m = title && title.style.viewTransitionName ? measure(title) : { size: 0, width: 0 };
+      sessionStorage.setItem(NOTE_KEY, JSON.stringify({ work, size: m.size, width: m.width, t: Date.now() }));
+    } catch (_) { /* no note: the page that opens simply crossfades */ }
+  }
+
+  function takeNote() {
+    try {
+      const note = JSON.parse(sessionStorage.getItem(NOTE_KEY) || 'null');
+      sessionStorage.removeItem(NOTE_KEY);
+      return note && Date.now() - note.t < 10000 ? note : null;
+    } catch (_) { return null; }
+  }
+
+  // The title's letters keep one size between the two pictures of it: both
+  // pictures are scaled by the ratio of the two measures, anchored at their
+  // top left corners, so only the line breaks crossfade
+  function scaleTitles(title, before, transition) {
+    if (!(before.size > 0)) return;
+    const now = measure(title);
+    const ratio = before.width > 0 && now.width > 0 ? now.width / before.width : now.size / before.size;
+    if (!(ratio > 0)) return;
+    root.classList.add('vt-scale-title');
+    transition.ready.then(() => {
+      const timing = {
+        duration: 500,
+        easing: getComputedStyle(root).getPropertyValue('--ease-in-out').trim() || 'ease-in-out',
+        fill: 'both',
+      };
+      root.animate({ transform: ['scale(1)', `scale(${ratio})`] }, { ...timing, pseudoElement: '::view-transition-old(work-title)' });
+      root.animate({ transform: [`scale(${1 / ratio})`, 'scale(1)'] }, { ...timing, pseudoElement: '::view-transition-new(work-title)' });
+    }).catch(() => {});
+  }
+
+  function dressFor(work, arriving) {
+    const t = targets(work);
+    if (!t) return null;
+    if (t.frame) {
+      // the frame must be the active one, with the slate speaking for it, and
+      // in view on the strip: done before the picture is taken
+      if (arriving) strip.bringIn(t.frame);
+      else strip.activateQuietly(t.frame);
+    }
+    dress(t.shot, 'work-shot');
+    dress(t.title, 'work-title');
+    if (!arriving) leaveNote(work, t.title);
+    // what is carried in has arrived: it takes no part in the entrance
+    if (arriving) {
+      [t.frame, t.shot, t.title].forEach((el) => el && el.classList.add('is-carried'));
+      if (t.frame) t.frame.classList.add('is-landing');
+    }
+    return t;
+  }
+
+  // Where a link just followed was going: a browser without the Navigation
+  // API (Safari) does not say on the way out, so the click tells instead
+  let followed = null;
+  document.addEventListener('click', (e) => {
+    const link = !e.defaultPrevented && e.target.closest && e.target.closest('a[href]');
+    if (link) followed = { href: link.href, t: Date.now() };
+  });
+
+  window.addEventListener('pageswap', (e) => {
+    undress();
+    if (!e.viewTransition || reducedMotion.matches) return;
+    const to = (e.activation && e.activation.entry && e.activation.entry.url)
+      || (followed && Date.now() - followed.t < 3000 ? followed.href : null);
+    const work = to && workWith(to);
+    if (work) dressFor(work, false);
+  });
+
+  window.addEventListener('pagereveal', (e) => {
+    undress();
+    const note = takeNote();             // spent on every arrival, used or not
+    if (!e.viewTransition || reducedMotion.matches) return;
+    if (isHome && introActive()) return;
+    const from = (window.navigation && navigation.activation && navigation.activation.from && navigation.activation.from.url) || document.referrer;
+    const work = from && workWith(from);
+    if (!work || !note || note.work !== work) return;
+    const t = dressFor(work, true);
+    if (t && t.title && t.title.style.viewTransitionName) scaleTitles(t.title, note, e.viewTransition);
+    // which way the trip goes: the stylesheet times the shot's crossfade by it
+    const way = isHome ? 'vt-to-home' : 'vt-to-work';
+    root.classList.add(way);
+    e.viewTransition.finished.finally(() => {
+      undress();
+      root.classList.remove(way, 'vt-scale-title');
+      document.querySelectorAll('.is-landing').forEach((el) => el.classList.remove('is-landing'));
+    });
+  });
 })();
