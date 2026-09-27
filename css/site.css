@@ -435,6 +435,15 @@ main:not(:has(.band:last-child)) + .site-footer { border-top: 1px solid var(--ba
   }
 }
 
+/* With no hover to point with, the pencil waits for a tap: the strip's scroll
+   no longer carries the mark along, and the frame tapped last keeps it
+   (site.js). A page transition home still holds it until the picture lands. */
+@media (hover: none) {
+  .frame:not(.is-tapped) .loop { stroke-dashoffset: 1.01; }
+
+  .is-tapped .loop { stroke-dashoffset: 0; }
+}
+
 /* The frame is as wide as its picture; the caption wraps to that width */
 .frame a {
   display: grid;

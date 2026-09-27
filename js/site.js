@@ -181,6 +181,29 @@
 
     frames.forEach((frame) => frame.addEventListener('focusin', () => activate(frame)));
 
+    // With no hover to point with (a touch screen), the pencil marks the frame
+    // tapped last, not the one the strip's scroll comes to (css/site.css). A
+    // frame that opens a page of this site lets the pencil draw first, a beat
+    // before the page changes; one that opens a new tab keeps its mark for
+    // when the visitor comes back.
+    const noHover = window.matchMedia('(hover: none)');
+    let tappedAt = 0;
+    const markTapped = (frame) => frames.forEach((f) => f.classList.toggle('is-tapped', f === frame));
+
+    roll.addEventListener('click', (e) => {
+      if (!noHover.matches || e.defaultPrevented) return;
+      const frame = e.target.closest('.frame');
+      if (!frame) return;
+      markTapped(frame);
+      const link = frame.querySelector('a');
+      if (link.target === '_blank' || reducedMotion.matches || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      if (Date.now() - tappedAt < 1000) return;   // a second tap on the way out
+      tappedAt = Date.now();
+      followed = { href: link.href, t: tappedAt };  // for the page transition (see there)
+      setTimeout(() => window.location.assign(link.href), 180);
+    });
+
     // When the strip scrolls on its own account (a swipe, or the wheel moving
     // it under a resting pointer) the mark follows the scroll. Its anchor
     // slides from the strip's leading edge at the start to its trailing edge
@@ -244,6 +267,8 @@
       activateQuietly: (frame) => activate(frame, true),
       bringIn(frame) {
         activate(frame, true);
+        // on a touch screen the frame came back from is the one tapped last
+        if (noHover.matches) markTapped(frame);
         const box = roll.getBoundingClientRect();
         const lead = box.left + parseFloat(getComputedStyle(roll).paddingLeft);
         const r = frame.getBoundingClientRect();
