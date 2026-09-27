@@ -172,6 +172,16 @@ body.intro-finished .site-footer {
   pointer-events: none;
 }
 
+/* On a phone the button waits at the top right, clear of the crawl and of the
+   browser's own bar along the bottom; on a desktop it stays bottom right */
+@media (max-width: 768px) {
+  .intro-skip {
+    top: calc(16px + env(safe-area-inset-top, 0px));
+    right: 16px;
+    bottom: auto;
+  }
+}
+
 /* The night sky behind the crawl: four layers of stars drawn by the browser
    (no image to fetch), tiled at sizes that share no rhythm (211, 293, 443 and
    997px) so no pattern shows. Fixed, no motion. */
