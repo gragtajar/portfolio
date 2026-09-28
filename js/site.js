@@ -861,10 +861,20 @@
   }
 
   // ─── Beer emoji: plays once when the page appears, again on hover ──
+  // With reduced motion it keeps still: its player shows the two mugs at
+  // rest (its first frame, the same as its last) once it is not told to
+  // play. This runs before the player's own script, so taking away autoplay
+  // is enough; stop() covers a player that is already running.
   const cheers = document.getElementById('cheers-lottie');
-  if (cheers) {
+  if (cheers && reducedMotion.matches) {
+    cheers.removeAttribute('autoplay');
+    if (typeof cheers.stop === 'function') cheers.stop();
+  } else if (cheers) {
     const replay = () => {
       if (typeof cheers.stop !== 'function') return;
+      // a toast already under way plays on, rather than starting over
+      const state = typeof cheers.getState === 'function' ? cheers.getState() : null;
+      if (state && state.currentState === 'playing') return;
       cheers.stop();
       cheers.play();
     };
