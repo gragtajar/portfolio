@@ -527,6 +527,15 @@
   .sr-play-disc { transition: transform 0.12s var(--ease-out); }
 }
 
+/* With reduced motion a round still changes where it can be seen, without
+   moving: the rejected frame fades out and the next film fades in, and the
+   winner fades up (the game's own timers keep the pace) */
+@media (prefers-reduced-motion: reduce) {
+  .sr-card.slide-out-left, .sr-card.slide-out-right { animation: fade-out 0.35s ease forwards; }
+  .sr-card.slide-in-left, .sr-card.slide-in-right { animation: fade-in 0.35s ease backwards; }
+  .sr-winner.active, .sr-impressive.active { animation: fade-in 0.4s ease backwards; }
+}
+
 /* --- Opening (site.js): the page settles in every time it opens ---
    The title rises into place, then the invitation; the two posters come up
    out of the dark a beat apart, and the Play disc arrives last. When the
@@ -611,10 +620,16 @@
 
 /* Both ends in inset(), so the edge travels (to "none" it would only jump).
    The sides and the foot of the clip reach 48px out, past the poster's
-   shadow, which grows in with it instead of appearing once it is up. */
+   shadow, which grows in with it instead of appearing once it is up. The
+   shadow ends at the poster's own lift (deeper under the pointer), so it
+   does not jump when the title card is over. */
 @keyframes sr-unmask {
   from { clip-path: inset(100% -48px -48px -48px); --lift: 0; }
-  to { clip-path: inset(-48px); --lift: 1; }
+  to { clip-path: inset(-48px); }
+}
+
+@keyframes fade-out {
+  to { opacity: 0; }
 }
 
 @keyframes sr-develop {
