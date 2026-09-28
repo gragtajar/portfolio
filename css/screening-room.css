@@ -512,7 +512,7 @@
 
   .sr-winner.active, .sr-impressive.active { animation: sr-arrive 0.5s var(--ease-out) backwards; }
 
-  .sr-winner.active .loop { transition-delay: 0.35s; }
+  .sr-winner.active .loop { transition: stroke-dashoffset 0.32s var(--ease-out) 0.35s; }
 
   .sr-poster-skeleton { animation: sr-wait 0.9s ease-in-out infinite alternate; }
 

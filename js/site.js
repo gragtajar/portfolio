@@ -111,7 +111,9 @@
     let hovering = false;
 
     // quiet: the words are put in place without their settle, for the page's
-    // first picture and for a page transition, which bring their own motion
+    // first picture and for a page transition, which bring their own motion,
+    // and for a step along the strip from the keyboard
+    let swappedAt = -Infinity;           // when the slate's words last changed
     const activate = (frame, quiet) => {
       if (!frame || frame === active) return;
       if (active) active.classList.remove('is-active');
@@ -128,9 +130,14 @@
       go.target = link.target;
       go.rel = link.rel;
       go.dataset.track = link.dataset.track || '';
-      // restart the settle animation so the words arrive with the mark
+      // restart the settle animation so the words arrive with the mark, unless
+      // the last words are still settling (the strip flung past several
+      // frames): then these simply replace them, and nothing blinks
       slate.classList.remove('swap');
-      if (quiet) return;
+      const now = performance.now();
+      const hurried = now - swappedAt < 320;
+      swappedAt = now;
+      if (quiet || hurried) return;
       void slate.offsetWidth;
       slate.classList.add('swap');
     };
@@ -179,7 +186,7 @@
       clearTimeout(dwell);
     });
 
-    frames.forEach((frame) => frame.addEventListener('focusin', () => activate(frame)));
+    frames.forEach((frame) => frame.addEventListener('focusin', () => activate(frame, true)));
 
     // With no hover to point with (a touch screen), the pencil marks the frame
     // tapped last, not the one the strip's scroll comes to (css/site.css). A

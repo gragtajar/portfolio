@@ -439,7 +439,12 @@ main:not(:has(.band:last-child)) + .site-footer { border-top: 1px solid var(--ba
    no longer carries the mark along, and the frame tapped last keeps it
    (site.js). A page transition home still holds it until the picture lands. */
 @media (hover: none) {
-  .frame:not(.is-tapped) .loop { stroke-dashoffset: 1.01; }
+  /* .js: without the script there are no taps to track, and the page's own
+     fallback (the mark on the frame under the finger) stands */
+  .js .frame:not(.is-tapped) .loop {
+    stroke-dashoffset: 1.01;
+    transition: none;
+  }
 
   .is-tapped .loop { stroke-dashoffset: 0; }
 }
@@ -566,7 +571,12 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
 .quote:empty { display: none; }
 
 @media (prefers-reduced-motion: no-preference) {
-  .loop { transition: stroke-dashoffset 0.32s var(--ease-out); }
+  /* The mark takes its time only as it is drawn: the one it leaves goes at
+     once, so one frame wears it, never two (as on the game's posters) */
+  .is-active .loop,
+  .is-tapped .loop,
+  html:not(.js) .frame a:hover .loop,
+  html:not(.js) .frame a:focus-visible .loop { transition: stroke-dashoffset 0.32s var(--ease-out); }
 
   /* the pencil is quick: most of the line is down in the first tenth of a second */
   a, .under { transition: background-size 0.3s var(--ease-out); }
