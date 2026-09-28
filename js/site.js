@@ -781,15 +781,39 @@
   // goes and fading a little, and resists the other way. Let go past the
   // game's mark and the game's own exit carries it on from where it is; let go
   // before, and it springs back. The game's script is untouched.
+  //
+  // Toward the other poster it gives a quarter of the finger's move at first
+  // and never more than 24px (under half the gutter): friction rising to a
+  // stop, not a wall. A poster caught while it springs back carries on from
+  // where it is instead of jumping home under the finger.
+  const RESIST = 24;
+  const pull = (v) => Math.sign(v) * RESIST * (1 - Math.exp(-Math.abs(v) * 0.25 / RESIST));
+  // the finger travel a given pull stands for (for a poster caught on its way back)
+  const unpull = (d) => -Math.sign(d) * (RESIST / 0.25) * Math.log(1 - Math.min(Math.abs(d), RESIST * 0.999) / RESIST);
+
   document.querySelectorAll('.sr-card-left, .sr-card-right').forEach((card) => {
     const edge = card.classList.contains('sr-card-left') ? -1 : 1;
     const sliding = () => /\bslide-(out|in)-/.test(card.className);
     let startX = null;
     let startY = 0;
+    let base = 0;                        // the finger travel the poster already stood for at touchdown
     let across = null;                   // decided on the first few pixels: across (ours) or down (a scroll)
 
     const settle = () => {
       card.style.transition = '';
+      card.style.transform = '';
+      card.style.opacity = '';
+    };
+
+    // the poster for a finger that has travelled v: free toward its edge, held the other way
+    const place = (v) => {
+      const dx = v * edge > 0 ? v : pull(v);
+      card.style.transform = dx ? `translateX(${dx}px) rotate(${(dx * 0.04).toFixed(2)}deg)` : '';
+      card.style.opacity = dx * edge > 0 ? String(Math.max(0.6, 1 - Math.abs(dx) / 300)) : '';
+    };
+
+    const springBack = () => {
+      card.style.transition = reducedMotion.matches ? 'none' : 'transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out)';
       card.style.transform = '';
       card.style.opacity = '';
     };
@@ -799,7 +823,12 @@
       startX = e.touches[0].clientX;
       startY = e.touches[0].clientY;
       across = null;
+      // where the poster is now (on its way back from the last drag, or home)
+      const now = getComputedStyle(card).transform;
+      const at = now && now !== 'none' ? new DOMMatrixReadOnly(now).m41 : 0;
+      base = at * edge > 0 ? at : unpull(at);
       card.style.transition = 'none';
+      place(base);
     }, { passive: true });
 
     card.addEventListener('touchmove', (e) => {
@@ -812,13 +841,10 @@
       }
       if (!across) {
         startX = null;
-        settle();
+        springBack();
         return;
       }
-      const out = mx * edge > 0;
-      const dx = out ? mx : mx * 0.25;
-      card.style.transform = `translateX(${dx}px) rotate(${(dx * 0.04).toFixed(2)}deg)`;
-      card.style.opacity = out ? String(Math.max(0.6, 1 - Math.abs(dx) / 300)) : '';
+      place(base + mx);
     }, { passive: true });
 
     const release = () => {
@@ -827,9 +853,7 @@
       // the game's own handler has run by the next frame: rejected, or not
       requestAnimationFrame(() => {
         if (/\bslide-out-/.test(card.className)) return;
-        card.style.transition = reducedMotion.matches ? 'none' : 'transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out)';
-        card.style.transform = '';
-        card.style.opacity = '';
+        springBack();
       });
     };
     card.addEventListener('touchend', release, { passive: true });
