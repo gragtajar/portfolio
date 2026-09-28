@@ -1,8 +1,8 @@
 /* ============================================
    rajatg.in
    Pencil marks, the contact strip (slate, wheel, drag, arrows), GIF-like
-   videos, the Sound and Lights switches, the game's cheer, and the footer's
-   film quote.
+   videos, the Sound and Lights switches, the game's cheer and the clapper's
+   clap, and the footer's film quote.
    ============================================ */
 
 (function () {
@@ -520,6 +520,51 @@
     });
   }
 
+  // The clapper's clap (cursor.js brings the stick down on a press over a
+  // poster, and says when it will land): the crack of the two sticks meeting
+  // over a short knock of the wood, a few hundredths of a second in all.
+  // Light and low, about as loud as the hover tick and well under a press
+  // click, and like every sound here silent unless Sound is on.
+  function clack(delay) {
+    if (!soundOn) return;
+    const ac = audio();
+    if (!ac) return;
+    const t0 = ac.currentTime + delay;
+    // the one place to turn it up or down. At 0.5 it peaks near -18 dBFS
+    const out = ac.createGain();
+    out.gain.value = 0.5;
+    out.connect(ac.destination);
+
+    // the crack: noise gone within a few hundredths of a second, band-passed high
+    const length = Math.ceil(ac.sampleRate * 0.06);
+    const buffer = ac.createBuffer(1, length, ac.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < length; i++) data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ac.sampleRate * 0.005));
+    const noise = ac.createBufferSource();
+    const crack = ac.createBiquadFilter();
+    const crackGain = ac.createGain();
+    noise.buffer = buffer;
+    crack.type = 'bandpass';
+    crack.frequency.value = 3000;
+    crack.Q.value = 1.1;
+    crackGain.gain.value = 0.5;
+    noise.connect(crack).connect(crackGain).connect(out);
+    noise.start(t0);
+
+    // the knock: the wood's own note, struck and damped
+    const tone = ac.createOscillator();
+    const knock = ac.createGain();
+    tone.frequency.value = 1150;
+    knock.gain.setValueAtTime(0, t0);
+    knock.gain.linearRampToValueAtTime(0.08, t0 + 0.001);
+    knock.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.035);
+    tone.connect(knock).connect(out);
+    tone.start(t0);
+    tone.stop(t0 + 0.045);
+  }
+
+  document.addEventListener('rg:clap', (e) => clack(((e.detail && e.detail.lands) || 0) / 1000));
+
   function renderSound() {
     if (!sound) return;
     sound.querySelector('.state').textContent = soundOn ? 'on' : 'off';
@@ -545,12 +590,15 @@
     if (el) click(0.18, 0.025, 3200);
   });
 
+  const mouseCursor = document.querySelector('.figma-cursor');
   document.addEventListener('pointerdown', (e) => {
     // any press wakes the audio while a gesture is in hand: Safari will not
     // start it later from a timer, which is when the game's cheer is due
     if (soundOn) audio();
     const el = e.target.closest('a, button');
-    if (el && el !== sound) click(0.5, 0.06, 1800);
+    // a mouse press under the clapper claps it (cursor.js): the clap is its sound
+    const clapping = e.pointerType === 'mouse' && e.button === 0 && mouseCursor && mouseCursor.dataset.state === 'slate';
+    if (el && el !== sound && !clapping) click(0.5, 0.06, 1800);
   });
 
   // ─── The game: a small cheer when the confetti goes up ──────────────
