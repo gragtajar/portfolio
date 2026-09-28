@@ -735,7 +735,7 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
      cursor stays visible at all times on desktop, including during the intro */
   z-index: 10002;
   display: none;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s var(--ease-out);
   will-change: transform;
 }
 
@@ -800,15 +800,15 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
 .figma-cursor[data-state="hand"] .cursor-label { top: 30px; left: 14px; }
 .figma-cursor[data-state="slate"] .cursor-label { top: 17px; left: 10px; }
 
-/* A press: the hand gives a little under the finger, and springs back. The
-   clapper claps instead (cursor.js). */
+/* A press: the hand gives a little under the finger, and springs back; with
+   reduced motion it dips and returns at once. The clapper claps instead
+   (cursor.js). */
+.figma-cursor.is-pressed .cursor-hand { transform: scale(0.9); }
+
 @media (prefers-reduced-motion: no-preference) {
   .figma-cursor .cursor-hand { transition: transform 0.16s var(--ease-out); }
 
-  .figma-cursor.is-pressed .cursor-hand {
-    transform: scale(0.9);
-    transition-duration: 0.1s;
-  }
+  .figma-cursor.is-pressed .cursor-hand { transition-duration: 0.1s; }
 }
 
 .cursor-label {

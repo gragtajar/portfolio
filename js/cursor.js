@@ -16,7 +16,9 @@
 (function () {
   'use strict';
 
-  if (window.innerWidth < 769) return;
+  // A cursor for a mouse or a trackpad only: on a touch screen, however wide,
+  // the browser's stand-in mouse events would leave it wherever a finger taps
+  if (window.innerWidth < 769 || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
   // Phosphor's outline path, and the inner shape of that outline on its own for the white
   const HAND = 'M196,88a27.86,27.86,0,0,0-13.35,3.39A28,28,0,0,0,144,74.7V44a28,28,0,0,0-56,0v80l-3.82-6.13A28,28,0,0,0,35.73,146l4.67,8.23C74.81,214.89,89.05,240,136,240a88.1,88.1,0,0,0,88-88V116A28,28,0,0,0,196,88Zm12,64a72.08,72.08,0,0,1-72,72c-37.63,0-47.84-18-81.68-77.68l-4.69-8.27,0-.05A12,12,0,0,1,54,121.61a11.88,11.88,0,0,1,6-1.6,12,12,0,0,1,10.41,6,1.76,1.76,0,0,0,.14.23l18.67,30A8,8,0,0,0,104,152V44a12,12,0,0,1,24,0v68a8,8,0,0,0,16,0V100a12,12,0,0,1,24,0v20a8,8,0,0,0,16,0v-4a12,12,0,0,1,24,0Z';
@@ -166,16 +168,31 @@
   }).observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['class', 'hidden', 'disabled'] });
   recheck();
 
-  // A press: the hand gives a little under the finger (the clapper claps instead, below)
+  // A press: the hand gives a little under the finger (the clapper claps
+  // instead, below). It lasts at least the 100ms its dip takes, since a
+  // trackpad's tap sends the press and the release together, and a native
+  // drag, which swallows the release, ends it too.
+  let pressedAt = 0;
+  let letGo = 0;
   document.addEventListener('mousedown', (e) => {
-    if (e.button === 0) cursor.classList.add('is-pressed');
+    if (e.button !== 0) return;
+    clearTimeout(letGo);
+    pressedAt = performance.now();
+    cursor.classList.add('is-pressed');
   });
-  const release = () => cursor.classList.remove('is-pressed');
+  const release = () => {
+    clearTimeout(letGo);
+    const left = 100 - (performance.now() - pressedAt);
+    if (left > 0) letGo = setTimeout(() => cursor.classList.remove('is-pressed'), left);
+    else cursor.classList.remove('is-pressed');
+  };
   document.addEventListener('mouseup', () => {
     release();
     recheck();
   });
   window.addEventListener('blur', release);
+  document.addEventListener('dragstart', release);
+  document.addEventListener('pointercancel', release);
 
   // ─── A press on a poster claps the clapper ─────────────
   // The stick comes down onto the board at full speed, so that it lands
