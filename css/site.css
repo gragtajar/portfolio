@@ -439,7 +439,12 @@ main:not(:has(.band:last-child)) + .site-footer { border-top: 1px solid var(--ba
    no longer carries the mark along, and the frame tapped last keeps it
    (site.js). A page transition home still holds it until the picture lands. */
 @media (hover: none) {
-  .frame:not(.is-tapped) .loop { stroke-dashoffset: 1.01; }
+  /* .js: without the script there are no taps to track, and the page's own
+     fallback (the mark on the frame under the finger) stands */
+  .js .frame:not(.is-tapped) .loop {
+    stroke-dashoffset: 1.01;
+    transition: none;
+  }
 
   .is-tapped .loop { stroke-dashoffset: 0; }
 }
@@ -566,7 +571,12 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
 .quote:empty { display: none; }
 
 @media (prefers-reduced-motion: no-preference) {
-  .loop { transition: stroke-dashoffset 0.32s var(--ease-out); }
+  /* The mark takes its time only as it is drawn: the one it leaves goes at
+     once, so one frame wears it, never two (as on the game's posters) */
+  .is-active .loop,
+  .is-tapped .loop,
+  html:not(.js) .frame a:hover .loop,
+  html:not(.js) .frame a:focus-visible .loop { transition: stroke-dashoffset 0.32s var(--ease-out); }
 
   /* the pencil is quick: most of the line is down in the first tenth of a second */
   a, .under { transition: background-size 0.3s var(--ease-out); }
@@ -725,7 +735,7 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
      cursor stays visible at all times on desktop, including during the intro */
   z-index: 10002;
   display: none;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s var(--ease-out);
   will-change: transform;
 }
 
@@ -770,6 +780,18 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
   height: 27.16px;
 }
 
+/* The clapper is two pictures of one size, the board and the stick over it.
+   The stick turns about its hinge, at the board's top left corner (40, 108
+   on the icon's grid), when cursor.js claps it. */
+.figma-cursor .cursor-slate svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.figma-cursor .slate-stick { transform-origin: 2.38px 11.9px; }
+
 .figma-cursor[data-state] .cursor-arrow { display: none; }
 .figma-cursor[data-state="hand"] .cursor-hand,
 .figma-cursor[data-state="slate"] .cursor-slate { display: block; }
@@ -778,16 +800,15 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
 .figma-cursor[data-state="hand"] .cursor-label { top: 30px; left: 14px; }
 .figma-cursor[data-state="slate"] .cursor-label { top: 17px; left: 10px; }
 
-/* A press: the glyph gives a little under the finger, and springs back */
-@media (prefers-reduced-motion: no-preference) {
-  .figma-cursor .cursor-hand,
-  .figma-cursor .cursor-slate { transition: transform 0.16s var(--ease-out); }
+/* A press: the hand gives a little under the finger, and springs back; with
+   reduced motion it dips and returns at once. The clapper claps instead
+   (cursor.js). */
+.figma-cursor.is-pressed .cursor-hand { transform: scale(0.9); }
 
-  .figma-cursor.is-pressed .cursor-hand,
-  .figma-cursor.is-pressed .cursor-slate {
-    transform: scale(0.9);
-    transition-duration: 0.1s;
-  }
+@media (prefers-reduced-motion: no-preference) {
+  .figma-cursor .cursor-hand { transition: transform 0.16s var(--ease-out); }
+
+  .figma-cursor.is-pressed .cursor-hand { transition-duration: 0.1s; }
 }
 
 .cursor-label {

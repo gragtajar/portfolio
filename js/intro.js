@@ -26,15 +26,16 @@
     sessionStorage.setItem(KEY, String(window.scrollY));
   });
 
-  // The intro plays once per visit (per browser session). On later loads the
-  // overlay is already hidden by the inline script in <head>; just put the
-  // visitor back where they were.
+  // The intro plays once per visit (per browser session), and never for a
+  // visitor who asks for less motion. Otherwise the overlay is already hidden
+  // by the inline script in <head>; just put the visitor back where they were.
   const SEEN = 'rg-intro-seen';
   let seen = false;
   try {
     seen = sessionStorage.getItem(SEEN) === '1';
     sessionStorage.setItem(SEEN, '1');
   } catch (_) {}
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) seen = true;
 
   if (seen) {
     overlay.remove();

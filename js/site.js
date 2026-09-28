@@ -1,8 +1,8 @@
 /* ============================================
    rajatg.in
    Pencil marks, the contact strip (slate, wheel, drag, arrows), GIF-like
-   videos, the Sound and Lights switches, the game's cheer, and the footer's
-   film quote.
+   videos, the Sound and Lights switches, the game's cheer and the clapper's
+   clap, and the footer's film quote.
    ============================================ */
 
 (function () {
@@ -111,7 +111,9 @@
     let hovering = false;
 
     // quiet: the words are put in place without their settle, for the page's
-    // first picture and for a page transition, which bring their own motion
+    // first picture and for a page transition, which bring their own motion,
+    // and for a step along the strip from the keyboard
+    let swappedAt = -Infinity;           // when the slate's words last changed
     const activate = (frame, quiet) => {
       if (!frame || frame === active) return;
       if (active) active.classList.remove('is-active');
@@ -128,9 +130,14 @@
       go.target = link.target;
       go.rel = link.rel;
       go.dataset.track = link.dataset.track || '';
-      // restart the settle animation so the words arrive with the mark
+      // restart the settle animation so the words arrive with the mark, unless
+      // the last words are still settling (the strip flung past several
+      // frames): then these simply replace them, and nothing blinks
       slate.classList.remove('swap');
-      if (quiet) return;
+      const now = performance.now();
+      const hurried = now - swappedAt < 320;
+      swappedAt = now;
+      if (quiet || hurried) return;
       void slate.offsetWidth;
       slate.classList.add('swap');
     };
@@ -179,7 +186,7 @@
       clearTimeout(dwell);
     });
 
-    frames.forEach((frame) => frame.addEventListener('focusin', () => activate(frame)));
+    frames.forEach((frame) => frame.addEventListener('focusin', () => activate(frame, true)));
 
     // With no hover to point with (a touch screen), the pencil marks the frame
     // tapped last, not the one the strip's scroll comes to (css/site.css). A
@@ -389,20 +396,79 @@
   // reduced motion it is a short crossfade instead, and a browser without view
   // transitions switches at once, as it always did.
   let shifts = 0;
+  let current = null;                    // the transition on screen, if any
   const SHIFT_CLASSES = ['lights-shift', 'lights-up', 'lights-down', 'lights-fade'];
 
+  function setTheme(theme) {
+    root.dataset.theme = theme;
+    try { localStorage.setItem('rg-theme', theme); } catch (_) {}
+    renderLights();
+  }
+
+  // The circle's size now, read from the picture it clips
+  function radiusNow(sweep) {
+    const clip = getComputedStyle(root, sweep.pseudo).clipPath;
+    const m = /circle\(\s*([\d.]+)px/.exec(clip || '');
+    return m ? parseFloat(m[1]) : null;
+  }
+
+  // Draw the circle from where it is to one end: the far one finishes the
+  // sweep, the near one brings the old light back as it was
+  function steer(sweep, home) {
+    const r = radiusNow(sweep);
+    const from = r === null ? (sweep.on ? 0 : sweep.reach) : Math.min(Math.max(r, 0), sweep.reach);
+    const to = sweep.on === home ? 0 : sweep.reach;
+    const circle = (size) => `circle(${size}px at ${sweep.x}px ${sweep.y}px)`;
+    if (sweep.circle) sweep.circle.cancel();
+    sweep.circle = root.animate({ clipPath: [circle(from), circle(to)] }, {
+      duration: 700 * Math.abs(to - from) / sweep.reach,
+      easing: getComputedStyle(root).getPropertyValue('--ease-out-soft').trim() || 'ease-out',
+      fill: 'both',
+      pseudoElement: sweep.pseudo,
+    });
+    // Heading home, the transition must outlast the circle (a still hold on
+    // its root), so the old light is put back under it before it lifts
+    if (home && !sweep.hold) {
+      sweep.hold = root.animate({ opacity: [1, 1] }, { duration: Infinity, pseudoElement: '::view-transition' });
+    }
+    if (!home && sweep.hold) {
+      sweep.hold.cancel();
+      sweep.hold = null;
+    }
+    const circleNow = sweep.circle;
+    circleNow.finished.then(() => {
+      if (!home || sweep.circle !== circleNow) return;
+      setTheme(sweep.from);
+      sweep.shift.skipTransition();
+    }).catch(() => {});
+  }
+
   function switchLights(next) {
-    const apply = () => {
-      root.dataset.theme = next;
-      try { localStorage.setItem('rg-theme', next); } catch (_) {}
-      renderLights();
-    };
     if (!document.startViewTransition) {
-      apply();
+      setTheme(next);
+      return;
+    }
+    const calm = reducedMotion.matches;
+    // A click while the lights are still changing never starts a second
+    // change over the first (the browser would picture a blank page). A sweep
+    // turns round from where its circle has got to; the page under it is
+    // already in the new light and goes back only once the circle is home.
+    // A crossfade simply ends where the click wants it.
+    if (current) {
+      if (!calm && current.pseudo) {
+        // each click turns it round: home, then on again, and so on
+        const sweep = current;
+        const home = !sweep.home;
+        sweep.home = home;
+        sweep.shift.ready.then(() => steer(sweep, home)).catch(() => {});
+        return;
+      }
+      current.shift.skipTransition();
+      setTheme(next);
       return;
     }
     const mine = ++shifts;
-    const calm = reducedMotion.matches;
+    const from = currentTheme();
     const on = next === 'light';
     const box = lights.getBoundingClientRect();
     const x = box.left + box.width / 2;
@@ -412,18 +478,14 @@
 
     root.classList.remove(...SHIFT_CLASSES);
     root.classList.add('lights-shift', calm ? 'lights-fade' : on ? 'lights-up' : 'lights-down');
-    const shift = document.startViewTransition(apply);
+    const shift = document.startViewTransition(() => setTheme(next));
+    const sweep = { shift, from, on, x, y, reach, home: false, circle: null, hold: null, pseudo: calm ? null : on ? '::view-transition-new(root)' : '::view-transition-old(root)' };
+    current = sweep;
     shift.ready.then(() => {
-      if (calm) return;
-      const circle = [`circle(0px at ${x}px ${y}px)`, `circle(${reach}px at ${x}px ${y}px)`];
-      root.animate({ clipPath: on ? circle : circle.reverse() }, {
-        duration: 700,
-        easing: getComputedStyle(root).getPropertyValue('--ease-out-soft').trim() || 'ease-out',
-        fill: 'both',
-        pseudoElement: on ? '::view-transition-new(root)' : '::view-transition-old(root)',
-      });
+      if (!calm && !sweep.circle) steer(sweep, false);
     }).catch(() => {});
     shift.finished.finally(() => {
+      if (current === sweep) current = null;
       if (mine === shifts) root.classList.remove(...SHIFT_CLASSES);
     });
   }
@@ -431,7 +493,16 @@
   if (lights) {
     renderLights();
     systemDark.addEventListener('change', renderLights);
-    lights.addEventListener('click', () => switchLights(currentTheme() === 'dark' ? 'light' : 'dark'));
+    const flip = () => switchLights(currentTheme() === 'dark' ? 'light' : 'dark');
+    lights.addEventListener('click', flip);
+    // While the lights change, the browser shows pictures of the page and
+    // hands every click to <html>. The page under them is the same page in
+    // the same place, so a click where the switch is counts as the switch's.
+    document.addEventListener('click', (e) => {
+      if (!current || e.target !== root) return;
+      const box = lights.getBoundingClientRect();
+      if (e.clientX >= box.left && e.clientX <= box.right && e.clientY >= box.top && e.clientY <= box.bottom) flip();
+    });
   }
 
   // ─── UI sound: synthesized, off until the visitor turns it on ─────
@@ -520,6 +591,51 @@
     });
   }
 
+  // The clapper's clap (cursor.js brings the stick down on a press over a
+  // poster, and says when it will land): the crack of the two sticks meeting
+  // over a short knock of the wood, a few hundredths of a second in all.
+  // Light and low, about as loud as the hover tick and well under a press
+  // click, and like every sound here silent unless Sound is on.
+  function clack(delay) {
+    if (!soundOn) return;
+    const ac = audio();
+    if (!ac) return;
+    const t0 = ac.currentTime + delay;
+    // the one place to turn it up or down. At 0.5 it peaks near -18 dBFS
+    const out = ac.createGain();
+    out.gain.value = 0.5;
+    out.connect(ac.destination);
+
+    // the crack: noise gone within a few hundredths of a second, band-passed high
+    const length = Math.ceil(ac.sampleRate * 0.06);
+    const buffer = ac.createBuffer(1, length, ac.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < length; i++) data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ac.sampleRate * 0.005));
+    const noise = ac.createBufferSource();
+    const crack = ac.createBiquadFilter();
+    const crackGain = ac.createGain();
+    noise.buffer = buffer;
+    crack.type = 'bandpass';
+    crack.frequency.value = 3000;
+    crack.Q.value = 1.1;
+    crackGain.gain.value = 0.5;
+    noise.connect(crack).connect(crackGain).connect(out);
+    noise.start(t0);
+
+    // the knock: the wood's own note, struck and damped
+    const tone = ac.createOscillator();
+    const knock = ac.createGain();
+    tone.frequency.value = 1150;
+    knock.gain.setValueAtTime(0, t0);
+    knock.gain.linearRampToValueAtTime(0.08, t0 + 0.001);
+    knock.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.035);
+    tone.connect(knock).connect(out);
+    tone.start(t0);
+    tone.stop(t0 + 0.045);
+  }
+
+  document.addEventListener('rg:clap', (e) => clack(((e.detail && e.detail.lands) || 0) / 1000));
+
   function renderSound() {
     if (!sound) return;
     sound.querySelector('.state').textContent = soundOn ? 'on' : 'off';
@@ -545,12 +661,15 @@
     if (el) click(0.18, 0.025, 3200);
   });
 
+  const mouseCursor = document.querySelector('.figma-cursor');
   document.addEventListener('pointerdown', (e) => {
     // any press wakes the audio while a gesture is in hand: Safari will not
     // start it later from a timer, which is when the game's cheer is due
     if (soundOn) audio();
     const el = e.target.closest('a, button');
-    if (el && el !== sound) click(0.5, 0.06, 1800);
+    // a mouse press under the clapper claps it (cursor.js): the clap is its sound
+    const clapping = e.pointerType === 'mouse' && e.button === 0 && mouseCursor && mouseCursor.dataset.state === 'slate';
+    if (el && el !== sound && !clapping) click(0.5, 0.06, 1800);
   });
 
   // ─── The game: a small cheer when the confetti goes up ──────────────
@@ -662,15 +781,39 @@
   // goes and fading a little, and resists the other way. Let go past the
   // game's mark and the game's own exit carries it on from where it is; let go
   // before, and it springs back. The game's script is untouched.
+  //
+  // Toward the other poster it gives a quarter of the finger's move at first
+  // and never more than 24px (under half the gutter): friction rising to a
+  // stop, not a wall. A poster caught while it springs back carries on from
+  // where it is instead of jumping home under the finger.
+  const RESIST = 24;
+  const pull = (v) => Math.sign(v) * RESIST * (1 - Math.exp(-Math.abs(v) * 0.25 / RESIST));
+  // the finger travel a given pull stands for (for a poster caught on its way back)
+  const unpull = (d) => -Math.sign(d) * (RESIST / 0.25) * Math.log(1 - Math.min(Math.abs(d), RESIST * 0.999) / RESIST);
+
   document.querySelectorAll('.sr-card-left, .sr-card-right').forEach((card) => {
     const edge = card.classList.contains('sr-card-left') ? -1 : 1;
     const sliding = () => /\bslide-(out|in)-/.test(card.className);
     let startX = null;
     let startY = 0;
+    let base = 0;                        // the finger travel the poster already stood for at touchdown
     let across = null;                   // decided on the first few pixels: across (ours) or down (a scroll)
 
     const settle = () => {
       card.style.transition = '';
+      card.style.transform = '';
+      card.style.opacity = '';
+    };
+
+    // the poster for a finger that has travelled v: free toward its edge, held the other way
+    const place = (v) => {
+      const dx = v * edge > 0 ? v : pull(v);
+      card.style.transform = dx ? `translateX(${dx}px) rotate(${(dx * 0.04).toFixed(2)}deg)` : '';
+      card.style.opacity = dx * edge > 0 ? String(Math.max(0.6, 1 - Math.abs(dx) / 300)) : '';
+    };
+
+    const springBack = () => {
+      card.style.transition = reducedMotion.matches ? 'none' : 'transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out)';
       card.style.transform = '';
       card.style.opacity = '';
     };
@@ -680,7 +823,12 @@
       startX = e.touches[0].clientX;
       startY = e.touches[0].clientY;
       across = null;
+      // where the poster is now (on its way back from the last drag, or home)
+      const now = getComputedStyle(card).transform;
+      const at = now && now !== 'none' ? new DOMMatrixReadOnly(now).m41 : 0;
+      base = at * edge > 0 ? at : unpull(at);
       card.style.transition = 'none';
+      place(base);
     }, { passive: true });
 
     card.addEventListener('touchmove', (e) => {
@@ -693,13 +841,10 @@
       }
       if (!across) {
         startX = null;
-        settle();
+        springBack();
         return;
       }
-      const out = mx * edge > 0;
-      const dx = out ? mx : mx * 0.25;
-      card.style.transform = `translateX(${dx}px) rotate(${(dx * 0.04).toFixed(2)}deg)`;
-      card.style.opacity = out ? String(Math.max(0.6, 1 - Math.abs(dx) / 300)) : '';
+      place(base + mx);
     }, { passive: true });
 
     const release = () => {
@@ -708,9 +853,7 @@
       // the game's own handler has run by the next frame: rejected, or not
       requestAnimationFrame(() => {
         if (/\bslide-out-/.test(card.className)) return;
-        card.style.transition = reducedMotion.matches ? 'none' : 'transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out)';
-        card.style.transform = '';
-        card.style.opacity = '';
+        springBack();
       });
     };
     card.addEventListener('touchend', release, { passive: true });
@@ -742,10 +885,20 @@
   }
 
   // ─── Beer emoji: plays once when the page appears, again on hover ──
+  // With reduced motion it keeps still: its player shows the two mugs at
+  // rest (its first frame, the same as its last) once it is not told to
+  // play. This runs before the player's own script, so taking away autoplay
+  // is enough; stop() covers a player that is already running.
   const cheers = document.getElementById('cheers-lottie');
-  if (cheers) {
+  if (cheers && reducedMotion.matches) {
+    cheers.removeAttribute('autoplay');
+    if (typeof cheers.stop === 'function') cheers.stop();
+  } else if (cheers) {
     const replay = () => {
       if (typeof cheers.stop !== 'function') return;
+      // a toast already under way plays on, rather than starting over
+      const state = typeof cheers.getState === 'function' ? cheers.getState() : null;
+      if (state && state.currentState === 'playing') return;
       cheers.stop();
       cheers.play();
     };

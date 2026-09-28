@@ -23,7 +23,7 @@
   <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- Before first paint: the chosen theme, whether the intro already played this visit, and the opening -->
+  <!-- Before first paint: the chosen theme, whether the intro plays (it does not once it has played this visit, or for a visitor who asks for less motion), and the opening -->
   <script>
     (function () {
       var root = document.documentElement;
@@ -33,6 +33,8 @@
         if (theme === 'light' || theme === 'dark') root.dataset.theme = theme;
         if (sessionStorage.getItem('rg-intro-seen') === '1') root.classList.add('intro-seen');
       } catch (e) {}
+      // A visitor who asks for less motion is spared the crawl, as if it had played
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) root.classList.add('intro-seen');
       // No intro this time: the page settles in as it opens (site.js takes the class off)
       if (root.classList.contains('intro-seen')) root.classList.add('entering');
       // The intro restores scroll itself once it ends
@@ -40,17 +42,17 @@
     })();
   </script>
 
-  <link rel="stylesheet" href="css/intro.css?v=2026-09-28">
-  <link rel="stylesheet" href="css/site.css?v=2026-09-28">
+  <link rel="stylesheet" href="css/intro.css?v=2026-09-29">
+  <link rel="stylesheet" href="css/site.css?v=2026-09-29">
 
   <!-- The site's own scripts run before the page is first drawn
        (blocking="render"; a browser without it runs them as plain deferred
        scripts), so a page transition finds the page ready: the right frame
        on the strip, the cursor under the mouse. They come before the remote
        scripts below, which deferred scripts would otherwise wait for. -->
-  <script src="js/intro.js?v=2026-09-28" defer blocking="render"></script>
-  <script src="js/cursor.js?v=2026-09-28" defer blocking="render"></script>
-  <script src="js/site.js?v=2026-09-28" defer blocking="render"></script>
+  <script src="js/intro.js?v=2026-09-29" defer blocking="render"></script>
+  <script src="js/cursor.js?v=2026-09-29" defer blocking="render"></script>
+  <script src="js/site.js?v=2026-09-29" defer blocking="render"></script>
 
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="manifest" href="site.webmanifest">
@@ -249,7 +251,7 @@
                 <svg class="loop" aria-hidden="true" focusable="false"><use href="#pencil-wide"/></svg>
               </span>
               <div class="cap">
-                <h3 class="title">learncivicsense.in</h3>
+                <h3 class="title">Learn Civic Sense</h3>
                 <p class="desc">Short, practical lessons on civic sense in India, drawn from real situations. Free, no login, no lectures.</p>
                 <span class="go"><span class="under">Visit the site</span></span>
               </div>

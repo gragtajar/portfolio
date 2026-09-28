@@ -83,6 +83,11 @@
   background-size: 100% 2px, 4px 2px;
 }
 
+/* The mark leaves in the ink it was drawn in: only the pointer, the keyboard
+   or a press brings the red, so a link the reader has moved on from never
+   flashes it as its line lifts off */
+.cs-index a:not(:hover, :focus-visible, :active) .under { --stroke: var(--ink); }
+
 /* --- Reading --- */
 .cs-body > section {
   margin-top: clamp(64px, 9vw, 120px);
