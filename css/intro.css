@@ -93,7 +93,9 @@ body.intro-finished .site-footer {
      ends as far past the last line as it did before. The lines wrap
      differently at each size of the board, so each size has its own end point
      and duration (measured: the four lines were 15.2%, 18% and 23.6% of the
-     board's height). */
+     board's height). The words wait just below the board (top: 100%) and the
+     crawl carries them up by transform, so the browser's compositor runs it
+     and it keeps its pace while the page's scripts load. */
   animation: scroll 38.13s linear 0.5s;
   position: absolute;
   top: 100%;
@@ -128,19 +130,19 @@ body.intro-finished .site-footer {
   margin-bottom: 0.5em;
 }
 
+/* The same distances as ever: from 100% of the board's height (its 50em) to
+   -49.79%, -47% and -41.41% of it, that is up by 74.895em, 73.5em and
+   70.705em in the board's own type size */
 @keyframes scroll {
-  0% { top: 100%; }
-  100% { top: -49.79%; }
+  to { transform: translateY(-74.895em); }
 }
 
 @keyframes scroll-md {
-  0% { top: 100%; }
-  100% { top: -47%; }
+  to { transform: translateY(-73.5em); }
 }
 
 @keyframes scroll-sm {
-  0% { top: 100%; }
-  100% { top: -41.41%; }
+  to { transform: translateY(-70.705em); }
 }
 
 /* Skip button */
@@ -158,7 +160,8 @@ body.intro-finished .site-footer {
   padding: 10px 18px;
   border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  /* only what hover and the fade-out change: never its place, which moves on a phone */
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
 }
 
 .intro-skip:hover {
