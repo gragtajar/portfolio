@@ -169,14 +169,17 @@
         or <a href="resume.pdf" download="Rajat-Garg-Lead-Product-Designer-Resume.pdf" data-track="resume">download my resume</a>.
       </p>
 
-      <!-- Utilities: after the contact sentence in the flow, top-right on wide screens -->
+      <!-- Utilities: after the contact sentence in the flow, top-right on wide screens.
+           Each has its key (site.js), shown as a keycap where there is a keyboard. -->
       <nav class="tools" aria-label="Site">
-        <button type="button" class="switch sound-toggle" aria-pressed="false"><span class="under">Sound <span class="state">off</span></span></button>
-        <button type="button" class="switch theme-toggle" aria-pressed="true"><span class="under">Lights <span class="state">on</span></span></button>
+        <button type="button" class="switch sound-toggle" aria-pressed="false" aria-keyshortcuts="S"><span class="under">Sound <span class="state">off</span></span><kbd class="key" aria-hidden="true">S</kbd></button>
+        <button type="button" class="switch theme-toggle" aria-pressed="true" aria-keyshortcuts="L"><span class="under">Lights <span class="state">on</span></span><kbd class="key" aria-hidden="true">L</kbd></button>
       </nav>
     </section>
 
     <!-- The contact strip: one frame per work. Adding a work = one more <li class="frame">.
+         Each frame's link carries its number key (aria-keyshortcuts, the same as
+         its edge print) and a keycap after its action.
          Media can be an <img>, or a <video class="clip"> that behaves like a GIF.
          A site's frame can show its phone layout on a phone: a <picture> with a
          (max-width: 767px) source, the same 16:9 as the frames around it. -->
@@ -188,12 +191,12 @@
         <div class="slate" aria-hidden="true" hidden>
           <p class="slate-title"></p>
           <p class="slate-desc"></p>
-          <a class="open slate-go" tabindex="-1"><span class="under"></span></a>
+          <a class="open slate-go" tabindex="-1"><span class="under"></span><kbd class="key" aria-hidden="true"></kbd></a>
         </div>
 
         <ol class="roll">
           <li class="frame is-active">
-            <a href="lenskart-eye-test.html" data-track="lk-card">
+            <a href="lenskart-eye-test.html" data-track="lk-card" aria-keyshortcuts="1">
               <span class="edge no">01 <span>Case study</span> <span class="name">Lenskart</span></span>
               <span class="still">
                 <img src="assets/home/eye-test-hero.png" alt="Lenskart eye test case study: redesigning the in-store experience across 1600+ stores" width="3200" height="1800" fetchpriority="high" decoding="async">
@@ -202,13 +205,13 @@
               <div class="cap">
                 <h3 class="title">From 34 Minutes to 8: Redesigning Lenskart's <span class="nowrap">In-Store</span> Eye Test Experience</h3>
                 <p class="desc">Led designs of iPad, mobile &amp; TV apps for customers &amp; staff that reduced eye test wait time by 38% in 1600+ Lenskart stores.</p>
-                <span class="go"><span class="under">Open the case study</span></span>
+                <span class="go"><span class="under">Open the case study</span><kbd class="key" aria-hidden="true">1</kbd></span>
               </div>
             </a>
           </li>
 
           <li class="frame">
-            <a href="https://www.figma.com/community/plugin/1653647181051443124/library-pulse" target="_blank" rel="noopener" data-track="lp-install">
+            <a href="https://www.figma.com/community/plugin/1653647181051443124/library-pulse" target="_blank" rel="noopener" data-track="lp-install" aria-keyshortcuts="2">
               <span class="edge no">02 <span>Figma plugin</span> <span class="name">Library Pulse</span></span>
               <span class="still">
                 <img src="assets/library-pulse/cover.png" alt="Library Pulse: Slack alerts for Figma library publishes" width="1920" height="1080" decoding="async">
@@ -217,13 +220,13 @@
               <div class="cap">
                 <h3 class="title">Library Pulse</h3>
                 <p class="desc">Slack alerts the moment your Figma library is published, with exactly what changed.</p>
-                <span class="go"><span class="under">View on Figma Community</span></span>
+                <span class="go"><span class="under">View on Figma Community</span><kbd class="key" aria-hidden="true">2</kbd></span>
               </div>
             </a>
           </li>
 
           <li class="frame">
-            <a href="screening-room.html">
+            <a href="screening-room.html" aria-keyshortcuts="3">
               <span class="edge no">03 <span>Movie game</span> <span class="name">Screening Room</span></span>
               <span class="still">
                 <picture>
@@ -235,13 +238,13 @@
               <div class="cap">
                 <h3 class="title">Screening Room</h3>
                 <p class="desc">A movie bracket game that reveals my taste in cinema. Pick your favorite, round by round.</p>
-                <span class="go"><span class="under">Play</span></span>
+                <span class="go"><span class="under">Play</span><kbd class="key" aria-hidden="true">3</kbd></span>
               </div>
             </a>
           </li>
 
           <li class="frame">
-            <a href="https://learncivicsense.in/" target="_blank" rel="noopener" data-track="lcs-card">
+            <a href="https://learncivicsense.in/" target="_blank" rel="noopener" data-track="lcs-card" aria-keyshortcuts="4">
               <span class="edge no">04 <span>Website</span> <span class="name">learncivicsense.in</span></span>
               <span class="still">
                 <picture>
@@ -253,13 +256,13 @@
               <div class="cap">
                 <h3 class="title">Learn Civic Sense</h3>
                 <p class="desc">Short, practical lessons on civic sense in India, drawn from real situations. Free, no login, no lectures.</p>
-                <span class="go"><span class="under">Visit the site</span></span>
+                <span class="go"><span class="under">Visit the site</span><kbd class="key" aria-hidden="true">4</kbd></span>
               </div>
             </a>
           </li>
 
           <li class="frame">
-            <a href="https://www.figma.com/community/file/1516171459035590514/flags-library-svg" target="_blank" rel="noopener" data-track="flags-card">
+            <a href="https://www.figma.com/community/file/1516171459035590514/flags-library-svg" target="_blank" rel="noopener" data-track="flags-card" aria-keyshortcuts="5">
               <span class="edge no">05 <span>Figma file</span> <span class="name">Flags Library</span></span>
               <span class="still">
                 <img src="assets/home/flags.png" alt="Flags Library: 253 SVG country flags, shown on a dotted world map" width="1920" height="1080" loading="lazy" decoding="async">
@@ -268,7 +271,7 @@
               <div class="cap">
                 <h3 class="title">Flags Library (SVG)</h3>
                 <p class="desc">253 country flags in rectangular SVG format, sorted by continent. Free to use under CC BY 4.0.</p>
-                <span class="go"><span class="under">View on Figma Community</span></span>
+                <span class="go"><span class="under">View on Figma Community</span><kbd class="key" aria-hidden="true">5</kbd></span>
               </div>
             </a>
           </li>
