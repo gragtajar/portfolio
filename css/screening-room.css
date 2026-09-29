@@ -240,6 +240,22 @@
   touch-action: pan-y;
 }
 
+/* Where there is a keyboard, a poster's edge print starts with the keycap of
+   its arrow (css/site.css), centred on the year's line and ahead of it. It
+   takes no room of its own, so the frames stand exactly where they did. */
+@media (hover: hover) and (pointer: fine) {
+  .js .sr-card { position: relative; }
+
+  .js .sr-card > .sr-key {
+    position: absolute;
+    top: calc((0.6875rem * 1.3 - 18px) / 2);
+    left: 0;
+    margin: 0;
+  }
+
+  .js .sr-card > .sr-card-year { padding-left: 26px; }
+}
+
 .sr-still {
   position: relative;
   aspect-ratio: 2 / 3;
