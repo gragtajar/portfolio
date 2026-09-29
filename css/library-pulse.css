@@ -1,0 +1,46 @@
+/* ============================================
+   LIBRARY PULSE
+   The Figma plugin's own page: what it is, where to get it, how to use it,
+   and its privacy policy and terms of use. It is built on the reading
+   patterns the case study established (css/case-study.css); only what this
+   short page adds is here.
+   ============================================ */
+
+/* It ends on words rather than a band, so the room before the footer's
+   hairline is the room between its sections */
+.page-plugin main { padding-block: clamp(32px, 5vw, 72px) clamp(48px, 7vw, 88px); }
+
+/* The plugin's one line, under its name */
+.page-plugin .lede {
+  max-width: 37rem;
+  margin-top: clamp(20px, 3vw, 24px);
+  font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+/* A short page: its sections sit closer together than a case study's chapters */
+.page-plugin .cs-body > section { margin-top: clamp(48px, 7vw, 88px); }
+
+/* A quiet note after a list keeps a paragraph's distance from it (the case
+   study sets a quiet note tight under the heading it qualifies) */
+.page-plugin .cs-body :is(ul, ol) + .quiet { margin-top: 16px; }
+
+/* The way to the plugin: the section's one action, a step up from its words */
+.page-plugin .get {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+/* On a phone the sticky index keeps clear of the notch */
+@media (max-width: 63.99em) {
+  .page-plugin .cs-index { top: env(safe-area-inset-top, 0px); }
+}
+
+/* From 84em the case study puts its facts beside its title; this page has none */
+@media (min-width: 84em) {
+  .page-plugin .cs-head {
+    display: block;
+    max-width: calc(62rem + var(--pad));
+  }
+}
