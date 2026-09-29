@@ -46,16 +46,16 @@
     })();
   </script>
 
-  <link rel="stylesheet" href="css/site.css?v=2026-09-29">
-  <link rel="stylesheet" href="css/screening-room.css?v=2026-09-29">
+  <link rel="stylesheet" href="css/site.css?v=2026-09-29.2">
+  <link rel="stylesheet" href="css/screening-room.css?v=2026-09-29.2">
 
   <!-- The site's own scripts run before the page is first drawn
        (blocking="render"; a browser without it runs them as plain deferred
        scripts), so a page transition finds the page ready: the right frame
        on the strip, the cursor under the mouse. They come before the remote
        scripts below, which deferred scripts would otherwise wait for. -->
-  <script src="js/cursor.js?v=2026-09-29" defer blocking="render"></script>
-  <script src="js/site.js?v=2026-09-29" defer blocking="render"></script>
+  <script src="js/cursor.js?v=2026-09-29.2" defer blocking="render"></script>
+  <script src="js/site.js?v=2026-09-29.2" defer blocking="render"></script>
 
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="manifest" href="site.webmanifest">
@@ -159,11 +159,15 @@
           </div>
         </div>
 
-        <!-- Game arena -->
+        <!-- Game arena. ← and → keep the poster on that side (site.js clicks
+             its card, as a mouse would); each card's edge print starts with
+             its keycap where there is a keyboard. The arrows are Phosphor's
+             arrow-left and arrow-right, bold (MIT licence, phosphoricons.com). -->
         <div class="sr-arena">
           <div class="sr-cards">
             <!-- Left card -->
-            <div class="sr-card sr-card-left">
+            <div class="sr-card sr-card-left" aria-keyshortcuts="ArrowLeft">
+              <kbd class="key sr-key" aria-hidden="true"><svg viewBox="0 0 256 256" focusable="false"><path d="M228,128a12,12,0,0,1-12,12H69l51.52,51.51a12,12,0,0,1-17,17l-72-72a12,12,0,0,1,0-17l72-72a12,12,0,0,1,17,17L69,116H216A12,12,0,0,1,228,128Z"/></svg></kbd>
               <span class="sr-card-year edge"></span>
               <div class="sr-still">
                 <div class="sr-poster"></div>
@@ -180,7 +184,8 @@
             <div class="sr-vs">VS</div>
 
             <!-- Right card -->
-            <div class="sr-card sr-card-right">
+            <div class="sr-card sr-card-right" aria-keyshortcuts="ArrowRight">
+              <kbd class="key sr-key" aria-hidden="true"><svg viewBox="0 0 256 256" focusable="false"><path d="M224.49,136.49l-72,72a12,12,0,0,1-17-17L187,140H40a12,12,0,0,1,0-24H187L135.51,64.48a12,12,0,0,1,17-17l72,72A12,12,0,0,1,224.49,136.49Z"/></svg></kbd>
               <span class="sr-card-year edge"></span>
               <div class="sr-still">
                 <div class="sr-poster"></div>
@@ -252,7 +257,7 @@
   </footer>
 
   <!-- canvas-confetti is lazy-loaded inside screening-room.js when a game ends -->
-  <script src="js/screening-room.js?v=2026-09-29" defer></script>
+  <script src="js/screening-room.js?v=2026-09-29.2" defer></script>
 
 </body>
 </html>

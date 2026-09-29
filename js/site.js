@@ -125,7 +125,10 @@
       // innerHTML, not textContent: the title may carry a no-wrap span (the page's own static markup)
       slate.querySelector('.slate-title').innerHTML = frame.querySelector('.title').innerHTML;
       slate.querySelector('.slate-desc').textContent = frame.querySelector('.desc').textContent;
-      go.querySelector('.under').textContent = frame.querySelector('.go').textContent;
+      go.querySelector('.under').textContent = frame.querySelector('.go .under').textContent;
+      // the frame's number key, shown after the action as it is under the frame
+      const cap = go.querySelector('.key');
+      if (cap) cap.textContent = link.getAttribute('aria-keyshortcuts') || '';
       go.href = link.href;
       go.target = link.target;
       go.rel = link.rel;
@@ -671,6 +674,54 @@
     const clapping = e.pointerType === 'mouse' && e.button === 0 && mouseCursor && mouseCursor.dataset.state === 'slate';
     if (el && el !== sound && !clapping) click(0.5, 0.06, 1800);
   });
+
+  // ─── Keys ──────────────────────────────────────────────
+  // A page names its keys in its markup (aria-keyshortcuts), and a key does
+  // what a click on its element would: on the homepage 1 to 5 open the works
+  // in the order of their edge print, S flips Sound and L the Lights; in the
+  // game ← and → keep the poster on that side (its script hears a click on
+  // the card, as from a mouse). Never while typing (the cursor's name), with
+  // a modifier held (the browser's own shortcuts are those), under the intro,
+  // or for an element not on screen: the posters are keys only while a game
+  // is on. A key held down counts once, and its keycap stays down with it.
+  const keyed = [...document.querySelectorAll('[aria-keyshortcuts]')];
+  if (keyed.length) {
+    const nameOf = (e) => (e.key.length === 1 ? e.key.toUpperCase() : e.key);
+    let held = null;                     // the key that is down, and its keycaps
+    const letGo = () => {
+      if (held) held.caps.forEach((cap) => cap.classList.remove('is-down'));
+      held = null;
+    };
+
+    document.addEventListener('keydown', (e) => {
+      if (e.defaultPrevented || e.isComposing || e.metaKey || e.ctrlKey || e.altKey) return;
+      const typing = e.target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName);
+      if (typing || introActive()) return;
+      const key = nameOf(e);
+      const el = keyed.find((k) => k.getAttribute('aria-keyshortcuts').split(' ').includes(key) && k.getClientRects().length);
+      if (!el) return;
+      e.preventDefault();
+      if (e.repeat) return;
+      // a key is a gesture too: wake the audio for sounds due later (see pointerdown)
+      if (soundOn) audio();
+      const caps = [...el.querySelectorAll('.key')];
+      // a frame opened by its key takes the mark, and the slate speaks for it
+      const frame = el.closest('.frame');
+      if (frame && strip) {
+        strip.bringIn(frame);
+        if (strip.slate) caps.push(strip.slate.querySelector('.key'));
+      }
+      letGo();
+      held = { key, caps: caps.filter(Boolean) };
+      held.caps.forEach((cap) => cap.classList.add('is-down'));
+      el.click();
+    });
+
+    document.addEventListener('keyup', (e) => {
+      if (held && held.key === nameOf(e)) letGo();
+    });
+    window.addEventListener('blur', letGo);
+  }
 
   // ─── The game: a small cheer when the confetti goes up ──────────────
   // The game's own script is not ours to change, so this only watches for what
