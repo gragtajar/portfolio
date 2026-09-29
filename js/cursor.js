@@ -260,11 +260,14 @@
       input.focus();
       input.select();
 
+      // Once only: taking the field away blurs it, which calls this again
+      // while the field is being removed (and the browser threw an error)
       const finish = () => {
+        if (!isEditing) return;
+        isEditing = false;
         const val = input.value.trim() || 'Guest';
         cursorName = val;
         labelContainer.innerHTML = `<span class="cursor-label-text">${cursorName}</span>`;
-        isEditing = false;
       };
 
       input.addEventListener('keydown', (ev) => {
