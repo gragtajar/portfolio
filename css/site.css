@@ -322,6 +322,72 @@ h1 dotlottie-player {
 
 .switch .state { color: var(--ink); font-weight: 600; }
 
+/* --- Keys: a keycap beside what its key does ---
+   A small square key in the edge print's condensed capitals and the second
+   ink of its ground, a hairline around it and the thin lower edge of a real
+   key. It shows only where a mouse or a trackpad points, so a keyboard is at
+   hand, and only with the script, which is what listens for the keys
+   (site.js). A key held down pushes its keycap down, at once, the way a key
+   goes: no animation for something the keyboard does. */
+.key { display: none; }
+
+@media (hover: hover) and (pointer: fine) {
+  .js .key {
+    --key-line: var(--line);
+    --key-ink: var(--ink-2);
+    --key-ink-down: var(--ink);
+    display: inline-grid;
+    place-items: center;
+    inline-size: 18px;
+    block-size: 18px;
+    /* drawn at 18px, counted at 14: it never makes its line taller */
+    margin: -2px 0 -2px 8px;
+    border: 1px solid var(--key-line);
+    border-radius: 3px;
+    box-shadow: 0 1px 0 var(--key-line);
+    color: var(--key-ink);
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    font-stretch: 75%;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    /* its middle level with the middle of the capitals beside it, the lower
+       edge counted */
+    vertical-align: 3px;
+  }
+
+  .js .band .key {
+    --key-line: var(--base-line);
+    --key-ink: var(--base-ink-2);
+    --key-ink-down: var(--base-ink);
+  }
+
+  /* the slate's, while the frame it speaks for has no key */
+  .js .key:empty { display: none; }
+
+  /* beside the smaller words of a frame's caption, lifted a little less */
+  .js .go .key { vertical-align: 2px; }
+
+  /* a glyph for a key with no letter (the game's arrows), from Phosphor */
+  .js .key svg {
+    width: 10px;
+    height: 10px;
+    max-width: none;
+    fill: currentColor;
+  }
+
+  /* held down from the keyboard (site.js), or pressed with its control */
+  .js .key.is-down,
+  .js :is(a, button, [aria-keyshortcuts]):active .key {
+    color: var(--key-ink-down);
+    box-shadow: none;
+    transform: translateY(1px);
+  }
+}
+
 /* --- About --- */
 .about {
   display: grid;
