@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Pulse, a Figma plugin by Rajat Garg</title>
+  <meta name="description" content="Library Pulse posts a Slack update the moment your Figma library is published, listing exactly what changed. About, download, how to use, privacy policy and terms of use.">
+  <meta name="author" content="Rajat Garg">
+  <meta name="theme-color" content="#f4f5f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#18191a" media="(prefers-color-scheme: dark)">
+
+  <link rel="canonical" href="https://rajatg.in/library-pulse-plugin">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Rajat Garg">
+  <meta property="og:title" content="Library Pulse, a Figma plugin">
+  <meta property="og:description" content="Slack alerts the moment your Figma library is published: see exactly what changed.">
+  <meta property="og:url" content="https://rajatg.in/library-pulse-plugin">
+  <meta property="og:image" content="https://rajatg.in/assets/library-pulse/cover.png">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1080">
+  <meta property="og:image:alt" content="Library Pulse: a Slack message the moment your Figma library is published">
+
+  <!-- Fonts are served from this site (css/site.css declares them). The one
+       connection kept to fonts.gstatic.com is for the animated beer emoji. -->
+  <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Before first paint: the chosen theme -->
+  <script>
+    (function () {
+      var root = document.documentElement;
+      root.classList.add('js');
+      try {
+        var theme = localStorage.getItem('rg-theme');
+        if (theme === 'light' || theme === 'dark') root.dataset.theme = theme;
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="stylesheet" href="css/site.css?v=2026-09-29">
+  <link rel="stylesheet" href="css/case-study.css?v=2026-09-29">
+  <link rel="stylesheet" href="css/library-pulse.css?v=2026-09-29">
+
+  <!-- The site's own scripts run before the page is first drawn
+       (blocking="render"; a browser without it runs them as plain deferred
+       scripts), so a page transition finds the page ready: the right frame
+       on the strip, the cursor under the mouse. They come before the remote
+       scripts below, which deferred scripts would otherwise wait for. -->
+  <script src="js/cursor.js?v=2026-09-29" defer blocking="render"></script>
+  <script src="js/site.js?v=2026-09-29" defer blocking="render"></script>
+
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="manifest" href="site.webmanifest">
+
+  <!-- Lottie player for the animated beer emoji -->
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+  <!-- Analytics: Cloudflare Web Analytics (cookieless, deferred) -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "599e70fe62dd40bf8b0fa8569f070d68"}'></script>
+
+  <!--
+    Analytics: Amplitude, loaded async by script injection so it never blocks
+    rendering. trackEvent() queues events fired before the SDK is ready.
+  -->
+  <script>
+  (function () {
+    window.trackEvent = function (name) {
+      if (window.amplitude && typeof window.amplitude.track === 'function') {
+        window.amplitude.track(name);
+      } else {
+        (window.__ampQueue = window.__ampQueue || []).push(name);
+      }
+    };
+    var s = document.createElement('script');
+    s.src = 'https://cdn.amplitude.com/script/8300beffc146f03833610e507db0468c.js';
+    s.async = true;
+    s.onload = function () {
+      if (!window.amplitude) return;
+      if (window.sessionReplay && window.amplitude.add) {
+        window.amplitude.add(window.sessionReplay.plugin({ sampleRate: 1 }));
+      }
+      window.amplitude.init('8300beffc146f03833610e507db0468c', {
+        fetchRemoteConfig: true,
+        autocapture: {
+          attribution: { trackingMethod: ['userProperty', 'eventProperty'] },
+          fileDownloads: true,
+          formInteractions: true,
+          pageViews: true,
+          sessions: true,
+          elementInteractions: true,
+          networkTracking: true,
+          webVitals: true,
+          frustrationInteractions: { thrashedCursor: true, errorClicks: true, deadClicks: true, rageClicks: true }
+        }
+      });
+      (window.__ampQueue || []).forEach(function (n) { window.amplitude.track(n); });
+      window.__ampQueue = [];
+    };
+    document.head.appendChild(s);
+  })();
+  </script>
+</head>
+<body class="page-case page-plugin">
+
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <p class="way-home"><a href="index.html" class="home-link">Rajat Garg</a> <dotlottie-player id="cheers-lottie" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f37b/lottie.json" autoplay speed="1" aria-hidden="true"></dotlottie-player></p>
+    <nav class="tools" aria-label="Site">
+      <button type="button" class="switch sound-toggle" aria-pressed="false"><span class="under">Sound <span class="state">off</span></span></button>
+      <button type="button" class="switch theme-toggle" aria-pressed="true"><span class="under">Lights <span class="state">on</span></span></button>
+    </nav>
+  </header>
+
+  <!-- The plugin's own page: what it is, where to get it, how to use it, and
+       its privacy policy and terms of use. Linked from nowhere on the site;
+       its sections are addressable (#privacy, #terms) for app listings. Every
+       statement here comes from the plugin's Figma Community page or its
+       released code. -->
+  <main id="main">
+
+    <header class="cs-head">
+      <h1>Library Pulse</h1>
+      <p class="lede">Slack alerts the moment your Figma library is published: see exactly what changed.</p>
+      <p class="cs-read-time">A free Figma plugin by Rajat Garg · <span class="keep">Version 6, 25 September 2026</span></p>
+    </header>
+
+    <nav class="cs-index" aria-label="Sections">
+      <a href="#about"><span class="under">About</span></a>
+      <a href="#download"><span class="under">Download</span></a>
+      <a href="#how-to-use"><span class="under">How to use</span></a>
+      <a href="#privacy"><span class="under">Privacy policy</span></a>
+      <a href="#terms"><span class="under">Terms of use</span></a>
+    </nav>
+
+    <div class="cs-body">
+
+      <figure class="fig cs-hero">
+        <img src="assets/library-pulse/cover.png" alt="Library Pulse: a published Figma design library sends a Slack message from the Library Pulse app, &quot;Library Published&quot;, with 2 components added and 3 modified" width="1920" height="1080" fetchpriority="high" decoding="async">
+      </figure>
+
+      <section id="about">
+        <h2>About</h2>
+        <p>When someone publishes changes to a Figma library, the people who use it usually find out by accident. Library Pulse closes that gap: the moment the library is published, it posts a Slack message that lists exactly what changed.</p>
+
+        <h3 class="minor">What the Slack message includes</h3>
+        <ul>
+          <li>The library's name and who published it</li>
+          <li>The publisher's description, the note they typed when publishing</li>
+          <li>Components, styles and variables that were added, modified or removed</li>
+          <li>Your team's own message, with real @mentions that ping people or user groups in Slack</li>
+          <li>The publish time, shown in each reader's own time zone</li>
+          <li>A link back to the file</li>
+        </ul>
+
+        <p>It watches the one file you choose, using your own access to that file, so you don't need to be a Figma team or organisation admin. Everyone with edit access to the file shares one setup, and it posts to one to three Slack channels.</p>
+      </section>
+
+      <section id="download">
+        <h2>Download</h2>
+        <p>Library Pulse is free on the Figma Community.</p>
+        <p class="get"><a href="https://www.figma.com/community/plugin/1653647181051443124/library-pulse" target="_blank" rel="noopener">Get Library Pulse on Figma Community</a></p>
+
+        <h3 class="minor">You will need</h3>
+        <ul>
+          <li>A Slack workspace where you can add an app</li>
+          <li>Edit access to the Figma library file you want to watch</li>
+          <li>The library published at least once: that is how the plugin identifies the file</li>
+        </ul>
+        <p class="quiet">Publishing libraries is a paid-plan Figma feature. Slack user groups need a paid Slack plan; mentioning people works on every plan.</p>
+      </section>
+
+      <section id="how-to-use">
+        <h2>How to use</h2>
+        <ol>
+          <li>Open the plugin in your Figma library file. It connects your Figma account (one quick browser confirmation the first time) and identifies the file on its own.</li>
+          <li>Connect your Slack workspace (Slack workspace admin approval required).</li>
+          <li>Pick one to three Slack channels and, if you like, write a message to go with every update: type @ to mention people or user groups.</li>
+          <li>Choose Save &amp; Activate.</li>
+        </ol>
+        <p>From then on, every publish of that file posts an update to your channels. To stop them, open the plugin in the file and choose Disable. If Slack or Figma access is ever revoked, the plugin says exactly what to reconnect.</p>
+      </section>
+
+      <section id="privacy">
+        <h2>Privacy policy</h2>
+        <p class="quiet">Last updated 29 September 2026</p>
+        <p>This policy covers Library Pulse: the Figma plugin and the service behind it, which connects to Figma and Slack for you. Library Pulse is made and maintained by Rajat Garg.</p>
+
+        <h3 class="minor">What it can access</h3>
+        <ul>
+          <li><strong>In Figma,</strong> it asks only for permission to manage webhooks on your file, to check that you can access the file, and to read published component and style metadata, which is how it identifies the file. It never reads your designs or file contents. Inside the plugin it also reads your Figma user ID, to connect your account, and your name, which it only shows back to you in the plugin.</li>
+          <li><strong>In Slack,</strong> it can post messages and list the names of channels, members and user groups for its pickers. It never reads your messages.</li>
+        </ul>
+
+        <h3 class="minor">What it stores</h3>
+        <ul>
+          <li>Your Figma user ID, and the access tokens Figma issues to Library Pulse</li>
+          <li>For each connected Slack workspace: its ID and name, the Slack user ID of the person who connected it, and the token Slack issues to Library Pulse</li>
+          <li>For each file that is set up: its key and name, the chosen channels, the optional team message and its mentions, the Figma user ID of the person who set it up, and whether its updates are on</li>
+          <li>A record of each publish received and each update sent: the file, the channel, the time, and whether it was delivered</li>
+          <li>For the pickers, a copy of your workspace's channel, member and user-group names, fetched from Slack again once it is more than ten minutes old</li>
+          <li>While you connect Figma or Slack, a sign-in record that hands your session to the plugin, valid for ten minutes</li>
+          <li>On your computer, in Figma's storage for the plugin: a session token and your connection details</li>
+        </ul>
+        <p>The Figma and Slack tokens are encrypted at rest (AES-256-GCM). Your file contents are never stored, and the details of each publish are passed on to Slack, not kept.</p>
+
+        <h3 class="minor">How it is used</h3>
+        <p>Only to deliver the updates you set up and to fill the plugin's pickers. It is never sold or shared.</p>
+
+        <h3 class="minor">Where it is kept</h3>
+        <p>The service runs on Vercel and keeps its data in a Supabase (Postgres) database. Access is limited to the maintainer. Vercel's operational logs record events such as a saved setup or a failed delivery, with identifiers like your Figma user ID, and never your tokens.</p>
+
+        <h3 class="minor">Keeping and deleting it</h3>
+        <ul>
+          <li>Library Pulse keeps this data until you ask for it to be deleted. Disable stops a file's updates and keeps its setup.</li>
+          <li>The person who set up a file can also choose Remove Figma connection, which deletes the webhook Library Pulse registered on the file.</li>
+          <li>You can revoke Library Pulse's access to your Figma account, and remove the app from your Slack workspace, at any time.</li>
+          <li>To have your data deleted, email <a href="mailto:rajatgarg1809@gmail.com">rajatgarg1809@gmail.com</a>.</li>
+        </ul>
+
+        <h3 class="minor">Changes and contact</h3>
+        <p>Any change to this policy is posted on this page with a new date. Questions and data requests: <a href="mailto:rajatgarg1809@gmail.com">rajatgarg1809@gmail.com</a>.</p>
+      </section>
+
+      <section id="terms">
+        <h2>Terms of use</h2>
+        <p class="quiet">Last updated 29 September 2026</p>
+        <p>By installing or using Library Pulse, you agree to these terms.</p>
+        <ul>
+          <li><strong>Free.</strong> Library Pulse is free to use.</li>
+          <li><strong>Your use.</strong> Use it only with Figma files and Slack workspaces you are allowed to use, and follow Figma's and Slack's own terms. You are responsible for what your setup posts, including your team's message and its mentions.</li>
+          <li><strong>As is.</strong> Library Pulse is provided as is, without warranties of any kind. Updates can be delayed or missed, and the service can change, pause or end at any time.</li>
+          <li><strong>Liability.</strong> To the extent the law allows, Rajat Garg is not liable for any loss or damage arising from the use of Library Pulse.</li>
+          <li><strong>Stopping.</strong> You can stop at any time: disable it in the plugin, revoke its access to your Figma account and remove it from your Slack workspace.</li>
+          <li><strong>Changes.</strong> Any change to these terms is posted on this page with a new date. Using Library Pulse after a change means you accept it.</li>
+        </ul>
+        <p>Questions: <a href="mailto:rajatgarg1809@gmail.com">rajatgarg1809@gmail.com</a>.</p>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p class="quote"></p>
+    <p class="credit">written &amp; directed by me. produced by claude</p>
+  </footer>
+
+  <script src="js/case-study.js?v=2026-09-29" defer></script>
+
+</body>
+</html>
