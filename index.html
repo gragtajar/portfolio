@@ -175,6 +175,16 @@
         <button type="button" class="switch sound-toggle" aria-pressed="false" aria-keyshortcuts="S"><span class="under">Sound <span class="state">off</span></span><kbd class="key" aria-hidden="true">S</kbd></button>
         <button type="button" class="switch theme-toggle" aria-pressed="true" aria-keyshortcuts="L"><span class="under">Lights <span class="state">on</span></span><kbd class="key" aria-hidden="true">L</kbd></button>
       </nav>
+
+      <!-- Where I've worked, latest first: each company's own symbol in one ink
+           (images/logos/companies.svg), sized by eye to look the same size, and
+           its name over it on hover, keyboard focus or a tap (site.js) -->
+      <ul class="companies" aria-label="Where I've worked">
+        <li><span class="company" role="img" aria-label="TestMu AI" tabindex="0"><svg class="mark mark-testmu" aria-hidden="true" focusable="false"><use href="images/logos/companies.svg#testmu"/></svg><span class="tip" aria-hidden="true">TestMu AI</span></span></li>
+        <li><span class="company" role="img" aria-label="Lenskart" tabindex="0"><svg class="mark mark-lenskart" aria-hidden="true" focusable="false"><use href="images/logos/companies.svg#lenskart"/></svg><span class="tip" aria-hidden="true">Lenskart</span></span></li>
+        <li><span class="company" role="img" aria-label="dox2U" tabindex="0"><svg class="mark mark-dox2u" aria-hidden="true" focusable="false"><use href="images/logos/companies.svg#dox2u"/></svg><span class="tip" aria-hidden="true">dox2U</span></span></li>
+        <li><span class="company" role="img" aria-label="Apporio" tabindex="0"><svg class="mark mark-apporio" aria-hidden="true" focusable="false"><use href="images/logos/companies.svg#apporio"/></svg><span class="tip" aria-hidden="true">Apporio</span></span></li>
+      </ul>
     </section>
 
     <!-- The contact strip: one frame per work. Adding a work = one more <li class="frame">.

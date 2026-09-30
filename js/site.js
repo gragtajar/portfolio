@@ -341,6 +341,43 @@
     roll.querySelectorAll('img').forEach((img) => { img.draggable = false; });
   }
 
+  // ─── Where I've worked: a name over each mark ───────────────────────
+  // The stylesheet shows a mark's name under a mouse (after a beat) and on
+  // keyboard focus. Once one name has shown, the row is warm and the next
+  // mark along answers at once, until the pointer has been off the row for a
+  // moment. With no hover (a touch screen) a tap shows a name, and a tap on
+  // it again or anywhere else puts it away.
+  const companies = document.querySelector('.companies');
+  if (companies) {
+    let warming = 0;
+    let cooling = 0;
+    companies.addEventListener('pointerover', (e) => {
+      if (e.pointerType !== 'mouse' || !e.target.closest('.company')) return;
+      clearTimeout(cooling);
+      if (companies.classList.contains('is-warm')) return;
+      clearTimeout(warming);
+      // as the first name finishes its beat (css/site.css, 300ms)
+      warming = setTimeout(() => companies.classList.add('is-warm'), 300);
+    });
+    companies.addEventListener('pointerout', (e) => {
+      if (e.pointerType !== 'mouse' || companies.contains(e.relatedTarget)) return;
+      clearTimeout(warming);
+      cooling = setTimeout(() => companies.classList.remove('is-warm'), 300);
+    });
+
+    const tapped = window.matchMedia('(hover: none)');
+    const openOnly = (company) => companies.querySelectorAll('.company').forEach((c) => c.classList.toggle('is-open', c === company));
+    companies.addEventListener('click', (e) => {
+      if (!tapped.matches) return;
+      const company = e.target.closest('.company');
+      openOnly(company && !company.classList.contains('is-open') ? company : null);
+    });
+    // (a press, not a click: iOS sends no click for a tap on plain words)
+    document.addEventListener('pointerdown', (e) => {
+      if (!companies.contains(e.target)) openOnly(null);
+    });
+  }
+
   // ─── Clips: a <video class="clip"> behaves like a GIF ──────────────
   // Muted loop, playing only while it is on screen, and never on its own for
   // visitors who prefer less motion (they get the browser's own controls).
