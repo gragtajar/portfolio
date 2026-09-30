@@ -254,6 +254,14 @@
   }
 
   .js .sr-card > .sr-card-year { padding-left: 26px; }
+
+  /* Play's Enter keycap hangs after the word without taking room, so the
+     word stays centred under the disc */
+  .js .sr-play-label .key { margin-right: -26px; }
+
+  /* Restart's shows only while Enter restarts: on the winner's screen, when
+     site.js names the key on the button */
+  .js .sr-restart:not([aria-keyshortcuts]) .key { display: none; }
 }
 
 .sr-still {
@@ -568,7 +576,7 @@
 
   .entering .sr-stage:not(.is-carried) .sr-play-disc { animation: sr-disc-in 0.5s var(--ease-out) 0.45s backwards; }
 
-  .entering .sr-stage:not(.is-carried) .sr-play-btn > .under { animation: rise 0.5s var(--ease-out) 0.55s backwards; }
+  .entering .sr-stage:not(.is-carried) .sr-play-btn > .sr-play-label { animation: rise 0.5s var(--ease-out) 0.55s backwards; }
 }
 
 /* With reduced motion the page only fades in, without moving */

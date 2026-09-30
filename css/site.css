@@ -336,6 +336,7 @@ h1 dotlottie-player {
     --key-line: var(--line);
     --key-ink: var(--ink-2);
     --key-ink-down: var(--ink);
+    --key-ground: var(--paper);
     display: inline-grid;
     place-items: center;
     inline-size: 18px;
@@ -344,6 +345,8 @@ h1 dotlottie-player {
     margin: -2px 0 -2px 8px;
     border: 1px solid var(--key-line);
     border-radius: 3px;
+    /* its own ground under it, for the one that sits over a picture (Play's) */
+    background: var(--key-ground);
     box-shadow: 0 1px 0 var(--key-line);
     color: var(--key-ink);
     font-family: var(--font-sans);
@@ -363,6 +366,7 @@ h1 dotlottie-player {
     --key-line: var(--base-line);
     --key-ink: var(--base-ink-2);
     --key-ink-down: var(--base-ink);
+    --key-ground: var(--base);
   }
 
   /* the slate's, while the frame it speaks for has no key */
