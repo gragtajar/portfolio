@@ -336,6 +336,7 @@ h1 dotlottie-player {
     --key-line: var(--line);
     --key-ink: var(--ink-2);
     --key-ink-down: var(--ink);
+    --key-ground: var(--paper);
     display: inline-grid;
     place-items: center;
     inline-size: 18px;
@@ -344,6 +345,8 @@ h1 dotlottie-player {
     margin: -2px 0 -2px 8px;
     border: 1px solid var(--key-line);
     border-radius: 3px;
+    /* its own ground under it, for the one that sits over a picture (Play's) */
+    background: var(--key-ground);
     box-shadow: 0 1px 0 var(--key-line);
     color: var(--key-ink);
     font-family: var(--font-sans);
@@ -363,6 +366,7 @@ h1 dotlottie-player {
     --key-line: var(--base-line);
     --key-ink: var(--base-ink-2);
     --key-ink-down: var(--base-ink);
+    --key-ground: var(--base);
   }
 
   /* the slate's, while the frame it speaks for has no key */
@@ -430,6 +434,104 @@ h1 dotlottie-player {
 }
 
 .reach a { color: var(--ink); }
+
+/* --- Where I've worked: four marks in a row under the words ---
+   Each company's own symbol in the second ink (the sprite's symbols take
+   currentColor; dox2U's colours are tones of it over the paper). They are
+   sized to look the same size rather than to share one box: equal areas to
+   start, then set by eye in both lights, smaller for the heaviest (Apporio's
+   bold letters, TestMu AI's solid blocks), larger for the lightest (dox2U's
+   pale back sheets, Lenskart's thin strokes). Not links, so the pointer
+   stays the arrow; a mark darkens to the ink under it and its name floats
+   above it (site.js adds the tap, and the quick hand-over between marks). */
+.companies {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+  margin-top: 4px;
+  padding: 0;
+  list-style: none;
+  color: var(--ink-2);
+}
+
+.company {
+  position: relative;
+  display: block;
+}
+
+.company .mark {
+  display: block;
+  width: var(--w);
+  height: var(--h);
+  max-width: none;
+}
+
+.mark-testmu { --w: 24px; --h: 27px; }
+.mark-lenskart { --w: 49px; --h: 20.6px; }
+.mark-dox2u { --w: 28px; --h: 32.8px; }
+.mark-apporio { --w: 23.3px; --h: 26.7px; }
+
+/* The name: a small label in ink over the mark, pointing down at it */
+.company .tip {
+  position: absolute;
+  z-index: 1;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  translate: -50% 0;
+  padding: 5px 8px 6px;
+  border-radius: 3px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  scale: 0.97;
+  transform-origin: 50% 100%;
+}
+
+.company .tip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  translate: -50% 0;
+  border: 4px solid transparent;
+  border-top-color: var(--ink);
+}
+
+/* shown on keyboard focus and after a tap (site.js), and under a mouse */
+.company:is(:focus-visible, .is-open) { color: var(--ink); }
+.company:is(:focus-visible, .is-open) .tip { opacity: 1; scale: 1; }
+
+@media (hover: hover) {
+  .company:hover { color: var(--ink); }
+  .company:hover .tip { opacity: 1; scale: 1; }
+}
+
+/* It grows from the mark in a moment (the site's ease-out), and goes the
+   same way. Under a mouse the first name waits a beat, so a pointer passing
+   over shows nothing; once one is showing, the next mark along answers at
+   once, with no delay and no motion (site.js marks the row warm). With
+   reduced motion it only fades. */
+.company { transition: color 0.2s ease; }
+
+.company .tip { transition: opacity 125ms var(--ease-out), scale 125ms var(--ease-out); }
+
+@media (hover: hover) {
+  .company:hover .tip { transition-delay: 300ms; }
+  .companies.is-warm .company:hover .tip { transition: none; }
+}
+
+.company:focus-visible .tip { transition-delay: 0s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .company .tip { scale: 1; }
+}
 
 /* --- The band: paper with the lights on, a strip of film base with them off --- */
 .band, .site-footer {
@@ -1015,7 +1117,7 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
 .page-home .role, .page-home .tools { --k: 1; }
 .page-home .bio, .slate-title { --k: 2; }
 .page-home .reach, .slate-desc { --k: 3; }
-.slate-go { --k: 4; }
+.slate-go, .page-home .companies { --k: 4; }
 
 @media (prefers-reduced-motion: no-preference) {
   .entering .page-home :is(.ident > *, .about > *, .slate:not(.swap) > *):not(.is-carried) {

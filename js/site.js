@@ -341,6 +341,43 @@
     roll.querySelectorAll('img').forEach((img) => { img.draggable = false; });
   }
 
+  // ─── Where I've worked: a name over each mark ───────────────────────
+  // The stylesheet shows a mark's name under a mouse (after a beat) and on
+  // keyboard focus. Once one name has shown, the row is warm and the next
+  // mark along answers at once, until the pointer has been off the row for a
+  // moment. With no hover (a touch screen) a tap shows a name, and a tap on
+  // it again or anywhere else puts it away.
+  const companies = document.querySelector('.companies');
+  if (companies) {
+    let warming = 0;
+    let cooling = 0;
+    companies.addEventListener('pointerover', (e) => {
+      if (e.pointerType !== 'mouse' || !e.target.closest('.company')) return;
+      clearTimeout(cooling);
+      if (companies.classList.contains('is-warm')) return;
+      clearTimeout(warming);
+      // as the first name finishes its beat (css/site.css, 300ms)
+      warming = setTimeout(() => companies.classList.add('is-warm'), 300);
+    });
+    companies.addEventListener('pointerout', (e) => {
+      if (e.pointerType !== 'mouse' || companies.contains(e.relatedTarget)) return;
+      clearTimeout(warming);
+      cooling = setTimeout(() => companies.classList.remove('is-warm'), 300);
+    });
+
+    const tapped = window.matchMedia('(hover: none)');
+    const openOnly = (company) => companies.querySelectorAll('.company').forEach((c) => c.classList.toggle('is-open', c === company));
+    companies.addEventListener('click', (e) => {
+      if (!tapped.matches) return;
+      const company = e.target.closest('.company');
+      openOnly(company && !company.classList.contains('is-open') ? company : null);
+    });
+    // (a press, not a click: iOS sends no click for a tap on plain words)
+    document.addEventListener('pointerdown', (e) => {
+      if (!companies.contains(e.target)) openOnly(null);
+    });
+  }
+
   // ─── Clips: a <video class="clip"> behaves like a GIF ──────────────
   // Muted loop, playing only while it is on screen, and never on its own for
   // visitors who prefer less motion (they get the browser's own controls).
@@ -677,29 +714,50 @@
 
   // ─── Keys ──────────────────────────────────────────────
   // A page names its keys in its markup (aria-keyshortcuts), and a key does
-  // what a click on its element would: on the homepage 1 to 5 open the works
-  // in the order of their edge print, S flips Sound and L the Lights; in the
-  // game ← and → keep the poster on that side (its script hears a click on
-  // the card, as from a mouse). Never while typing (the cursor's name), with
-  // a modifier held (the browser's own shortcuts are those), under the intro,
+  // what a click on its element would: S flips Sound and L the Lights (on
+  // the homepage, the case study and the game); on the homepage 1 to 5 open
+  // the works in the order of their edge print; in the game ← and → keep the
+  // poster on that side (its script hears a click on the card, as from a
+  // mouse), and Enter starts a game from rest (Play, or Restart on the
+  // winner's screen). Never while typing (the cursor's name), with a
+  // modifier held (the browser's own shortcuts are those), under the intro,
   // or for an element not on screen: the posters are keys only while a game
   // is on. A key held down counts once, and its keycap stays down with it.
-  const keyed = [...document.querySelectorAll('[aria-keyshortcuts]')];
-  if (keyed.length) {
+  const keyed = () => [...document.querySelectorAll('[aria-keyshortcuts]')];
+  if (keyed().length) {
     const nameOf = (e) => (e.key.length === 1 ? e.key.toUpperCase() : e.key);
+    const keysOf = (el) => el.getAttribute('aria-keyshortcuts').split(' ');
     let held = null;                     // the key that is down, and its keycaps
     const letGo = () => {
       if (held) held.caps.forEach((cap) => cap.classList.remove('is-down'));
       held = null;
     };
 
+    // Which control the keyboard moved focus to (Tab), as opposed to one a
+    // click left focused. Chrome counts a clicked button as keyboard-focused
+    // (:focus-visible) as soon as any key is pressed, so this is kept here.
+    let pressedLast = false;             // was the last input a pointer press?
+    let keyboardFocus = null;
+    document.addEventListener('pointerdown', () => { pressedLast = true; }, true);
+    document.addEventListener('keydown', () => { pressedLast = false; }, true);
+    document.addEventListener('focusin', (e) => { keyboardFocus = pressedLast ? null : e.target; });
+
     document.addEventListener('keydown', (e) => {
       if (e.defaultPrevented || e.isComposing || e.metaKey || e.ctrlKey || e.altKey) return;
       const typing = e.target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName);
       if (typing || introActive()) return;
       const key = nameOf(e);
-      const el = keyed.find((k) => k.getAttribute('aria-keyshortcuts').split(' ').includes(key) && k.getClientRects().length);
-      if (!el) return;
+      // Enter on a link or a button the keyboard has moved to is that
+      // control's own (an IMDB link opens, a focused Restart restarts)
+      if (key === 'Enter' && e.target !== document.body && e.target === keyboardFocus) return;
+      const all = keyed();
+      const el = all.find((k) => keysOf(k).includes(key) && k.getClientRects().length);
+      if (!el) {
+        // With a game on, Enter starts nothing, and is not a press of the
+        // button a mouse click last left focused (Restart, mid-game)
+        if (key === 'Enter' && all.some((k) => keysOf(k).includes('Enter'))) e.preventDefault();
+        return;
+      }
       e.preventDefault();
       if (e.repeat) return;
       // a key is a gesture too: wake the audio for sounds due later (see pointerdown)
@@ -721,6 +779,22 @@
       if (held && held.key === nameOf(e)) letGo();
     });
     window.addEventListener('blur', letGo);
+  }
+
+  // Enter on the winner's screen restarts the game (a new genre, round 1),
+  // so Restart names the key only while that screen is up: during a game it
+  // is still a button, but Enter does not press it (css/screening-room.css
+  // shows its keycap by the same name). The game's script is untouched: this
+  // watches the .active it puts on the winner.
+  const winnerScreen = document.querySelector('.sr-winner');
+  const restartButton = document.querySelector('.sr-restart');
+  if (winnerScreen && restartButton && 'MutationObserver' in window) {
+    const atRest = () => {
+      if (winnerScreen.classList.contains('active')) restartButton.setAttribute('aria-keyshortcuts', 'Enter');
+      else restartButton.removeAttribute('aria-keyshortcuts');
+    };
+    new MutationObserver(atRest).observe(winnerScreen, { attributes: true, attributeFilter: ['class'] });
+    atRest();
   }
 
   // ─── The game: a small cheer when the confetti goes up ──────────────

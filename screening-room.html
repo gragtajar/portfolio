@@ -46,16 +46,16 @@
     })();
   </script>
 
-  <link rel="stylesheet" href="css/site.css?v=2026-09-29.2">
-  <link rel="stylesheet" href="css/screening-room.css?v=2026-09-29.2">
+  <link rel="stylesheet" href="css/site.css?v=2026-09-30">
+  <link rel="stylesheet" href="css/screening-room.css?v=2026-09-30">
 
   <!-- The site's own scripts run before the page is first drawn
        (blocking="render"; a browser without it runs them as plain deferred
        scripts), so a page transition finds the page ready: the right frame
        on the strip, the cursor under the mouse. They come before the remote
        scripts below, which deferred scripts would otherwise wait for. -->
-  <script src="js/cursor.js?v=2026-09-29.2" defer blocking="render"></script>
-  <script src="js/site.js?v=2026-09-29.2" defer blocking="render"></script>
+  <script src="js/cursor.js?v=2026-09-30" defer blocking="render"></script>
+  <script src="js/site.js?v=2026-09-30" defer blocking="render"></script>
 
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="manifest" href="site.webmanifest">
@@ -115,8 +115,8 @@
   <header class="site-header">
     <p class="way-home"><a href="index.html" class="home-link">Rajat Garg</a> <dotlottie-player id="cheers-lottie" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f37b/lottie.json" autoplay speed="1" aria-hidden="true"></dotlottie-player></p>
     <nav class="tools" aria-label="Site">
-      <button type="button" class="switch sound-toggle" aria-pressed="false"><span class="under">Sound <span class="state">off</span></span></button>
-      <button type="button" class="switch theme-toggle" aria-pressed="true"><span class="under">Lights <span class="state">on</span></span></button>
+      <button type="button" class="switch sound-toggle" aria-pressed="false" aria-keyshortcuts="S"><span class="under">Sound <span class="state">off</span></span><kbd class="key" aria-hidden="true">S</kbd></button>
+      <button type="button" class="switch theme-toggle" aria-pressed="true" aria-keyshortcuts="L"><span class="under">Lights <span class="state">on</span></span><kbd class="key" aria-hidden="true">L</kbd></button>
     </nav>
   </header>
 
@@ -134,17 +134,20 @@
            stand at the middle of the screen, the slate's words to their left. -->
       <div class="band sr-stage">
 
-        <!-- The slate during a game: genre, round, and a way to start over -->
+        <!-- The slate during a game: genre, round, and a way to start over.
+             On the winner's screen Enter restarts too: site.js names the key
+             on the button while that screen is up, and its keycap shows. -->
         <div class="sr-slate">
           <p class="sr-genre"></p>
           <p class="sr-round"></p>
-          <button class="sr-restart" style="display:none;"><span class="under">Restart</span></button>
+          <button class="sr-restart" style="display:none;"><span class="under">Restart</span><kbd class="key" aria-hidden="true"><svg viewBox="0 0 256 256" focusable="false"><path d="M204,32V176a12,12,0,0,1-12,12H77l27.52,27.51a12,12,0,0,1-17,17l-48-48a12,12,0,0,1,0-17l48-48a12,12,0,1,1,17,17L77,164H180V32a12,12,0,0,1,24,0Z"/></svg></kbd></button>
         </div>
 
         <!-- Start state: the invitation, and a big Play over two posters from
              the game's own list (Blade Runner 2049 and The Grand Budapest
              Hotel), blurred. The button covers both posters, so pressing
-             anywhere on them starts the game. -->
+             anywhere on them starts the game, and so does Enter (site.js); its
+             keycap is Phosphor's arrow-elbow-down-left, bold (MIT licence). -->
         <div class="sr-start">
           <div class="sr-slate sr-slate-start">
             <p class="sr-tagline">Pick your favorite, round by round</p>
@@ -152,9 +155,9 @@
           <div class="sr-start-hint">
             <span class="sr-teaser" aria-hidden="true"><img src="https://image.tmdb.org/t/p/w185/gajva2L0rPYkEWjzgFlBXCAVBE5.jpg" alt="" width="185" height="278" decoding="async"></span>
             <span class="sr-teaser" aria-hidden="true"><img src="https://image.tmdb.org/t/p/w185/eWdyYQreja6JGCzqHWXpWHDrrPo.jpg" alt="" width="185" height="278" decoding="async"></span>
-            <button class="sr-play-btn" id="sr-play">
+            <button class="sr-play-btn" id="sr-play" aria-keyshortcuts="Enter">
               <span class="sr-play-disc" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 4.5v15l12.5-7.5z"/></svg></span>
-              <span class="under">Play</span>
+              <span class="sr-play-label"><span class="under">Play</span><kbd class="key" aria-hidden="true"><svg viewBox="0 0 256 256" focusable="false"><path d="M204,32V176a12,12,0,0,1-12,12H77l27.52,27.51a12,12,0,0,1-17,17l-48-48a12,12,0,0,1,0-17l48-48a12,12,0,1,1,17,17L77,164H180V32a12,12,0,0,1,24,0Z"/></svg></kbd></span>
             </button>
           </div>
         </div>
@@ -257,7 +260,7 @@
   </footer>
 
   <!-- canvas-confetti is lazy-loaded inside screening-room.js when a game ends -->
-  <script src="js/screening-room.js?v=2026-09-29.2" defer></script>
+  <script src="js/screening-room.js?v=2026-09-30" defer></script>
 
 </body>
 </html>

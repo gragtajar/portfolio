@@ -42,17 +42,17 @@
     })();
   </script>
 
-  <link rel="stylesheet" href="css/intro.css?v=2026-09-29.2">
-  <link rel="stylesheet" href="css/site.css?v=2026-09-29.2">
+  <link rel="stylesheet" href="css/intro.css?v=2026-09-30">
+  <link rel="stylesheet" href="css/site.css?v=2026-09-30">
 
   <!-- The site's own scripts run before the page is first drawn
        (blocking="render"; a browser without it runs them as plain deferred
        scripts), so a page transition finds the page ready: the right frame
        on the strip, the cursor under the mouse. They come before the remote
        scripts below, which deferred scripts would otherwise wait for. -->
-  <script src="js/intro.js?v=2026-09-29.2" defer blocking="render"></script>
-  <script src="js/cursor.js?v=2026-09-29.2" defer blocking="render"></script>
-  <script src="js/site.js?v=2026-09-29.2" defer blocking="render"></script>
+  <script src="js/intro.js?v=2026-09-30" defer blocking="render"></script>
+  <script src="js/cursor.js?v=2026-09-30" defer blocking="render"></script>
+  <script src="js/site.js?v=2026-09-30" defer blocking="render"></script>
 
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="manifest" href="site.webmanifest">
@@ -153,7 +153,7 @@
   <header class="site-header">
     <div class="ident">
       <h1>Rajat Garg <dotlottie-player id="cheers-lottie" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f37b/lottie.json" autoplay speed="1" aria-hidden="true"></dotlottie-player></h1>
-      <p class="role">Product designer</p>
+      <p class="role">Human designer, powered with AI</p>
     </div>
   </header>
 
@@ -175,6 +175,16 @@
         <button type="button" class="switch sound-toggle" aria-pressed="false" aria-keyshortcuts="S"><span class="under">Sound <span class="state">off</span></span><kbd class="key" aria-hidden="true">S</kbd></button>
         <button type="button" class="switch theme-toggle" aria-pressed="true" aria-keyshortcuts="L"><span class="under">Lights <span class="state">on</span></span><kbd class="key" aria-hidden="true">L</kbd></button>
       </nav>
+
+      <!-- Where I've worked, latest first: each company's own symbol in one ink
+           (images/logos/companies.svg), sized by eye to look the same size, and
+           its name over it on hover, keyboard focus or a tap (site.js) -->
+      <ul class="companies" aria-label="Where I've worked">
+        <li><span class="company" role="img" aria-label="TestMu AI" tabindex="0"><svg class="mark mark-testmu" aria-hidden="true" focusable="false"><use href="images/logos/companies.svg#testmu"/></svg><span class="tip" aria-hidden="true">TestMu AI</span></span></li>
+        <li><span class="company" role="img" aria-label="Lenskart" tabindex="0"><svg class="mark mark-lenskart" aria-hidden="true" focusable="false"><use href="images/logos/companies.svg#lenskart"/></svg><span class="tip" aria-hidden="true">Lenskart</span></span></li>
+        <li><span class="company" role="img" aria-label="dox2U" tabindex="0"><svg class="mark mark-dox2u" aria-hidden="true" focusable="false"><use href="images/logos/companies.svg#dox2u"/></svg><span class="tip" aria-hidden="true">dox2U</span></span></li>
+        <li><span class="company" role="img" aria-label="Apporio" tabindex="0"><svg class="mark mark-apporio" aria-hidden="true" focusable="false"><use href="images/logos/companies.svg#apporio"/></svg><span class="tip" aria-hidden="true">Apporio</span></span></li>
+      </ul>
     </section>
 
     <!-- The contact strip: one frame per work. Adding a work = one more <li class="frame">.
@@ -214,7 +224,7 @@
             <a href="https://www.figma.com/community/plugin/1653647181051443124/library-pulse" target="_blank" rel="noopener" data-track="lp-install" aria-keyshortcuts="2">
               <span class="edge no">02 <span>Figma plugin</span> <span class="name">Library Pulse</span></span>
               <span class="still">
-                <img src="assets/library-pulse/cover.png" alt="Library Pulse: Slack alerts for Figma library publishes" width="1920" height="1080" decoding="async">
+                <img src="assets/library-pulse/cover-2026-09-30.jpg" alt="Library Pulse: &quot;Ship it. They'll know.&quot; beside the plugin's window, with Figma connected and Connect to Slack next" width="1920" height="1080" decoding="async">
                 <svg class="loop" aria-hidden="true" focusable="false"><use href="#pencil-wide"/></svg>
               </span>
               <div class="cap">
