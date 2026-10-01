@@ -394,10 +394,13 @@ h1 dotlottie-player {
 
 /* --- About --- */
 .about {
+  /* the room between its parts, and the room under the last one */
+  --about-gap: clamp(16px, 2.2dvh, 24px);
+  --about-end: clamp(28px, 4dvh, 48px);
   display: grid;
-  gap: clamp(16px, 2.2dvh, 24px);
+  gap: var(--about-gap);
   max-width: calc(37rem + var(--pad) * 2);
-  padding: clamp(20px, 3.5dvh, 40px) var(--pad) clamp(28px, 4dvh, 48px);
+  padding: clamp(20px, 3.5dvh, 40px) var(--pad) var(--about-end);
 }
 
 /* The homepage's name and words stand three times as far in from the sides
@@ -443,13 +446,24 @@ h1 dotlottie-player {
    bold letters, TestMu AI's solid blocks), larger for the lightest (dox2U's
    pale back sheets, Lenskart's thin strokes). Not links, so the pointer
    stays the arrow; a mark darkens to the ink under it and its name floats
-   above it (site.js adds the tap, and the quick hand-over between marks). */
+   above it (site.js adds the tap, and the quick hand-over between marks).
+
+   They stand midway between the contact sentence and the band, as much room
+   above them as below: the room they had (the gap and 4px over them, the
+   about's end under them) is shared out evenly, so the band stays where it
+   was. On the one-screen layout they take the middle of the spare height
+   too (see "One screen"). */
+.page-home .about {
+  --marks-room: calc((var(--about-gap) + 4px + var(--about-end)) / 2);
+  padding-bottom: var(--marks-room);
+}
+
 .companies {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 16px 28px;
-  margin-top: 4px;
+  margin-top: calc(var(--marks-room) - var(--about-gap));
   padding: 0;
   list-style: none;
   color: var(--ink-2);
@@ -810,7 +824,8 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
 @media (min-width: 64em) and (min-height: 44em) {
   /* The band holds near two fifths of the screen, so at least two whole
      frames and the start of a third are in view; spare height becomes air
-     above the band. The second term keeps the page from ever overflowing. */
+     above the band, either side of the marks. The second term keeps the
+     page from ever overflowing. */
   :root { --frame-h: clamp(170px, min(28dvh, 100dvh - 32.75rem), 340px); }
 
   .js .page-home {
@@ -826,7 +841,18 @@ html:not(.js) .frame a:focus-visible .loop { stroke-dashoffset: 0; }
   }
 
   .js .page-home { --head-top: clamp(44px, 9dvh, 112px); }
-  .js .about { align-self: start; }
+
+  /* The words keep to the top, and the marks take the middle of the room
+     left above the band, as far from the words as from the band however
+     tall the screen. Their row may shrink below them (minmax from 0) so that
+     on the shortest screens, where the words leave a few pixels too little,
+     the marks give up as much room above as below. */
+  .js .about {
+    align-self: stretch;
+    grid-template-rows: auto auto minmax(0, 1fr);
+  }
+
+  .js .page-home .companies { align-self: center; }
 
   .js .band-body {
     position: relative;
