@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Pulse terms of service</title>
+  <meta name="description" content="The terms of service of Library Pulse, a Figma plugin by Rajat Garg.">
+  <meta name="author" content="Rajat Garg">
+  <meta name="theme-color" content="#f4f5f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#18191a" media="(prefers-color-scheme: dark)">
+
+  <link rel="canonical" href="https://rajatg.in/library-pulse-terms-of-service">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Rajat Garg">
+  <meta property="og:title" content="Library Pulse terms of service">
+  <meta property="og:description" content="The terms under which the Figma plugin is offered.">
+  <meta property="og:url" content="https://rajatg.in/library-pulse-terms-of-service">
+  <meta property="og:image" content="https://rajatg.in/assets/library-pulse/cover-2026-09-30.jpg">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1080">
+  <meta property="og:image:alt" content="Library Pulse: &quot;Ship it. They'll know.&quot; beside the plugin's window">
+
+  <!-- Fonts are served from this site (css/site.css declares them). The one
+       connection kept to fonts.gstatic.com is for the animated beer emoji. -->
+  <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Before first paint: the chosen theme -->
+  <script>
+    (function () {
+      var root = document.documentElement;
+      root.classList.add('js');
+      try {
+        var theme = localStorage.getItem('rg-theme');
+        if (theme === 'light' || theme === 'dark') root.dataset.theme = theme;
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="stylesheet" href="css/site.css?v=2026-10-01">
+  <link rel="stylesheet" href="css/case-study.css?v=2026-10-01">
+  <link rel="stylesheet" href="css/library-pulse.css?v=2026-10-01">
+
+  <script src="js/cursor.js?v=2026-10-01" defer blocking="render"></script>
+  <script src="js/site.js?v=2026-10-01" defer blocking="render"></script>
+
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="manifest" href="site.webmanifest">
+
+  <!-- Lottie player for the animated beer emoji -->
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+  <!-- Analytics: Cloudflare Web Analytics (cookieless, deferred) -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "599e70fe62dd40bf8b0fa8569f070d68"}'></script>
+</head>
+<body class="page-case page-plugin">
+
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <p class="way-home"><a href="index.html" class="home-link">Rajat Garg</a> <dotlottie-player id="cheers-lottie" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f37b/lottie.json" autoplay speed="1" aria-hidden="true"></dotlottie-player></p>
+    <nav class="tools" aria-label="Site">
+      <button type="button" class="switch sound-toggle" aria-pressed="false"><span class="under">Sound <span class="state">off</span></span></button>
+      <button type="button" class="switch theme-toggle" aria-pressed="true"><span class="under">Lights <span class="state">on</span></span></button>
+    </nav>
+  </header>
+
+  <!-- The terms of the plugin at a URL of their own, as app stores require.
+       The same text is a section of library-pulse-plugin.html
+       (#terms-of-service): change the two together. -->
+  <main id="main">
+
+    <header class="cs-head">
+      <h1>Terms of service</h1>
+      <p class="lede">For Library Pulse, the Figma plugin by Rajat Garg. By installing or using Library Pulse, you agree to these terms.</p>
+      <p class="cs-read-time">Last updated 1 October 2026 · <a href="library-pulse-plugin">About Library Pulse</a></p>
+    </header>
+
+    <div class="cs-body">
+
+      <section id="terms">
+        <h2>The terms</h2>
+        <ul>
+          <li><strong>Free.</strong> Library Pulse is free to use.</li>
+          <li><strong>Your use.</strong> Use it only with Figma files, Slack workspaces and email addresses you are allowed to use, and follow Figma's and Slack's own terms. Add only the addresses of people who want the updates; each of them confirms before receiving anything. You are responsible for what your setup sends, including your team's message and its mentions.</li>
+          <li><strong>As is.</strong> Library Pulse is provided as is, without warranties of any kind. Updates can be delayed or missed, and the service can change, pause or end at any time.</li>
+          <li><strong>Liability.</strong> To the extent the law allows, Rajat Garg is not liable for any loss or damage arising from the use of Library Pulse.</li>
+          <li><strong>Stopping.</strong> You can stop at any time: disable it in the plugin, revoke its access to your Figma account, remove it from your Slack workspace, remove the email addresses, or use the unsubscribe link in any email.</li>
+          <li><strong>Changes.</strong> Any change to these terms is posted on this page with a new date. Using Library Pulse after a change means you accept it.</li>
+        </ul>
+        <p>Questions: <a href="mailto:library.pulse@rajatg.in">library.pulse@rajatg.in</a>. The privacy policy is at <a href="library-pulse-privacy-policy">rajatg.in/library-pulse-privacy-policy</a>.</p>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p class="quote"></p>
+    <p class="credit">written &amp; directed by me. produced by claude</p>
+  </footer>
+
+  <script src="js/case-study.js?v=2026-10-01" defer></script>
+
+</body>
+</html>
