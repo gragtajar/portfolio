@@ -254,9 +254,11 @@
     show(false);
   });
 
-  // Press `/` to edit cursor name
+  // Press `/` to edit cursor name, but not while typing in a field (the beer
+  // page's search): there a slash is a slash
   document.addEventListener('keydown', (e) => {
-    if (e.key === '/' && !isEditing) {
+    const typing = e.target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName);
+    if (e.key === '/' && !isEditing && !typing) {
       e.preventDefault();
       isEditing = true;
       const labelContainer = cursor.querySelector('.cursor-label');
