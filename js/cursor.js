@@ -55,14 +55,20 @@
           <path d="${STICK}" fill="#000" fill-rule="evenodd"/>
         </svg>
       </span>
-      <div class="cursor-label"><span class="cursor-label-text">Guest</span></div>
+      <div class="cursor-label"><span class="cursor-label-text"></span></div>
     `;
+  // A name given with `/` stays with the cursor from page to page, and on the
+  // next visit, until it is changed again. It is kept in this browser only,
+  // as the Lights and Sound choices are.
+  const NAME_KEY = 'rg-cursor-name';
+  let cursorName = 'Guest';
+  try { cursorName = localStorage.getItem(NAME_KEY) || cursorName; } catch (_) { /* storage off: Guest on every page, as before */ }
+  cursor.querySelector('.cursor-label-text').textContent = cursorName;
   document.body.appendChild(cursor);
   // The stylesheet hides the system pointer only once this class says the custom one is running
   const root = document.documentElement;
   root.classList.add('has-figma-cursor');
 
-  let cursorName = 'Guest';
   let isEditing = false;
 
   // ─── Where the pointer is ───────────────────────────────
@@ -254,8 +260,10 @@
       e.preventDefault();
       isEditing = true;
       const labelContainer = cursor.querySelector('.cursor-label');
-      labelContainer.innerHTML = `<input class="cursor-label-input" type="text" value="${cursorName}" maxlength="10" autofocus />`;
+      labelContainer.innerHTML = '<input class="cursor-label-input" type="text" maxlength="10" autofocus />';
       const input = labelContainer.querySelector('input');
+      // set as text, so a name with quotes or angle brackets stays just a name
+      input.value = cursorName;
       input.style.pointerEvents = 'all';
       input.focus();
       input.select();
@@ -265,9 +273,14 @@
       const finish = () => {
         if (!isEditing) return;
         isEditing = false;
-        const val = input.value.trim() || 'Guest';
-        cursorName = val;
-        labelContainer.innerHTML = `<span class="cursor-label-text">${cursorName}</span>`;
+        cursorName = input.value.trim() || 'Guest';
+        // kept for the next page; an empty name (Guest again) clears it
+        try {
+          if (cursorName === 'Guest') localStorage.removeItem(NAME_KEY);
+          else localStorage.setItem(NAME_KEY, cursorName);
+        } catch (_) { /* storage off: this page has the name, the next starts as Guest */ }
+        labelContainer.innerHTML = '<span class="cursor-label-text"></span>';
+        labelContainer.firstChild.textContent = cursorName;
       };
 
       input.addEventListener('keydown', (ev) => {
