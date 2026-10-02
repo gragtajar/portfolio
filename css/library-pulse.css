@@ -26,6 +26,14 @@
    study sets a quiet note tight under the heading it qualifies) */
 .page-plugin .cs-body :is(ul, ol) + .quiet { margin-top: 16px; }
 
+/* The privacy policy and the terms on their own pages are one short
+   document each: one section, with small heads where the plugin's page has
+   them. Whatever opens the section sits where a section's title would, and
+   a head linked to directly lands with air above it. */
+.page-plugin .cs-body > section > :first-child { margin-top: 0; }
+
+.page-plugin .cs-body .minor[id] { scroll-margin-top: 32px; }
+
 /* The way to the plugin: the section's one action, a step up from its words */
 .page-plugin .get {
   font-size: 1.125rem;

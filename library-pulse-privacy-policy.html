@@ -78,29 +78,19 @@
       <p class="cs-read-time">Last updated 2 October 2026 · <a href="library-pulse-plugin">About Library Pulse</a></p>
     </header>
 
-    <nav class="cs-index" aria-label="Sections">
-      <a href="#access"><span class="under">What it can access</span></a>
-      <a href="#stores"><span class="under">What it stores</span></a>
-      <a href="#email"><span class="under">How email is delivered</span></a>
-      <a href="#use"><span class="under">How it is used</span></a>
-      <a href="#where"><span class="under">Where it is kept</span></a>
-      <a href="#deleting"><span class="under">Keeping and deleting it</span></a>
-      <a href="#contact"><span class="under">Changes and contact</span></a>
-    </nav>
-
     <div class="cs-body">
 
-      <section id="access">
-        <h2>What it can access</h2>
+      <!-- One short document, so one section with small heads, as it is on
+           the plugin's page; each head keeps an anchor of its own -->
+      <section>
+        <h2 class="minor" id="access">What it can access</h2>
         <ul>
           <li><strong>In Figma,</strong> it asks only for permission to manage webhooks on your file, to check that you can access the file, and to read published component and style metadata, which is how it identifies the file. It never reads your designs or file contents. Inside the plugin it also reads your Figma user ID, to connect your account, and your name, which it only shows back to you in the plugin.</li>
           <li><strong>In Slack,</strong> it can post messages and list the names of channels, members and user groups for its pickers. It never reads your messages.</li>
           <li><strong>By email,</strong> it sends to the addresses an editor of the file enters, and only after each address has confirmed. It never reads anyone's mailbox.</li>
         </ul>
-      </section>
 
-      <section id="stores">
-        <h2>What it stores</h2>
+        <h2 class="minor" id="stores">What it stores</h2>
         <ul>
           <li>Your Figma user ID, and the access tokens Figma issues to Library Pulse</li>
           <li>For each connected Slack workspace: its ID and name, the Slack user ID of the person who connected it, and the token Slack issues to Library Pulse</li>
@@ -112,25 +102,17 @@
           <li>On your computer, in Figma's storage for the plugin: a session token and your connection details</li>
         </ul>
         <p>The Figma and Slack tokens are encrypted at rest (AES-256-GCM). Your file contents are never stored, and the details of each publish are passed on to Slack or into the email, not kept.</p>
-      </section>
 
-      <section id="email">
-        <h2>How email is delivered</h2>
+        <h2 class="minor" id="email">How email is delivered</h2>
         <p>Emails are sent through Amazon Simple Email Service, part of Amazon Web Services, from its Sydney region. Amazon handles the recipient addresses and the message in order to deliver it. If a message bounces or is reported as spam, Amazon forwards the notice to the mailbox <a href="mailto:library.pulse@rajatg.in">library.pulse@rajatg.in</a>; replies to an update go there too. The confirm and unsubscribe links in every email name one file setup and one address and are signed, so they cannot be altered to act on another; confirmation links expire after seven days. To limit misuse, an address receives at most three confirmation emails a day and a file sends at most 150 update emails a day.</p>
-      </section>
 
-      <section id="use">
-        <h2>How it is used</h2>
+        <h2 class="minor" id="use">How it is used</h2>
         <p>Only to deliver the updates you set up and to fill the plugin's pickers. It is never sold, shared or used for advertising.</p>
-      </section>
 
-      <section id="where">
-        <h2>Where it is kept</h2>
+        <h2 class="minor" id="where">Where it is kept</h2>
         <p>The service runs on Vercel and keeps its data in a Supabase (Postgres) database. Access is limited to the maintainer. Vercel's operational logs record events such as a saved setup or a failed delivery, with identifiers like your Figma user ID and a masked form of an email address, and never your tokens.</p>
-      </section>
 
-      <section id="deleting">
-        <h2>Keeping and deleting it</h2>
+        <h2 class="minor" id="deleting">Keeping and deleting it</h2>
         <ul>
           <li>Library Pulse keeps this data until you ask for it to be deleted. Disable stops a file's updates and keeps its setup.</li>
           <li>The person who set up a file can also choose Remove Figma connection, which deletes the webhook Library Pulse registered on the file.</li>
@@ -138,10 +120,8 @@
           <li>You can revoke Library Pulse's access to your Figma account, and remove the app from your Slack workspace, at any time.</li>
           <li>To have your data deleted, email <a href="mailto:library.pulse@rajatg.in">library.pulse@rajatg.in</a>.</li>
         </ul>
-      </section>
 
-      <section id="contact">
-        <h2>Changes and contact</h2>
+        <h2 class="minor" id="contact">Changes and contact</h2>
         <p>Any change to this policy is posted on this page with a new date. Questions and data requests: <a href="mailto:library.pulse@rajatg.in">library.pulse@rajatg.in</a>.</p>
       </section>
 
