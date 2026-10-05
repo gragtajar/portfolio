@@ -1,0 +1,73 @@
+/* ============================================
+   TESTMU AI CASE STUDY
+   What testmu-ai-test-case-generator.html adds to the long-form reading
+   patterns of css/case-study.css. The brief keeps case-study.css as it is,
+   so these live here, loaded by this page only; each is recorded in
+   DESIGN.md under Long-form Reading.
+   ============================================ */
+
+/* Captions are sentences, held to the reading measure like every other
+   sentence; under a wide picture they otherwise ran to 140 characters */
+.cs-body figcaption { max-width: 37rem; }
+
+/* A list inside a list item continues it: 8px down, as its siblings sit */
+.cs-body li > :is(ul, ol) { margin-top: 8px; }
+
+/* A quiet note after a list keeps a paragraph's distance, so it does not
+   read as the list's last line */
+.cs-body :is(ul, ol) + .quiet { margin-top: 16px; }
+
+/* A heading linked from the text lands clear of the sticky index row */
+.cs-body h3[id] { scroll-margin-top: calc(var(--index-h) + 16px); }
+
+/* --- Sub-stories: a story that belongs to the step above it (dedup and
+       root cause analysis under step 7). Ruled on its left like an aside,
+       but the full width of the column, so its pictures keep their size. --- */
+.cs-body .sub {
+  margin-top: clamp(48px, 6vw, 80px);
+  padding-left: 20px;
+  border-left: 1px solid var(--line);
+}
+
+.cs-body .sub > h3 { margin-top: 0; }
+
+/* its labels are labels, as they are directly under a section */
+.cs-body .sub > h4 { margin-top: 40px; color: var(--ink-2); }
+
+.cs-body .sub > h3 + h4 { margin-top: 16px; }
+
+.cs-body .sub > h4 + :is(p, ul, ol, .fig, .figs) { margin-top: 12px; }
+
+/* --- Ledger rows: hairline rows whose terms repeat from block to block
+       (What shipped, Why, Whose call, What I'd do next). The repeated term
+       steps back into the second ink at Small; the judgment is the first
+       ink. Hairline rows with distinct terms (the facts, the timeline)
+       keep the term in first ink. --- */
+.ledger dt {
+  font-size: 0.875rem;
+  color: var(--ink-2);
+}
+
+.ledger dd { color: var(--ink); }
+
+@media (min-width: 64em) {
+  .cs-body h3[id] { scroll-margin-top: 32px; }
+}
+
+/* --- From 84em the facts stand beside the title, as on every case study.
+       These facts are long (five rows, two of them several lines), taller
+       than the title, so the two start together at the top instead of
+       meeting on the title's last baseline, which left the title floating
+       240px down. The column is wider, so the rows wrap less and the first
+       picture arrives sooner; "This story covers:" keeps to one line. --- */
+@media (min-width: 84em) {
+  .cs-head {
+    grid-template-columns: minmax(0, 1fr) 26rem;
+    align-items: start;
+  }
+
+  /* level with the title's own top */
+  .cs-facts { margin-top: clamp(20px, 3vw, 32px); }
+
+  .cs-meta > div { grid-template-columns: minmax(0, 8.5rem) minmax(0, 1fr); }
+}

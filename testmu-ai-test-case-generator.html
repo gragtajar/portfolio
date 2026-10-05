@@ -47,16 +47,17 @@
     })();
   </script>
 
-  <link rel="stylesheet" href="css/site.css?v=2026-10-02.2">
-  <link rel="stylesheet" href="css/case-study.css?v=2026-10-02.2">
+  <link rel="stylesheet" href="css/site.css?v=2026-10-05">
+  <link rel="stylesheet" href="css/case-study.css?v=2026-10-05">
+  <link rel="stylesheet" href="css/testmu.css?v=2026-10-05">
 
   <!-- The site's own scripts run before the page is first drawn
        (blocking="render"; a browser without it runs them as plain deferred
        scripts), so a page transition finds the page ready: the right frame
        on the strip, the cursor under the mouse. They come before the remote
        scripts below, which deferred scripts would otherwise wait for. -->
-  <script src="js/cursor.js?v=2026-10-02.2" defer blocking="render"></script>
-  <script src="js/site.js?v=2026-10-02.2" defer blocking="render"></script>
+  <script src="js/cursor.js?v=2026-10-05" defer blocking="render"></script>
+  <script src="js/site.js?v=2026-10-05" defer blocking="render"></script>
 
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="manifest" href="site.webmanifest">
@@ -152,7 +153,7 @@
 
     <!-- ═══ CASE STUDY HEADER ═══ -->
     <header class="cs-head">
-      <h1><span class="keep">Showing the work:</span> AI test case generation QA teams can check</h1>
+      <h1><span class="keep">Showing the work:</span> <span class="keep">AI test case generation</span> QA teams can check</h1>
 
       <div class="cs-facts">
         <dl class="rows cs-meta">
@@ -277,7 +278,7 @@
               <li>Studied <strong>BrowserStack's generator</strong> as the parity reference</li>
               <li>Reviewed designs with the <strong>PM, engineering and the cofounder</strong></li>
               <li>Used <strong>AI to run UI and UX audits</strong> from several perspectives, and to <strong>synthesise feedback</strong> from those stakeholders</li>
-              <li><strong>No usability testing</strong>: it wasn't part of the team's process (see Learnings)</li>
+              <li><strong>No usability testing</strong>: it wasn't part of the team's process (<a href="#cs-learnings">see Learnings</a>)</li>
             </ul>
           </li>
         </ul>
@@ -340,7 +341,7 @@
           <li>Voice input carried over from v1.</li>
         </ul>
 
-        <figure class="fig">
+        <figure class="fig board board-45">
           <img src="assets/testmu/ai-test-cases/01-entry-point.png" alt="The Test Manager repository toolbar with three actions: Review Duplicates, Generate with AI and Add Test Case." width="2053" height="106" loading="lazy" decoding="async">
           <figcaption>Generate with AI sits in the repository toolbar, next to Review Duplicates and Add Test Case</figcaption>
         </figure>
@@ -509,7 +510,7 @@
 
         <h4>What I learned from using it</h4>
         <ul>
-          <li><strong>The summary is text only.</strong> Nothing in the list marks which fields changed (see trade-off 2).</li>
+          <li><strong>The summary is text only.</strong> Nothing in the list marks which fields changed (<a href="#cs-tradeoff-2">see <span class="nowrap">trade-off 2</span></a>).</li>
         </ul>
 
         <figure class="fig board">
@@ -551,98 +552,102 @@
           <li>My call; not written down.</li>
         </ul>
 
-        <h3>AI Deduplication: the high-stakes version</h3>
+        <div class="sub">
+          <h3>AI Deduplication: the high-stakes version</h3>
 
-        <h4>What it does</h4>
-        <ul>
-          <li>AI with vector search finds duplicate test cases in a project or folder and scores each one against a <strong>base test case</strong>.</li>
-        </ul>
+          <h4>What it does</h4>
+          <ul>
+            <li>AI with vector search finds duplicate test cases in a project or folder and scores each one against a <strong>base test case</strong>.</li>
+          </ul>
 
-        <h4>What I designed</h4>
-        <ul>
-          <li><strong>Before scanning:</strong> users pick the scope and a <strong>minimum match percentage</strong>.</li>
-          <li><strong>Results:</strong>
-            <ul>
-              <li>Base test cases on the left, each with its duplicate and marked counts.</li>
-              <li>Duplicates on the right, each with a <strong>match percentage and a colour dot</strong> (darker red means a closer match).</li>
-            </ul>
-          </li>
-          <li><strong>Side-by-side compare</strong> and <strong>Ignore</strong> for every match.</li>
-          <li><strong>Nothing is pre-selected.</strong> Users mark each duplicate themselves.</li>
-          <li><strong>A running tally</strong> in the footer, by confidence band: above 80%, 50 to 80%, 20 to 50%, below 20%.</li>
-          <li><strong>Delete</strong> opens a modal where users <strong>type DELETE</strong> to confirm.</li>
-        </ul>
+          <h4>What I designed</h4>
+          <ul>
+            <li><strong>Before scanning:</strong> users pick the scope and a <strong>minimum match percentage</strong>.</li>
+            <li><strong>Results:</strong>
+              <ul>
+                <li>Base test cases on the left, each with its duplicate and marked counts.</li>
+                <li>Duplicates on the right, each with a <strong>match percentage and a colour dot</strong> (darker red means a closer match).</li>
+              </ul>
+            </li>
+            <li><strong>Side-by-side compare</strong> and <strong>Ignore</strong> for every match.</li>
+            <li><strong>Nothing is pre-selected.</strong> Users mark each duplicate themselves.</li>
+            <li><strong>A running tally</strong> in the footer, by confidence band: above 80%, 50 to 80%, 20 to 50%, below 20%.</li>
+            <li><strong>Delete</strong> opens a modal where users <strong>type DELETE</strong> to confirm.</li>
+          </ul>
 
-        <h4>Why</h4>
-        <ul>
-          <li><strong>Deletion is permanent.</strong> Every safeguard adds a deliberate step before it.</li>
-          <li><strong>The opposite default to the generator:</strong> the generator starts with everything selected (adding is the goal); dedup starts with nothing selected (deleting can't be undone).</li>
-          <li><strong>Why delete, not archive:</strong> removing duplicates from the repository is the whole point of the feature, and Archive didn't exist yet when dedup shipped.</li>
-        </ul>
+          <h4>Why</h4>
+          <ul>
+            <li><strong>Deletion is permanent.</strong> Every safeguard adds a deliberate step before it.</li>
+            <li><strong>The opposite default to the generator:</strong> the generator starts with everything selected (adding is the goal); dedup starts with nothing selected (deleting can't be undone).</li>
+            <li><strong>Why delete, not archive:</strong> removing duplicates from the repository is the whole point of the feature, and Archive didn't exist yet when dedup shipped.</li>
+          </ul>
 
-        <h4>UX principles at work</h4>
-        <ul>
-          <li><strong>Error prevention:</strong> threshold, opt-in selection, typed confirmation.</li>
-          <li><strong>Calibrated trust:</strong> match percentage plus confidence bands.</li>
-          <li><strong>Human-in-the-loop:</strong> the AI finds; a person deletes.</li>
-        </ul>
-        <p class="quiet"><strong>Launch:</strong> announced publicly on 28 Sep 2026.</p>
+          <h4>UX principles at work</h4>
+          <ul>
+            <li><strong>Error prevention:</strong> threshold, opt-in selection, typed confirmation.</li>
+            <li><strong>Calibrated trust:</strong> match percentage plus confidence bands.</li>
+            <li><strong>Human-in-the-loop:</strong> the AI finds; a person deletes.</li>
+          </ul>
+          <p class="quiet"><strong>Launch:</strong> announced publicly on 28 Sep 2026.</p>
 
-        <!-- figure pending: F20 assets/testmu/ai-test-cases/18-dedup-start.png -->
-        <figure class="fig board">
-          <img src="assets/testmu/ai-test-cases/19-dedup-review.png" alt="Review and Resolve Duplicates for a whole project: two base test cases on the left; on the right, duplicates with AI Generated tags, 96% and 91% match with red dots, and compare and ignore actions; the footer tallies marked duplicates by match band beside Delete Duplicates." width="3024" height="1720" loading="lazy" decoding="async">
-          <figcaption>Each duplicate sits under its base test case with a match percentage and colour dot, and the footer tallies marked duplicates by confidence band</figcaption>
-        </figure>
-        <!-- figure pending: F22 assets/testmu/ai-test-cases/20-dedup-delete.png -->
+          <!-- figure pending: F20 assets/testmu/ai-test-cases/18-dedup-start.png -->
+          <figure class="fig board">
+            <img src="assets/testmu/ai-test-cases/19-dedup-review.png" alt="Review and Resolve Duplicates for a whole project: two base test cases on the left; on the right, duplicates with AI Generated tags, 96% and 91% match with red dots, and compare and ignore actions; the footer tallies marked duplicates by match band beside Delete Duplicates." width="3024" height="1720" loading="lazy" decoding="async">
+            <figcaption>Each duplicate sits under its base test case with a match percentage and colour dot, and the footer tallies marked duplicates by confidence band</figcaption>
+          </figure>
+          <!-- figure pending: F22 assets/testmu/ai-test-cases/20-dedup-delete.png -->
+        </div>
 
-        <h3>AI Root Cause Analysis: dense output made readable</h3>
+        <div class="sub">
+          <h3>AI Root Cause Analysis: dense output made readable</h3>
 
-        <h4>What it does</h4>
-        <ul>
-          <li>When an automated test fails, the AI identifies the likely root cause.</li>
-        </ul>
+          <h4>What it does</h4>
+          <ul>
+            <li>When an automated test fails, the AI identifies the likely root cause.</li>
+          </ul>
 
-        <h4>Before</h4>
-        <ul>
-          <li>Users scoured logs in Automation and HyperExecute by hand. How long it took depended on the failure type, its complexity and the length of the run.</li>
-        </ul>
+          <h4>Before</h4>
+          <ul>
+            <li>Users scoured logs in Automation and HyperExecute by hand. How long it took depended on the failure type, its complexity and the length of the run.</li>
+          </ul>
 
-        <h4>Who decided what</h4>
-        <ul>
-          <li>Product and engineering decided what the analysis contains, based on what's technically feasible.</li>
-          <li>I designed how it reads: every part below.</li>
-        </ul>
+          <h4>Who decided what</h4>
+          <ul>
+            <li>Product and engineering decided what the analysis contains, based on what's technically feasible.</li>
+            <li>I designed how it reads: every part below.</li>
+          </ul>
 
-        <h4>What I designed (information architecture)</h4>
-        <ul>
-          <li><strong>Verdict first:</strong>
-            <ul>
-              <li>A two-level category (for example, Product Bug, then UI Data Defect).</li>
-              <li>A one-sentence summary.</li>
-              <li>Error trends for that test.</li>
-            </ul>
-          </li>
-          <li><strong>Detailed analysis</strong>, collapsed by default.</li>
-          <li><strong>Event timeline:</strong> the root cause first, then its effects, each labelled and expandable (Show, Hide).</li>
-          <li><strong>Evidence on demand:</strong> the relevant automation log sits under the step it explains, with a copy button.</li>
-          <li><strong>How to fix it:</strong> numbered next steps.</li>
-          <li><strong>Feedback:</strong> "Suggest Improvements", confirmed with "Your changes are saved and will enhance future RCA results."</li>
-        </ul>
+          <h4>What I designed (information architecture)</h4>
+          <ul>
+            <li><strong>Verdict first:</strong>
+              <ul>
+                <li>A two-level category (for example, Product Bug, then UI Data Defect).</li>
+                <li>A one-sentence summary.</li>
+                <li>Error trends for that test.</li>
+              </ul>
+            </li>
+            <li><strong>Detailed analysis</strong>, collapsed by default.</li>
+            <li><strong>Event timeline:</strong> the root cause first, then its effects, each labelled and expandable (Show, Hide).</li>
+            <li><strong>Evidence on demand:</strong> the relevant automation log sits under the step it explains, with a copy button.</li>
+            <li><strong>How to fix it:</strong> numbered next steps.</li>
+            <li><strong>Feedback:</strong> "Suggest Improvements", confirmed with "Your changes are saved and will enhance future RCA results."</li>
+          </ul>
 
-        <h4>Why</h4>
-        <ul>
-          <li>The raw material (logs, commands, network data) is heavy. I made it digestible for technical users without hiding the evidence.</li>
-        </ul>
+          <h4>Why</h4>
+          <ul>
+            <li>The raw material (logs, commands, network data) is heavy. I made it digestible for technical users without hiding the evidence.</li>
+          </ul>
 
-        <h4>UX principles at work</h4>
-        <ul>
-          <li><strong>Overview first, details on demand:</strong> verdict, then timeline, then logs.</li>
-          <li><strong>Progressive disclosure:</strong> collapsed analysis, Show and Hide per event.</li>
-          <li><strong>Lower extraneous cognitive load:</strong> one summary sentence instead of raw logs.</li>
-          <li><strong>Information scent:</strong> category chips and Root Cause and Effect labels.</li>
-        </ul>
+          <h4>UX principles at work</h4>
+          <ul>
+            <li><strong>Overview first, details on demand:</strong> verdict, then timeline, then logs.</li>
+            <li><strong>Progressive disclosure:</strong> collapsed analysis, Show and Hide per event.</li>
+            <li><strong>Lower extraneous cognitive load:</strong> one summary sentence instead of raw logs.</li>
+            <li><strong>Information scent:</strong> category chips and Root Cause and Effect labels.</li>
+          </ul>
 
-        <!-- figure pending: F23 assets/testmu/ai-test-cases/21-rca.png -->
+          <!-- figure pending: F23 assets/testmu/ai-test-cases/21-rca.png -->
+        </div>
 
         <h3>8. From features to the design system</h3>
         <ul>
@@ -673,40 +678,40 @@
       <section id="cs-tradeoffs">
         <h2>Trade-offs: what shipped, why, and what I'd do next</h2>
 
-        <h3>1. Per-case source traceability</h3>
-        <dl class="rows">
+        <h3 id="cs-tradeoff-1">1. Per-case source traceability</h3>
+        <dl class="rows ledger">
           <div><dt>What shipped</dt> <dd>A generated test case doesn't show which part of the input it came from.</dd></div>
           <div><dt>Why</dt> <dd>Not in v2 or v3 scope. Product set scope around the committed timeline and team capacity; v2 and v3 scope covered new input types.</dd></div>
           <div><dt>Whose call</dt> <dd>Product</dd></div>
           <div><dt>What I'd do next</dt> <dd>A <strong>source chip</strong> on each test case that opens the exact input excerpt it came from.</dd></div>
         </dl>
 
-        <h3>2. Change-diff after refinement</h3>
-        <dl class="rows">
+        <h3 id="cs-tradeoff-2">2. Change-diff after refinement</h3>
+        <dl class="rows ledger">
           <div><dt>What shipped</dt> <dd>The AI describes its change in text; the list doesn't mark what changed.</dd></div>
           <div><dt>Why</dt> <dd>Not in scope, for the same reasons.</dd></div>
           <div><dt>Whose call</dt> <dd>Product</dd></div>
           <div><dt>What I'd do next</dt> <dd><strong>Highlight changed fields</strong> and add a "changed only" filter.</dd></div>
         </dl>
 
-        <h3>3. Session save and history</h3>
-        <dl class="rows">
+        <h3 id="cs-tradeoff-3">3. Session save and history</h3>
+        <dl class="rows ledger">
           <div><dt>What shipped</dt> <dd>Sessions can't be saved and reopened, and iterations aren't versioned.</dd></div>
           <div><dt>Why</dt> <dd>High engineering effort. I proposed saving sessions; version history was in the PM's own prototype. Product cut both.</dd></div>
           <div><dt>Whose call</dt> <dd>Product</dd></div>
           <div><dt>What I'd do next</dt> <dd>A <strong>session list with restore</strong>, and a version per iteration.</dd></div>
         </dl>
 
-        <h3>4. Permanent deletion in dedup</h3>
-        <dl class="rows">
+        <h3 id="cs-tradeoff-4">4. Permanent deletion in dedup</h3>
+        <dl class="rows ledger">
           <div><dt>What shipped</dt> <dd>Deleting duplicates can't be undone. Safeguards add friction before it: nothing pre-selected, visible counts, type DELETE.</dd></div>
           <div><dt>Why</dt> <dd>Removing duplicates from the repository is the whole point of the feature, and Archive didn't exist yet when dedup shipped.</dd></div>
           <div><dt>Whose call</dt> <dd>Feature scope at launch</dd></div>
           <div><dt>What I'd do next</dt> <dd><strong>Pitch adding Archive next to Delete</strong> in dedup, now that Archive exists (I designed it for Test Manager), so duplicates can be restored.</dd></div>
         </dl>
 
-        <h3>5. Scenario becomes folder</h3>
-        <dl class="rows">
+        <h3 id="cs-tradeoff-5">5. Scenario becomes folder</h3>
+        <dl class="rows ledger">
           <div><dt>What shipped</dt> <dd>Scenarios in the session become folders in the repository on save. Nothing tells the user: after saving, they land on the first new folder, with its test cases (tagged AI Generated) on the right.</dd></div>
           <div><dt>Why</dt> <dd>The backend has no scenario entity, and the generator's architecture was built around v1's scenario concept. I flagged the mismatch; we kept it.</dd></div>
           <div><dt>Whose call</dt> <dd>Product</dd></div>
@@ -714,8 +719,8 @@
         </dl>
         <!-- figure pending: F25 assets/testmu/ai-test-cases/23-after-save.png -->
 
-        <h3>6. Dedup merge</h3>
-        <dl class="rows">
+        <h3 id="cs-tradeoff-6">6. Dedup merge</h3>
+        <dl class="rows ledger">
           <div><dt>What shipped</dt> <dd>Users can delete duplicates but can't merge them. I designed merge.</dd></div>
           <div><dt>Why</dt> <dd>The open question of which fields win when two test cases conflict. Product moved merge out of scope because of it.</dd></div>
           <div><dt>Whose call</dt> <dd>Product</dd></div>
@@ -796,7 +801,7 @@
     <p class="credit">written &amp; directed by me. produced by claude</p>
   </footer>
 
-  <script src="js/case-study.js?v=2026-10-02.2" defer></script>
+  <script src="js/case-study.js?v=2026-10-05" defer></script>
 
 </body>
 </html>
