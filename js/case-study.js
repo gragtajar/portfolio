@@ -1,12 +1,68 @@
 /* ============================================
    CASE STUDY
    The section index says which section is being read and glides to the
-   section it is asked for, and a board that slides sideways can be panned
-   from the keyboard.
+   section it is asked for; a board that slides sideways can be panned from
+   the keyboard; and a picture that carries a blurred copy of itself is
+   covered by the copy until it has loaded and been reached.
    ============================================ */
 
 (function () {
   'use strict';
+
+  const root = document.documentElement;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  // ─── Pictures: a blurred copy until each one is in, and reached ────
+  // A figure that carries a blurred copy of its picture (.blur-up: its
+  // --blurred, drawn by the page's stylesheet) is covered by that copy until
+  // the picture has loaded and the reader has scrolled to it; then the copy
+  // fades and the picture is there, as on Medium. The cover is put on here,
+  // so a page whose script never runs simply shows its pictures. A picture
+  // already in and on screen when this runs may have been seen: it is not
+  // covered. With reduced motion a picture is uncovered as soon as it is in,
+  // without waiting to be reached (and without the fade: the stylesheet).
+  const covered = [...document.querySelectorAll('.blur-up')];
+  if (covered.length) {
+    const sharpen = (figure) => figure.classList.add('is-sharp');
+    const reach = 'IntersectionObserver' in window && !reducedMotion.matches;
+    const waiting = new Map();           // picture -> what to do once it is reached
+    const reader = reach && new IntersectionObserver((entries) => entries.forEach(({ target, isIntersecting }) => {
+      if (!isIntersecting) return;
+      reader.unobserve(target);
+      waiting.get(target)();
+      waiting.delete(target);
+    }), { rootMargin: '0px 0px -10% 0px' }); // a little way up the screen, not at its very edge
+
+    covered.forEach((figure) => {
+      const img = figure.querySelector('img');
+      if (!img) {
+        sharpen(figure);
+        return;
+      }
+      if (img.complete && img.naturalWidth) {
+        const box = img.getBoundingClientRect();
+        if (box.bottom > 0 && box.top < window.innerHeight) {
+          sharpen(figure);
+          return;
+        }
+      }
+      // in: loaded and decoded, or failed (its alt text is better than a cover)
+      const loaded = new Promise((resolve) => {
+        if (img.complete) {
+          resolve();
+          return;
+        }
+        img.addEventListener('load', resolve, { once: true });
+        img.addEventListener('error', resolve, { once: true });
+      }).then(() => (img.decode ? img.decode().catch(() => {}) : null));
+      const reached = reach && new Promise((resolve) => {
+        waiting.set(img, resolve);
+        reader.observe(img);
+      });
+      Promise.all([loaded, reached]).then(() => sharpen(figure));
+    });
+    root.classList.add('has-blur-up');
+  }
 
   // ─── Boards: focusable only while they have somewhere to slide ─────
   const boards = document.querySelectorAll('.board');
@@ -26,8 +82,6 @@
   const links = [...document.querySelectorAll('.cs-index a')];
   if (!links.length || !('IntersectionObserver' in window)) return;
 
-  const root = document.documentElement;
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const byId = new Map(links.map((link) => [link.getAttribute('href').slice(1), link]));
   const sections = [...byId.keys()].map((id) => document.getElementById(id)).filter(Boolean);
   const onScreen = new Set();

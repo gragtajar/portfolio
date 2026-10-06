@@ -2,8 +2,8 @@
    LAMBDATEST CASE STUDY
    What lambdatest-test-case-generator.html adds to the long-form reading
    patterns of css/case-study.css. The brief keeps case-study.css as it is,
-   so these live here, loaded by this page only; each is recorded in
-   DESIGN.md under Long-form Reading.
+   so these live here, loaded by this page only. The reading patterns are
+   recorded in DESIGN.md under Long-form Reading.
    ============================================ */
 
 /* Captions are sentences, held to the reading measure like every other
@@ -49,6 +49,53 @@
 }
 
 .ledger dd { color: var(--ink); }
+
+/* --- Pictures arrive as they do on Medium. Until a lazy picture has loaded
+       and the reader has scrolled to it, a blurred copy of it, made from a
+       few of its own pixels (its figure's --blurred, from
+       .claude/revamp/blur-up.py), covers its place; then the copy fades
+       and the picture is there. js/case-study.js puts the cover on (the
+       root's .has-blur-up) and lifts it (.is-sharp), so a page whose script
+       never ran shows its pictures as before. --- */
+.has-blur-up .blur-up { position: relative; }
+
+.has-blur-up .blur-up::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  aspect-ratio: var(--ratio);
+  border-radius: 2px;
+  outline: 1px solid var(--line);
+  outline-offset: -1px;
+  background: var(--blurred) 0 0 / 100% 100% no-repeat;
+  pointer-events: none;
+}
+
+/* A board's picture keeps the width its lettering needs, measured against
+   the board's content (css/case-study.css). The cover is placed in the
+   board's padding box, so it takes the same measure less the end padding. */
+.has-blur-up .board.blur-up::after {
+  --column: calc(100% - var(--pad));
+  width: max(var(--column), min(var(--legible), (var(--legible) * 0.85 - var(--column)) * 9999));
+}
+
+.has-blur-up .blur-up.is-sharp::after {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* the copy fades off the picture, which seems to come into focus */
+  .has-blur-up .blur-up.is-sharp::after {
+    transition: opacity 0.6s var(--ease-out-soft), visibility 0s 0.6s;
+  }
+}
+
+@media print {
+  .has-blur-up .blur-up::after { display: none; }
+}
 
 @media (min-width: 64em) {
   .cs-body h3[id] { scroll-margin-top: 32px; }
