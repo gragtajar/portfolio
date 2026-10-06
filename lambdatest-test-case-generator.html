@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LambdaTest Test Case Generator Case Study, Rajat Garg</title>
+  <meta name="description" content="How I rebuilt LambdaTest's test case generator around transparency: it shows its work, refines by @-reference, and saves nothing without review.">
+  <meta name="author" content="Rajat Garg">
+  <!-- This page stays out of search engines: not indexed or listed, its links
+       not followed, no snippet, cached copy or image results. robots.txt also
+       closes it to crawlers, and the server sends the same rule as a header. -->
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="theme-color" content="#f4f5f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#18191a" media="(prefers-color-scheme: dark)">
+
+  <link rel="canonical" href="https://rajatg.in/lambdatest-test-case-generator.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Rajat Garg">
+  <meta property="og:title" content="Showing the work: AI test case generation QA teams can check">
+  <meta property="og:description" content="How I rebuilt LambdaTest's test case generator around transparency: it shows its work, refines by @-reference, and saves nothing without review.">
+  <meta property="og:url" content="https://rajatg.in/lambdatest-test-case-generator.html">
+  <meta property="og:image" content="https://rajatg.in/assets/lambdatest/ai-test-cases/hero.png">
+  <meta property="og:image:width" content="3024">
+  <meta property="og:image:height" content="1720">
+  <meta property="og:image:alt" content="LambdaTest's test case generator after a run: the AI's summary of three scenarios on the left; on the right, the scenarios with Must have tags and their test cases, with Create and Save and Create and Automate buttons.">
+  <meta property="article:author" content="Rajat Garg">
+  <meta property="article:section" content="Case Study">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Showing the work: AI test case generation QA teams can check">
+  <meta name="twitter:description" content="How I rebuilt LambdaTest's test case generator around transparency: it shows its work, refines by @-reference, and saves nothing without review.">
+  <meta name="twitter:image" content="https://rajatg.in/assets/lambdatest/ai-test-cases/hero.png">
+
+  <!-- Fonts are served from this site (css/site.css declares them). The one
+       connection kept to fonts.gstatic.com is for the animated beer emoji. -->
+  <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Before first paint: the chosen theme -->
+  <script>
+    (function () {
+      var root = document.documentElement;
+      root.classList.add('js');
+      try {
+        var theme = localStorage.getItem('rg-theme');
+        if (theme === 'light' || theme === 'dark') root.dataset.theme = theme;
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="stylesheet" href="css/site.css?v=2026-10-06">
+  <link rel="stylesheet" href="css/case-study.css?v=2026-10-06">
+  <link rel="stylesheet" href="css/lambdatest.css?v=2026-10-06">
+
+  <!-- The site's own scripts run before the page is first drawn
+       (blocking="render"; a browser without it runs them as plain deferred
+       scripts), so a page transition finds the page ready: the right frame
+       on the strip, the cursor under the mouse. They come before the remote
+       scripts below, which deferred scripts would otherwise wait for. -->
+  <script src="js/cursor.js?v=2026-10-06" defer blocking="render"></script>
+  <script src="js/site.js?v=2026-10-06" defer blocking="render"></script>
+
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="manifest" href="site.webmanifest">
+
+  <!-- Structured data: Article schema for SEO rich results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Showing the work: AI test case generation QA teams can check",
+    "description": "How I rebuilt LambdaTest's test case generator around transparency: it shows its work, refines by @-reference, and saves nothing without review.",
+    "image": "https://rajatg.in/assets/lambdatest/ai-test-cases/hero.png",
+    "author": {
+      "@type": "Person",
+      "name": "Rajat Garg",
+      "url": "https://rajatg.in/"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Rajat Garg"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rajatg.in/lambdatest-test-case-generator.html"
+    },
+    "datePublished": "2026-10-05",
+    "dateModified": "2026-10-05",
+    "articleSection": "Case Study"
+  }
+  </script>
+
+  <!-- Lottie player for the animated beer emoji -->
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+  <!-- Analytics: Cloudflare Web Analytics (cookieless, deferred) -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "599e70fe62dd40bf8b0fa8569f070d68"}'></script>
+
+  <!--
+    Analytics: Amplitude, loaded async by script injection so it never blocks
+    rendering. trackEvent() queues events fired before the SDK is ready.
+  -->
+  <script>
+  (function () {
+    window.trackEvent = function (name) {
+      if (window.amplitude && typeof window.amplitude.track === 'function') {
+        window.amplitude.track(name);
+      } else {
+        (window.__ampQueue = window.__ampQueue || []).push(name);
+      }
+    };
+    var s = document.createElement('script');
+    s.src = 'https://cdn.amplitude.com/script/8300beffc146f03833610e507db0468c.js';
+    s.async = true;
+    s.onload = function () {
+      if (!window.amplitude) return;
+      if (window.sessionReplay && window.amplitude.add) {
+        window.amplitude.add(window.sessionReplay.plugin({ sampleRate: 1 }));
+      }
+      window.amplitude.init('8300beffc146f03833610e507db0468c', {
+        fetchRemoteConfig: true,
+        autocapture: {
+          attribution: { trackingMethod: ['userProperty', 'eventProperty'] },
+          fileDownloads: true,
+          formInteractions: true,
+          pageViews: true,
+          sessions: true,
+          elementInteractions: true,
+          networkTracking: true,
+          webVitals: true,
+          frustrationInteractions: { thrashedCursor: true, errorClicks: true, deadClicks: true, rageClicks: true }
+        }
+      });
+      (window.__ampQueue || []).forEach(function (n) { window.amplitude.track(n); });
+      window.__ampQueue = [];
+    };
+    document.head.appendChild(s);
+  })();
+  </script>
+</head>
+<body class="page-case">
+
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <p class="way-home"><a href="index.html" class="home-link">Rajat Garg</a> <dotlottie-player id="cheers-lottie" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f37b/lottie.json" autoplay speed="1" aria-hidden="true"></dotlottie-player></p>
+    <nav class="tools" aria-label="Site">
+      <button type="button" class="switch sound-toggle" aria-pressed="false" aria-keyshortcuts="S"><span class="under">Sound <span class="state">off</span></span><kbd class="key" aria-hidden="true">S</kbd></button>
+      <button type="button" class="switch theme-toggle" aria-pressed="true" aria-keyshortcuts="L"><span class="under">Lights <span class="state">on</span></span><kbd class="key" aria-hidden="true">L</kbd></button>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ═══ CASE STUDY HEADER ═══ -->
+    <header class="cs-head">
+      <h1><span class="keep">Showing the work:</span> <span class="keep">AI test case generation</span> QA teams can check</h1>
+
+      <div class="cs-facts">
+        <dl class="rows cs-meta">
+          <div><dt>Role:</dt> <dd>Senior Product Designer, sole designer on Test Manager</dd></div>
+          <div><dt>Company:</dt> <dd>LambdaTest</dd></div>
+          <div><dt>Product:</dt> <dd>Test Manager (web)</dd></div>
+          <div><dt>Shipped:</dt> <dd>v2 in Jan 2026, v3 in Jul 2026. Live in production.</dd></div>
+          <div><dt>This story covers:</dt> <dd>AI Test Case Generator (main), AI Deduplication and AI Root Cause Analysis (supporting)</dd></div>
+        </dl>
+
+        <p class="cs-read-time">15 min read</p>
+      </div>
+    </header>
+
+    <!-- ═══ SECTION INDEX (sticky) ═══ -->
+    <nav class="cs-index" aria-label="Sections">
+      <a href="#cs-glance"><span class="under">At a glance</span></a>
+      <a href="#cs-situation"><span class="under">Situation</span></a>
+      <a href="#cs-task"><span class="under">Task</span></a>
+      <a href="#cs-action"><span class="under">Action</span></a>
+      <a href="#cs-results"><span class="under">Results</span></a>
+      <a href="#cs-tradeoffs"><span class="under">Trade-offs</span></a>
+      <a href="#cs-teamwork"><span class="under">Teamwork</span></a>
+      <a href="#cs-leadership"><span class="under">Leadership</span></a>
+      <a href="#cs-learnings"><span class="under">Learnings</span></a>
+    </nav>
+
+    <div class="cs-body">
+
+      <!-- ═══ HERO IMAGE ═══ -->
+      <figure class="fig cs-hero">
+        <img src="assets/lambdatest/ai-test-cases/hero.png" alt="LambdaTest's test case generator after a run: the AI's summary of three scenarios on the left; on the right, the scenarios with Must have tags and their test cases, with Create and Save and Create and Automate buttons." width="3024" height="1720" fetchpriority="high" decoding="async">
+      </figure>
+
+      <!-- ═══ AT A GLANCE ═══ -->
+      <section id="cs-glance">
+        <h2>At a glance</h2>
+        <ul>
+          <li><strong>The ask:</strong> customers wanted AI test case generation. <strong>One deal was blocked</strong> until it existed, and <strong>BrowserStack already had it</strong>. This was competitive parity on a committed deadline.</li>
+          <li><strong>My goal:</strong> <strong>transparency</strong>. If users can see what the AI is doing and why, they can trust it here, and that trust carries over to the platform's other AI features.</li>
+          <li><strong>What shipped:</strong> a generator that <strong>shows its work while it runs</strong>, lets users <strong>point at any scenario or test case with an @-reference</strong>, and <strong>saves nothing without review</strong>.</li>
+          <li><strong>Delivered on the committed timeline</strong> for the deal that requested it.</li>
+          <li><strong>Beyond the feature:</strong> the same interaction pattern runs through deduplication and root cause analysis, and these features gave the design system its <strong>first AI components</strong>.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ SITUATION ═══ -->
+
+      <section id="cs-situation">
+        <h2>Situation</h2>
+
+        <h3>Problems before</h3>
+        <ul class="slips">
+          <li>
+            <h4>Writing test cases by hand is slow.</h4>
+            <p>Manual authoring takes a lot of time.</p>
+          </li>
+          <li>
+            <h4>Importing doesn't remove the manual work.</h4>
+            <p>CSV import and one-click migration from other tools are slow too, and still manual.</p>
+          </li>
+          <li>
+            <h4>KaneAI writes one test case at a time.</h4>
+            <p>It also can't take PRDs, documents or Figma files as reference.</p>
+          </li>
+          <li>
+            <h4>The first generator (v1) didn't hold up.</h4>
+            <p>Its design was in poor shape and couldn't scale to the changes customers were asking for.</p>
+          </li>
+        </ul>
+
+        <h3>Why now</h3>
+        <ul>
+          <li><strong>Customer pull:</strong> mid-market customers asked for AI test case generation, and one deal was blocked until it existed.</li>
+          <li><strong>Competitor parity:</strong> BrowserStack already offered it. I used their implementation as the reference.</li>
+          <li><strong>Business context:</strong>
+            <ul>
+              <li>Test Manager is sold as its own product, mostly bundled with KaneAI.</li>
+              <li>Teams moving from manual to automated testing also buy HyperExecute, LambdaTest's test orchestration platform.</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h3>Who it's for</h3>
+        <ul>
+          <li><strong>QA teams and PMs</strong> who write and maintain test cases.</li>
+        </ul>
+
+        <h3>Timeline</h3>
+        <dl class="rows">
+          <div><dt>Oct 2025</dt> <dd>joined LambdaTest</dd></div>
+          <div><dt>Nov to Dec 2025</dt> <dd>AI Root Cause Analysis shipped</dd></div>
+          <div><dt>Dec 2025 to Jan 2026</dt> <dd>test case generator v2 built; shipped in Jan 2026</dd></div>
+          <div><dt>Jun 2026</dt> <dd>work on AI Deduplication began</dd></div>
+          <div><dt>Jul 2026</dt> <dd>test case generator v3 shipped (video and Figma inputs)</dd></div>
+          <div><dt>28 Sep 2026</dt> <dd>AI Deduplication announced publicly</dd></div>
+        </dl>
+      </section>
+
+      <!-- ═══ TASK ═══ -->
+
+      <section id="cs-task">
+        <h2>Task</h2>
+        <ul>
+          <li><strong>Business goal:</strong> ship within the committed timeline to unblock the deal. That was the success criterion.</li>
+          <li><strong>Scope:</strong>
+            <ul>
+              <li><strong>v2 (Jan 2026):</strong> images and PRDs as inputs, edge-case generation, @-reference refinement, MoSCoW grouping</li>
+              <li><strong>v3 (Jul 2026):</strong> video and Figma as inputs</li>
+            </ul>
+          </li>
+          <li><strong>My design goal:</strong> <strong>transparency, to build trust</strong>. LambdaTest uses AI across many products and features; trust earned in one place carries to the others.</li>
+          <li><strong>Constraints:</strong>
+            <ul>
+              <li><strong>Model capability</strong> and <strong>engineering feasibility</strong></li>
+              <li><strong>A fixed deadline</strong> tied to a customer deal</li>
+              <li><strong>v1's architecture</strong>, built around a "scenario" concept that the rest of the product doesn't have</li>
+            </ul>
+          </li>
+          <li><strong>How I worked:</strong>
+            <ul>
+              <li>Studied <strong>BrowserStack's generator</strong> as the parity reference</li>
+              <li>Reviewed designs with the <strong>PM, engineering and the cofounder</strong></li>
+              <li>Used <strong>AI to run UI and UX audits</strong> from several perspectives, and to <strong>synthesise feedback</strong> from those stakeholders</li>
+              <li><strong>No usability testing</strong>: it wasn't part of the team's process (<a href="#cs-learnings">see Learnings</a>)</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ═══ ACTION ═══ -->
+
+      <section id="cs-action">
+        <h2>Action</h2>
+
+        <h3>1. Rebuild from first principles</h3>
+        <ul>
+          <li><strong>Decision:</strong> start over instead of patching v1.</li>
+          <li><strong>Why:</strong> v1 was in poor shape, and its design couldn't scale to the v2 scope.</li>
+        </ul>
+        <!-- confirm: 2 or 3 concrete v1 problems -->
+
+        <!-- figure pending: F02 assets/lambdatest/ai-test-cases/v1-vs-v2.png -->
+
+        <h3>2. One prompt box, all the context</h3>
+
+        <h4>What I designed</h4>
+        <ul>
+          <li><strong>Entry point:</strong> "Generate with AI" in the repository toolbar, next to "Review Duplicates" and "Add Test Case".</li>
+          <li><strong>Two modes:</strong>
+            <ul>
+              <li><strong>Generate scenarios</strong> creates full sets of scenarios and test cases.</li>
+              <li><strong>Quick Author</strong> takes the prompt plus any files or tickets to the KaneAI playground, which authors a single test case.</li>
+            </ul>
+          </li>
+          <li><strong>Inputs:</strong> text, voice, uploads, Jira, Azure DevOps and Linear. v2 added images and PRDs; v3 added video and Figma.</li>
+          <li><strong>Caps:</strong> maximum scenarios and maximum test cases per scenario (1 to 20 each). They show again in the session header.</li>
+          <li><strong>Session context:</strong> one drawer holds files, tickets, project instructions and org instructions, so users never leave the session.
+            <ul>
+              <li>Instruction edits save to project or org settings.</li>
+              <li>A warning says so before saving, and role-based access applies.</li>
+            </ul>
+          </li>
+          <li><strong>Memory toggle:</strong> a brain icon in the session input turns Memory Enhancement on or off. When it's on, the AI uses existing test case data and patterns as context. LambdaTest's launch announcement calls this "Smart Context".</li>
+        </ul>
+
+        <h4>Why</h4>
+        <ul>
+          <li><strong>Caps:</strong> the AI can't generate an unlimited number of scenarios or test cases, so there has to be a limit. Without caps, users had no way to decide how many they wanted before generating. Caps give them that choice and make the system's limits visible.</li>
+          <li><strong>Instructions inside the session:</strong> users see every input shaping the output without leaving. It also helps teams discover project and org instructions nobody has set up yet.</li>
+        </ul>
+
+        <h4>UX principles at work</h4>
+        <ul>
+          <li><strong>Visibility of system status:</strong> caps repeat in the session header.</li>
+          <li><strong>User control and freedom:</strong> users choose their own caps.</li>
+          <li><strong>User control and freedom (memory):</strong> users switch memory on or off.</li>
+          <li><strong>Error prevention:</strong> a warning before instruction edits change settings for the whole project or org, plus role-based access.</li>
+          <li><strong>Recognition over recall:</strong> all context visible in one place.</li>
+        </ul>
+
+        <h4>Who decided what</h4>
+        <ul>
+          <li>The integrations (Jira, Azure DevOps, Linear) were parity and the <strong>PM's call</strong>.</li>
+          <li>Voice input carried over from v1.</li>
+        </ul>
+
+        <figure class="fig board board-45 blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDgwJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJz48ZmlsdGVyIGlkPSdiJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249JzI0Jy8+PGZlQ29tcG9uZW50VHJhbnNmZXI+PGZlRnVuY0EgdHlwZT0nZGlzY3JldGUnIHRhYmxlVmFsdWVzPScxIDEnLz48L2ZlQ29tcG9uZW50VHJhbnNmZXI+PC9maWx0ZXI+PGcgZmlsdGVyPSd1cmwoI2IpJz48cmVjdCB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBmaWxsPScjZGZlOWU0Jy8+PGltYWdlIHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIHByZXNlcnZlQXNwZWN0UmF0aW89J25vbmUnIGhyZWY9J2RhdGE6aW1hZ2Uvd2VicDtiYXNlNjQsVWtsR1Jtb0FBQUJYUlVKUVZsQTRJRjRBQUFDd0F3Q2RBU29nQUFJQVBsRWdqVVFqb2lFWUJBQTRCUVN5Z0U2UU9BU3Via2FjN1p4NWdBRCsvLzRmdFJjek9XcHRGQTFHZklYaEZrWmZtcTNqR2dxRVRiT1pqLzA3MlpaQmxZd1NrYjdJNE45azAvQ2VkN296VElWd0FBQUEnLz48L2c+PC9zdmc+); --ratio: 2053 / 106">
+          <img src="assets/lambdatest/ai-test-cases/01-entry-point.png" alt="The Test Manager repository toolbar with three actions: Review Duplicates, Generate with AI and Add Test Case." width="2053" height="106" loading="lazy" decoding="async">
+          <figcaption>Generate with AI sits in the repository toolbar, next to Review Duplicates and Add Test Case</figcaption>
+        </figure>
+        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nIzkxOTM5NScvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSb3dBQUFCWFJVSlFWbEE0SUlBQUFBRHdBd0NkQVNvZ0FCSUFQa2tjakVRaW9hR1lCZ0FvQklTMGdBQWJCMk8xSE1iSzA4dWtTbytnQU9Ta3A0R2R2ekU1YTk2b1JGN3hEem1kaVV2ZkxTKzhGV0hLaXZoR0hzaVozZjk3UlhyYVVHdWFOMEJLd1RpL0pxV0preGIvUW51eGV6TmNhUXNlckZyT0dmV1FjeHhZOWNud1N2TTlMREkxTERBaVZBQUFBQT09Jy8+PC9nPjwvc3ZnPg==); --ratio: 3024 / 1720">
+          <img src="assets/lambdatest/ai-test-cases/02-prompt-box.png" alt="The Generate with AI prompt box over the repository, with &quot;airbnb.com login form&quot; typed, Generate scenarios selected, and buttons for settings, attachments, voice and send." width="3024" height="1720" loading="lazy" decoding="async">
+          <figcaption>One prompt box: Generate scenarios or Quick Author, plus settings, attachments and voice</figcaption>
+        </figure>
+        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2UzZTRlNScvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSb2dBQUFCWFJVSlFWbEE0SUh3QUFBQVFCQUNkQVNvZ0FCSUFQbEVnakVRam9pRVlCQUE0QlFTMGdBQXIvbWtySGRJb3lzdW9rWTNIZ0FEdm5kcjZ4MUxzZzBPemV1V0cwU1M0RzFLVzhKM0krV3ZLR0VNZUxwbmlnWVMzTVRMakIrZ0tORktJVGFYelFjUkxuc08rYkR2WnNZYndadlBUVzdRZUVXMHVISzc2NW93WWFRaGNHVGdNQUFBQScvPjwvZz48L3N2Zz4=); --ratio: 3024 / 1720">
+          <img src="assets/lambdatest/ai-test-cases/03-advanced-settings.png" alt="The Advanced settings drawer: sliders for maximum test scenarios and test cases per scenario (1 to 20), toggles for Memory Enhancement and Gherkin format, and a project instructions field." width="3024" height="1720" loading="lazy" decoding="async">
+          <figcaption>Advanced settings: caps of up to 20 scenarios and 20 test cases per scenario, plus memory, Gherkin format and project instructions</figcaption>
+        </figure>
+        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nIzk0OTc5OCcvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdScUlBQUFCWFJVSlFWbEE0SUpZQUFBQndCQUNkQVNvZ0FCSUFQa2tlaTBRaW9hRVlCZ0FvQklTMGdBSWZBR2p5MU9vblJZWHM4VHhaV2plY0FBRGtwS2VCbmI4eE9XcjFodW1zR3FCME5GSjh5YjlRTlN3eWoyMXRoK3hDeGtLK09TSElsWUhCR3EzS1VFeGFta3NwNUhUZ0RDV3BjdzhpTkZMclBheTlqNGV1Sk9mSWljUDJxUlFKanRQc1k5dVVJaEkzNWtKb2RZeGVyTE1UbnBZWkdwWVhhWVB3QUFBPScvPjwvZz48L3N2Zz4=); --ratio: 3024 / 1720">
+          <img src="assets/lambdatest/ai-test-cases/04-attach-menu.png" alt="The attach menu under the prompt box: Upload from device, Link Jira Issue, Connect to Azure DevOps and Connect to Linear." width="3024" height="1720" loading="lazy" decoding="async">
+          <figcaption>Add context from the device, a Jira issue, Azure DevOps or Linear</figcaption>
+        </figure>
+        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2VlZWVlYycvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdScXdBQUFCWFJVSlFWbEE0SUtBQUFBRFFCQUNkQVNvZ0FCSUFQa1VhaWtRaW9hRWI5QUFvQkVTemdHSG1FdUk0UDNKdXlQcnFQNDgwZWNBMnlOV0Z3QUQrL2NUYlAvcjc2bmpGak5OQUVEK1NLUWw3Y20vZXlXczJ1MERzbml0Smcrd21qanYvSmhVVVlCUVIrM2tXSG1jbDlvWmU3d3Jqb093djE5UUh4ajVCSUFZandCdDdPQ1YvaHFpTjhtYlFFL0g5R2xNazZoZU1KL2JVMWFQMU5pYzBxK2ZkU3JiRjhWS0tzQUx6VkVBQScvPjwvZz48L3N2Zz4=); --ratio: 3024 / 1720">
+          <img src="assets/lambdatest/ai-test-cases/05-session-context.png" alt="The Configure Session Context drawer on its Project Instructions tab: a banner says edits save to project settings, above a toggle to use the instructions for this session and an empty instructions field." width="3024" height="1720" loading="lazy" decoding="async">
+          <figcaption>Session context keeps files, tickets and instructions in one drawer, and warns that instruction edits save to project settings</figcaption>
+        </figure>
+        <!-- figure pending: F08 assets/lambdatest/ai-test-cases/06-memory-toggle.png (optional) -->
+
+        <h3>3. Show the work while it runs</h3>
+
+        <h4>What I designed</h4>
+        <ul>
+          <li><strong>Progress bar:</strong> a real percentage and a status line.</li>
+          <li><strong>Live reasoning:</strong> a "Thinking" stream that collapses to "Thought for 25s" and can be reopened.</li>
+          <li><strong>Scenarios first, then test cases:</strong>
+            <ul>
+              <li>Scenarios appear with their MoSCoW tag.</li>
+              <li>Test cases then fill in, and the positive, negative and edge counts tick up.</li>
+            </ul>
+          </li>
+          <li><strong>Stop Generating</strong>, available the whole time.</li>
+          <li><strong>A closing summary</strong> that names each scenario by its reference (@S1, @S2, @S3), with counts and time taken ("in 63s").</li>
+        </ul>
+
+        <h4>Why</h4>
+        <ul>
+          <li>About <strong>10 to 30 seconds</strong> pass before the first scenario appears. A spinner would hide what's happening; I wanted users to see what the AI is doing and how.</li>
+          <li>In one run, the stream showed that the AI <strong>couldn't open the page it was asked about</strong> and fell back on existing test cases. Without the stream, nobody would know why the output leaned on assumptions.</li>
+        </ul>
+
+        <h4>UX principles at work</h4>
+        <ul>
+          <li><strong>Visibility of system status:</strong> progress, status line and live reasoning.</li>
+          <li><strong>Perceived latency:</strong> incremental rendering puts partial results on screen early.</li>
+          <li><strong>User control and freedom:</strong> stop at any time.</li>
+          <li><strong>Calibrated trust:</strong> users see when the AI is guessing.</li>
+        </ul>
+
+        <h4>Who decided what</h4>
+        <ul>
+          <li><strong>I pushed for streaming and partial results.</strong> Engineering built them, which added to their work.</li>
+          <li><strong>Engineering decided to show the model's raw reasoning.</strong> A summarised version was never discussed.</li>
+          <li><strong>The model writes</strong> the reasoning and the output.</li>
+        </ul>
+
+        <h4>Trade-offs</h4>
+        <ul>
+          <li><strong>Raw reasoning shows internals</strong> such as record IDs and variable names: transparent, but noisy. (Engineering's call.)</li>
+          <li><strong>The percentage is real; the status labels rotate.</strong> A label can read "Designing meaningful test scenarios" while the AI edits one test case.</li>
+          <li><strong>Cost isn't shown before generating.</strong> Users see the credits counter drop, but not the cost up front.</li>
+        </ul>
+
+        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2ZjZmNmYycvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSbjRBQUFCWFJVSlFWbEE0SUhJQUFBQndCQUNkQVNvZ0FCSUFQa2thaTBRaW9hRWIvVlFBS0FTRXRJQm5kaER3NG5WSTRPL3p0U3YrS2ZqOHdBRCsvc1kwOTJ4U1U1disyNWFuNmNMdkZzaHlhNjNEMFh5TmxKUFYxUFZ4NEcxQk1nd3pXVzh6ZGZiZkROTFI3aC9TSFBTNzM4MDB0RnQwd1k3MXNQdmtLTkFBQUFBPScvPjwvZz48L3N2Zz4=); --ratio: 3024 / 1720">
+          <img src="assets/lambdatest/ai-test-cases/07-reasoning.png" alt="The generation screen: progress at 15% with a status line, the prompt, and the AI's reasoning streaming under Thinking, with Stop Generating at the top right." width="3024" height="1720" loading="lazy" decoding="async">
+          <figcaption>While the AI works, its reasoning streams under the progress bar, with Stop Generating in reach</figcaption>
+        </figure>
+        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2ZhZmFmYScvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSb1FBQUFCWFJVSlFWbEE0SUhnQUFBQndCQUNkQVNvZ0FCSUFQa2thaTBRaW9hRWIvVlFBS0FTRXRJQmxXaER3NG5HQ1RwNWU3WnVuM0o3UElBRCsvc1kwOTJ4U1U1disyNDdaMC92aWI3TGI5bHRxalNla3VNMnlWUTFNbE5OMHFSdm5VYWp5RTlOUFppQitxMWpjdEpwT1RRNEUvZHBabkpETzRBMmRsbVVNUDlwbE10SUFBQUE9Jy8+PC9nPjwvc3ZnPg==); --ratio: 3024 / 1720">
+          <img src="assets/lambdatest/ai-test-cases/08-browse-failure.png" alt="The reasoning stream saying the AI couldn't access the Airbnb login page and will rely on the prompt and memory instead." width="3024" height="1720" loading="lazy" decoding="async">
+          <figcaption>The stream shows when the AI can't open a page and falls back on existing test cases</figcaption>
+        </figure>
+        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2Y5ZjlmYScvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdScG9BQUFCWFJVSlFWbEE0SUk0QUFBRFFCQUNkQVNvZ0FCSUFQa2tjaTBRaW9hRVlCZ0FvQklTMGdHWXNFZjNadnp3Q0FKaVpCYWg5TkNBSVpwODhBQUQrL3NZMHVMMVBqcHVvTzFjQk52YTFyVVFIamJIQldGNG1YdWpIVkRwM2tvMEpsQUV3ci9JUnVoMW8yRkNNdHJQUldBWlAvTS9SZkszUkxyWGZvR1RzVllTQU1yakNEbG9iZjlGZVEyZWphTGVlalo5VnJ1OVlVWXpnQUFBQScvPjwvZz48L3N2Zz4=); --ratio: 3024 / 1720">
+          <img src="assets/lambdatest/ai-test-cases/09-scenarios-first.png" alt="Three scenarios listed with Must have tags and zero counts while progress reads 45%, before any test cases appear." width="3024" height="1720" loading="lazy" decoding="async">
+          <figcaption>Scenarios arrive first, each with its MoSCoW tag</figcaption>
+        </figure>
+        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2Y5ZjlmOScvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdScFFBQUFCWFJVSlFWbEE0SUlnQUFBRHdCQUNkQVNvZ0FCSUFQa2tjaTBRaW9hRVlCZ0FvQklTMGdHYkNFZjNadnp3Q0FKaXczOGlua1FCaVVaajczQ0FBL3Y3R05MaTlUNDZicUR0WEFUYjJ0YTFFQjUxTzh5OG9GU3ZZTGRsSmI4ZWFsaVRFU2tuRGtmdTBjWnYxLy9IaE0vSmNZVWtGRlhJL0MxZHFmN214eHNzT3cxS2ppQmFxNlltQUdlamFMZWVqYVE2RUVBQUEnLz48L2c+PC9zdmc+); --ratio: 3024 / 1720">
+          <img src="assets/lambdatest/ai-test-cases/10-cases-fill-in.png" alt="The same three scenarios with positive and negative counts filling in as test cases are generated, with progress at 61%." width="3024" height="1720" loading="lazy" decoding="async">
+          <figcaption>Test cases fill in under each scenario, and the counts update as they arrive</figcaption>
+        </figure>
+        <!-- figure pending: F12b assets/lambdatest/ai-test-cases/generation-run.webm (optional) -->
+        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2Y0ZjVmNScvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdScXdBQUFCWFJVSlFWbEE0SUtBQUFBQXdCUUNkQVNvZ0FCSUFQa1VhaWtRaW9hRWI5QUFvQkVTMG00QUI5WkNDdmZhOWQrUExtZVBzbzY4eC9QQ1NNTzQrVUFEKy91L0tGUjdMVzIvR3ZXTHNyeThUN0F2UzlmM2VTazF1dXFvMGpHM3ZNZ1N5SHh4bjJyRlFGOUJwYmU2aUczM2JTOE5HUU50RktJWTU0T2lVbWFIOEVucDJMb0V2Wm1Nb21yUTBkYkZ2akR1Nzd6a2huY0F2ZzcyNmdBNzRQdGplT0cxOW14WnNXYS93QUFBQScvPjwvZz48L3N2Zz4=); --ratio: 3024 / 1720">
+          <img src="assets/lambdatest/ai-test-cases/11-summary.png" alt="Generation complete: the AI's summary names @S1, @S2 and @S3 with their test case counts and &quot;in 63s&quot;, and both buttons read 11." width="3024" height="1720" loading="lazy" decoding="async">
+          <figcaption>When it finishes, the AI names each scenario by its reference and says how long it took</figcaption>
+        </figure>
+
+        <h3>4. Nothing enters the repository without review</h3>
+
+        <h4>What I designed</h4>
+        <ul>
+          <li><strong>Everything starts selected.</strong> Users deselect what they don't want; there's no delete. Counts on both buttons update live ("Create and Save 11" becomes 9).</li>
+          <li><strong>Scannable cards:</strong>
+            <ul>
+              <li>Each card shows title, description, priority, type (Functional, Performance) and a Positive or Negative tag.</li>
+              <li>Collapsed scenarios show their MoSCoW tag and positive, negative and edge counts.</li>
+            </ul>
+          </li>
+          <li><strong>Full detail on demand:</strong>
+            <ul>
+              <li>A side drawer shows a test case's description, pre-conditions, and steps with outcomes, all editable.</li>
+              <li>"Reviewing 1 of 4" with Previous and Next lets users review one test case after another.</li>
+            </ul>
+          </li>
+          <li><strong>Search, plus Type and Priority filters.</strong></li>
+          <li><strong>"AI Generated" tag</strong> on every saved test case. It's filterable in the repository and removable.</li>
+        </ul>
+
+        <h4>Carried over from v1</h4>
+        <ul>
+          <li><strong>"KaneAI test plan" tab</strong> in the same drawer: the step flow KaneAI uses if the user automates a test case. It's unchanged from v1.</li>
+        </ul>
+
+        <h4>Why</h4>
+        <ul>
+          <li><strong>Pre-selection:</strong> a design decision shaped by the business. We want teams to add as many test cases as possible, and deselecting a few is less work than selecting many.</li>
+          <li><strong>Steps in the drawer:</strong> the list stays scannable, and users open details when they choose to.</li>
+          <li><strong>AI Generated tag:</strong> teams can filter AI-made test cases and remove the tag after review.</li>
+        </ul>
+
+        <h4>UX principles at work</h4>
+        <ul>
+          <li><strong>Human-in-the-loop:</strong> the AI proposes; the user decides what gets saved.</li>
+          <li><strong>Overview first, details on demand / progressive disclosure:</strong> cards, then the drawer, then the steps.</li>
+          <li><strong>Information scent:</strong> MoSCoW tags and counts on collapsed scenarios.</li>
+          <li><strong>Provenance labelling:</strong> the AI Generated tag.</li>
+        </ul>
+
+        <h4>Trade-off</h4>
+        <ul>
+          <li>Pre-selection makes saving fast, but it also makes it easy to accept without reading. The AI Generated tag lets teams find and review these test cases later.</li>
+        </ul>
+
+        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2Y0ZjRmNScvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSclFBQUFCWFJVSlFWbEE0SUtnQUFBQ3dCQUNkQVNvZ0FCSUFQa1VhaVVRaW9hRWI5QUFvQkVTMGdHZDJHcktnZDluMUJHZGZWVVQzR2l1MmRXdUFBUDcrNzhvVkhzdGJiOGE5WXV5dFRsL2w2VXdiSVpTNEhVL0swUUtFTy94MXROT0NGQkhKd3RVS0xFRzcwVkVhTDBqU05EaG1waW5iZ1czR2cvMGZuVmN5SmliNHVIN29BdGJtMDJad2NsZGZpQmFxNlltTmg1TWNXYTFoYzJlTURsVDZoT0hOWG9IWkpNU3ovK2F2WDIrWXBDSEhiSWdBQUFBPScvPjwvZz48L3N2Zz4=); --ratio: 3024 / 1720">
+          <img src="assets/lambdatest/ai-test-cases/12-deselect.png" alt="Two test cases deselected in one scenario: both buttons now read 9 and the scenario's checkbox shows a partial selection." width="3024" height="1720" loading="lazy" decoding="async">
+          <figcaption>Deselecting two test cases changes both buttons from 11 to 9</figcaption>
+        </figure>
+        <!-- figure pending: F15 assets/lambdatest/ai-test-cases/13-edit-drawer.png -->
+        <!-- figure pending: F16 assets/lambdatest/ai-test-cases/14-kaneai-plan.png (optional) -->
+
+        <h3>5. Point, don't regenerate: @-references</h3>
+
+        <h4>What I designed</h4>
+        <ul>
+          <li><strong>Every scenario and test case has an address:</strong> @S1, @S1.C2.</li>
+          <li><strong>Discoverable syntax:</strong>
+            <ul>
+              <li>The address appears on hover.</li>
+              <li>The input box teaches it: "Update test cases or type @ to refer them".</li>
+            </ul>
+          </li>
+          <li><strong>One instruction can reference several items.</strong></li>
+          <li><strong>A plain-language reply</strong> says what changed, for example: "Converted @S1.C2 from a negative test case … to a positive one" (39 seconds in this run).</li>
+        </ul>
+
+        <h4>Why</h4>
+        <ul>
+          <li><strong>Fix exactly what's wrong</strong> without regenerating everything. This was my addition beyond the competitor reference, where refinement is scoped with checkboxes.</li>
+        </ul>
+
+        <h4>UX principles at work</h4>
+        <ul>
+          <li><strong>Recognition over recall:</strong> addresses on hover and a hint in the input box.</li>
+          <li><strong>User control and freedom:</strong> change one test case without touching the rest.</li>
+        </ul>
+
+        <h4>What I learned from using it</h4>
+        <ul>
+          <li><strong>The summary is text only.</strong> Nothing in the list marks which fields changed (<a href="#cs-tradeoff-2">see <span class="nowrap">trade-off 2</span></a>).</li>
+        </ul>
+
+        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2Y1ZjVmNicvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSclFBQUFCWFJVSlFWbEE0SUtnQUFBQ3dCQUNkQVNvZ0FCSUFQazBlaTBRaW9hRVlCZ0FvQk1TMG5jTHdBV25nVFVhQ3dwQWhvZ1JKcXk2NjV5L0FBUDc4ZE1KQk96MVZ2RDlBbzN0U3k4bm5pdmZKdmlIeVUxRmdQYnFVL2NoT0NyYlVXeS9sb28vd3VVRWFrV3EyTks5cWtScGVKNFBUdHdidGdGK2RiZWVKbEZCQWxFVzYrTkZBNEhTS0YxcS9qRXhyTGVLTFJ2Zk9GYVlNWUFqTGR5bGVSZSsySEhDellXVng0dUh1Rkp0V2xUUkorK0Z3b0FBPScvPjwvZz48L3N2Zz4=); --ratio: 3024 / 1720">
+          <img src="assets/lambdatest/ai-test-cases/15-refine.png" alt="The instruction &quot;@S1.C2 make it into a positive test case&quot; in the conversation, the AI's reasoning streaming below it, and the progress bar at 21%." width="3024" height="1720" loading="lazy" decoding="async">
+          <figcaption>Refining one test case by its address instead of regenerating everything</figcaption>
+        </figure>
+        <!-- figure pending: F18 assets/lambdatest/ai-test-cases/16-refine-result.png (optional) -->
+
+        <h3>6. Two ways out: save or automate</h3>
+
+        <h4>What I designed</h4>
+        <ul>
+          <li><strong>Create and Save:</strong> saves the selected test cases for manual testing.</li>
+          <li><strong>Create and Automate:</strong> shown only on plans that include automation. A drawer asks:
+            <ul>
+              <li><strong>Where to run:</strong> desktop browser, mobile browser or mobile app, plus the website URL and device.</li>
+              <li><strong>Test settings:</strong> agent concurrency, dynamic test data, auto-dismiss pop-ups, network configuration.</li>
+              <li>It also shows how many test cases are <strong>automation-ready</strong> (8 of 11 in this run) and labels the feature <strong>experimental</strong>.</li>
+            </ul>
+          </li>
+          <li>Automated test cases run on <strong>HyperExecute</strong> as part of KaneAI test runs.</li>
+          <li><strong>These settings appear only when automating.</strong> Create and Save skips them.</li>
+        </ul>
+
+        <h4>Why</h4>
+        <ul>
+          <li><strong>One step from generated test cases to automation</strong> for teams whose plan includes it.</li>
+        </ul>
+
+        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2YyZjNmMycvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdScklBQUFCWFJVSlFWbEE0SUtZQUFBQ3dCUUNkQVNvZ0FCSUFQa1VjaWtRaW9hRWI5QUFvQkVTMGdHTVI0TVNqQXROL1RFMlFkcW5IWm1jWk95ZGNMcmpoVEZUNEVKUUEvdjQycUoyYjVOSitDK0ZKQ2JPbEZqUWlzcjJSam55YlNhSElkOGxLNkM1dnBaVUNWWWxMV2U2VmRqOVdQalFVQUR1eWJrZnFtRDdnd0NPSmpablFHRWkwTyswNHhnaXlYR05pbWxQaXpMVG8xTTh3eG5DWk4vbDdLR2lhU0Z2VE56T3hQL1ZsTW85T0ttSFV6d0FBJy8+PC9nPjwvc3ZnPg==); --ratio: 3024 / 1720">
+          <img src="assets/lambdatest/ai-test-cases/17-create-and-automate.png" alt="The Create and Automate drawer, marked Experimental: tabs for desktop browser, mobile browser and mobile app; 11 distinct test cases with 8 automation-ready; website URL and device; agent concurrency, dynamic data, pop-up dismissal and network settings." width="3024" height="1720" loading="lazy" decoding="async">
+          <figcaption>Create and Automate asks where and how to run, and shows how many test cases are automation-ready</figcaption>
+        </figure>
+
+        <h3>7. One pattern across three AI features</h3>
+        <ul>
+          <li>I applied <strong>the same interaction pattern</strong> to test case generation, deduplication and root cause analysis, so users learn it once.</li>
+          <li><strong>Jakob's law</strong>, on a design language that borrows from GitHub Primer.</li>
+          <li>My call; not written down.</li>
+        </ul>
+
+        <div class="sub">
+          <h3>AI Deduplication: the high-stakes version</h3>
+
+          <h4>What it does</h4>
+          <ul>
+            <li>AI with vector search finds duplicate test cases in a project or folder and scores each one against a <strong>base test case</strong>.</li>
+          </ul>
+
+          <h4>What I designed</h4>
+          <ul>
+            <li><strong>Before scanning:</strong> users pick the scope and a <strong>minimum match percentage</strong>.</li>
+            <li><strong>Results:</strong>
+              <ul>
+                <li>Base test cases on the left, each with its duplicate and marked counts.</li>
+                <li>Duplicates on the right, each with a <strong>match percentage and a colour dot</strong> (darker red means a closer match).</li>
+              </ul>
+            </li>
+            <li><strong>Side-by-side compare</strong> and <strong>Ignore</strong> for every match.</li>
+            <li><strong>Nothing is pre-selected.</strong> Users mark each duplicate themselves.</li>
+            <li><strong>A running tally</strong> in the footer, by confidence band: above 80%, 50 to 80%, 20 to 50%, below 20%.</li>
+            <li><strong>Delete</strong> opens a modal where users <strong>type DELETE</strong> to confirm.</li>
+          </ul>
+
+          <h4>Why</h4>
+          <ul>
+            <li><strong>Deletion is permanent.</strong> Every safeguard adds a deliberate step before it.</li>
+            <li><strong>The opposite default to the generator:</strong> the generator starts with everything selected (adding is the goal); dedup starts with nothing selected (deleting can't be undone).</li>
+            <li><strong>Why delete, not archive:</strong> removing duplicates from the repository is the whole point of the feature, and Archive didn't exist yet when dedup shipped.</li>
+          </ul>
+
+          <h4>UX principles at work</h4>
+          <ul>
+            <li><strong>Error prevention:</strong> threshold, opt-in selection, typed confirmation.</li>
+            <li><strong>Calibrated trust:</strong> match percentage plus confidence bands.</li>
+            <li><strong>Human-in-the-loop:</strong> the AI finds; a person deletes.</li>
+          </ul>
+          <p class="quiet"><strong>Launch:</strong> announced publicly on 28 Sep 2026.</p>
+
+          <!-- figure pending: F20 assets/lambdatest/ai-test-cases/18-dedup-start.png -->
+          <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2Y5ZjlmYScvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdScUFBQUFCWFJVSlFWbEE0SUpRQUFBRFFCQUNkQVNvZ0FCSUFQbEVlakVRam9hRVlCQUE0QlFTMGdHVVFSR0dCcjJ1Y1FuZDlDaDFyR1JoV0hmQUVBQUQrL29GdVY5RjhsckphSGNEdEkrRGpGdjNuSlozcUJRMTBzUS9wOXZCbUlUZUZ6d2lmaTRVWXJGT1dBbXhuMVZtUHdwNm1qOThWQzN1RWczOUpaVjdyTGtrTVpWVzZmemtCWk05ZzVpU0o1OThrRWU2MWw4RWRzaVN2U29TWkdYempLVUFBJy8+PC9nPjwvc3ZnPg==); --ratio: 3024 / 1720">
+            <img src="assets/lambdatest/ai-test-cases/19-dedup-review.png" alt="Review and Resolve Duplicates for a whole project: two base test cases on the left; on the right, duplicates with AI Generated tags, 96% and 91% match with red dots, and compare and ignore actions; the footer tallies marked duplicates by match band beside Delete Duplicates." width="3024" height="1720" loading="lazy" decoding="async">
+            <figcaption>Each duplicate sits under its base test case with a match percentage and colour dot, and the footer tallies marked duplicates by confidence band</figcaption>
+          </figure>
+          <!-- figure pending: F22 assets/lambdatest/ai-test-cases/20-dedup-delete.png -->
+        </div>
+
+        <div class="sub">
+          <h3>AI Root Cause Analysis: dense output made readable</h3>
+
+          <h4>What it does</h4>
+          <ul>
+            <li>When an automated test fails, the AI identifies the likely root cause.</li>
+          </ul>
+
+          <h4>Before</h4>
+          <ul>
+            <li>Users scoured logs in Automation and HyperExecute by hand. How long it took depended on the failure type, its complexity and the length of the run.</li>
+          </ul>
+
+          <h4>Who decided what</h4>
+          <ul>
+            <li>Product and engineering decided what the analysis contains, based on what's technically feasible.</li>
+            <li>I designed how it reads: every part below.</li>
+          </ul>
+
+          <h4>What I designed (information architecture)</h4>
+          <ul>
+            <li><strong>Verdict first:</strong>
+              <ul>
+                <li>A two-level category (for example, Product Bug, then UI Data Defect).</li>
+                <li>A one-sentence summary.</li>
+                <li>Error trends for that test.</li>
+              </ul>
+            </li>
+            <li><strong>Detailed analysis</strong>, collapsed by default.</li>
+            <li><strong>Event timeline:</strong> the root cause first, then its effects, each labelled and expandable (Show, Hide).</li>
+            <li><strong>Evidence on demand:</strong> the relevant automation log sits under the step it explains, with a copy button.</li>
+            <li><strong>How to fix it:</strong> numbered next steps.</li>
+            <li><strong>Feedback:</strong> "Suggest Improvements", confirmed with "Your changes are saved and will enhance future RCA results."</li>
+          </ul>
+
+          <h4>Why</h4>
+          <ul>
+            <li>The raw material (logs, commands, network data) is heavy. I made it digestible for technical users without hiding the evidence.</li>
+          </ul>
+
+          <h4>UX principles at work</h4>
+          <ul>
+            <li><strong>Overview first, details on demand:</strong> verdict, then timeline, then logs.</li>
+            <li><strong>Progressive disclosure:</strong> collapsed analysis, Show and Hide per event.</li>
+            <li><strong>Lower extraneous cognitive load:</strong> one summary sentence instead of raw logs.</li>
+            <li><strong>Information scent:</strong> category chips and Root Cause and Effect labels.</li>
+          </ul>
+
+          <!-- figure pending: F23 assets/lambdatest/ai-test-cases/21-rca.png -->
+        </div>
+
+        <h3>8. From features to the design system</h3>
+        <ul>
+          <li>Before these features, Retro Glitch (the design system) and LTComponents (the code library) had <strong>no AI components</strong>.</li>
+          <li>I introduced the first ones with these features and, over time, got them <strong>adopted in other products</strong>. <!-- add later: which products use them --></li>
+          <li><strong>The components:</strong> AI button, AI icon button, AI shimmering text and AI labels.</li>
+          <!-- figure pending: F24 assets/lambdatest/ai-test-cases/22-ai-components.png -->
+          <li>Few of them appear in these three features, because the features shipped first. (Case study B covers this.)</li>
+        </ul>
+      </section>
+
+      <!-- ═══ RESULTS ═══ -->
+
+      <section id="cs-results">
+        <h2>Results so far</h2>
+        <ul>
+          <li><strong>On time:</strong> v2 met the committed timeline for the deal that requested it.</li>
+          <li><strong>Shipped and extended:</strong> v2 in Jan 2026, then v3 (video and Figma inputs) in Jul 2026. Live in production.</li>
+          <li><strong>Now on the public product page:</strong> @-reference refinement and MoSCoW grouping appear on LambdaTest's Test Management page as "Conversational Refinement" and "Scenario-Based Prioritization".</li>
+          <li><strong>Deduplication launched publicly</strong> on 28 Sep 2026.</li>
+          <li><strong>First AI components</strong> in the design system and code library, adopted beyond these features.</li>
+        </ul>
+        <!-- add later: adoption · repeat use · acceptance rate (saved ÷ generated) · edits before saving · share automated · dedup and RCA usage · deal outcome · internal QA usage -->
+      </section>
+
+      <!-- ═══ TRADE-OFFS ═══ -->
+
+      <section id="cs-tradeoffs">
+        <h2>Trade-offs: what shipped, why, and what I'd do next</h2>
+
+        <h3 id="cs-tradeoff-1">1. Per-case source traceability</h3>
+        <dl class="rows ledger">
+          <div><dt>What shipped</dt> <dd>A generated test case doesn't show which part of the input it came from.</dd></div>
+          <div><dt>Why</dt> <dd>Not in v2 or v3 scope. Product set scope around the committed timeline and team capacity; v2 and v3 scope covered new input types.</dd></div>
+          <div><dt>Whose call</dt> <dd>Product</dd></div>
+          <div><dt>What I'd do next</dt> <dd>A <strong>source chip</strong> on each test case that opens the exact input excerpt it came from.</dd></div>
+        </dl>
+
+        <h3 id="cs-tradeoff-2">2. Change-diff after refinement</h3>
+        <dl class="rows ledger">
+          <div><dt>What shipped</dt> <dd>The AI describes its change in text; the list doesn't mark what changed.</dd></div>
+          <div><dt>Why</dt> <dd>Not in scope, for the same reasons.</dd></div>
+          <div><dt>Whose call</dt> <dd>Product</dd></div>
+          <div><dt>What I'd do next</dt> <dd><strong>Highlight changed fields</strong> and add a "changed only" filter.</dd></div>
+        </dl>
+
+        <h3 id="cs-tradeoff-3">3. Session save and history</h3>
+        <dl class="rows ledger">
+          <div><dt>What shipped</dt> <dd>Sessions can't be saved and reopened, and iterations aren't versioned.</dd></div>
+          <div><dt>Why</dt> <dd>High engineering effort. I proposed saving sessions; version history was in the PM's own prototype. Product cut both.</dd></div>
+          <div><dt>Whose call</dt> <dd>Product</dd></div>
+          <div><dt>What I'd do next</dt> <dd>A <strong>session list with restore</strong>, and a version per iteration.</dd></div>
+        </dl>
+
+        <h3 id="cs-tradeoff-4">4. Permanent deletion in dedup</h3>
+        <dl class="rows ledger">
+          <div><dt>What shipped</dt> <dd>Deleting duplicates can't be undone. Safeguards add friction before it: nothing pre-selected, visible counts, type DELETE.</dd></div>
+          <div><dt>Why</dt> <dd>Removing duplicates from the repository is the whole point of the feature, and Archive didn't exist yet when dedup shipped.</dd></div>
+          <div><dt>Whose call</dt> <dd>Feature scope at launch</dd></div>
+          <div><dt>What I'd do next</dt> <dd><strong>Pitch adding Archive next to Delete</strong> in dedup, now that Archive exists (I designed it for Test Manager), so duplicates can be restored.</dd></div>
+        </dl>
+
+        <h3 id="cs-tradeoff-5">5. Scenario becomes folder</h3>
+        <dl class="rows ledger">
+          <div><dt>What shipped</dt> <dd>Scenarios in the session become folders in the repository on save. Nothing tells the user: after saving, they land on the first new folder, with its test cases (tagged AI Generated) on the right.</dd></div>
+          <div><dt>Why</dt> <dd>The backend has no scenario entity, and the generator's architecture was built around v1's scenario concept. I flagged the mismatch; we kept it.</dd></div>
+          <div><dt>Whose call</dt> <dd>Product</dd></div>
+          <div><dt>What I'd do next</dt> <dd><strong>Say it at save time:</strong> "3 scenarios will be saved as 3 folders in [location]".</dd></div>
+        </dl>
+        <!-- figure pending: F25 assets/lambdatest/ai-test-cases/23-after-save.png -->
+
+        <h3 id="cs-tradeoff-6">6. Dedup merge</h3>
+        <dl class="rows ledger">
+          <div><dt>What shipped</dt> <dd>Users can delete duplicates but can't merge them. I designed merge.</dd></div>
+          <div><dt>Why</dt> <dd>The open question of which fields win when two test cases conflict. Product moved merge out of scope because of it.</dd></div>
+          <div><dt>Whose call</dt> <dd>Product</dd></div>
+          <div><dt>What I'd do next</dt> <dd>A <strong>field-by-field merge preview</strong> where users pick the winning values.</dd></div>
+        </dl>
+
+        <h3>Other calls I'd revisit</h3>
+        <ul>
+          <li><strong>Everything pre-selected</strong> (my call, shaped by business): measure how many saved AI test cases get edited or deleted later.</li>
+          <li><strong>Steps only in the drawer</strong> (my call): check whether users open the drawer before saving.</li>
+          <li><strong>Raw reasoning</strong> (engineering's call): add a summarised layer, with the raw stream on demand.</li>
+          <li><strong>Rotating status labels next to a real percentage:</strong> tie each label to a real stage.</li>
+          <li><strong>Cost not shown before generating:</strong> show the estimated credits before the user submits.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ TEAMWORK ═══ -->
+
+      <section id="cs-teamwork">
+        <h2>Teamwork: where we disagreed</h2>
+        <ul>
+          <li><strong>Streaming and partial results:</strong> I pushed for them; engineering took on the extra work. <strong>Shipped.</strong></li>
+          <li><strong>Scenario becomes folder:</strong> I flagged the mismatch; the PM kept it for architecture reasons. <strong>Disagree and commit.</strong></li>
+          <li><strong>Saving sessions:</strong> I proposed it; product cut it for effort and timeline.</li>
+          <li><strong>Dedup merge:</strong> I designed it; product cut it over which fields win.</li>
+          <li><strong>Edge cases:</strong> on some features, I got the PM to extend scope for edge cases that were crucial for delivery. For example, on cross-project test case sharing, the PM hadn't covered a bulk selection that mixes test cases already shared with ones not yet shared. I got it into scope: the flow had to handle sharing the new ones and editing the existing shares together.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ LEADERSHIP ═══ -->
+
+      <section id="cs-leadership">
+        <h2>Leadership</h2>
+        <ul>
+          <li><strong>Set one AI interaction pattern</strong> across three features, on my own initiative.</li>
+          <li><strong>Created the first AI components</strong> in the design system and code library, then drove their adoption in other products.</li>
+          <li><strong>Proposing in-app notifications</strong> to the Test Manager PM. They aren't on the roadmap, but a future feature will need them.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ LEARNINGS ═══ -->
+
+      <section id="cs-learnings">
+        <h2>Learnings</h2>
+        <ul>
+          <li><strong>Validate before shipping, even on a deadline.</strong> No usability testing happened. Next time: short task-based sessions with internal QA teams before release. <!-- add later: internal QA usage --></li>
+          <li><strong>Agree on success metrics before launch.</strong> There was little follow-up data after release, so I seldom learned which decisions underperformed. Next time: define acceptance and refinement events with the PM up front.</li>
+          <li><strong>Transparency needs editing.</strong> Raw reasoning and rotating labels show activity, not always meaning.</li>
+          <li><strong>Show cost before work.</strong> Users should know what a generation costs before they press send.</li>
+          <li><strong>AI changed how I design:</strong>
+            <ul>
+              <li>I use AI for heuristic audits and to synthesise stakeholder feedback.</li>
+              <li>Building quick prototypes to "show, don't tell" led me to start contributing production code.</li>
+            </ul>
+          </li>
+        </ul>
+        <!-- add later: 2 or 3 design changes that came from stakeholder reviews, with before and after -->
+      </section>
+
+    </div>
+
+    <!-- ═══ LET'S TALK ═══ -->
+    <section class="band cs-talk" id="cs-talk">
+      <h2>Let's Talk</h2>
+      <p class="cs-talk-who">Rajat Garg, Human designer powered with AI</p>
+      <p class="cs-talk-links">
+        <a href="https://linkedin.com/in/gragtajar" target="_blank" rel="noopener"><span class="under">LinkedIn</span></a>
+        <a href="https://github.com/gragtajar" target="_blank" rel="noopener" data-track="github"><span class="under">GitHub</span></a>
+        <a href="https://www.figma.com/@gragtajar" target="_blank" rel="noopener" data-track="figma"><span class="under">Figma</span></a>
+        <a href="resume.pdf" download="Rajat-Garg-Lead-Product-Designer-Resume.pdf" data-track="resume"><span class="under">Download Resume</span></a>
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p class="quote"></p>
+    <p class="credit">written &amp; directed by me. produced by claude</p>
+  </footer>
+
+  <script src="js/case-study.js?v=2026-10-06" defer></script>
+
+</body>
+</html>

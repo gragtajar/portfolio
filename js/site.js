@@ -715,7 +715,7 @@
   // ─── Keys ──────────────────────────────────────────────
   // A page names its keys in its markup (aria-keyshortcuts), and a key does
   // what a click on its element would: S flips Sound and L the Lights (on
-  // the homepage, the case study and the game); on the homepage 1 to 5 open
+  // the homepage, the case studies and the game); on the homepage 1 to 6 open
   // the works in the order of their edge print; in the game ← and → keep the
   // poster on that side (its script hears a click on the card, as from a
   // mouse), and Enter starts a game from rest (Play, or Restart on the
@@ -1087,7 +1087,8 @@
   // back on the way home. The rest of the page crossfades (css/site.css).
   // Needs cross-document view transitions; skipped with reduced motion, where
   // the plain crossfade stays, and into the intro.
-  const WORKS = ['lenskart-eye-test.html', 'screening-room.html'];
+  const CASE_STUDIES = ['lenskart-eye-test.html', 'lambdatest-test-case-generator.html'];
+  const WORKS = [...CASE_STUDIES, 'screening-room.html'];
   const HERE = fileOf(window.location.href);
   const isHome = HERE === 'index.html';
   let dressed = [];
@@ -1110,7 +1111,7 @@
         title: slateShown ? strip.slate.querySelector('.slate-title') : frame.querySelector('.title'),
       };
     }
-    if (HERE === 'lenskart-eye-test.html') {
+    if (CASE_STUDIES.includes(HERE)) {
       return { shot: document.querySelector('.cs-hero img'), title: document.querySelector('.cs-head h1') };
     }
     return { shot: document.querySelector('.sr-stage'), title: document.querySelector('.sr-title') };

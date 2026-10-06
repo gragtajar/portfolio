@@ -59,6 +59,18 @@
 </IfModule>
 
 # ----------------------------------------------------------------------------
+# Kept out of search: the LambdaTest case study is not indexed or listed. The
+# page says so too (its robots meta tag), and robots.txt closes it, with its
+# pictures, to crawlers. Matches the clean URL as well: it is served from the
+# same file.
+# ----------------------------------------------------------------------------
+<IfModule mod_headers.c>
+  <Files "lambdatest-test-case-generator.html">
+    Header set X-Robots-Tag "noindex, nofollow, noarchive, nosnippet, noimageindex"
+  </Files>
+</IfModule>
+
+# ----------------------------------------------------------------------------
 # Cache headers per file type
 # ----------------------------------------------------------------------------
 <IfModule mod_expires.c>
