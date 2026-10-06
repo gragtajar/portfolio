@@ -1,9 +1,10 @@
 /* ============================================
    CASE STUDY
    The section index says which section is being read and glides to the
-   section it is asked for; a board that slides sideways can be panned from
-   the keyboard; and a picture that carries a blurred copy of itself is
-   covered by the copy until it has loaded and been reached.
+   section it is asked for, as a link to a place in the text glides to it; a
+   board that slides sideways can be panned from the keyboard; and a picture
+   that carries a blurred copy of itself is covered by the copy until it has
+   loaded and been reached.
    ============================================ */
 
 (function () {
@@ -105,12 +106,14 @@
     show(current ? byId.get(current.id) : null);
   };
 
-  // A click in the index glides to its section instead of jumping there. The
-  // browser's own jump to the #section still does the work (the address, the
-  // history entry, where Tab goes next), with smooth scrolling switched on for
-  // that jump alone: a link shared to a section still opens straight at it,
-  // and back and forward still put the page back at once. The index marks
-  // where the page is going from the start, not each section it passes.
+  // A click in the index glides to its section instead of jumping there, and
+  // so does a link in the text to a place on the page ("see trade-off 2").
+  // The browser's own jump to the #place still does the work (the address,
+  // the history entry, where Tab goes next), with smooth scrolling switched on
+  // for that jump alone: a link shared to a section still opens straight at
+  // it, and back and forward still put the page back at once. The index marks
+  // where the page is going from the start (for a place in the text, the
+  // section it is in), not each section it passes.
   let quiet = 0;
   let glides = 0;
   // The glide is over once the page stops: at scrollend where the browser
@@ -143,11 +146,21 @@
     });
   };
 
-  links.forEach((link) => link.addEventListener('click', (e) => {
+  // the index's link for the section a place on the page is in
+  const indexFor = (place) => {
+    const section = sections.find((s) => s.contains(place));
+    return section ? byId.get(section.id) : null;
+  };
+
+  const inText = [...document.querySelectorAll('.cs-body a[href^="#"]')];
+  [...links, ...inText].forEach((link) => link.addEventListener('click', (e) => {
     if (reducedMotion.matches || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const place = document.getElementById(link.getAttribute('href').slice(1));
+    if (!place) return;
+    const to = links.includes(link) ? link : indexFor(place);
     glides++;
     gliding = true;
-    show(link);
+    if (to) show(to);
     root.style.scrollBehavior = 'smooth';
     document.addEventListener('scroll', wait, { passive: true });
     document.addEventListener('scrollend', land);
