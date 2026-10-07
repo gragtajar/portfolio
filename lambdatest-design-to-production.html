@@ -161,7 +161,7 @@
           <div><dt>Scope:</dt> <dd>Retro Glitch (the Figma design system), LTComponents and Storybook (the code library and its docs), a prototyping repo for PMs, and my own production code</dd></div>
         </dl>
 
-        <p class="cs-read-time">10 min read</p>
+        <p class="cs-read-time">11 min read</p>
       </div>
     </header>
 
@@ -181,7 +181,11 @@
 
     <div class="cs-body">
 
-      <!-- figure pending: BF01 assets/lambdatest/design-system/hero.png (the hero; the page transition uses it) -->
+      <!-- ═══ HERO IMAGE ═══ -->
+      <!-- placeholder until the picture comes: BF01 assets/lambdatest/design-system/hero.png (the homepage tile's picture too) -->
+      <figure class="fig cs-hero">
+        <img src="assets/lambdatest/design-system/placeholders/hero.png" alt="Placeholder, picture to come: Hero. A rebuilt component in the Retro Glitch Figma file next to its Storybook docs page. Also the homepage tile, cropped to 16:9." width="1984" height="1116" fetchpriority="high" decoding="async">
+      </figure>
 
       <!-- ═══ AT A GLANCE ═══ -->
       <section id="cs-glance">
@@ -294,6 +298,18 @@
 
       <section id="cs-closed">
         <h2>How I closed it</h2>
+        <nav class="steps" aria-label="Steps">
+          <ol>
+            <li><a href="#cs-step-1">Foundations first: tokens</a></li>
+            <li><a href="#cs-step-2">Fix the most-used components</a></li>
+            <li><a href="#cs-step-3">The first AI components</a></li>
+            <li><a href="#cs-step-4">Two new themes</a></li>
+            <li><a href="#cs-step-5">Storybook docs people and AI can follow</a></li>
+            <li><a href="#cs-step-6">A prototyping repo for PMs</a></li>
+            <li><a href="#cs-step-7">Shipping my own code</a></li>
+            <li><a href="#cs-step-8">Fixing a flow that had drifted: creating a test run</a></li>
+          </ol>
+        </nav>
 
         <h3 id="cs-step-1">1. Foundations first: tokens</h3>
 
@@ -339,9 +355,24 @@
             <li><strong>Consistency and standards:</strong> one button looks and behaves the same everywhere.</li>
           </ul>
         </aside>
-        <!-- figure pending: BF03 assets/lambdatest/design-system/01-button-before.png -->
-        <!-- figure pending: BF04 assets/lambdatest/design-system/02-button-after.png -->
-        <!-- figure pending: BF05 assets/lambdatest/design-system/03-new-components.png -->
+
+        <!-- placeholder until the picture comes: BF03 assets/lambdatest/design-system/01-button-before.png (fig board) -->
+        <figure class="fig placeholder blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2VlZWZlZicvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSb2dBQUFCWFJVSlFWbEE0SUh3QUFBQXdCQUNkQVNvZ0FCSUFQbEVpalVVam9pRVVCVlE0QlFTMGlLQUFBSFJ1cWpPcGh5K2NPTk5XNEFBQS92NlVERDh1THRnVE5oUERxMHFVS2lKeU9iUUY3bitSK3hoZnBQdldBMlluZno5Szd3MEdEbDc1NGs4MGJ1UFVqZ1BPd09rREFYV2FuWHRpaS9TWXd1Qm1pVGE0TmJ2d2xSV2gvekVNU0FBQScvPjwvZz48L3N2Zz4=); --ratio: 1344 / 756">
+          <img src="assets/lambdatest/design-system/placeholders/01-button-before.png" alt="Placeholder, picture to come: Button, before. Button in the old Figma design system file (the Primer copy)." width="1344" height="756" loading="lazy" decoding="async">
+          <figcaption>Button in the old file</figcaption>
+        </figure>
+
+        <!-- placeholder until the picture comes: BF04 assets/lambdatest/design-system/02-button-after.png (fig board) -->
+        <figure class="fig placeholder blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2VkZWVlZScvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSb3dBQUFCWFJVSlFWbEE0SUlBQUFBQXdCQUNkQVNvZ0FCSUFQbEVpamtVam9pRVVCVlE0QlFTMGdBSHlISVZTbjRsZFRSdUpSR1dCQUFBQS92NlVEZGpnTnMwZllVa3BPc1dVMEIrc0wzVlpEMVZ4cXdOYUZtRUErZXJIMFRSSTBFSGtwSk8yeTlaM0VMSVlCOHJvTUhsbWxvQUVLQ2lJU1lqdmJhS3BWTHBERkZ5Q04xQXhZdzdrc3pSQkFRQUFBQT09Jy8+PC9nPjwvc3ZnPg==); --ratio: 1344 / 756">
+          <img src="assets/lambdatest/design-system/placeholders/02-button-after.png" alt="Placeholder, picture to come: Button, after. A frame from the Retro Glitch Figma file that shows the label, keyboard hint, notification indicator and loading state." width="1344" height="756" loading="lazy" decoding="async">
+          <figcaption>Button after the rebuild, with label, keyboard hint, notification indicator and loading state</figcaption>
+        </figure>
+
+        <!-- placeholder until the picture comes: BF05 assets/lambdatest/design-system/03-new-components.png (fig board) -->
+        <figure class="fig placeholder blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2VjZWRlZCcvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdScElBQUFCWFJVSlFWbEE0SUlZQUFBRFFBd0NkQVNvZ0FCSUFQbEVpalVVam9pRVVCVlE0QlFTMGlLQUFDcnBUaEhvc1VWOC90NUFBL3Y2VURkamdOczBmWVVrcXRJMzBKUG1uU1V2d3JtU1hSZ2EyVmlYejVXYytnZWlNdWJDT0x4dUFYVkN4OVBHaS8xcVlWWmZpdUV1cEd3RUdDUGxVZTFueU5xR1VxaFhaTmlVSHJDYVR1cEYvUHJZTG5tRGxuSlZFOVFBQUFBPT0nLz48L2c+PC9zdmc+); --ratio: 1344 / 756">
+          <img src="assets/lambdatest/design-system/placeholders/03-new-components.png" alt="Placeholder, picture to come: New components. RadioGroup, CheckboxGroup, Upload, Slider, DatePicker and TimePicker, from the Retro Glitch Figma file." width="1344" height="756" loading="lazy" decoding="async">
+          <figcaption>Components that didn't exist before: RadioGroup, CheckboxGroup, Upload, Slider, DatePicker and TimePicker</figcaption>
+        </figure>
 
         <h3 id="cs-step-3">3. The first AI components</h3>
 
@@ -367,7 +398,12 @@
         <ul>
           <li><strong>Accessibility wasn't reviewed</strong> for the gradients. My next steps: check text contrast against every gradient stop, give icon-only AI buttons a name, keep focus visible on the gradient, and make the shimmer respect reduced motion and announce its status to screen readers. <!-- confirm: adopt these as your next steps, from workbook Part 9 --></li>
         </ul>
-        <!-- figure pending: BF06 assets/lambdatest/design-system/04-ai-components.png -->
+
+        <!-- placeholder until the picture comes: BF06 assets/lambdatest/design-system/04-ai-components.png (fig board) -->
+        <figure class="fig placeholder blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2VkZWVlZScvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSb1FBQUFCWFJVSlFWbEE0SUhnQUFBQVFCQUNkQVNvZ0FCSUFQbEVpamtTam9pRVVCVlE0QlFTMGdBQVhPMW9WR0I1T0dWRmExMzY2QUFEKy9wUUtyT3p4RTdpRytSd2dKQVZ5bjVCYjh1clY0OXhTU2hibWVGWkNrZlpBdDNaTjdTRlcvRkNITWYvblR3WHRwbUtVUmNrRWJhWjluTDRhc0RvKzhDdnBYNERsN1FYODJYL0NBQUE9Jy8+PC9nPjwvc3ZnPg==); --ratio: 1344 / 756">
+          <img src="assets/lambdatest/design-system/placeholders/04-ai-components.png" alt="Placeholder, picture to come: AI components. AI button, AI icon button, AI label and AI shimmering text, from the Retro Glitch Figma file." width="1344" height="756" loading="lazy" decoding="async">
+          <figcaption>The first AI components, signalled by a spark icon and a gradient</figcaption>
+        </figure>
 
         <h3 id="cs-step-4">4. Two new themes</h3>
 
@@ -390,7 +426,12 @@
             <li><strong>Theming through modes:</strong> a new theme is a new set of values, not a new set of screens.</li>
           </ul>
         </aside>
-        <!-- figure pending: BF07 assets/lambdatest/design-system/05-themes.png -->
+
+        <!-- placeholder until the picture comes: BF07 assets/lambdatest/design-system/05-themes.png (fig board) -->
+        <figure class="fig placeholder blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2VkZWVlZScvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSb3dBQUFCWFJVSlFWbEE0SUlBQUFBQXdCQUNkQVNvZ0FCSUFQbEVpamtVam9pRVVCVlE0QlFTMGlLQUFDcjF6aEh1TXRTbUJPVmYxVEFBQS92NlVEZDdyVlZlOXVsYWVLUUYremZDMHVCaXFhTDA4OE02NUtoV1ozVk5CQitObitqSmx6aFpjSUoremsvemlJVkdFRC9kcjBESGIxajFFKzQvSDBpUTJuZXRqYzhEVzdUbUh5ZnJRLzVpR0s3UWdBQT09Jy8+PC9nPjwvc3ZnPg==); --ratio: 1344 / 756">
+          <img src="assets/lambdatest/design-system/placeholders/05-themes.png" alt="Placeholder, picture to come: Three themes. One set of components in its light, dark and light high-contrast modes, from the Retro Glitch Figma file." width="1344" height="756" loading="lazy" decoding="async">
+          <figcaption>One set of tokens, three themes</figcaption>
+        </figure>
 
         <h3 id="cs-step-5">5. Storybook docs people and AI can follow</h3>
 
@@ -398,13 +439,34 @@
         <ul>
           <li><strong>Prop descriptions and types:</strong> I had Claude map our props to Primer's equivalents and draw on Primer's public docs, then collated the descriptions and types into JSDoc handover files. The FE lead's team applied them in Storybook.</li>
           <li><strong>Dos, don'ts and guardrails</strong>, written for engineers and AI coding tools. LTButton's cover labels, sizes, a 24 × 24px minimum target, when to use inactive instead of disabled, and the ARIA rules.</li>
+        </ul>
+
+        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDg4MCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nIzI3MjkyYicvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSb0FBQUFCWFJVSlFWbEE0SUhRQUFBQndCQUNkQVNvZ0FCWUFQbEVrajBXam9pRVVCQUE0QlFTMGdBQVhSdW05azVXK3NVZUJWclBWVjhBWkFBRCsvVzdLTnI4djJBNjdmM3J6QW9LbTJWMDFadGtuVFFVeTBJQitHc3M1TExQR1EzYi9yMnZZSWJ1QVFEZi9NZ1V0bWtnR0YvVzVGZUJTN3hycUlvWEVXaS90Yk93QUFBPT0nLz48L2c+PC9zdmc+); --ratio: 2414 / 1638">
+          <img src="assets/lambdatest/design-system/06-ltbutton-docs.png" alt="Storybook guidance for LTButton: a Do list (short sentence-case labels starting with a verb, one primary button per group, ai only for AI-powered features, a 24 by 24px minimum target, ARIA rules for labels, menus and loading) and a Don't list (no all caps, keep focus styles, don't rely on colour or icons)." width="2414" height="1638" loading="lazy" decoding="async">
+          <figcaption>Dos and don'ts, written for engineers and AI coding tools alike</figcaption>
+        </figure>
+        <ul>
           <li><strong>Quirks and known issues stated plainly</strong> in the props, e.g., "Despite the name, a style object".</li>
+        </ul>
+
+        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDg4MCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nIzI1MjYyOCcvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdScG9BQUFCWFJVSlFWbEE0SUk0QUFBRHdBd0NkQVNvZ0FCWUFQbEVrajBXam9pRVVCQUE0QlFTMGdBQWluWHJIMTBONmVxWUtVZ0RBQVA3NTJtcTlYcm5QMjc0WDNWbDB5dlZhTUR0OUZGZzlwcXk5Y2k1UDNicmkvV20zR3owZmo5QnhoM1BkdVluSyt2Rjg1aDU1dTVwR2pMZlE0RDA2L1oxaW4wQU5KWEZ4ZzNNbE11bUlXRWt1anFTeHNkVFZVRGkzd2dxeUZHK0lHejlBQUFBQScvPjwvZz48L3N2Zz4=); --ratio: 2414 / 1638">
+          <img src="assets/lambdatest/design-system/07-ltselectpanel-props.png" alt="The Storybook props table for LTSelectPanel, with name, description, default and control columns; descriptions explain each prop and call out known issues and quirks." width="2414" height="1638" loading="lazy" decoding="async">
+          <figcaption>Prop descriptions that name quirks plainly</figcaption>
+        </figure>
+        <ul>
           <li><strong>Storybook against Figma, audited by hand:</strong> the AI model hallucinated across components and props with similar names, so I didn't trust it for this.</li>
         </ul>
 
         <h4>Result</h4>
         <ul>
           <li>In the FE lead's words: Storybook props went from <strong>28% to 97% typed</strong> and from <strong>0 to 509 documented</strong>.</li>
+        </ul>
+
+        <figure class="fig board board-45 blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDE2MCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nIzIwMjUyYScvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSbGdBQUFCWFJVSlFWbEE0SUV3QUFBQVFBd0NkQVNvZ0FBUUFQbEVlakVRam9hRVlCQUE0QlFTemdBQXBWVkdhOFdBQS92eHcxbXRkTjMzRThUOW1uZlpyN3Z4QTNhY2lrQjcyOEFHWWhqbWJrYTdTMnZNTUFaVEFBQUFBJy8+PC9nPjwvc3ZnPg==); --ratio: 1720 / 234">
+          <img src="assets/lambdatest/design-system/08-storybook-update.png" alt="A Slack message from the FE lead: Storybook props go from 28% to 97% typed and from 0 to 509 documented." width="1720" height="234" loading="lazy" decoding="async">
+          <figcaption>Props from 28% to 97% typed and from 0 to 509 documented</figcaption>
+        </figure>
+        <ul>
           <li><strong>FE engineers now use Storybook constantly</strong> and keep it updated, which wasn't the case before.</li>
         </ul>
 
@@ -414,21 +476,6 @@
             <li><strong>Documentation as guardrails:</strong> clear rules mean fewer one-off decisions, by people or by AI.</li>
           </ul>
         </aside>
-
-        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDg4MCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nIzI3MjkyYicvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSb0FBQUFCWFJVSlFWbEE0SUhRQUFBQndCQUNkQVNvZ0FCWUFQbEVrajBXam9pRVVCQUE0QlFTMGdBQVhSdW05azVXK3NVZUJWclBWVjhBWkFBRCsvVzdLTnI4djJBNjdmM3J6QW9LbTJWMDFadGtuVFFVeTBJQitHc3M1TExQR1EzYi9yMnZZSWJ1QVFEZi9NZ1V0bWtnR0YvVzVGZUJTN3hycUlvWEVXaS90Yk93QUFBPT0nLz48L2c+PC9zdmc+); --ratio: 2414 / 1638">
-          <img src="assets/lambdatest/design-system/06-ltbutton-docs.png" alt="Storybook guidance for LTButton: a Do list (short sentence-case labels starting with a verb, one primary button per group, ai only for AI-powered features, a 24 by 24px minimum target, ARIA rules for labels, menus and loading) and a Don't list (no all caps, keep focus styles, don't rely on colour or icons)." width="2414" height="1638" loading="lazy" decoding="async">
-          <figcaption>Dos and don'ts, written for engineers and AI coding tools alike</figcaption>
-        </figure>
-
-        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDg4MCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nIzI1MjYyOCcvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdScG9BQUFCWFJVSlFWbEE0SUk0QUFBRHdBd0NkQVNvZ0FCWUFQbEVrajBXam9pRVVCQUE0QlFTMGdBQWluWHJIMTBONmVxWUtVZ0RBQVA3NTJtcTlYcm5QMjc0WDNWbDB5dlZhTUR0OUZGZzlwcXk5Y2k1UDNicmkvV20zR3owZmo5QnhoM1BkdVluSyt2Rjg1aDU1dTVwR2pMZlE0RDA2L1oxaW4wQU5KWEZ4ZzNNbE11bUlXRWt1anFTeHNkVFZVRGkzd2dxeUZHK0lHejlBQUFBQScvPjwvZz48L3N2Zz4=); --ratio: 2414 / 1638">
-          <img src="assets/lambdatest/design-system/07-ltselectpanel-props.png" alt="The Storybook props table for LTSelectPanel, with name, description, default and control columns; descriptions explain each prop and call out known issues and quirks." width="2414" height="1638" loading="lazy" decoding="async">
-          <figcaption>Prop descriptions that name quirks plainly</figcaption>
-        </figure>
-
-        <figure class="fig board board-45 blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDE2MCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nIzIwMjUyYScvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSbGdBQUFCWFJVSlFWbEE0SUV3QUFBQVFBd0NkQVNvZ0FBUUFQbEVlakVRam9hRVlCQUE0QlFTemdBQXBWVkdhOFdBQS92eHcxbXRkTjMzRThUOW1uZlpyN3Z4QTNhY2lrQjcyOEFHWWhqbWJrYTdTMnZNTUFaVEFBQUFBJy8+PC9nPjwvc3ZnPg==); --ratio: 1720 / 234">
-          <img src="assets/lambdatest/design-system/08-storybook-update.png" alt="A Slack message from the FE lead: Storybook props go from 28% to 97% typed and from 0 to 509 documented." width="1720" height="234" loading="lazy" decoding="async">
-          <figcaption>Props from 28% to 97% typed and from 0 to 509 documented</figcaption>
-        </figure>
 
         <h3 id="cs-step-6">6. A prototyping repo for PMs</h3>
 
@@ -453,8 +500,18 @@
           <li>I haven't shown it to PMs yet; I'm improving the output first.</li>
           <!-- add later: the first PM to use it -->
         </ul>
-        <!-- figure pending: BF11 assets/lambdatest/design-system/09-repo.png -->
-        <!-- figure pending: BF12 assets/lambdatest/design-system/10-prototype.png -->
+
+        <!-- placeholder until the picture comes: BF11 assets/lambdatest/design-system/09-repo.png (fig board) -->
+        <figure class="fig placeholder blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2VlZWZlZicvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSbndBQUFCWFJVSlFWbEE0SUhBQUFBQVFCQUNkQVNvZ0FCSUFQbEVrajBXam9pRVVCQUE0QlFTMGdBQVhPMW4wcG1uMC9mUjhHdFc4Z0FEKy9wUUtyTndMZUwxaUNOZVBTdTRJZUpPbXNSWWU5SHYzczhzRDRYcUF0cGwyR0pDSTVQdXRFalNFcTBURDdCTS80b0hhdTZEODJhcFhMUG9jK1dEd3c3N0FBQUFBJy8+PC9nPjwvc3ZnPg==); --ratio: 1344 / 756">
+          <img src="assets/lambdatest/design-system/placeholders/09-repo.png" alt="Placeholder, picture to come: Prototyping repo. The private repo: its file tree and README. Hide anything sensitive." width="1344" height="756" loading="lazy" decoding="async">
+          <figcaption>Components synced monthly from Storybook, plus mock data and layout patterns</figcaption>
+        </figure>
+
+        <!-- placeholder until the picture comes: BF12 assets/lambdatest/design-system/10-prototype.png (fig board) -->
+        <figure class="fig placeholder blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2YwZjFmMScvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSbklBQUFCWFJVSlFWbEE0SUdZQUFBRFFBd0NkQVNvZ0FCSUFQbEVrajBXam9pRVVCQUE0QlFTMGdBQVhPdi85ZjdORHM1SzR3OEFBL3Y2VURESzYreDV1amF0NHpMeEk0M3d4cUFMZ2gvR0cxeDd1am9ZYjNyUVRHY0lVNFA1NFFWQ0FUeHZkSlhuUmkwejRuTkVuckhoOXAxYllBQUE9Jy8+PC9nPjwvc3ZnPg==); --ratio: 1344 / 756">
+          <img src="assets/lambdatest/design-system/placeholders/10-prototype.png" alt="Placeholder, picture to come: A prototype. One prototype built with the repo." width="1344" height="756" loading="lazy" decoding="async">
+          <figcaption>A Test Manager prototype built from the repo with Claude Code</figcaption>
+        </figure>
 
         <h3 id="cs-step-7">7. Shipping my own code</h3>
 
@@ -482,7 +539,12 @@
           <li><strong>Claude Code</strong>, with Opus 5.5 and Fable 5.1.</li>
           <li>I read every diff and tested each change in my dev environment.</li>
         </ul>
-        <!-- figure pending: BF13 assets/lambdatest/design-system/11-merged-pr.png (optional) -->
+
+        <!-- placeholder until the picture comes: BF13 assets/lambdatest/design-system/11-merged-pr.png (fig board, optional) -->
+        <figure class="fig placeholder blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2VmZjBmMCcvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSbm9BQUFCWFJVSlFWbEE0SUc0QUFBRFFBd0NkQVNvZ0FCSUFQbEVrajBXam9pRVVCQUE0QlFTMGdBQVhPcTFBTjJURjNpU1N3aUFBL3Y2VURPVTl3aDlxMVUxWk15eSsyaTZxUjIrZ09MZnFuT21CU2FGQmh4OEFYK0x6V0VZQ3Vic05MQy90QUpuZEx2Tk13TVdhdTNqcGlCYk1DaUx5ZGk3N25ZQUFBQT09Jy8+PC9nPjwvc3ZnPg==); --ratio: 1344 / 756">
+          <img src="assets/lambdatest/design-system/placeholders/11-merged-pr.png" alt="Placeholder, picture to come: A merged PR. One merged PR, with sensitive parts hidden. Optional." width="1344" height="756" loading="lazy" decoding="async">
+          <figcaption>One of my merged PRs, reviewed by the FE team</figcaption>
+        </figure>
 
         <h4>Next (in progress)</h4>
         <ul>
@@ -546,18 +608,18 @@
 
       <section id="cs-unlocked">
         <h2>What it unlocked</h2>
-        <ul>
-          <li><strong>Storybook:</strong> props from <strong>28% to 97% typed</strong> and <strong>0 to 509 documented</strong>, with the FE team. FE engineers now use it constantly.</li>
-          <li><strong>Tokens:</strong> <strong>393</strong> in two collections, with <strong>three theme modes</strong>.
+        <dl class="rows">
+          <div><dt>Storybook:</dt> <dd>props from <strong>28% to 97% typed</strong> and <strong>0 to 509 documented</strong>, with the FE team. FE engineers now use it constantly.</dd></div>
+          <div><dt>Tokens:</dt> <dd><strong>393</strong> in two collections, with <strong>three theme modes</strong>.
             <ul>
               <li>down from <strong>622 in 5 collections</strong> in the old Primer copy</li>
             </ul>
-          </li>
-          <li><strong>Dark theme:</strong> <strong>3 days</strong> of design work once tokens existed; engineering spent about a month converting products to the new CSS variables and got to about 90%.</li>
-          <li><strong>AI components:</strong> 3 of 4 standard in the code library, used in <strong>4 products</strong>.</li>
-          <li><strong>Code:</strong> 2 PRs merged; 5 more planned.</li>
-          <li><strong>Prototyping repo:</strong> auto-syncs monthly from Storybook; a couple of prototypes built.</li>
-        </ul>
+          </dd></div>
+          <div><dt>Dark theme:</dt> <dd><strong>3 days</strong> of design work once tokens existed; engineering spent about a month converting products to the new CSS variables and got to about 90%.</dd></div>
+          <div><dt>AI components:</dt> <dd>3 of 4 standard in the code library, used in <strong>4 products</strong>.</dd></div>
+          <div><dt>Code:</dt> <dd>2 PRs merged; 5 more planned.</dd></div>
+          <div><dt>Prototyping repo:</dt> <dd>auto-syncs monthly from Storybook; a couple of prototypes built.</dd></div>
+        </dl>
         <!-- add later: components and variants added · contrast pass rates (AA and AAA) per theme · PR stats -->
       </section>
 

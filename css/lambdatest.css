@@ -18,6 +18,19 @@
    read as the list's last line */
 .cs-body :is(ul, ol) + .quiet { margin-top: 16px; }
 
+/* A list that carries on after a picture (where a picture stands under the
+   bullet it proves) starts the picture's own 28px below it, so the picture
+   sits between equal spaces */
+.cs-body .fig + :is(ul, ol) { margin-top: 28px; }
+
+/* --- A picture still to come (owner's call, 2026-10-07): a placeholder of
+       its own (.claude/revamp/case-study-b/placeholders.js) stands in its
+       place and says which picture goes there and the file to save it as.
+       It prints no wider than a homepage tile, where its words read on a
+       phone as on a desktop. The cover keeps the column's width: the page
+       transition carries it from the homepage tile. --- */
+.cs-body .fig.placeholder { max-width: 28rem; }
+
 /* A slip can hold a short list instead of a sentence (the gaps in four
    components). Its items are the slip's own sentences: Detail size in the
    second ink, 6px under the slip's title like a slip's sentence, and none of
@@ -82,6 +95,12 @@
 }
 
 .ledger dd { color: var(--ink); }
+
+/* A row's detail can carry a short list (the tokens' "down from 622..."): it
+   continues the detail at the detail's own size, 4px under it */
+.cs-body .rows dd > ul { margin-top: 4px; }
+
+.cs-body .rows dd li { font-size: inherit; line-height: inherit; }
 
 /* --- Pictures arrive as they do on Medium. Until a lazy picture has loaded
        and the reader has scrolled to it, a blurred copy of it, made from a
