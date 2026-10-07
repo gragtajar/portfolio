@@ -1,9 +1,10 @@
 /* ============================================
-   LAMBDATEST CASE STUDY
-   What lambdatest-test-case-generator.html adds to the long-form reading
-   patterns of css/case-study.css. The brief keeps case-study.css as it is,
-   so these live here, loaded by this page only. The reading patterns are
-   recorded in DESIGN.md under Long-form Reading.
+   LAMBDATEST CASE STUDIES
+   What the two LambdaTest case studies (lambdatest-test-case-generator.html
+   and lambdatest-design-to-production.html) add to the long-form reading
+   patterns of css/case-study.css. Their briefs keep case-study.css as it is,
+   so these live here, loaded by those two pages only. The reading patterns
+   are recorded in DESIGN.md under Long-form Reading.
    ============================================ */
 
 /* Captions are sentences, held to the reading measure like every other
@@ -17,8 +18,53 @@
    read as the list's last line */
 .cs-body :is(ul, ol) + .quiet { margin-top: 16px; }
 
-/* A heading linked from the text lands clear of the sticky index row */
-.cs-body h3[id] { scroll-margin-top: calc(var(--index-h) + 16px); }
+/* A list that carries on after a picture (where a picture stands under the
+   bullet it proves) starts the picture's own 28px below it, so the picture
+   sits between equal spaces */
+.cs-body .fig + :is(ul, ol) { margin-top: 28px; }
+
+/* --- A picture still to come (owner's call, 2026-10-07): a placeholder of
+       its own (.claude/revamp/case-study-b/placeholders.js) stands in its
+       place and says which picture goes there and the file to save it as.
+       It prints no wider than a homepage tile, where its words read on a
+       phone as on a desktop. The cover keeps the column's width: the page
+       transition carries it from the homepage tile. --- */
+.cs-body .fig.placeholder { max-width: 28rem; }
+
+/* A slip can hold a short list instead of a sentence (the gaps in four
+   components). Its items are the slip's own sentences: Detail size in the
+   second ink, 6px under the slip's title like a slip's sentence, and none of
+   the hairline and padding that make a slip a slip. */
+.cs-body .slips li > ul {
+  max-width: 28rem;
+  margin-top: 6px;
+  list-style-type: disc;
+}
+
+.cs-body .slips li li {
+  padding: 0;
+  border-top: 0;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.cs-body .slips li li + li { margin-top: 4px; }
+
+/* A slip whose bold lead is only the start of its sentence ("Missing
+   components: with no...", "No owner on the design side and no process.")
+   runs its lead in, so the sentence reads whole: the lead in first ink at
+   600, the rest in second ink, both at the slip's Detail size. */
+.cs-body .slips li.run-in > :is(h4, p) {
+  display: inline;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.cs-body .slips li.run-in > p { margin: 0; }
+
+/* A heading or a slip linked from the text lands clear of the sticky index row */
+.cs-body :is(h3, li)[id] { scroll-margin-top: calc(var(--index-h) + 16px); }
 
 /* --- Sub-stories: a story that belongs to the step above it (dedup and
        root cause analysis under step 7). Ruled on its left like an aside,
@@ -49,6 +95,12 @@
 }
 
 .ledger dd { color: var(--ink); }
+
+/* A row's detail can carry a short list (the tokens' "down from 622..."): it
+   continues the detail at the detail's own size, 4px under it */
+.cs-body .rows dd > ul { margin-top: 4px; }
+
+.cs-body .rows dd li { font-size: inherit; line-height: inherit; }
 
 /* --- Pictures arrive as they do on Medium. Until a lazy picture has loaded
        and the reader has scrolled to it, a blurred copy of it, made from a
@@ -98,7 +150,27 @@
 }
 
 @media (min-width: 64em) {
-  .cs-body h3[id] { scroll-margin-top: 32px; }
+  .cs-body :is(h3, li)[id] { scroll-margin-top: 32px; }
+}
+
+/* From 40em the slips stand in two columns. The slip that holds a list is
+   as tall as two others, so it takes two rows and the two slips after it in
+   the reading order stack beside it, instead of leaving a hole under its
+   neighbour. */
+@media (min-width: 40em) {
+  .cs-body .slips li:has(> ul) { grid-row: span 2; }
+}
+
+/* Below 64em, where the index is a row across the top, a page whose first
+   picture is still to come starts its first section close under the index
+   row, not 64px below it between two hairlines. Once the cover picture is
+   the first thing in the body, this no longer applies. */
+@media (max-width: 63.99em) {
+  .cs-body > section:first-child {
+    margin-top: 32px;
+    padding-top: 0;
+    border-top: 0;
+  }
 }
 
 /* --- From 84em the facts stand beside the title, as on every case study.
