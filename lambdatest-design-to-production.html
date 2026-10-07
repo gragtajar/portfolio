@@ -21,8 +21,7 @@
   <meta property="og:title" content="Closing the gap between design and production">
   <meta property="og:description" content="How I rebuilt LambdaTest's design system on my own initiative, and what it unlocked: a dark theme, documented Storybook props and a prototyping repo for PMs.">
   <meta property="og:url" content="https://rajatg.in/lambdatest-design-to-production.html">
-  <meta property="og:image" content="https://rajatg.in/assets/lambdatest/design-system/hero.png">
-  <!-- og:image:width, og:image:height and og:image:alt pending: BF01 (the hero) -->
+  <!-- og:image, twitter:image and the structured data's image wait for BF01 (the hero) -->
   <meta property="article:author" content="Rajat Garg">
   <meta property="article:section" content="Case Study">
 
@@ -30,7 +29,6 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Closing the gap between design and production">
   <meta name="twitter:description" content="How I rebuilt LambdaTest's design system on my own initiative, and what it unlocked: a dark theme, documented Storybook props and a prototyping repo for PMs.">
-  <meta name="twitter:image" content="https://rajatg.in/assets/lambdatest/design-system/hero.png">
 
   <!-- Fonts are served from this site (css/site.css declares them). The one
        connection kept to fonts.gstatic.com is for the animated beer emoji. -->
@@ -71,7 +69,6 @@
     "@type": "Article",
     "headline": "Closing the gap between design and production",
     "description": "How I rebuilt LambdaTest's design system on my own initiative, and what it unlocked: a dark theme, documented Storybook props and a prototyping repo for PMs.",
-    "image": "https://rajatg.in/assets/lambdatest/design-system/hero.png",
     "author": {
       "@type": "Person",
       "name": "Rajat Garg",
@@ -240,7 +237,7 @@
             <h4>Storybook drifted from Figma.</h4>
             <p>The code library's docs deviated from the design system in many places.</p>
           </li>
-          <li>
+          <li id="cs-component-gaps">
             <h4>Components with gaps:</h4>
             <ul>
               <li>Button had no props for label, keyboard hint, notification indicator or loading state.</li>
@@ -249,11 +246,11 @@
               <li>Breadcrumbs had no collapsed state.</li>
             </ul>
           </li>
-          <li>
+          <li class="run-in">
             <h4>Missing components:</h4>
             <p>with no RadioGroup or CheckboxGroup, designers and engineers built their own with their own spacing. With no Upload component, the live products used several different upload elements. Slider, DatePicker and TimePicker were missing too.</p>
           </li>
-          <li>
+          <li class="run-in">
             <h4>No owner on the design side</h4>
             <p>and no process. On the code side, the FE lead owned the library.</p>
           </li>
@@ -298,7 +295,7 @@
       <section id="cs-closed">
         <h2>How I closed it</h2>
 
-        <h3>1. Foundations first: tokens</h3>
+        <h3 id="cs-step-1">1. Foundations first: tokens</h3>
 
         <h4>What I did</h4>
         <ul>
@@ -318,31 +315,35 @@
           <li>Tokens live as Figma variables. They aren't wired directly to the CSS variables in code yet. <!-- confirm with the FE lead --></li>
         </ul>
 
-        <h4>Principles at work</h4>
-        <ul>
-          <li><strong>Single source of truth:</strong> components take their colours from theme tokens. <!-- confirm: all rebuilt components use tokens --></li>
-          <li><strong>Semantic naming:</strong> tokens say what they're for (text, border), not what they look like.</li>
-        </ul>
+        <aside class="aside">
+          <h4 class="aside-label">Principles at work</h4>
+          <ul>
+            <li><strong>Single source of truth:</strong> components take their colours from theme tokens. <!-- confirm: all rebuilt components use tokens --></li>
+            <li><strong>Semantic naming:</strong> tokens say what they're for (text, border), not what they look like.</li>
+          </ul>
+        </aside>
 
-        <h3>2. Fix the most-used components</h3>
+        <h3 id="cs-step-2">2. Fix the most-used components</h3>
 
         <h4>What I did</h4>
         <ul>
           <li><strong>Picked by real usage:</strong> button, action menu, select panel, radio, checkbox, breadcrumbs and labelGroup, the components used most on the most-seen screens.</li>
-          <li><strong>Closed every component gap listed above:</strong> I designed each fix, handed it to FE, and tested it in Storybook against the intended behaviour.</li>
+          <li><strong>Closed every component gap <a href="#cs-component-gaps">listed above</a>:</strong> I designed each fix, handed it to FE, and tested it in Storybook against the intended behaviour.</li>
           <li><strong>Added the missing components the same way:</strong> RadioGroup, CheckboxGroup, Upload, Slider, DatePicker and TimePicker.</li>
           <!-- add later: components updated, variants and props added -->
         </ul>
 
-        <h4>Principle at work</h4>
-        <ul>
-          <li><strong>Consistency and standards:</strong> one button looks and behaves the same everywhere.</li>
-        </ul>
+        <aside class="aside">
+          <h4 class="aside-label">Principle at work</h4>
+          <ul>
+            <li><strong>Consistency and standards:</strong> one button looks and behaves the same everywhere.</li>
+          </ul>
+        </aside>
         <!-- figure pending: BF03 assets/lambdatest/design-system/01-button-before.png -->
         <!-- figure pending: BF04 assets/lambdatest/design-system/02-button-after.png -->
         <!-- figure pending: BF05 assets/lambdatest/design-system/03-new-components.png -->
 
-        <h3>3. The first AI components</h3>
+        <h3 id="cs-step-3">3. The first AI components</h3>
 
         <h4>Why</h4>
         <ul>
@@ -368,7 +369,7 @@
         </ul>
         <!-- figure pending: BF06 assets/lambdatest/design-system/04-ai-components.png -->
 
-        <h3>4. Two new themes</h3>
+        <h3 id="cs-step-4">4. Two new themes</h3>
 
         <h4>Dark theme</h4>
         <ul>
@@ -383,13 +384,15 @@
           <li>It isn't shipped yet; it's waiting for dark to go fully live. Then I'll hand engineering the values as a file to apply to the CSS variables.</li>
         </ul>
 
-        <h4>Principle at work</h4>
-        <ul>
-          <li><strong>Theming through modes:</strong> a new theme is a new set of values, not a new set of screens.</li>
-        </ul>
+        <aside class="aside">
+          <h4 class="aside-label">Principle at work</h4>
+          <ul>
+            <li><strong>Theming through modes:</strong> a new theme is a new set of values, not a new set of screens.</li>
+          </ul>
+        </aside>
         <!-- figure pending: BF07 assets/lambdatest/design-system/05-themes.png -->
 
-        <h3>5. Storybook docs people and AI can follow</h3>
+        <h3 id="cs-step-5">5. Storybook docs people and AI can follow</h3>
 
         <h4>What I did</h4>
         <ul>
@@ -405,10 +408,12 @@
           <li><strong>FE engineers now use Storybook constantly</strong> and keep it updated, which wasn't the case before.</li>
         </ul>
 
-        <h4>Principle at work</h4>
-        <ul>
-          <li><strong>Documentation as guardrails:</strong> clear rules mean fewer one-off decisions, by people or by AI.</li>
-        </ul>
+        <aside class="aside">
+          <h4 class="aside-label">Principle at work</h4>
+          <ul>
+            <li><strong>Documentation as guardrails:</strong> clear rules mean fewer one-off decisions, by people or by AI.</li>
+          </ul>
+        </aside>
 
         <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDg4MCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nIzI3MjkyYicvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSb0FBQUFCWFJVSlFWbEE0SUhRQUFBQndCQUNkQVNvZ0FCWUFQbEVrajBXam9pRVVCQUE0QlFTMGdBQVhSdW05azVXK3NVZUJWclBWVjhBWkFBRCsvVzdLTnI4djJBNjdmM3J6QW9LbTJWMDFadGtuVFFVeTBJQitHc3M1TExQR1EzYi9yMnZZSWJ1QVFEZi9NZ1V0bWtnR0YvVzVGZUJTN3hycUlvWEVXaS90Yk93QUFBPT0nLz48L2c+PC9zdmc+); --ratio: 2414 / 1638">
           <img src="assets/lambdatest/design-system/06-ltbutton-docs.png" alt="Storybook guidance for LTButton: a Do list (short sentence-case labels starting with a verb, one primary button per group, ai only for AI-powered features, a 24 by 24px minimum target, ARIA rules for labels, menus and loading) and a Don't list (no all caps, keep focus styles, don't rely on colour or icons)." width="2414" height="1638" loading="lazy" decoding="async">
@@ -425,7 +430,7 @@
           <figcaption>Props from 28% to 97% typed and from 0 to 509 documented</figcaption>
         </figure>
 
-        <h3>6. A prototyping repo for PMs</h3>
+        <h3 id="cs-step-6">6. A prototyping repo for PMs</h3>
 
         <h4>Before</h4>
         <ul>
@@ -451,7 +456,7 @@
         <!-- figure pending: BF11 assets/lambdatest/design-system/09-repo.png -->
         <!-- figure pending: BF12 assets/lambdatest/design-system/10-prototype.png -->
 
-        <h3>7. Shipping my own code</h3>
+        <h3 id="cs-step-7">7. Shipping my own code</h3>
 
         <h4>Getting set up</h4>
         <ul>
@@ -488,7 +493,7 @@
           <li>drag and drop test cases into folders to move or copy them</li>
         </ul>
 
-        <h3>8. Fixing a flow that had drifted: creating a test run</h3>
+        <h3 id="cs-step-8">8. Fixing a flow that had drifted: creating a test run</h3>
 
         <h4>Why</h4>
         <ul>
@@ -582,7 +587,7 @@
           <div><dt>Where it stands</dt> <dd>Gradients unchecked; shimmer not final</dd></div>
           <!-- confirm: your reason -->
           <!-- confirm -->
-          <div><dt>What I'd do next</dt> <dd>Run the accessibility checks listed under "The first AI components"</dd></div>
+          <div><dt>What I'd do next</dt> <dd>Run the accessibility checks listed under "<a href="#cs-step-3">The first AI components</a>"</dd></div>
         </dl>
 
         <h3 id="cs-tradeoff-4">4. Light high-contrast not shipped</h3>
