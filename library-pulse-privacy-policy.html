@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Library Pulse privacy policy</title>
-  <meta name="description" content="The privacy policy of Library Pulse, a Figma plugin by Rajat Garg: what it can access in Figma, Slack and email, what it stores, how it is used, where it is kept, and how to have it deleted.">
+  <meta name="description" content="The privacy policy of Library Pulse, a Figma plugin by Rajat Garg: what it can access in Figma, Slack, email and Google Chat, what it stores, how it is used, where it is kept, and how to have it deleted.">
   <meta name="author" content="Rajat Garg">
   <meta name="theme-color" content="#f4f5f5" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#18191a" media="(prefers-color-scheme: dark)">
@@ -74,8 +74,8 @@
 
     <header class="cs-head">
       <h1>Library Pulse privacy policy</h1>
-      <p class="lede">This policy covers Library Pulse: the Figma plugin and the service behind it, which connects to Figma and to Slack or email for you. Library Pulse is made and maintained by Rajat Garg.</p>
-      <p class="cs-read-time">Last updated 2 October 2026 · <a href="library-pulse-plugin">About Library Pulse</a></p>
+      <p class="lede">This policy covers Library Pulse: the Figma plugin and the service behind it, which connects to Figma and to Slack, email or Google Chat for you. Library Pulse is made and maintained by Rajat Garg.</p>
+      <p class="cs-read-time">Last updated 8 October 2026 · <a href="library-pulse-plugin">About Library Pulse</a></p>
     </header>
 
     <div class="cs-body">
@@ -88,29 +88,36 @@
           <li><strong>In Figma,</strong> it asks only for permission to manage webhooks on your file, to check that you can access the file, and to read published component and style metadata, which is how it identifies the file. It never reads your designs or file contents. Inside the plugin it also reads your Figma user ID, to connect your account, and your name, which it only shows back to you in the plugin.</li>
           <li><strong>In Slack,</strong> it can post messages and list the names of channels, members and user groups for its pickers. It never reads your messages.</li>
           <li><strong>By email,</strong> it sends to the addresses an editor of the file enters, and only after each address has confirmed. It never reads anyone's mailbox.</li>
+          <li><strong>In Google Chat,</strong> once you sign in with Google, it can see which Google Chat spaces you belong to, to list them for you, and add the Library Pulse app to the spaces you choose. It also receives your Google account's email address and account ID and, for a Google Workspace account, your organisation's domain. It posts updates as the Library Pulse app, never as you. It can't read the rest of a space's conversation: Google Chat gives it only the messages that mention it or are sent to it directly, which it reads to answer help, stop and start, and doesn't store.</li>
         </ul>
 
         <h2 class="minor" id="stores">What it stores</h2>
         <ul>
           <li>Your Figma user ID, and the access tokens Figma issues to Library Pulse</li>
           <li>For each connected Slack workspace: its ID and name, the Slack user ID of the person who connected it, and the token Slack issues to Library Pulse</li>
-          <li>For each file that is set up: its key and name, whether it sends to Slack or email, the chosen channels or the email addresses, the optional team message and its mentions, the Figma user ID of the person who set it up, whether its updates are on and, for email, the time zone of the editor who saved the list, which the emails use to show the publish time</li>
+          <li>For each Google account that connects Google Chat: its account ID, email address and organisation domain, the Figma user ID of the person who connected it, the permissions they granted, the token Google issues to Library Pulse, and whether Google has since revoked it</li>
+          <li>For each file that is set up: its key and name, whether it sends to Slack, email or Google Chat, the chosen channels, email addresses or Google Chat spaces (their IDs and names), the optional team message and its mentions, the Figma user ID of the person who set it up, whether its updates are on and, for email and Google Chat, the time zone of the editor who saved the setup, which the updates use to show the publish time</li>
           <li>For each email address: whether it is awaiting confirmation, confirmed or unsubscribed, when it was added and when it confirmed</li>
-          <li>A record of each publish received and each update sent: the file, the Slack channel or email address, the time, and whether it was delivered. Confirmation emails are recorded the same way.</li>
+          <li>For each Google Chat space Library Pulse joins: its ID, name and type, the Google Chat user ID of whoever last added or removed the app, when that happened, whether the app is still a member, and whether updates there are paused</li>
+          <li>A record of each publish received and each update sent: the file, the Slack channel, email address or Google Chat space, the time, and whether it was delivered. Confirmation emails are recorded the same way.</li>
           <li>For the pickers, a copy of your workspace's channel, member and user-group names, fetched from Slack again once it is more than ten minutes old</li>
-          <li>While you connect Figma or Slack, a sign-in record that hands your session to the plugin, valid for ten minutes</li>
+          <li>While you connect Figma, Slack or Google, a sign-in record that hands your session to the plugin, valid for ten minutes</li>
           <li>On your computer, in Figma's storage for the plugin: a session token and your connection details</li>
         </ul>
-        <p>The Figma and Slack tokens are encrypted at rest (AES-256-GCM). Your file contents are never stored, and the details of each publish are passed on to Slack or into the email, not kept.</p>
+        <p>The Figma, Slack and Google tokens are encrypted at rest (AES-256-GCM). Your file contents are never stored, and the details of each publish are passed on to Slack or Google Chat or into the email, not kept.</p>
 
         <h2 class="minor" id="email">How email is delivered</h2>
         <p>Emails are sent through Amazon Simple Email Service, part of Amazon Web Services, from its Sydney region. Amazon handles the recipient addresses and the message in order to deliver it. If a message bounces or is reported as spam, Amazon forwards the notice to the mailbox <a href="mailto:library.pulse@rajatg.in">library.pulse@rajatg.in</a>; replies to an update go there too. The confirm and unsubscribe links in every email name one file setup and one address and are signed, so they cannot be altered to act on another; confirmation links expire after seven days. To limit misuse, an address receives at most three confirmation emails a day and a file sends at most 150 update emails a day.</p>
+
+        <h2 class="minor" id="google-chat">How Google Chat works</h2>
+        <p>When you connect Google Chat, you sign in with Google and allow two permissions: to see the Google Chat spaces you belong to, and to add the Library Pulse app to a space. Library Pulse uses your sign-in only to list your spaces and to add the app to the spaces you pick. Updates are posted by the Library Pulse app itself, and Google Chat shows them as coming from an app. Google, which provides Google Chat, processes the messages it carries.</p>
+        <p>Library Pulse's use of information received from Google APIs will adhere to <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">Google API Services User Data Policy</a>, including the Limited Use requirements. Google user data is used only to deliver the updates you set up. It is never sold, shared, used for advertising, or used to develop, improve or train AI or machine-learning models.</p>
 
         <h2 class="minor" id="use">How it is used</h2>
         <p>Only to deliver the updates you set up and to fill the plugin's pickers. It is never sold, shared or used for advertising.</p>
 
         <h2 class="minor" id="where">Where it is kept</h2>
-        <p>The service runs on Vercel and keeps its data in a Supabase (Postgres) database. Access is limited to the maintainer. Vercel's operational logs record events such as a saved setup or a failed delivery, with identifiers like your Figma user ID and a masked form of an email address, and never your tokens.</p>
+        <p>The service runs on Vercel and keeps its data in a Supabase (Postgres) database. Access is limited to the maintainer. Vercel's operational logs record events such as a saved setup or a failed delivery, with identifiers like your Figma user ID, a masked form of an email address, a Google Chat space ID or a Google Workspace domain, and never your tokens.</p>
 
         <h2 class="minor" id="deleting">Keeping and deleting it</h2>
         <ul>
@@ -118,6 +125,7 @@
           <li>The person who set up a file can also choose Remove Figma connection, which deletes the webhook Library Pulse registered on the file.</li>
           <li>Any editor of the file can remove an email address from its list. The unsubscribe link in any email stops updates to that address at once; adding it again sends a new confirmation, and nothing is sent until it is confirmed.</li>
           <li>You can revoke Library Pulse's access to your Figma account, and remove the app from your Slack workspace, at any time.</li>
+          <li>For Google Chat, you can remove Library Pulse from a space (the space's Apps &amp; integrations), pause it there by mentioning @Library Pulse with stop, and <a href="https://support.google.com/accounts/answer/14012355" target="_blank" rel="noopener">remove its access to your Google Account</a> at any time. Switching a file to Slack or email removes its Google Chat spaces from the setup.</li>
           <li>To have your data deleted, email <a href="mailto:library.pulse@rajatg.in">library.pulse@rajatg.in</a>.</li>
         </ul>
 
