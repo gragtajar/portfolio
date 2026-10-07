@@ -1,9 +1,11 @@
 User-agent: *
 Disallow: /cua/
-# The LambdaTest case study and its pictures are not to be crawled
+# The LambdaTest case studies and their pictures are not to be crawled
 Disallow: /lambdatest-test-case-generator
+Disallow: /lambdatest-design-to-production
 Disallow: /assets/lambdatest/
 Disallow: /assets/home/lambdatest-ai-test-cases.png
+Disallow: /assets/home/lambdatest-design-to-production.png
 Allow: /
 
 Sitemap: https://rajatg.in/sitemap.xml
