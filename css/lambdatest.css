@@ -1,9 +1,10 @@
 /* ============================================
-   LAMBDATEST CASE STUDY
-   What lambdatest-test-case-generator.html adds to the long-form reading
-   patterns of css/case-study.css. The brief keeps case-study.css as it is,
-   so these live here, loaded by this page only. The reading patterns are
-   recorded in DESIGN.md under Long-form Reading.
+   LAMBDATEST CASE STUDIES
+   What the two LambdaTest case studies (lambdatest-test-case-generator.html
+   and lambdatest-design-to-production.html) add to the long-form reading
+   patterns of css/case-study.css. Their briefs keep case-study.css as it is,
+   so these live here, loaded by those two pages only. The reading patterns
+   are recorded in DESIGN.md under Long-form Reading.
    ============================================ */
 
 /* Captions are sentences, held to the reading measure like every other
@@ -16,6 +17,26 @@
 /* A quiet note after a list keeps a paragraph's distance, so it does not
    read as the list's last line */
 .cs-body :is(ul, ol) + .quiet { margin-top: 16px; }
+
+/* A slip can hold a short list instead of a sentence (the gaps in four
+   components). Its items are the slip's own sentences: Detail size in the
+   second ink, 6px under the slip's title like a slip's sentence, and none of
+   the hairline and padding that make a slip a slip. */
+.cs-body .slips li > ul {
+  max-width: 28rem;
+  margin-top: 6px;
+  list-style-type: disc;
+}
+
+.cs-body .slips li li {
+  padding: 0;
+  border-top: 0;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.cs-body .slips li li + li { margin-top: 4px; }
 
 /* A heading linked from the text lands clear of the sticky index row */
 .cs-body h3[id] { scroll-margin-top: calc(var(--index-h) + 16px); }

@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LambdaTest Design System Case Study, Rajat Garg</title>
+  <meta name="description" content="How I rebuilt LambdaTest's design system on my own initiative, and what it unlocked: a dark theme, documented Storybook props and a prototyping repo for PMs.">
+  <meta name="author" content="Rajat Garg">
+  <!-- This page stays out of search engines: not indexed or listed, its links
+       not followed, no snippet, cached copy or image results. robots.txt also
+       closes it to crawlers, and the server sends the same rule as a header. -->
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="theme-color" content="#f4f5f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#18191a" media="(prefers-color-scheme: dark)">
+
+  <link rel="canonical" href="https://rajatg.in/lambdatest-design-to-production.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Rajat Garg">
+  <meta property="og:title" content="Closing the gap between design and production">
+  <meta property="og:description" content="How I rebuilt LambdaTest's design system on my own initiative, and what it unlocked: a dark theme, documented Storybook props and a prototyping repo for PMs.">
+  <meta property="og:url" content="https://rajatg.in/lambdatest-design-to-production.html">
+  <meta property="og:image" content="https://rajatg.in/assets/lambdatest/design-system/hero.png">
+  <!-- og:image:width, og:image:height and og:image:alt pending: BF01 (the hero) -->
+  <meta property="article:author" content="Rajat Garg">
+  <meta property="article:section" content="Case Study">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Closing the gap between design and production">
+  <meta name="twitter:description" content="How I rebuilt LambdaTest's design system on my own initiative, and what it unlocked: a dark theme, documented Storybook props and a prototyping repo for PMs.">
+  <meta name="twitter:image" content="https://rajatg.in/assets/lambdatest/design-system/hero.png">
+
+  <!-- Fonts are served from this site (css/site.css declares them). The one
+       connection kept to fonts.gstatic.com is for the animated beer emoji. -->
+  <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Before first paint: the chosen theme -->
+  <script>
+    (function () {
+      var root = document.documentElement;
+      root.classList.add('js');
+      try {
+        var theme = localStorage.getItem('rg-theme');
+        if (theme === 'light' || theme === 'dark') root.dataset.theme = theme;
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="stylesheet" href="css/site.css?v=2026-10-06">
+  <link rel="stylesheet" href="css/case-study.css?v=2026-10-06">
+  <link rel="stylesheet" href="css/lambdatest.css?v=2026-10-06">
+
+  <!-- The site's own scripts run before the page is first drawn
+       (blocking="render"; a browser without it runs them as plain deferred
+       scripts), so a page transition finds the page ready: the right frame
+       on the strip, the cursor under the mouse. They come before the remote
+       scripts below, which deferred scripts would otherwise wait for. -->
+  <script src="js/cursor.js?v=2026-10-06" defer blocking="render"></script>
+  <script src="js/site.js?v=2026-10-06" defer blocking="render"></script>
+
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="manifest" href="site.webmanifest">
+
+  <!-- Structured data: Article schema for SEO rich results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Closing the gap between design and production",
+    "description": "How I rebuilt LambdaTest's design system on my own initiative, and what it unlocked: a dark theme, documented Storybook props and a prototyping repo for PMs.",
+    "image": "https://rajatg.in/assets/lambdatest/design-system/hero.png",
+    "author": {
+      "@type": "Person",
+      "name": "Rajat Garg",
+      "url": "https://rajatg.in/"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Rajat Garg"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rajatg.in/lambdatest-design-to-production.html"
+    },
+    "datePublished": "2026-10-07",
+    "dateModified": "2026-10-07",
+    "articleSection": "Case Study"
+  }
+  </script>
+
+  <!-- Lottie player for the animated beer emoji -->
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+  <!-- Analytics: Cloudflare Web Analytics (cookieless, deferred) -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "599e70fe62dd40bf8b0fa8569f070d68"}'></script>
+
+  <!--
+    Analytics: Amplitude, loaded async by script injection so it never blocks
+    rendering. trackEvent() queues events fired before the SDK is ready.
+  -->
+  <script>
+  (function () {
+    window.trackEvent = function (name) {
+      if (window.amplitude && typeof window.amplitude.track === 'function') {
+        window.amplitude.track(name);
+      } else {
+        (window.__ampQueue = window.__ampQueue || []).push(name);
+      }
+    };
+    var s = document.createElement('script');
+    s.src = 'https://cdn.amplitude.com/script/8300beffc146f03833610e507db0468c.js';
+    s.async = true;
+    s.onload = function () {
+      if (!window.amplitude) return;
+      if (window.sessionReplay && window.amplitude.add) {
+        window.amplitude.add(window.sessionReplay.plugin({ sampleRate: 1 }));
+      }
+      window.amplitude.init('8300beffc146f03833610e507db0468c', {
+        fetchRemoteConfig: true,
+        autocapture: {
+          attribution: { trackingMethod: ['userProperty', 'eventProperty'] },
+          fileDownloads: true,
+          formInteractions: true,
+          pageViews: true,
+          sessions: true,
+          elementInteractions: true,
+          networkTracking: true,
+          webVitals: true,
+          frustrationInteractions: { thrashedCursor: true, errorClicks: true, deadClicks: true, rageClicks: true }
+        }
+      });
+      (window.__ampQueue || []).forEach(function (n) { window.amplitude.track(n); });
+      window.__ampQueue = [];
+    };
+    document.head.appendChild(s);
+  })();
+  </script>
+</head>
+<body class="page-case">
+
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <p class="way-home"><a href="index.html" class="home-link">Rajat Garg</a> <dotlottie-player id="cheers-lottie" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f37b/lottie.json" autoplay speed="1" aria-hidden="true"></dotlottie-player></p>
+    <nav class="tools" aria-label="Site">
+      <button type="button" class="switch sound-toggle" aria-pressed="false" aria-keyshortcuts="S"><span class="under">Sound <span class="state">off</span></span><kbd class="key" aria-hidden="true">S</kbd></button>
+      <button type="button" class="switch theme-toggle" aria-pressed="true" aria-keyshortcuts="L"><span class="under">Lights <span class="state">on</span></span><kbd class="key" aria-hidden="true">L</kbd></button>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ═══ CASE STUDY HEADER ═══ -->
+    <header class="cs-head">
+      <h1><span class="keep">Closing the gap</span> between design and production</h1>
+
+      <div class="cs-facts">
+        <dl class="rows cs-meta">
+          <div><dt>Role:</dt> <dd>Senior Product Designer, on my own initiative alongside feature work</dd></div>
+          <div><dt>Company:</dt> <dd>LambdaTest</dd></div>
+          <div><dt>Scope:</dt> <dd>Retro Glitch (the Figma design system), LTComponents and Storybook (the code library and its docs), a prototyping repo for PMs, and my own production code</dd></div>
+        </dl>
+
+        <p class="cs-read-time">10 min read</p>
+      </div>
+    </header>
+
+    <!-- ═══ SECTION INDEX (sticky) ═══ -->
+    <nav class="cs-index" aria-label="Sections">
+      <a href="#cs-glance"><span class="under">At a glance</span></a>
+      <a href="#cs-gap"><span class="under">The gap</span></a>
+      <a href="#cs-took-on"><span class="under">What I took on</span></a>
+      <a href="#cs-closed"><span class="under">How I closed it</span></a>
+      <a href="#cs-ai"><span class="under">How I used AI</span></a>
+      <a href="#cs-unlocked"><span class="under">What it unlocked</span></a>
+      <a href="#cs-tradeoffs"><span class="under">Trade-offs</span></a>
+      <a href="#cs-teamwork"><span class="under">Teamwork</span></a>
+      <a href="#cs-leadership"><span class="under">Leadership</span></a>
+      <a href="#cs-learnings"><span class="under">Learnings</span></a>
+    </nav>
+
+    <div class="cs-body">
+
+      <!-- figure pending: BF01 assets/lambdatest/design-system/hero.png (the hero; the page transition uses it) -->
+
+      <!-- ═══ AT A GLANCE ═══ -->
+      <section id="cs-glance">
+        <h2>At a glance</h2>
+        <ul>
+          <li><strong>The problem:</strong> design and code had drifted apart. Our Figma file was a copy of GitHub Primer's community file, with broken colour ramps and components that ignored its tokens. Storybook didn't match it, and <strong>customers could see the inconsistencies</strong>.</li>
+          <li><strong>What I did, unassigned:</strong>
+            <ul>
+              <li>rebuilt the token foundations</li>
+              <li>fixed the most-used components</li>
+              <li>designed the first AI components</li>
+              <li>added dark and light high-contrast themes</li>
+              <li>drafted the Storybook docs the FE team shipped</li>
+              <li>built a prototyping repo for PMs</li>
+              <li>started shipping my own PRs</li>
+            </ul>
+          </li>
+          <li><strong>What it unlocked:</strong>
+            <ul>
+              <li>the dark theme took <strong>3 days of design work</strong> once tokens existed</li>
+              <li>Storybook props went from <strong>0 to 509 documented</strong> and <strong>28% to 97% typed</strong>, with the FE team</li>
+              <li>AI components now appear in <strong>four products</strong></li>
+            </ul>
+          </li>
+          <li><strong>The honest part:</strong> light high-contrast isn't shipped, and PMs haven't started using the repo yet.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ THE GAP ═══ -->
+
+      <section id="cs-gap">
+        <h2>The gap</h2>
+
+        <h3>Problems before</h3>
+        <ul class="slips">
+          <li>
+            <h4>A borrowed design system.</h4>
+            <p>We worked from a copy of GitHub Primer's Figma community file, with a tangle of primary and secondary token variables.</p>
+          </li>
+          <li>
+            <h4>Broken colour.</h4>
+            <p>The colour ramp was broken, the colour collections were skewed and colour names were far off.</p>
+          </li>
+          <li>
+            <h4>Components ignored the tokens.</h4>
+            <p>Many components didn't use the variables at all, many had spacing issues, and the icons were a mess.</p>
+          </li>
+          <li>
+            <h4>It couldn't scale.</h4>
+            <p>Advanced patterns like slots and nested components would have been a nightmare to build on it.</p>
+          </li>
+          <li>
+            <h4>Storybook drifted from Figma.</h4>
+            <p>The code library's docs deviated from the design system in many places.</p>
+          </li>
+          <li>
+            <h4>Components with gaps:</h4>
+            <ul>
+              <li>Button had no props for label, keyboard hint, notification indicator or loading state.</li>
+              <li>Checkbox and radio had no hover or pressed states, and no label or caption support.</li>
+              <li>Action menu and select panel were split into too many disjointed sub-components, so designers had to remember which piece to use where.</li>
+              <li>Breadcrumbs had no collapsed state.</li>
+            </ul>
+          </li>
+          <li>
+            <h4>Missing components:</h4>
+            <p>with no RadioGroup or CheckboxGroup, designers and engineers built their own with their own spacing. With no Upload component, the live products used several different upload elements. Slider, DatePicker and TimePicker were missing too.</p>
+          </li>
+          <li>
+            <h4>No owner on the design side</h4>
+            <p>and no process. On the code side, the FE lead owned the library.</p>
+          </li>
+        </ul>
+
+        <h3>Why it mattered</h3>
+        <ul>
+          <li><strong>Customers could see it:</strong> UI inconsistencies across components made the product look immature and unprofessional.</li>
+          <li><strong>It slowed my own work:</strong> the old system was frustrating and had no room to scale.</li>
+          <li><strong>PMs' prototypes didn't look real:</strong> PMs fed screenshots of the live product to AI tools to build prototypes. Even with the Figma file as reference, the results didn't look or behave like production.</li>
+        </ul>
+
+        <h3>Who it's for</h3>
+        <ul>
+          <li><strong>Designers and FE engineers</strong>, who build from the system.</li>
+          <li><strong>PMs</strong>, who prototype ideas for stakeholders.</li>
+          <li><strong>AI coding tools</strong>, which read the docs and guardrails.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ WHAT I TOOK ON ═══ -->
+
+      <section id="cs-took-on">
+        <h2>What I took on</h2>
+        <ul>
+          <li><strong>No brief, no written goal.</strong> I started the design system rebuild because the old system was frustrating and couldn't scale.</li>
+          <li><strong>The prototyping repo</strong> came from an ask. My manager, a senior PM, asked in a 1:1 for a way to automate this design work so it helps everyone. I chose the approach and built it.</li>
+          <li><strong>The PRs</strong> were for my own growth, as product design builder roles gain ground.</li>
+          <li><strong>Constraints:</strong>
+            <ul>
+              <li><strong>Stay on Primer.</strong> I proposed moving off it towards LambdaTest's own visual identity, since our product and our website speak different visual languages. Leadership saw it as too big a change.</li>
+              <li><strong>No dedicated time.</strong> I did all of this alongside my regular deliverables, mostly in my own time.</li>
+              <li><strong>The code library isn't mine.</strong> The FE lead owns Storybook and LTComponents, so code changes go through her team.</li>
+            </ul>
+          </li>
+          <li><strong>Order of work:</strong> tokens, then components, then themes, then Storybook docs, then the repo, then PRs. Components and PRs are ongoing.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ HOW I CLOSED IT ═══ -->
+
+      <section id="cs-closed">
+        <h2>How I closed it</h2>
+
+        <h3>1. Foundations first: tokens</h3>
+
+        <h4>What I did</h4>
+        <ul>
+          <li>Rebuilt the variables into <strong>two collections</strong>:
+            <ul>
+              <li><strong>243 base tokens:</strong> size, spacing, border radius and width, and colour as solids and transparent (alpha) versions across eight hues.
+                <ul>
+                  <li>plus <strong>14 text tokens</strong> for font family, weight, size and line height</li>
+                </ul>
+              </li>
+              <li><strong>150 theme tokens</strong> named by purpose: text, background, icon, border, overlay and shadow, plus component tokens for keyboard hint, upload, button, text field and segmented control.</li>
+              <!-- confirm: which panel is which collection -->
+            </ul>
+          </li>
+          <li><strong>Down from 622 variables in 5 collections</strong> in the old Primer copy.</li>
+          <li><strong>Light, dark and light high-contrast are modes</strong> of the theme collection, so every theme token holds a value for each.</li>
+          <li>Tokens live as Figma variables. They aren't wired directly to the CSS variables in code yet. <!-- confirm with the FE lead --></li>
+        </ul>
+
+        <h4>Principles at work</h4>
+        <ul>
+          <li><strong>Single source of truth:</strong> components take their colours from theme tokens. <!-- confirm: all rebuilt components use tokens --></li>
+          <li><strong>Semantic naming:</strong> tokens say what they're for (text, border), not what they look like.</li>
+        </ul>
+
+        <h3>2. Fix the most-used components</h3>
+
+        <h4>What I did</h4>
+        <ul>
+          <li><strong>Picked by real usage:</strong> button, action menu, select panel, radio, checkbox, breadcrumbs and labelGroup, the components used most on the most-seen screens.</li>
+          <li><strong>Closed every component gap listed above:</strong> I designed each fix, handed it to FE, and tested it in Storybook against the intended behaviour.</li>
+          <li><strong>Added the missing components the same way:</strong> RadioGroup, CheckboxGroup, Upload, Slider, DatePicker and TimePicker.</li>
+          <!-- add later: components updated, variants and props added -->
+        </ul>
+
+        <h4>Principle at work</h4>
+        <ul>
+          <li><strong>Consistency and standards:</strong> one button looks and behaves the same everywhere.</li>
+        </ul>
+        <!-- figure pending: BF03 assets/lambdatest/design-system/01-button-before.png -->
+        <!-- figure pending: BF04 assets/lambdatest/design-system/02-button-after.png -->
+        <!-- figure pending: BF05 assets/lambdatest/design-system/03-new-components.png -->
+
+        <h3>3. The first AI components</h3>
+
+        <h4>Why</h4>
+        <ul>
+          <li>AI features were using normal components with makeshift changes, and they looked half-baked.</li>
+        </ul>
+
+        <h4>What I designed</h4>
+        <ul>
+          <li><strong>AI button, AI icon button, AI label and AI shimmering text.</strong></li>
+          <li><strong>One signal for AI:</strong> a spark icon and a gradient. The gradient was the main decision; everything else comes from the normal components, so AI parts still feel like the same product.</li>
+          <li><strong>A usage rule in the docs:</strong> "Use ai only for AI-powered features".</li>
+        </ul>
+
+        <h4>Where they are</h4>
+        <ul>
+          <li>AI button, AI icon button and AI label are standard in LTComponents and used mainly in Test Manager and KaneAI, with a little use in SmartUI and Accessibility.</li>
+          <li>AI shimmering text isn't in the code library yet, and its motion isn't final.</li>
+        </ul>
+
+        <h4>What's not done</h4>
+        <ul>
+          <li><strong>Accessibility wasn't reviewed</strong> for the gradients. My next steps: check text contrast against every gradient stop, give icon-only AI buttons a name, keep focus visible on the gradient, and make the shimmer respect reduced motion and announce its status to screen readers. <!-- confirm: adopt these as your next steps, from workbook Part 9 --></li>
+        </ul>
+        <!-- figure pending: BF06 assets/lambdatest/design-system/04-ai-components.png -->
+
+        <h3>4. Two new themes</h3>
+
+        <h4>Dark theme</h4>
+        <ul>
+          <li>I translated <strong>every colour token from light to dark</strong>, following Primer's colour guidance, in <strong>3 days</strong>.</li>
+          <li>Engineering spent <strong>about a month converting products to the new CSS variables and got to about 90%</strong>.</li>
+        </ul>
+
+        <h4>Light high-contrast</h4>
+        <ul>
+          <li>A large enterprise customer had a custom light high-contrast theme, built earlier without tokens, so it couldn't extend to other themes.</li>
+          <li>Now <strong>every colour token has a light high-contrast value</strong> in Figma.</li>
+          <li>It isn't shipped yet; it's waiting for dark to go fully live. Then I'll hand engineering the values as a file to apply to the CSS variables.</li>
+        </ul>
+
+        <h4>Principle at work</h4>
+        <ul>
+          <li><strong>Theming through modes:</strong> a new theme is a new set of values, not a new set of screens.</li>
+        </ul>
+        <!-- figure pending: BF07 assets/lambdatest/design-system/05-themes.png -->
+
+        <h3>5. Storybook docs people and AI can follow</h3>
+
+        <h4>What I did</h4>
+        <ul>
+          <li><strong>Prop descriptions and types:</strong> I had Claude map our props to Primer's equivalents and draw on Primer's public docs, then collated the descriptions and types into JSDoc handover files. The FE lead's team applied them in Storybook.</li>
+          <li><strong>Dos, don'ts and guardrails</strong>, written for engineers and AI coding tools. LTButton's cover labels, sizes, a 24 × 24px minimum target, when to use inactive instead of disabled, and the ARIA rules.</li>
+          <li><strong>Quirks and known issues stated plainly</strong> in the props, e.g., "Despite the name, a style object".</li>
+          <li><strong>Storybook against Figma, audited by hand:</strong> the AI model hallucinated across components and props with similar names, so I didn't trust it for this.</li>
+        </ul>
+
+        <h4>Result</h4>
+        <ul>
+          <li>In the FE lead's words: Storybook props went from <strong>28% to 97% typed</strong> and from <strong>0 to 509 documented</strong>.</li>
+          <li><strong>FE engineers now use Storybook constantly</strong> and keep it updated, which wasn't the case before.</li>
+        </ul>
+
+        <h4>Principle at work</h4>
+        <ul>
+          <li><strong>Documentation as guardrails:</strong> clear rules mean fewer one-off decisions, by people or by AI.</li>
+        </ul>
+
+        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDg4MCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nIzI3MjkyYicvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSb0FBQUFCWFJVSlFWbEE0SUhRQUFBQndCQUNkQVNvZ0FCWUFQbEVrajBXam9pRVVCQUE0QlFTMGdBQVhSdW05azVXK3NVZUJWclBWVjhBWkFBRCsvVzdLTnI4djJBNjdmM3J6QW9LbTJWMDFadGtuVFFVeTBJQitHc3M1TExQR1EzYi9yMnZZSWJ1QVFEZi9NZ1V0bWtnR0YvVzVGZUJTN3hycUlvWEVXaS90Yk93QUFBPT0nLz48L2c+PC9zdmc+); --ratio: 2414 / 1638">
+          <img src="assets/lambdatest/design-system/06-ltbutton-docs.png" alt="Storybook guidance for LTButton: a Do list (short sentence-case labels starting with a verb, one primary button per group, ai only for AI-powered features, a 24 by 24px minimum target, ARIA rules for labels, menus and loading) and a Don't list (no all caps, keep focus styles, don't rely on colour or icons)." width="2414" height="1638" loading="lazy" decoding="async">
+          <figcaption>Dos and don'ts, written for engineers and AI coding tools alike</figcaption>
+        </figure>
+
+        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDg4MCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nIzI1MjYyOCcvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdScG9BQUFCWFJVSlFWbEE0SUk0QUFBRHdBd0NkQVNvZ0FCWUFQbEVrajBXam9pRVVCQUE0QlFTMGdBQWluWHJIMTBONmVxWUtVZ0RBQVA3NTJtcTlYcm5QMjc0WDNWbDB5dlZhTUR0OUZGZzlwcXk5Y2k1UDNicmkvV20zR3owZmo5QnhoM1BkdVluSyt2Rjg1aDU1dTVwR2pMZlE0RDA2L1oxaW4wQU5KWEZ4ZzNNbE11bUlXRWt1anFTeHNkVFZVRGkzd2dxeUZHK0lHejlBQUFBQScvPjwvZz48L3N2Zz4=); --ratio: 2414 / 1638">
+          <img src="assets/lambdatest/design-system/07-ltselectpanel-props.png" alt="The Storybook props table for LTSelectPanel, with name, description, default and control columns; descriptions explain each prop and call out known issues and quirks." width="2414" height="1638" loading="lazy" decoding="async">
+          <figcaption>Prop descriptions that name quirks plainly</figcaption>
+        </figure>
+
+        <figure class="fig board board-45 blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDE2MCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nIzIwMjUyYScvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSbGdBQUFCWFJVSlFWbEE0SUV3QUFBQVFBd0NkQVNvZ0FBUUFQbEVlakVRam9hRVlCQUE0QlFTemdBQXBWVkdhOFdBQS92eHcxbXRkTjMzRThUOW1uZlpyN3Z4QTNhY2lrQjcyOEFHWWhqbWJrYTdTMnZNTUFaVEFBQUFBJy8+PC9nPjwvc3ZnPg==); --ratio: 1720 / 234">
+          <img src="assets/lambdatest/design-system/08-storybook-update.png" alt="A Slack message from the FE lead: Storybook props go from 28% to 97% typed and from 0 to 509 documented." width="1720" height="234" loading="lazy" decoding="async">
+          <figcaption>Props from 28% to 97% typed and from 0 to 509 documented</figcaption>
+        </figure>
+
+        <h3>6. A prototyping repo for PMs</h3>
+
+        <h4>Before</h4>
+        <ul>
+          <li>PMs prototyped by feeding screenshots of the live product to AI tools. The results didn't look or behave like production.</li>
+        </ul>
+
+        <h4>What I built</h4>
+        <ul>
+          <li><strong>A private GitHub repo</strong> that pulls component details from Storybook's manifest.json and index.json with a script.</li>
+          <li><strong>A GitHub Action</strong> that refreshes it every month, so it doesn't go stale.</li>
+          <li><strong>mock-data.md:</strong> realistic test management data (test case, test run and instance names, users, projects, browser and OS configurations, devices), so prototypes don't fill up with generic values.</li>
+          <li><strong>Screen layout patterns as code</strong> for the most common screens, so PMs don't need screenshots.</li>
+          <li><strong>Component guidelines and guardrails</strong> from Storybook.</li>
+          <li><strong>Works with Claude Code</strong>, which picks what it needs from the repo for each task.</li>
+        </ul>
+
+        <h4>Where it stands</h4>
+        <ul>
+          <li>I've built a couple of Test Manager prototypes with it, and they came out well.</li>
+          <li>I haven't shown it to PMs yet; I'm improving the output first.</li>
+          <!-- add later: the first PM to use it -->
+        </ul>
+        <!-- figure pending: BF11 assets/lambdatest/design-system/09-repo.png -->
+        <!-- figure pending: BF12 assets/lambdatest/design-system/10-prototype.png -->
+
+        <h3>7. Shipping my own code</h3>
+
+        <h4>Getting set up</h4>
+        <ul>
+          <li>Repo access came through IT and engineering leadership.</li>
+          <li>An FE developer helped me set up the editor, GitHub CLI, Claude Code and a dev environment.</li>
+        </ul>
+
+        <h4>What I shipped</h4>
+        <ul>
+          <li><strong>2 merged PRs</strong>, reviewed by the FE lead and other FE reviewers:
+            <ul>
+              <li>accordion interactions</li>
+              <li>the order of action menu items</li>
+              <li>wrong icons replaced</li>
+              <li>dynamic browser page titles on a couple of pages</li>
+            </ul>
+          </li>
+          <!-- add later: dates, files changed and review rounds -->
+        </ul>
+
+        <h4>How</h4>
+        <ul>
+          <li><strong>Claude Code</strong>, with Opus 5.5 and Fable 5.1.</li>
+          <li>I read every diff and tested each change in my dev environment.</li>
+        </ul>
+        <!-- figure pending: BF13 assets/lambdatest/design-system/11-merged-pr.png (optional) -->
+
+        <h4>Next (in progress)</h4>
+        <ul>
+          <li>browser page titles for all Test Manager pages</li>
+          <li>open the agent input from anywhere with a keyboard shortcut</li>
+          <li>show the email on hover over a user name</li>
+          <li>create a test run from test cases selected on the listing page</li>
+          <li>drag and drop test cases into folders to move or copy them</li>
+        </ul>
+
+        <h3>8. Fixing a flow that had drifted: creating a test run</h3>
+
+        <h4>Why</h4>
+        <ul>
+          <li>The flow was built from designs, but long-term scalability and design critique weren't followed, so its layout drifted.</li>
+        </ul>
+
+        <h4>What I designed (handed to FE in Figma)</h4>
+        <ul>
+          <li><strong>Step 3, "Set configurations and assignee", redesigned.</strong></li>
+          <li><strong>Bulk actions:</strong> set assignee or configuration for every selected test case at once.</li>
+          <li><strong>A clear hierarchy:</strong> test case, then its configurations, then each configuration's dataset rows, with an assignee at each level that needs one.</li>
+          <li><strong>What's missing, at a glance:</strong> warnings on each test case, and a footer with totals for missing configurations and assignees, each with "View all".</li>
+          <li><strong>Built for volume:</strong> folders, search, filters and pagination for thousands of test cases.</li>
+        </ul>
+
+        <h4>Where it stands</h4>
+        <ul>
+          <li><strong>Live in production:</strong> the shipped step keeps the design's folders, search and filters, selection, assignee and configuration for each test case, warnings, and totals.</li>
+        </ul>
+
+        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2Y2ZjhmOCcvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdSc1FBQUFCWFJVSlFWbEE0SUxnQUFBQlFCUUNkQVNvZ0FCSUFQa1VhaVVRaW9hRWI5QUFvQkVTemdGK3I0Ui84Q0RmdFZSd0xybzFDUVQ0ZzdxTU1BZ0d3UG1BQS92OEM4bXhGeHczOG5Jbm5HTVF4UjBNbnJ0ZS9NN2lTL2NvZFVHa0hyaWR6Qjc1SHMzQkdCbld5d1FvaDFFQjV5dDNROUorMmRQaDZHOWxkMUlrR3p0bU1Qbkprd0k1NDQ3V3paOTk4ZkxIMm50SWJISnN2V2t3a1NpWncvYThZYTlocmY0SjU5aXNoTGRYNTdQaUI0MFZSVEFYU3J5QXR5VGYza1Q3dnIxalVnWUFBJy8+PC9nPjwvc3ZnPg==); --ratio: 3024 / 1722">
+          <img src="assets/lambdatest/design-system/12-test-run-before.png" alt="The old test run step: each test case lists its configurations, each with its own Select Assignee menu, under a toggle for running instances in sequence." width="3024" height="1722" loading="lazy" decoding="async">
+          <figcaption>Before: configurations nested under each test case, each with its own assignee picker</figcaption>
+        </figure>
+
+        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDExMjAnIHByZXNlcnZlQXNwZWN0UmF0aW89J25vbmUnPjxmaWx0ZXIgaWQ9J2InIGNvbG9yLWludGVycG9sYXRpb24tZmlsdGVycz0nc1JHQic+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0nMjQnLz48ZmVDb21wb25lbnRUcmFuc2Zlcj48ZmVGdW5jQSB0eXBlPSdkaXNjcmV0ZScgdGFibGVWYWx1ZXM9JzEgMScvPjwvZmVDb21wb25lbnRUcmFuc2Zlcj48L2ZpbHRlcj48ZyBmaWx0ZXI9J3VybCgjYiknPjxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9JyNmNGY1ZjUnLz48aW1hZ2Ugd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZScgaHJlZj0nZGF0YTppbWFnZS93ZWJwO2Jhc2U2NCxVa2xHUnZJQUFBQlhSVUpRVmxBNElPWUFBQUJRQmdDZEFTb2dBQndBUGtVY2kwUWlvYUViL1ZRQUtBUkVzNEJra29BWFlCdklZR01obDBQQitkd1RvWHRlRGlVQkQwZFIwRW81aXJRWWdBRCsvc285Sy9NUmJzYlZlYkszS1hMaTcya2p2OXM1V2FkRzVSd0dBeFNKOXErdjNmMlAvNGk2NHQ3Qy9tNnpMMUxROG5kTU16cjNXcDJvUUhHRld6bnliazByMDNaRHkxcWlGa0lFTTZTMVRqWGJJd05KSHExTFkrWjZRbmFXVVRkT0Vqb0hyaXZ0RjJQV2htcER6V3pxRGFGM0YvbjJVMkFhUDhvSXdncFJ5RDNkQW5wMVd4RTRTSWdMQ29odU1udHBTK0gwNll2dzNLaFpLcy9lMnlYUEVzQnNQT3FTdGFZQUFBPT0nLz48L2c+PC9zdmc+); --ratio: 2892 / 2504">
+          <img src="assets/lambdatest/design-system/13-test-run-design.png" alt="The redesigned step in Figma: a folder tree, search and filters, a bulk bar to set assignee and configuration for selected test cases, test cases with warnings and counts, and one expanded to show its configurations, a dataset and an assignee per row, above a footer of totals." width="2892" height="2504" loading="lazy" decoding="async">
+          <figcaption>My design: bulk actions, a test case to configuration to dataset hierarchy, and totals for what's missing</figcaption>
+        </figure>
+
+        <figure class="fig board blur-up" style="--blurred: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjgwIDcyMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PGZpbHRlciBpZD0nYicgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPScyNCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2Rpc2NyZXRlJyB0YWJsZVZhbHVlcz0nMSAxJy8+PC9mZUNvbXBvbmVudFRyYW5zZmVyPjwvZmlsdGVyPjxnIGZpbHRlcj0ndXJsKCNiKSc+PHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nI2Y5ZjlmOScvPjxpbWFnZSB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJyBocmVmPSdkYXRhOmltYWdlL3dlYnA7YmFzZTY0LFVrbEdScXdBQUFCWFJVSlFWbEE0SUtBQUFBQXdCUUNkQVNvZ0FCSUFQa2tjaTBRaW9hRWIvVlFBS0FTRXRJQmlmQzc0QUFLNm90NGQwZ0t0QkxBWVUwY09EeWkrUkFEKy9zZ1M2VGkwZkhEUVFHc090aTdnVVFZemphaDdSVTlVTUFpMTdtVmJ3dTlRVFhEd05MVlh5aFpOM3dMRDYwWm00dnZ4S1hxZG9SL1lZSCtPRXM4QVZvejRvb0V2Wm1NckhRTmJFSGhvdE5PNjFVYXQxRDZlTTVwYnJGTkNOUC9lQTN0TXRjWDRsU29LKzVBQScvPjwvZz48L3N2Zz4=); --ratio: 3024 / 1720">
+          <img src="assets/lambdatest/design-system/14-test-run-live.png" alt="The live step: a three-step header, folders, search and filters, four test cases each flagged for missing configuration and assignee with Set Assignee and Set Config menus, and a footer of totals with Save Test Run." width="3024" height="1720" loading="lazy" decoding="async">
+          <figcaption>Live in production, with the design's folders, filters, warnings and totals</figcaption>
+        </figure>
+      </section>
+
+      <!-- ═══ HOW I USED AI ═══ -->
+
+      <section id="cs-ai">
+        <h2>How I used AI</h2>
+        <ul>
+          <li><strong>Decisions stayed mine:</strong> what to fix, when, and how much.</li>
+          <li><strong>AI did the heavy lifting:</strong> prop descriptions, the token JSON, and the repo's sync scripts.</li>
+          <li><strong>I checked AI with AI:</strong> Opus 5.5 does the work and Fable 5.1 reviews and improves it.</li>
+          <li><strong>I didn't trust AI where it failed:</strong> I did the Storybook-against-Figma audit by hand.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ WHAT IT UNLOCKED ═══ -->
+
+      <section id="cs-unlocked">
+        <h2>What it unlocked</h2>
+        <ul>
+          <li><strong>Storybook:</strong> props from <strong>28% to 97% typed</strong> and <strong>0 to 509 documented</strong>, with the FE team. FE engineers now use it constantly.</li>
+          <li><strong>Tokens:</strong> <strong>393</strong> in two collections, with <strong>three theme modes</strong>.
+            <ul>
+              <li>down from <strong>622 in 5 collections</strong> in the old Primer copy</li>
+            </ul>
+          </li>
+          <li><strong>Dark theme:</strong> <strong>3 days</strong> of design work once tokens existed; engineering spent about a month converting products to the new CSS variables and got to about 90%.</li>
+          <li><strong>AI components:</strong> 3 of 4 standard in the code library, used in <strong>4 products</strong>.</li>
+          <li><strong>Code:</strong> 2 PRs merged; 5 more planned.</li>
+          <li><strong>Prototyping repo:</strong> auto-syncs monthly from Storybook; a couple of prototypes built.</li>
+        </ul>
+        <!-- add later: components and variants added · contrast pass rates (AA and AAA) per theme · PR stats -->
+      </section>
+
+      <!-- ═══ TRADE-OFFS ═══ -->
+
+      <section id="cs-tradeoffs">
+        <h2>Trade-offs: what's unfinished, why, and what's next</h2>
+
+        <h3 id="cs-tradeoff-1">1. Still on Primer</h3>
+        <dl class="rows ledger">
+          <div><dt>Where it stands</dt> <dd>The product keeps Primer's look, which doesn't match LambdaTest's website</dd></div>
+          <div><dt>Why</dt> <dd>Leadership saw a full identity change as too big</dd></div>
+          <div><dt>Whose call</dt> <dd>Leadership</dd></div>
+          <!-- confirm: your next step -->
+        </dl>
+
+        <h3 id="cs-tradeoff-2">2. Tokens not wired to code</h3>
+        <dl class="rows ledger">
+          <div><dt>Where it stands</dt> <dd>Figma variables and CSS variables are maintained separately</dd></div>
+          <!-- confirm with the FE lead -->
+          <!-- confirm -->
+          <div><dt>What I'd do next</dt> <dd>Make the token JSON the shared source for the CSS variables</dd></div>
+        </dl>
+
+        <h3 id="cs-tradeoff-3">3. AI components not reviewed for accessibility</h3>
+        <dl class="rows ledger">
+          <div><dt>Where it stands</dt> <dd>Gradients unchecked; shimmer not final</dd></div>
+          <!-- confirm: your reason -->
+          <!-- confirm -->
+          <div><dt>What I'd do next</dt> <dd>Run the accessibility checks listed under "The first AI components"</dd></div>
+        </dl>
+
+        <h3 id="cs-tradeoff-4">4. Light high-contrast not shipped</h3>
+        <dl class="rows ledger">
+          <div><dt>Where it stands</dt> <dd>Values ready in Figma</dd></div>
+          <div><dt>Why</dt> <dd>Waiting for dark to go fully live</dd></div>
+          <!-- confirm -->
+          <div><dt>What I'd do next</dt> <dd>Hand engineering the values as a file</dd></div>
+        </dl>
+
+        <h3 id="cs-tradeoff-5">5. No PM using the repo yet</h3>
+        <dl class="rows ledger">
+          <div><dt>Where it stands</dt> <dd>A couple of prototypes, built by me</dd></div>
+          <div><dt>Why</dt> <dd>I'm improving output quality first</dd></div>
+          <div><dt>Whose call</dt> <dd>Mine</dd></div>
+          <!-- confirm: e.g., pilot it with my manager, who asked for it -->
+        </dl>
+      </section>
+
+      <!-- ═══ TEAMWORK ═══ -->
+
+      <section id="cs-teamwork">
+        <h2>Teamwork</h2>
+        <ul>
+          <li><strong>With the FE lead and her team:</strong> they applied my docs in Storybook and reviewed my PRs.</li>
+          <li><strong>With an FE developer:</strong> they set up my dev environment and tools.</li>
+          <li><strong>With engineering:</strong> they rebuilt the CSS variables product by product for the dark theme.</li>
+          <li><strong>How it worked:</strong> personal rapport, and a shared sense that this work had waited too long. The only real pushback was on leaving Primer.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ LEADERSHIP ═══ -->
+
+      <section id="cs-leadership">
+        <h2>Leadership</h2>
+        <ul>
+          <li><strong>Took ownership of a system nobody owned</strong> on the design side.</li>
+          <li><strong>Set the order of work</strong> so each step unlocked the next: tokens first, then components and themes.</li>
+          <li><strong>Turned Storybook into a working tool</strong> that FE engineers now use every day.</li>
+          <li><strong>Wrote guardrails for AI coding tools</strong>, not just for people.</li>
+          <li><strong>Argued for our own visual identity,</strong> though leadership said no.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ LEARNINGS ═══ -->
+
+      <section id="cs-learnings">
+        <h2>Learnings</h2>
+        <ul>
+          <li><strong>Foundations decide the speed of everything after.</strong> The token rebuild turned the dark theme into 3 days of design work.</li>
+          <li><strong>Accessibility can't wait for later.</strong> The AI gradients went out before an accessibility review.</li>
+          <li><strong>AI does the work; judgement stays with me.</strong> I used AI where it was reliable and did the audit by hand where it wasn't.</li>
+          <li><strong>A tool needs users, not just features.</strong> The repo works, but it only counts once PMs use it.</li>
+        </ul>
+      </section>
+
+    </div>
+
+    <!-- ═══ LET'S TALK ═══ -->
+    <section class="band cs-talk" id="cs-talk">
+      <h2>Let's Talk</h2>
+      <p class="cs-talk-who">Rajat Garg, Human designer powered with AI</p>
+      <p class="cs-talk-links">
+        <a href="https://linkedin.com/in/gragtajar" target="_blank" rel="noopener"><span class="under">LinkedIn</span></a>
+        <a href="https://github.com/gragtajar" target="_blank" rel="noopener" data-track="github"><span class="under">GitHub</span></a>
+        <a href="https://www.figma.com/@gragtajar" target="_blank" rel="noopener" data-track="figma"><span class="under">Figma</span></a>
+        <a href="resume.pdf" download="Rajat-Garg-Lead-Product-Designer-Resume.pdf" data-track="resume"><span class="under">Download Resume</span></a>
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p class="quote"></p>
+    <p class="credit">written &amp; directed by me. produced by claude</p>
+  </footer>
+
+  <script src="js/case-study.js?v=2026-10-06" defer></script>
+
+</body>
+</html>
