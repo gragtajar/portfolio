@@ -190,3 +190,131 @@
 
   .cs-meta > div { grid-template-columns: minmax(0, 8.5rem) minmax(0, 1fr); }
 }
+
+/* --- The order of the work, drawn so it reads without reading (owner's
+       call, 2026-10-14): frames in a row, each ruled off like a slip, its
+       number in edge print, an arrow at the end of its rule pointing on to
+       the next. Work still going on has a dashed rule and says so. In a
+       column too narrow for frames side by side, they stack, the rule
+       running down their left and the arrows pointing down. --- */
+.cs-body .work-order {
+  container-type: inline-size;
+  margin-top: 12px;
+}
+
+.cs-body .work-order ol {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cs-body .work-order li {
+  position: relative;
+  margin: 0;
+  padding: 2px 0 14px 16px;
+  border-left: 1px solid var(--ink-2);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.cs-body .work-order li:last-child { padding-bottom: 2px; }
+
+.cs-body .work-order .is-ongoing { border-left-style: dashed; }
+
+.cs-body .work-order .edge { color: var(--ink-2); }
+
+/* the frame's number, then its name; "ongoing" after the name */
+.cs-body .work-order .edge:first-child {
+  display: inline-block;
+  min-width: 2.25em;
+}
+
+.cs-body .work-order .edge:last-child:not(:first-child) { margin-left: 8px; }
+
+/* the arrow at the end of a frame's rule, pointing on to the next */
+.cs-body .work-order li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -4px;
+  width: 7px;
+  height: 7px;
+  border: solid var(--ink-2);
+  border-width: 0 1px 1px 0;
+  transform: rotate(45deg);
+}
+
+/* three frames a row once each can hold its longest name ("Components", 89px) */
+@container (min-width: 19rem) {
+  .cs-body .work-order ol {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px 12px;
+  }
+
+  .cs-body .work-order li {
+    padding: 8px 0 0;
+    border-left: 0;
+    border-top: 1px solid var(--ink-2);
+  }
+
+  .cs-body .work-order .is-ongoing { border-top-style: dashed; }
+
+  .cs-body .work-order .edge:first-child {
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .cs-body .work-order .edge:last-child:not(:first-child) {
+    display: block;
+    margin: 2px 0 0;
+  }
+
+  .cs-body .work-order li:not(:last-child)::after {
+    top: -4px;
+    right: -1px;
+    bottom: auto;
+    left: auto;
+    border-width: 1px 1px 0 0;
+  }
+
+  /* a row's last frame: the next one starts the row below */
+  .cs-body .work-order li:nth-child(3n)::after { content: none; }
+}
+
+/* --- The tokens' count, old file against new (owner's call, 2026-10-14):
+       two quiet bars under the sentence that gives the count, each as long
+       as its count, the old one in the hairline's grey. For the eye only:
+       the sentences around it say the same in words. --- */
+.cs-body .token-tally {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 6px 12px;
+  align-items: center;
+  max-width: 24rem;
+  margin-top: 10px;
+}
+
+.cs-body .token-tally .edge { color: var(--ink-2); }
+
+.cs-body .tally-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+}
+
+.cs-body .tally-bar::before {
+  content: '';
+  flex: none;
+  width: calc((100% - 3.5em) * var(--share));
+  height: 6px;
+  border-radius: 1px;
+  background: var(--ink-2);
+}
+
+.cs-body .tally-bar.is-old::before { background: var(--line); }
